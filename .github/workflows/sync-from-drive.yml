@@ -1,0 +1,70 @@
+name: Sync from Google Drive
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'   # cada 10 minutos
+  workflow_dispatch:           # trigger manual desde GitHub UI
+  repository_dispatch:
+    types: [drive-webhook]     # trigger via webhook externo
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SYNC_PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Install rclone
+        run: curl https://rclone.org/install.sh | sudo bash
+
+      - name: Configure rclone
+        run: |
+          mkdir -p ~/.config/rclone
+          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+
+      - name: Sync Drive → content/drive-sync/
+        run: |
+          rclone sync \
+            "gdrive:daath-zen/R002-daath-cortex/20--udfjc-reforma-vinculante" \
+            ./content/drive-sync/ \
+            --include "*.md" \
+            --exclude ".obsidian/**" \
+            --exclude ".trash/**" \
+            --exclude "*.canvas" \
+            --exclude "node_modules/**" \
+            --transfers 8 \
+            --verbose \
+            2>&1 | tail -30
+
+      - name: Remove Obsidian internals that may have slipped
+        run: |
+          find ./content/drive-sync -name ".obsidian" -type d -exec rm -rf {} + 2>/dev/null || true
+          find ./content/drive-sync -name ".trash" -type d -exec rm -rf {} + 2>/dev/null || true
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "drive-sync-bot"
+          git config user.email "drive-sync@reforma-ud.vercel.app"
+
+          CHANGED=$(git status --porcelain | wc -l | tr -d ' ')
+
+          if [ "$CHANGED" -gt "0" ]; then
+            git add -A
+
+            FILES_CHANGED=$(git diff --cached --name-only | wc -l | tr -d ' ')
+            TIMESTAMP=$(date -u +%Y-%m-%dT%H:%MZ)
+
+            git commit -m "sync: drive snapshot ${TIMESTAMP}" \
+                       -m "Files changed: ${FILES_CHANGED}" \
+                       -m "Source: Google Drive (Patron C — B5 §14.3)"
+
+            git push
+            echo "✓ Pushed ${FILES_CHANGED} changed files"
+          else
+            echo "✓ No changes to sync"
+          fi

@@ -1,0 +1,54 @@
+/* Design tokens B.3 — Reforma Vinculante UDFJC
+   Paleta CV v12 · mapeada 1:1 con 5 Rutas Clark */
+:root {
+  /* Brand colors */
+  --color-navy:    #0f172a; /* texto primary, headings */
+  --color-blue:    #0284c7; /* links, CTA, R-3 Sector */
+  --color-emerald: #059669; /* success, R-1 Governance */
+  --color-purple:  #7c3aed; /* R-2 Periferia, innovacion */
+  --color-gold:    #d97706; /* R-4 Mision, destacados */
+  --color-orange:  #ea580c; /* R-5 Cultura, territorio */
+
+  /* Neutrals */
+  --color-neutral-50:  #fafaf9;
+  --color-neutral-100: #f5f5f4;
+  --color-neutral-200: #e7e5e4;
+  --color-neutral-300: #d6d3d1;
+  --color-neutral-500: #78716c;
+  --color-neutral-700: #44403c;
+  --color-neutral-900: #1c1917;
+
+  /* Typography */
+  --font-serif:   'Crimson Pro', 'Source Serif Pro', Georgia, serif;
+  --font-heading: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Starlight overrides */
+  --sl-font: var(--font-heading);
+  --sl-color-accent:        var(--color-blue);
+  --sl-color-accent-high:   var(--color-navy);
+  --sl-color-text-accent:   var(--color-blue);
+
+  /* Spacing (8pt grid) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+}
+
+/* Callout types */
+.callout-abstract  { background: #eff6ff; border-color: #3b82f6; color: #1e40af; }
+.callout-question  { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+.callout-info      { background: #e0f2fe; border-color: #0284c7; color: #075985; }
+.callout-note      { background: #f5f3ff; border-color: #7c3aed; color: #5b21b6; }
+.callout-important { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
+.callout-tip       { background: #ecfdf5; border-color: #059669; color: #065f46; }
+.callout-quote     { background: #f5f5f4; border-color: #78716c; color: #44403c; }
+.callout-example   { background: #fffbeb; border-color: #d97706; color: #78350f; }
+.callout-warning   { background: #fff7ed; border-color: #ea580c; color: #9a3412; }
+.callout-success   { background: #f0fdf4; border-color: #16a34a; color: #14532d; }
+.callout-danger    { background: #450a0a; border-color: #ef4444; color: #fee2e2; }

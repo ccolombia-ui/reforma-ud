@@ -1,0 +1,45 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+---
+<StarlightPage
+  frontmatter={{
+    title: 'reforma·ud',
+    description: 'MI-12 Hoja de Ruta CRISP-DM — Reforma Vinculante UDFJC',
+    template: 'splash',
+    hero: {
+      tagline: 'La Reforma Vinculante de la Universidad Distrital Francisco José de Caldas, explicada desde tu rol.',
+      actions: [
+        { text: 'Ver los 12 papers', link: '/papers/m01', icon: 'right-arrow', variant: 'primary' },
+        { text: 'El Acuerdo CSU 04/2025', link: '/acuerdo', icon: 'document', variant: 'secondary' },
+        { text: 'GitHub', link: 'https://github.com/ccolombia-ui/reforma-ud', icon: 'github', variant: 'minimal' },
+      ],
+    },
+  }}
+>
+
+## ¿Qué es la Reforma Vinculante?
+
+El **Acuerdo CSU 04/2025** establece la transformación estructural de la UDFJC hacia una **universidad emprendedora, innovadora y con pertinencia territorial**. Este portal es la hoja de ruta CRISP-DM para entenderla e implementarla.
+
+## 12 investigaciones · 6 roles · 21 Buenas Prácticas
+
+Cada paper (M01–M12) responde una pregunta trazadora específica del ciclo CRISP-DM, desde el *Business Understanding* hasta el *Deployment*.
+
+| Rol | Tu pregunta clave |
+|-----|-------------------|
+| 🎓 **Estudiante** | ¿Qué nuevas oportunidades de investigación y emprendimiento me abre la reforma? |
+| 📋 **Director/a** | ¿Cómo implemento la Escuela Emprendedora Transformativa en mi programa? |
+| 🔧 **Diseñador/a curricular** | ¿Cómo rediseño el plan de estudios con CCA + CABA? |
+| 📚 **Formador/a** | ¿Cómo transformo mi práctica pedagógica hacia PBL y co-op? |
+| 🔬 **Investigador/a** | ¿Cómo conectar mi agenda investigativa con el territorio via UROP? |
+| 🚀 **Emprendedor/a** | ¿Cómo crear transferencia de conocimiento con impacto territorial? |
+
+## Licencia
+
+Todo el contenido de este portal está bajo **Creative Commons BY-SA 4.0** — libre de compartir y adaptar con atribución.
+
+<div class="cc-license">
+  Carlos Camilo Madera Sepulveda · ccmaderas@udistrital.edu.co · Contrato CPS-939-2026 · UDFJC · CC BY-SA 4.0
+</div>
+
+</StarlightPage>

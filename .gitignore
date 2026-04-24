@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+.astro/
+.turbo/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Secrets — NUNCA versionar
+secrets/
+*.conf
+rclone.conf
+
+# PDFs generados (son artifacts, no source)
+apps/portal/public/pdfs/
+
+# Drive sync puede tener archivos grandes o temporales de Obsidian
+content/drive-sync/.obsidian/
+content/drive-sync/**/*.canvas
+content/drive-sync/**/.trash/

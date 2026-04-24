@@ -1,0 +1,33 @@
+/* Custom overrides para reforma-ud portal */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+/* Paper body text usa serif */
+.paper-body, article.paper {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--color-navy);
+}
+
+/* Headings usan sans */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+/* Ruta Clark badges */
+.badge-r1 { background: var(--color-emerald); color: white; border-radius: 9999px; padding: 2px 10px; font-size: 0.75rem; font-weight: 600; }
+.badge-r2 { background: var(--color-purple);  color: white; border-radius: 9999px; padding: 2px 10px; font-size: 0.75rem; font-weight: 600; }
+.badge-r3 { background: var(--color-blue);    color: white; border-radius: 9999px; padding: 2px 10px; font-size: 0.75rem; font-weight: 600; }
+.badge-r4 { background: var(--color-gold);    color: white; border-radius: 9999px; padding: 2px 10px; font-size: 0.75rem; font-weight: 600; }
+.badge-r5 { background: var(--color-orange);  color: white; border-radius: 9999px; padding: 2px 10px; font-size: 0.75rem; font-weight: 600; }
+
+/* CC license footer */
+.cc-license {
+  font-size: 0.8rem;
+  color: var(--color-neutral-500);
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-neutral-200);
+}

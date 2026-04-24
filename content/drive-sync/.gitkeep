@@ -1,0 +1,4 @@
+# Este directorio es el mirror de Google Drive.
+# Se popula automáticamente via GitHub Actions (rclone sync).
+# No editar manualmente — los cambios se sobreescriben en el siguiente sync.
+# Fuente editorial: Google Drive (ver B5--monorepo-architecture-sota.md §14.3)

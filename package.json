@@ -1,0 +1,27 @@
+{
+  "name": "aleia-reforma-ud",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MI-12 Reforma Vinculante UDFJC — monorepo portal + research + content",
+  "license": "CC-BY-SA-4.0",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev --filter=portal",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "sync:drive": "node scripts/sync-from-drive.mjs",
+    "build:pdfs": "turbo build-pdfs"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.3",
+    "@biomejs/biome": "^1.9.4",
+    "typescript": "^5.7.2",
+    "tsx": "^4.19.2",
+    "@changesets/cli": "^2.27.12"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@10.28.0"
+}
