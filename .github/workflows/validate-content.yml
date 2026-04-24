@@ -1,0 +1,38 @@
+name: Validate content (TDD CI)
+
+on:
+  pull_request:
+    paths:
+      - 'apps/portal/src/content/docs/**'
+      - 'content/drive-sync/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Check required frontmatter in papers
+        run: |
+          ERRORS=0
+          for f in apps/portal/src/content/docs/papers/*.md; do
+            [ -f "$f" ] || continue
+            grep -q "^title:" "$f" || { echo "❌ Missing title: $f"; ERRORS=$((ERRORS+1)); }
+            grep -q "^description:" "$f" || { echo "❌ Missing description: $f"; ERRORS=$((ERRORS+1)); }
+          done
+          [ "$ERRORS" -eq 0 ] && echo "✓ All papers have required frontmatter" || exit 1
+
+      - name: Build portal
+        run: pnpm --filter portal build
