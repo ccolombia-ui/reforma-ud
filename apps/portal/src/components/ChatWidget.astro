@@ -1,0 +1,169 @@
+---
+// ChatWidget.astro — flotante bottom-right, asistente AI del portal
+// Pasa contexto del paper actual al endpoint /api/chat
+const { paperTitle = '', paperDescription = '' } = Astro.props;
+const context = paperTitle ? `${paperTitle}: ${paperDescription}` : '';
+---
+
+<div
+  id="reforma-chat-widget"
+  data-paper-context={context}
+>
+  <button
+    type="button"
+    id="reforma-chat-toggle"
+    aria-label="Abrir asistente AI"
+    aria-expanded="false"
+  >
+    <span class="chat-icon">💬</span>
+    <span class="chat-label">Pregúntale al portal</span>
+  </button>
+
+  <div id="reforma-chat-panel" hidden>
+    <header class="chat-header">
+      <div>
+        <strong>Asistente reforma·ud</strong>
+        <small>powered by Claude Haiku</small>
+      </div>
+      <button type="button" id="reforma-chat-close" aria-label="Cerrar">✕</button>
+    </header>
+
+    <div id="reforma-chat-messages" role="log" aria-live="polite">
+      <div class="msg-bot">
+        <p>Hola 👋 Soy el asistente del portal. Pregúntame sobre la Reforma UDFJC, el corpus MI-12 o tu rol en la CoP.</p>
+      </div>
+    </div>
+
+    <div class="chat-suggestions" id="reforma-chat-suggestions">
+      <button class="suggestion" data-q="¿Qué es el Acuerdo CSU 04/2025?">¿Qué es el Acuerdo CSU 04/2025?</button>
+      <button class="suggestion" data-q="¿Cuáles son las 3 BPAs más desbloqueadoras?">3 BPAs más desbloqueadoras</button>
+      <button class="suggestion" data-q="¿Cómo puedo contribuir desde mi rol?">¿Cómo puedo contribuir?</button>
+    </div>
+
+    <form id="reforma-chat-form" autocomplete="off">
+      <input
+        type="text"
+        id="reforma-chat-input"
+        placeholder="Escribe tu pregunta..."
+        maxlength="500"
+        required
+      />
+      <button type="submit" id="reforma-chat-send" aria-label="Enviar">↑</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  type Msg = { role: 'user' | 'assistant'; content: string };
+
+  const $widget = document.getElementById('reforma-chat-widget') as HTMLDivElement;
+  const $toggle = document.getElementById('reforma-chat-toggle') as HTMLButtonElement;
+  const $panel = document.getElementById('reforma-chat-panel') as HTMLDivElement;
+  const $close = document.getElementById('reforma-chat-close') as HTMLButtonElement;
+  const $messages = document.getElementById('reforma-chat-messages') as HTMLDivElement;
+  const $form = document.getElementById('reforma-chat-form') as HTMLFormElement;
+  const $input = document.getElementById('reforma-chat-input') as HTMLInputElement;
+  const $send = document.getElementById('reforma-chat-send') as HTMLButtonElement;
+  const $suggestions = document.getElementById('reforma-chat-suggestions') as HTMLDivElement;
+
+  const paperContext = $widget?.dataset.paperContext ?? '';
+  const history: Msg[] = [];
+
+  const SS_KEY = 'reforma-chat:history';
+  try {
+    const saved = sessionStorage.getItem(SS_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved) as Msg[];
+      parsed.forEach((m) => {
+        history.push(m);
+        appendMessage(m.role === 'user' ? 'user' : 'bot', m.content, false);
+      });
+    }
+  } catch {}
+
+  function open() {
+    $panel.hidden = false;
+    $toggle.setAttribute('aria-expanded', 'true');
+    $widget.classList.add('is-open');
+    setTimeout(() => $input.focus(), 100);
+  }
+
+  function close() {
+    $panel.hidden = true;
+    $toggle.setAttribute('aria-expanded', 'false');
+    $widget.classList.remove('is-open');
+  }
+
+  $toggle.addEventListener('click', () => {
+    if ($panel.hidden) open();
+    else close();
+  });
+  $close.addEventListener('click', close);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$panel.hidden) close();
+  });
+
+  $suggestions.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains('suggestion')) {
+      const q = target.getAttribute('data-q') ?? '';
+      $input.value = q;
+      $form.requestSubmit();
+    }
+  });
+
+  $form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const message = $input.value.trim();
+    if (!message) return;
+
+    appendMessage('user', message);
+    history.push({ role: 'user', content: message });
+    $input.value = '';
+    $send.disabled = true;
+
+    const $thinking = appendMessage('bot', '...', true);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, paperContext }),
+      });
+      const data = await res.json();
+      $thinking.remove();
+
+      if (data.error) {
+        appendMessage('bot-error', data.error);
+      } else {
+        appendMessage('bot', data.reply ?? '');
+        history.push({ role: 'assistant', content: data.reply ?? '' });
+        try {
+          sessionStorage.setItem(SS_KEY, JSON.stringify(history));
+        } catch {}
+      }
+    } catch (err) {
+      $thinking.remove();
+      appendMessage('bot-error', 'Error de conexión. Intenta de nuevo.');
+    } finally {
+      $send.disabled = false;
+      $input.focus();
+    }
+  });
+
+  function appendMessage(
+    type: 'user' | 'bot' | 'bot-error',
+    text: string,
+    scroll = true
+  ): HTMLDivElement {
+    const div = document.createElement('div');
+    div.className = `msg-${type}`;
+    const p = document.createElement('p');
+    p.textContent = text;
+    div.appendChild(p);
+    $messages.appendChild(div);
+    if (scroll) $messages.scrollTop = $messages.scrollHeight;
+    return div;
+  }
+</script>

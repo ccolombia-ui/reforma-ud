@@ -1,0 +1,95 @@
+---
+import GameLayout from '../../layouts/GameLayout.astro';
+import { papers, cops } from '../../data/papers';
+---
+
+<GameLayout title="Mapa de misión">
+  <a href="/" class="nav-back">← Portal</a>
+
+  <div class="player-header" id="player-header" hidden>
+    <div>
+      <span class="name" id="ph-name"></span>
+      <span class="role" id="ph-role" style="margin-left:0.5rem;"></span>
+    </div>
+    <div class="medals" id="ph-medals"></div>
+  </div>
+
+  <h1>🗺️ Tu mapa de misión</h1>
+  <p>Avanza M01 → M12. Cada paper desbloquea el siguiente al ganar medalla.</p>
+
+  <div class="mission-grid" id="mission-grid">
+    {papers.map((p) => (
+      <a class="mission-card" data-mid={p.id} href={`/tu-reforma/${p.id}/`}>
+        <span class="mid">M{String(p.number).padStart(2, '0')}</span>
+        <span class="mt">{p.shortTitle}</span>
+        <span class="icon" data-status="locked">🔒</span>
+      </a>
+    ))}
+  </div>
+
+  <div id="completion" hidden style="margin-top:2rem;text-align:center;">
+    <div class="game-hero" style="background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);">
+      <h1>🏆 ¡Misión cumplida!</h1>
+      <p>Has completado las 12 investigaciones del corpus MI-12.</p>
+      <a href="/tu-reforma/certificado/" class="btn" style="background:white;color:#0f172a;margin-top:1rem;">Ver mi certificado</a>
+    </div>
+  </div>
+
+  <script>
+    import { getState, isUnlocked, isCompleted, PAPERS_LIST } from '../../scripts/game-state';
+    import { cops as copsData } from '../../data/papers';
+
+    const state = getState();
+    if (!state) {
+      window.location.href = '/tu-reforma/';
+    } else {
+      const $name = document.getElementById('ph-name');
+      const $role = document.getElementById('ph-role');
+      const $medals = document.getElementById('ph-medals');
+      const $header = document.getElementById('player-header');
+      const $completion = document.getElementById('completion');
+      const roleData = copsData.find((c: any) => c.id === state.player.role);
+
+      if ($name) $name.textContent = state.player.name;
+      if ($role) $role.textContent = roleData ? `${roleData.emoji} ${roleData.name}` : state.player.role;
+      $header?.removeAttribute('hidden');
+
+      // Render medals
+      const medalEmoji = { gold: '🥇', silver: '🥈', bronze: '🥉' } as const;
+      let medalStr = '';
+      PAPERS_LIST.forEach((p: string) => {
+        const m = state.progress.medals[p];
+        medalStr += m ? medalEmoji[m as keyof typeof medalEmoji] : '·';
+      });
+      if ($medals) $medals.textContent = medalStr;
+
+      // Update mission cards
+      document.querySelectorAll('.mission-card').forEach((card) => {
+        const mid = card.getAttribute('data-mid')!;
+        const unlocked = isUnlocked(mid, state);
+        const medal = state.progress.medals[mid];
+        const $icon = card.querySelector('[data-status]');
+
+        if (medal) {
+          card.classList.add('completed');
+          if ($icon) {
+            $icon.textContent = medalEmoji[medal as keyof typeof medalEmoji];
+            $icon.className = `icon medal-${medal}`;
+          }
+        } else if (mid === state.progress.currentMission) {
+          card.classList.add('current');
+          if ($icon) $icon.textContent = '▶';
+        } else if (unlocked) {
+          if ($icon) $icon.textContent = '○';
+        } else {
+          card.classList.add('locked');
+          if ($icon) $icon.textContent = '🔒';
+        }
+      });
+
+      if (isCompleted(state)) {
+        $completion?.removeAttribute('hidden');
+      }
+    }
+  </script>
+</GameLayout>

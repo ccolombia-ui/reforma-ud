@@ -1,0 +1,142 @@
+---
+import GameLayout from '../../layouts/GameLayout.astro';
+import { papers } from '../../data/papers';
+import { quizzes } from '../../data/quizzes';
+
+export function getStaticPaths() {
+  return papers.map((p) => ({ params: { mid: p.id }, props: { paper: p } }));
+}
+
+const { paper } = Astro.props;
+const quiz = quizzes[paper.id] ?? [];
+const quizJson = JSON.stringify(quiz);
+---
+
+<GameLayout title={`Quiz ${paper.id.toUpperCase()}`}>
+  <a href="/tu-reforma/mapa/" class="nav-back">← Volver al mapa</a>
+
+  <div class="card">
+    <span class="mid" style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#38bdf8;">
+      M{String(paper.number).padStart(2, '0')}
+    </span>
+    <h1 style="margin-top:0.5rem;">{paper.title}</h1>
+    <p>{paper.description}</p>
+    <p style="margin-top:1rem;">
+      <a href={paper.href} target="_blank" rel="noopener" class="btn btn-secondary">📖 Leer paper completo →</a>
+    </p>
+  </div>
+
+  <div class="quiz-card" id="quiz-card">
+    <div class="quiz-progress" id="quiz-progress"></div>
+    <div class="quiz-q" id="quiz-q"></div>
+    <div class="quiz-opts" id="quiz-opts"></div>
+    <div class="feedback" id="feedback" hidden></div>
+    <div style="margin-top:1.5rem;display:flex;gap:0.5rem;">
+      <button class="btn" id="next-btn" hidden>Siguiente →</button>
+    </div>
+  </div>
+
+  <div class="medal-result" id="result" hidden>
+    <div class="emoji" id="result-emoji"></div>
+    <h2 id="result-title"></h2>
+    <p id="result-detail"></p>
+    <div style="margin-top:1.5rem;">
+      <a href="/tu-reforma/mapa/" class="btn">Volver al mapa</a>
+    </div>
+  </div>
+
+  <script set:html={`window.__QUIZ_DATA__ = ${quizJson}; window.__PAPER_ID__ = '${paper.id}';`}></script>
+
+  <script>
+    import { getState, recordQuiz } from '../../scripts/game-state';
+    import { calcMedal } from '../../data/quizzes';
+
+    type Q = { q: string; options: string[]; correctIndex: number; explain?: string };
+
+    const state = getState();
+    if (!state) {
+      window.location.href = '/tu-reforma/';
+    } else {
+      const data = (window as any).__QUIZ_DATA__ as Q[];
+      const paperId = (window as any).__PAPER_ID__ as string;
+      let idx = 0;
+      let correct = 0;
+
+      const $card = document.getElementById('quiz-card')!;
+      const $progress = document.getElementById('quiz-progress')!;
+      const $q = document.getElementById('quiz-q')!;
+      const $opts = document.getElementById('quiz-opts')!;
+      const $feedback = document.getElementById('feedback')!;
+      const $next = document.getElementById('next-btn') as HTMLButtonElement;
+      const $result = document.getElementById('result')!;
+
+      function render() {
+        if (idx >= data.length) return showResult();
+        const cur = data[idx];
+        $progress.textContent = `Pregunta ${idx + 1} de ${data.length}`;
+        $q.textContent = cur.q;
+        $opts.innerHTML = '';
+        $feedback.setAttribute('hidden', '');
+        $next.setAttribute('hidden', '');
+
+        cur.options.forEach((opt, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-opt';
+          btn.textContent = opt;
+          btn.addEventListener('click', () => onAnswer(i, btn, cur));
+          $opts.appendChild(btn);
+        });
+      }
+
+      function onAnswer(chosen: number, btn: HTMLButtonElement, cur: Q) {
+        const buttons = $opts.querySelectorAll<HTMLButtonElement>('.quiz-opt');
+        buttons.forEach((b) => (b.disabled = true));
+
+        const ok = chosen === cur.correctIndex;
+        if (ok) {
+          correct += 1;
+          btn.classList.add('correct');
+          $feedback.className = 'feedback correct';
+          $feedback.textContent = '✓ ¡Correcto!' + (cur.explain ? ` ${cur.explain}` : '');
+        } else {
+          btn.classList.add('incorrect');
+          buttons[cur.correctIndex]?.classList.add('correct');
+          $feedback.className = 'feedback incorrect';
+          $feedback.textContent = '✗ Respuesta correcta: ' + cur.options[cur.correctIndex] + (cur.explain ? ` — ${cur.explain}` : '');
+        }
+        $feedback.removeAttribute('hidden');
+        $next.removeAttribute('hidden');
+        $next.textContent = idx === data.length - 1 ? 'Ver resultado →' : 'Siguiente →';
+      }
+
+      $next.addEventListener('click', () => {
+        idx += 1;
+        render();
+      });
+
+      function showResult() {
+        const medal = calcMedal(correct, data.length);
+        $card.setAttribute('hidden', '');
+        $result.removeAttribute('hidden');
+        const emoji = medal === 'gold' ? '🥇' : medal === 'silver' ? '🥈' : medal === 'bronze' ? '🥉' : '😐';
+        const cls = medal ? `medal-${medal}` : '';
+        document.getElementById('result-emoji')!.textContent = emoji;
+        const title = document.getElementById('result-title')!;
+        title.textContent = medal ? `Medalla ${medal === 'gold' ? 'oro' : medal === 'silver' ? 'plata' : 'bronce'}` : 'Sigue intentando';
+        if (cls) title.className = cls;
+        document.getElementById('result-detail')!.textContent =
+          `${correct}/${data.length} correctas. ` +
+          (medal ? '¡Misión completada!' : 'Necesitas al menos 60% para ganar medalla. Lee el paper y vuelve a intentar.');
+
+        if (medal) recordQuiz(paperId, correct, data.length, medal);
+      }
+
+      if (data.length === 0) {
+        $q.textContent = 'Quiz no disponible para este paper aún.';
+        $opts.innerHTML = '';
+      } else {
+        render();
+      }
+    }
+  </script>
+</GameLayout>

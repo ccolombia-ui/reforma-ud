@@ -1,0 +1,11 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+import ChatWidget from '../ChatWidget.astro';
+
+const entry = Astro.props?.entry;
+const paperTitle = entry?.data?.title ?? '';
+const paperDescription = entry?.data?.description ?? '';
+---
+
+<Default {...Astro.props}><slot /></Default>
+<ChatWidget paperTitle={paperTitle} paperDescription={paperDescription} />

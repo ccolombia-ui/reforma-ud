@@ -1,0 +1,87 @@
+---
+const { title } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · tu-reforma</title>
+    <link rel="stylesheet" href="/_astro/tokens.css" />
+    <style is:global>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+      :root {
+        --color-navy: #0f172a;
+        --color-blue: #0284c7;
+        --color-emerald: #059669;
+        --color-purple: #7c3aed;
+        --color-gold: #d97706;
+        --color-orange: #ea580c;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: 'Inter', system-ui, sans-serif;
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        color: #e2e8f0;
+        min-height: 100vh;
+      }
+      a { color: #38bdf8; }
+      a:hover { color: #7dd3fc; }
+      .game-container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+      .nav-back { display: inline-block; margin-bottom: 1rem; color: #94a3b8; text-decoration: none; font-size: 0.9rem; }
+      .nav-back:hover { color: #e2e8f0; }
+      .game-hero { background: linear-gradient(135deg, #7c3aed 0%, #0284c7 100%); padding: 3rem 2rem; border-radius: 16px; text-align: center; margin-bottom: 2rem; }
+      .game-hero h1 { color: white; font-size: 2.5rem; margin: 0 0 0.5rem; }
+      .game-hero p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
+      .card { background: rgba(30, 41, 59, 0.6); border: 1px solid #334155; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+      .btn { display: inline-block; padding: 0.75rem 1.5rem; background: #0284c7; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; text-decoration: none; font-family: inherit; }
+      .btn:hover { background: #0369a1; }
+      .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+      .btn-secondary { background: transparent; border: 1px solid #475569; color: #cbd5e1; }
+      .btn-secondary:hover { background: #1e293b; }
+      input[type="text"], select {
+        width: 100%; padding: 0.75rem; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #e2e8f0; font-size: 1rem; font-family: inherit;
+      }
+      input[type="text"]:focus, select:focus { outline: none; border-color: #0284c7; }
+      label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: #cbd5e1; }
+      .field { margin-bottom: 1rem; }
+      .player-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; border-radius: 12px; margin-bottom: 1.5rem; }
+      .player-header .name { font-weight: 700; }
+      .player-header .role { font-size: 0.85rem; opacity: 0.7; }
+      .player-header .medals { font-size: 1.5rem; letter-spacing: 4px; }
+      .mission-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+      .mission-card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.5rem 1rem; border: 2px solid #334155; border-radius: 12px; text-decoration: none; color: inherit; transition: transform 0.15s ease, border-color 0.15s ease; background: rgba(30, 41, 59, 0.4); }
+      .mission-card:hover:not(.locked) { transform: translateY(-3px); border-color: #0284c7; }
+      .mission-card.locked { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+      .mission-card.current { border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2,132,199,0.25); }
+      .mission-card.completed { background: rgba(16,185,129,0.08); border-color: #059669; }
+      .mission-card .mid { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700; color: #38bdf8; }
+      .mission-card .mt { font-size: 0.85rem; margin: 0.5rem 0; line-height: 1.3; min-height: 2.4rem; }
+      .mission-card .icon { font-size: 1.75rem; margin-top: 0.25rem; }
+      .quiz-card { background: rgba(30, 41, 59, 0.7); border: 1px solid #334155; border-radius: 12px; padding: 2rem; }
+      .quiz-progress { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem; }
+      .quiz-q { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; }
+      .quiz-opts { display: flex; flex-direction: column; gap: 0.6rem; }
+      .quiz-opt { padding: 0.85rem 1rem; background: #0f172a; border: 2px solid #334155; border-radius: 8px; cursor: pointer; text-align: left; font-size: 1rem; font-family: inherit; color: #e2e8f0; transition: all 0.1s ease; }
+      .quiz-opt:hover:not(:disabled) { border-color: #0284c7; }
+      .quiz-opt.correct { border-color: #10b981; background: rgba(16,185,129,0.15); }
+      .quiz-opt.incorrect { border-color: #ef4444; background: rgba(239,68,68,0.15); }
+      .quiz-opt:disabled { cursor: default; }
+      .feedback { margin-top: 1.5rem; padding: 1rem; border-radius: 8px; font-size: 0.95rem; }
+      .feedback.correct { background: rgba(16,185,129,0.12); border: 1px solid #10b981; color: #6ee7b7; }
+      .feedback.incorrect { background: rgba(239,68,68,0.12); border: 1px solid #ef4444; color: #fca5a5; }
+      .medal-result { text-align: center; padding: 2rem; }
+      .medal-result .emoji { font-size: 5rem; margin-bottom: 1rem; }
+      .medal-result h2 { font-size: 2rem; margin: 0 0 0.5rem; }
+      .medal-bronze { color: #cd7f32; }
+      .medal-silver { color: #c0c0c0; }
+      .medal-gold { color: #ffd700; }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <slot />
+    </div>
+  </body>
+</html>

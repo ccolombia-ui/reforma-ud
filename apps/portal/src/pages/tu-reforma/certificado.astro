@@ -1,0 +1,74 @@
+---
+import GameLayout from '../../layouts/GameLayout.astro';
+---
+
+<GameLayout title="Certificado Embajador/a">
+  <a href="/tu-reforma/mapa/" class="nav-back">← Volver al mapa</a>
+
+  <div id="cert-container" hidden>
+    <div class="game-hero" style="background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);">
+      <h1>🏆 Embajador/a de la Reforma</h1>
+      <p>Has completado el corpus MI-12 completo</p>
+    </div>
+
+    <div class="card" id="cert-paper" style="background:white;color:#0f172a;padding:3rem 2rem;text-align:center;">
+      <p style="font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;color:#64748b;">Certificado de Embajador/a</p>
+      <h1 style="margin:0.5rem 0;color:#0f172a;font-size:1.5rem;">Reforma Vinculante UDFJC · Acuerdo CSU 04/2025</h1>
+      <p style="font-size:0.95rem;color:#475569;">Por la presente se certifica que</p>
+      <p id="cert-name" style="font-size:2rem;font-weight:700;color:#0284c7;margin:0.5rem 0;"></p>
+      <p style="font-size:0.95rem;color:#475569;line-height:1.6;max-width:520px;margin:0 auto;">
+        en su rol de <strong id="cert-role"></strong>, ha completado la misión <em>tu-reforma</em>
+        recorriendo las 12 investigaciones del corpus MI-12 y demostrando comprensión de los marcos,
+        estándares internacionales y buenas prácticas que sustentan la reforma.
+      </p>
+      <p id="cert-medals" style="font-size:1.5rem;letter-spacing:6px;margin:1.5rem 0;"></p>
+      <p style="font-size:0.85rem;color:#64748b;">Fecha: <span id="cert-date"></span></p>
+      <p style="font-size:0.75rem;color:#94a3b8;margin-top:2rem;">CC BY-SA 4.0 · CPS-939-2026 · Acuerdo CSU 04/2025</p>
+    </div>
+
+    <div style="text-align:center;margin-top:1.5rem;">
+      <button class="btn" id="print-btn">🖨️ Imprimir / Guardar PDF</button>
+    </div>
+  </div>
+
+  <div id="not-yet" hidden class="card">
+    <h2>Aún no has completado todas las misiones</h2>
+    <p>El certificado se desbloquea al ganar medalla en las 12 investigaciones.</p>
+    <a href="/tu-reforma/mapa/" class="btn">Ver mi progreso</a>
+  </div>
+
+  <script>
+    import { getState, isCompleted } from '../../scripts/game-state';
+    import { cops as copsData } from '../../data/papers';
+
+    const state = getState();
+    if (!state) {
+      window.location.href = '/tu-reforma/';
+    } else if (!isCompleted(state)) {
+      document.getElementById('not-yet')?.removeAttribute('hidden');
+    } else {
+      const $cert = document.getElementById('cert-container');
+      $cert?.removeAttribute('hidden');
+
+      const role = copsData.find((c: any) => c.id === state.player.role);
+      document.getElementById('cert-name')!.textContent = state.player.name;
+      document.getElementById('cert-role')!.textContent = role ? role.name : state.player.role;
+
+      const medalEmoji = { gold: '🥇', silver: '🥈', bronze: '🥉' } as const;
+      let str = '';
+      Object.values(state.progress.medals).forEach((m) => {
+        if (m) str += medalEmoji[m as keyof typeof medalEmoji];
+      });
+      document.getElementById('cert-medals')!.textContent = str;
+
+      const d = new Date();
+      document.getElementById('cert-date')!.textContent = d.toLocaleDateString('es-CO', {
+        year: 'numeric', month: 'long', day: 'numeric',
+      });
+
+      document.getElementById('print-btn')?.addEventListener('click', () => {
+        window.print();
+      });
+    }
+  </script>
+</GameLayout>

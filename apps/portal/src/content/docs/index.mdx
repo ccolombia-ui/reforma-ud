@@ -1,0 +1,81 @@
+---
+title: reforma·ud
+description: La Reforma Vinculante UDFJC explicada desde tu rol — Acuerdo CSU 04/2025 · Corpus MI-12
+template: splash
+hero:
+  tagline: La Reforma Vinculante UDFJC explicada desde tu rol
+  actions:
+    - text: Iniciar misión "tu-reforma"
+      link: /tu-reforma
+      icon: rocket
+      variant: primary
+    - text: Explorar corpus MI-12
+      link: /papers/m01
+      icon: document
+---
+
+import { papers, cops } from '../../data/papers';
+
+## El portal en cifras
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="value">12</div>
+    <div class="label">Investigaciones MI-12</div>
+  </div>
+  <div class="kpi-card">
+    <div class="value">21</div>
+    <div class="label">Buenas prácticas (BPA)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="value">6</div>
+    <div class="label">Comunidades de práctica</div>
+  </div>
+  <div class="kpi-card">
+    <div class="value">Q2 2026</div>
+    <div class="label">Sprint actual</div>
+  </div>
+</div>
+
+## Hoja de ruta CRISP-DM
+
+Cada investigación M## responde a una pregunta trazadora del Acuerdo CSU 04/2025. El corpus se construye en público bajo TDD: 🔴 issue abierto · 🟡 PR en revisión · 🟢 merged.
+
+<div class="invest-grid">
+  {papers.map((p) => (
+    <a class="invest-card" href={p.href}>
+      <span class="id">M{String(p.number).padStart(2, '0')}</span>
+      <span class={`tdd-${p.status === 'red' ? 'red' : p.status === 'yellow' ? 'yellow' : 'green'}`} style="float: right;">
+        {p.status === 'red' ? '🔴 RED' : p.status === 'yellow' ? '🟡 PR' : '🟢 LIVE'}
+      </span>
+      <h3>{p.shortTitle}</h3>
+      <p class="desc">{p.description}</p>
+    </a>
+  ))}
+</div>
+
+## Comunidades de práctica — elige tu rol
+
+Cada rol entra a la reforma por una puerta distinta. Encuentra la tuya:
+
+<div class="role-grid">
+  {cops.map((c) => (
+    <a class="role-card" href={c.href}>
+      <span class="emoji">{c.emoji}</span>
+      <span class="name">{c.name}</span>
+    </a>
+  ))}
+</div>
+
+## ¿Cómo contribuir?
+
+Este portal es un Inner Source académico bajo TDD: cada paper, ficha BPA o guía de CoP nace como issue con criterios de aceptación, vive como Draft PR mientras se escribe, y solo se publica cuando supera la revisión.
+
+- **Lee la guía**: [TDD para Comunidades de Práctica](https://github.com/ccolombia-ui/reforma-ud/blob/main/docs/governance/cop-tdd.md)
+- **Abre un issue RED**: [GitHub Issues](https://github.com/ccolombia-ui/reforma-ud/issues/new/choose)
+- **Pregunta al asistente**: usa el botón flotante 💬 abajo a la derecha
+
+---
+
+> [!abstract]
+> Este portal acompaña la implementación del **Acuerdo CSU 04/2025** de la Universidad Distrital Francisco José de Caldas, una reforma orgánica que mueve a la Universidad de un nivel **N1 (frágil)** a **N4 (extensión transformativa-solidaria)** en la matriz de Burton Clark, anclada en CONPES 4069/2021 y las misiones transformativas del PIIOM. CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda.

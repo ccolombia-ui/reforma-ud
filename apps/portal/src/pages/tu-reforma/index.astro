@@ -1,0 +1,76 @@
+---
+import GameLayout from '../../layouts/GameLayout.astro';
+import { cops } from '../../data/papers';
+---
+
+<GameLayout title="Misión tu-reforma">
+  <a href="/" class="nav-back">← Volver al portal</a>
+
+  <div class="game-hero">
+    <h1>🚀 Misión: tu-reforma</h1>
+    <p>Recorre las 12 investigaciones del corpus MI-12 desde tu rol y gana medallas</p>
+  </div>
+
+  <div class="card" id="onboard-card">
+    <h2>Identifícate para empezar</h2>
+    <p>Tu progreso se guarda en este navegador. Sin login, sin servidores.</p>
+
+    <form id="onboard-form">
+      <div class="field">
+        <label for="name">Tu nombre</label>
+        <input id="name" name="name" type="text" required maxlength="60" placeholder="Ej: Manuela Rodríguez" />
+      </div>
+      <div class="field">
+        <label for="role">Tu rol en la comunidad UDFJC</label>
+        <select id="role" name="role" required>
+          <option value="">— Elige tu rol —</option>
+          {cops.map((c) => <option value={c.id}>{c.emoji} {c.name}</option>)}
+        </select>
+      </div>
+      <button type="submit" class="btn">Iniciar misión →</button>
+    </form>
+  </div>
+
+  <div class="card" id="continue-card" hidden>
+    <h2>Ya tienes una misión en curso 👋</h2>
+    <p id="continue-info"></p>
+    <a href="/tu-reforma/mapa/" class="btn">Continuar misión</a>
+    <button id="reset-btn" class="btn btn-secondary" style="margin-left:0.5rem;">Empezar de nuevo</button>
+  </div>
+
+  <script>
+    import { getState, initState, clearState } from '../../scripts/game-state';
+    import type { CopRole } from '../../scripts/game-state';
+
+    const existing = getState();
+    const $onboard = document.getElementById('onboard-card');
+    const $continue = document.getElementById('continue-card');
+    const $info = document.getElementById('continue-info');
+    const $form = document.getElementById('onboard-form') as HTMLFormElement;
+    const $reset = document.getElementById('reset-btn');
+
+    if (existing) {
+      $onboard?.setAttribute('hidden', '');
+      $continue?.removeAttribute('hidden');
+      const won = Object.values(existing.progress.medals).filter(Boolean).length;
+      if ($info) $info.textContent = `${existing.player.name} — ${existing.player.role}. ${won}/12 medallas. Próxima: ${existing.progress.currentMission}.`;
+    }
+
+    $form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData($form);
+      const name = (fd.get('name') as string)?.trim();
+      const role = fd.get('role') as CopRole;
+      if (!name || !role) return;
+      initState(name, role);
+      window.location.href = '/tu-reforma/mapa/';
+    });
+
+    $reset?.addEventListener('click', () => {
+      if (confirm('¿Borrar progreso y empezar de nuevo?')) {
+        clearState();
+        window.location.reload();
+      }
+    });
+  </script>
+</GameLayout>

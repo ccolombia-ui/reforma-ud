@@ -1,7 +1,10 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
+  output: 'static',
+  adapter: vercel(),
   integrations: [
     starlight({
       title: 'reforma·ud',
@@ -19,10 +22,17 @@ export default defineConfig({
         './src/styles/tokens.css',
         './src/styles/custom.css',
       ],
+      components: {
+        Footer: './src/components/overrides/Footer.astro',
+      },
       sidebar: [
         {
           label: 'Inicio',
           link: '/',
+        },
+        {
+          label: '🚀 Misión tu-reforma',
+          link: '/tu-reforma/',
         },
         {
           label: 'El Acuerdo CSU 04/2025',
@@ -82,5 +92,4 @@ export default defineConfig({
       },
     }),
   ],
-  output: 'static',
 });

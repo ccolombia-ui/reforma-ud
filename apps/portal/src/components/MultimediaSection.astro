@@ -1,0 +1,49 @@
+---
+import { multimedia } from '../data/multimedia';
+
+const { paperId } = Astro.props;
+const data = multimedia[paperId];
+if (!data) {
+  // sin datos de multimedia para este paper
+}
+---
+
+{data && (
+  <section class="multimedia">
+    <h2 id="para-profundizar">🎥 Para profundizar</h2>
+    <p>Curaduría de videos y artículos seleccionados (B.2 dossier · 2026-04-24).</p>
+
+    {data.videos.length > 0 && (
+      <>
+        <h3>Videos recomendados</h3>
+        <div class="videos-grid">
+          {data.videos.map((v) => (
+            <article class="video-card">
+              <h3>{v.title}</h3>
+              <p class="meta">{v.author}{v.duration ? ` · ${v.duration}` : ''}</p>
+              <p>{v.relevance}</p>
+              <a href={v.url} target="_blank" rel="noopener noreferrer">Ver →</a>
+              {v.verified === 'VERIF' && <span class="badge-verif">✓ verificado</span>}
+              {v.verified === 'CAND' && <span class="badge-cand">candidato</span>}
+            </article>
+          ))}
+        </div>
+      </>
+    )}
+
+    {data.articles.length > 0 && (
+      <>
+        <h3>Artículos y referencias</h3>
+        <ol class="articles-list">
+          {data.articles.map((a) => (
+            <li>
+              <strong>{a.authors}</strong> ({a.year}). <em>{a.title}</em>. {a.source}.{' '}
+              <a href={a.url} target="_blank" rel="noopener noreferrer">{a.url}</a>
+              {a.verified === 'VERIF' && <span class="badge-verif">✓</span>}
+            </li>
+          ))}
+        </ol>
+      </>
+    )}
+  </section>
+)}
