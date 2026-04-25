@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { canonicPaper } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed } from '@/lib/ui-state';
@@ -22,6 +22,121 @@ const TYPE_ICONS: Record<string, React.ReactNode> = {
   instituto: <Microscope className="h-3.5 w-3.5" />,
   centro: <Globe className="h-3.5 w-3.5" />,
 };
+
+/** Section colapsable principal del sidebar (Canónico, Comunidades, ...) con persistencia en localStorage. */
+function SectionToggle({
+  id,
+  emoji,
+  title,
+  children,
+}: {
+  id: string;
+  emoji: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  const storageKey = `reforma-ud:sidebar-section-${id}`;
+  const [open, setOpen] = useState<boolean>(true);
+
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem(storageKey);
+      if (v === 'false') setOpen(false);
+    } catch {}
+  }, [storageKey]);
+
+  function handleToggle() {
+    setOpen((v) => {
+      const next = !v;
+      try {
+        localStorage.setItem(storageKey, String(next));
+      } catch {}
+      return next;
+    });
+  }
+
+  return (
+    <section className="mb-3">
+      <button
+        type="button"
+        onClick={handleToggle}
+        className="group flex w-full items-center gap-1.5 rounded px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground hover:bg-sidebar-accent hover:text-foreground"
+        aria-expanded={open}
+      >
+        <ChevronDown className={cn('h-3 w-3 transition-transform', !open && '-rotate-90')} />
+        <span>{emoji} {title}</span>
+      </button>
+      {open && <div className="mt-1">{children}</div>}
+    </section>
+  );
+}
+
+/** Sub-sección colapsable de los 12 papers del canónico */
+function PapersSubsection({
+  papers,
+  pathname,
+}: {
+  papers: Array<{ id: string; number: number; title: string; href: string }>;
+  pathname: string;
+}) {
+  const storageKey = 'reforma-ud:sidebar-papers-list';
+  const isOnPaper = pathname.startsWith('/canonico/m');
+  const [open, setOpen] = useState<boolean>(isOnPaper);
+
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem(storageKey);
+      if (v === 'true') setOpen(true);
+      else if (v === 'false' && !isOnPaper) setOpen(false);
+    } catch {}
+  }, [isOnPaper]);
+
+  function handleToggle() {
+    setOpen((v) => {
+      const next = !v;
+      try {
+        localStorage.setItem(storageKey, String(next));
+      } catch {}
+      return next;
+    });
+  }
+
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={handleToggle}
+        className="group flex w-full items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent"
+        aria-expanded={open}
+      >
+        <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !open && '-rotate-90')} />
+        <BookMarked className="h-3.5 w-3.5" />
+        <span className="flex-1 text-left">12 papers M01-M12</span>
+        <span className="text-[9px] text-muted-foreground">{papers.length}</span>
+      </button>
+      {open && (
+        <ul className="ml-3 space-y-0.5 border-l border-sidebar-border pl-2 mt-0.5">
+          {papers.map((p) => (
+            <li key={p.id}>
+              <Link
+                href={p.href}
+                className={cn(
+                  'flex items-center gap-1.5 rounded px-2 py-1 text-[11px] hover:bg-sidebar-accent',
+                  pathname === p.href && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+                )}
+              >
+                <span className="font-mono text-[9px] text-muted-foreground">
+                  M{String(p.number).padStart(2, '0')}
+                </span>
+                <span className="truncate">{p.title.replace(/^M\d+\s*[—-]\s*/i, '').slice(0, 32)}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
 
 function TreeItem({ node, currentPath, depth = 0 }: { node: TreeNode; currentPath: string; depth?: number }) {
   const isLeaf = node.children.length === 0;
@@ -148,10 +263,7 @@ export function Sidebar() {
       </div>
 
       <div className="flex-1 overflow-y-auto px-2 py-3 text-sm">
-        <section className="mb-4">
-          <h3 className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-            📚 Canónico MI-12
-          </h3>
+        <SectionToggle id="canonico" emoji="📚" title="Canónico MI-12">
           <ul className="space-y-0.5">
             <li>
               <Link
@@ -175,33 +287,11 @@ export function Sidebar() {
                 <Network className="h-3.5 w-3.5" /> Grafo global
               </Link>
             </li>
-            <li>
-              <ul className="ml-2 space-y-0.5 border-l border-sidebar-border pl-2">
-                {papers.map((p) => (
-                  <li key={p.id}>
-                    <Link
-                      href={p.href}
-                      className={cn(
-                        'flex items-center gap-1.5 rounded px-2 py-1 text-[11px] hover:bg-sidebar-accent',
-                        pathname === p.href && 'bg-sidebar-accent font-semibold text-sidebar-primary',
-                      )}
-                    >
-                      <span className="font-mono text-[9px] text-muted-foreground">
-                        M{String(p.number).padStart(2, '0')}
-                      </span>
-                      <span className="truncate">{p.title.replace(/^M\d+\s*[—-]\s*/i, '').slice(0, 36)}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
+            <PapersSubsection papers={papers} pathname={pathname} />
           </ul>
-        </section>
+        </SectionToggle>
 
-        <section className="mb-4">
-          <h3 className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-            🏛️ Comunidades
-          </h3>
+        <SectionToggle id="comunidades" emoji="🏛️" title="Comunidades">
           <ul className="space-y-0.5">
             <li>
               <Link
@@ -211,14 +301,14 @@ export function Sidebar() {
                   pathname === '/comunidades' && 'bg-sidebar-accent text-sidebar-primary',
                 )}
               >
-                Hub
+                <Folder className="h-3.5 w-3.5 opacity-60" /> Hub
               </Link>
             </li>
             {tree.map((root) => (
               <TreeItem key={root.slug} node={root} currentPath={pathname} />
             ))}
           </ul>
-        </section>
+        </SectionToggle>
       </div>
 
       <div className="border-t border-sidebar-border px-3 py-2 text-[10px] text-muted-foreground">
