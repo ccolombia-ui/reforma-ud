@@ -1,0 +1,193 @@
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { ChevronLeft, Clock, FileText, Hash } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { MDXContent } from '@/components/mdx-content';
+import { PrintButton } from '@/components/print-button';
+import { canonicPaper, note } from '#site/content';
+import type { Metadata } from 'next';
+
+const PHASE_LABEL: Record<string, string> = {
+  business: 'Business Understanding',
+  'data-understanding': 'Data Understanding',
+  'data-prep': 'Data Preparation',
+  modeling: 'Modeling',
+  evaluation: 'Evaluation',
+  deployment: 'Deployment',
+};
+
+const RUTAS_LABEL: Record<string, string> = {
+  R1: 'R1 · Gobernanza',
+  R2: 'R2 · Periferia',
+  R3: 'R3 · Sector',
+  R4: 'R4 · Misión',
+  R5: 'R5 · Cultura',
+};
+
+export function generateStaticParams() {
+  return canonicPaper.map((p) => ({ mid: p.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ mid: string }>;
+}): Promise<Metadata> {
+  const { mid } = await params;
+  const paper = canonicPaper.find((p) => p.id === mid);
+  if (!paper) return {};
+  return { title: paper.title, description: paper.description };
+}
+
+export default async function PaperPage({ params }: { params: Promise<{ mid: string }> }) {
+  const { mid } = await params;
+  const paper = canonicPaper.find((p) => p.id === mid);
+  if (!paper) notFound();
+
+  // Backlinks: notas que citen este paper
+  const backlinks = note.filter((n) => n.cites?.includes(mid));
+
+  return (
+    <article className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
+      {/* Top nav */}
+      <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground no-print">
+        <Link href="/canonico" className="inline-flex items-center gap-1 hover:text-foreground">
+          <ChevronLeft className="h-3.5 w-3.5" />
+          Canónico
+        </Link>
+        <span>/</span>
+        <span className="font-mono">M{String(paper.number).padStart(2, '0')}</span>
+      </div>
+
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
+        <main className="min-w-0">
+          {/* Hero */}
+          <header className="mb-8">
+            <div className="mb-3 flex flex-wrap items-center gap-2">
+              <Badge className="font-mono">M{String(paper.number).padStart(2, '0')}</Badge>
+              <Badge variant="outline">{PHASE_LABEL[paper.crispPhase] ?? paper.crispPhase}</Badge>
+              <span className={`tdd-${paper.status}`}>
+                {paper.status === 'red' ? '🔴 RED' : paper.status === 'yellow' ? '🟡 PR' : '🟢 LIVE'}
+              </span>
+            </div>
+            <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
+              {paper.title}
+            </h1>
+            <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
+              {paper.description}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+              {paper.metadata?.readingTime && (
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="h-3.5 w-3.5" />
+                  {paper.metadata.readingTime} min lectura
+                </span>
+              )}
+              {paper.metadata?.wordCount && (
+                <span className="inline-flex items-center gap-1">
+                  <FileText className="h-3.5 w-3.5" />
+                  {paper.metadata.wordCount.toLocaleString()} palabras
+                </span>
+              )}
+              <div className="ml-auto no-print">
+                <PrintButton />
+              </div>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-1">
+              {paper.rutaClark.map((r) => (
+                <span
+                  key={r}
+                  className={`ruta-${r.toLowerCase()} rounded-full px-2 py-0.5 text-[10px] font-semibold`}
+                >
+                  {RUTAS_LABEL[r] ?? r}
+                </span>
+              ))}
+              {paper.tags.map((t) => (
+                <Badge key={t} variant="secondary" className="text-[10px]">
+                  <Hash className="mr-0.5 h-3 w-3 opacity-60" />
+                  {t}
+                </Badge>
+              ))}
+            </div>
+          </header>
+
+          <Separator className="my-6 no-print" />
+
+          {/* Body */}
+          <div className="prose-paper">
+            <MDXContent code={paper.body} />
+          </div>
+
+          {/* Backlinks */}
+          {backlinks.length > 0 && (
+            <section className="mt-12 backlinks-panel no-print">
+              <Separator className="mb-6" />
+              <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                Referenciado en
+              </h2>
+              <div className="grid gap-2 sm:grid-cols-2">
+                {backlinks.map((b) => (
+                  <Link key={b.href} href={b.href}>
+                    <Card className="p-3 transition-colors hover:border-primary/50 hover:bg-accent/30">
+                      <div className="text-sm font-medium">{b.title}</div>
+                      <div className="mt-0.5 truncate font-mono text-[10px] text-muted-foreground">
+                        {b.communitySlug}
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Print-only header (visible only when printing) */}
+          <div className="print-only mt-12 border-t pt-4 text-xs text-muted-foreground">
+            reforma·ud · CSU 04/2025 · M{String(paper.number).padStart(2, '0')} · CC BY-SA 4.0
+          </div>
+        </main>
+
+        {/* TOC sidebar */}
+        {paper.toc && paper.toc.length > 0 && (
+          <aside className="hidden lg:block no-print">
+            <div className="sticky top-20">
+              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                En esta página
+              </h3>
+              <nav className="text-sm">
+                <ul className="space-y-1">
+                  {paper.toc.map((entry) => (
+                    <TocItem key={entry.url} entry={entry} />
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </aside>
+        )}
+      </div>
+    </article>
+  );
+}
+
+type TocEntry = { title: string; url: string; items?: TocEntry[] };
+
+function TocItem({ entry, depth = 0 }: { entry: TocEntry; depth?: number }) {
+  return (
+    <li style={{ paddingLeft: depth * 12 }}>
+      <a
+        href={entry.url}
+        className="block py-0.5 text-muted-foreground hover:text-foreground"
+      >
+        {entry.title}
+      </a>
+      {entry.items && entry.items.length > 0 && (
+        <ul className="space-y-1">
+          {entry.items.map((sub) => (
+            <TocItem key={sub.url} entry={sub} depth={depth + 1} />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
