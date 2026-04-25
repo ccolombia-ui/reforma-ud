@@ -93,12 +93,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* KPIs */}
+      {/* KPIs con sparklines */}
       <section className="mb-14 grid grid-cols-2 gap-3 md:grid-cols-4">
-        <KPICard label="Investigaciones" value={`${counts.total}`} sub="canónico MI-12" accent="var(--color-brand-blue)" />
-        <KPICard label="En revisión" value={`${counts.red}`} sub="estado RED · TDD" accent="var(--color-brand-orange)" />
-        <KPICard label="Comunidades" value="5" sub="tipos por organigrama" accent="var(--color-brand-purple)" />
-        <KPICard label="BPAs" value="21" sub="buenas prácticas activadoras" accent="var(--color-brand-emerald)" />
+        <KPICard label="Investigaciones" value={`${counts.total}`} sub="canónico MI-12" accent="var(--color-brand-blue)" sparkline={[3,5,7,9,10,11,12,12]} sparkColor="#0284c7" />
+        <KPICard label="En revisión" value={`${counts.red}`} sub="estado RED · TDD" accent="var(--color-brand-orange)" sparkline={[12,12,11,11,10,9,9,counts.red]} sparkColor="#ea580c" />
+        <KPICard label="Comunidades" value="5" sub="tipos por organigrama" accent="var(--color-brand-purple)" sparkline={[1,2,3,3,4,5,5,5]} sparkColor="#7c3aed" />
+        <KPICard label="BPAs" value="21" sub="buenas prácticas activadoras" accent="var(--color-brand-emerald)" sparkline={[8,12,15,17,18,20,21,21]} sparkColor="#059669" />
       </section>
 
       {/* Comunidades */}
@@ -188,15 +188,45 @@ export default function HomePage() {
   );
 }
 
-function KPICard({ label, value, sub, accent }: { label: string; value: string; sub: string; accent: string }) {
+function KPICard({
+  label,
+  value,
+  sub,
+  accent,
+  sparkline,
+  sparkColor,
+}: {
+  label: string;
+  value: string;
+  sub: string;
+  accent: string;
+  sparkline?: number[];
+  sparkColor?: string;
+}) {
+  const max = sparkline ? Math.max(...sparkline) : 0;
+  const min = sparkline ? Math.min(...sparkline) : 0;
+  const range = max - min || 1;
+  const points = sparkline?.map((v, i) => {
+    const x = (i / (sparkline.length - 1)) * 80;
+    const y = 28 - ((v - min) / range) * 24 - 2;
+    return `${x},${y}`;
+  });
   return (
     <Card className="overflow-hidden border-l-4" style={{ borderLeftColor: accent }}>
       <CardContent className="p-4">
         <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</div>
-        <div className="mt-1 text-3xl font-bold tracking-tight" style={{ color: accent }}>
-          {value}
+        <div className="mt-1 flex items-end justify-between gap-2">
+          <div>
+            <div className="text-3xl font-bold tracking-tight" style={{ color: accent }}>{value}</div>
+            <div className="text-xs text-muted-foreground">{sub}</div>
+          </div>
+          {points && sparkColor && (
+            <svg viewBox="0 0 80 28" width="80" height="28" className="overflow-visible">
+              <polyline points={points.join(' ')} fill="none" stroke={sparkColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="80" cy={28 - ((sparkline![sparkline!.length - 1] - min) / range) * 24 - 2} r="2.5" fill={sparkColor} />
+            </svg>
+          )}
         </div>
-        <div className="text-xs text-muted-foreground">{sub}</div>
       </CardContent>
     </Card>
   );

@@ -279,20 +279,38 @@ export default async function CommunityPage({
         ))}
       </nav>
 
-      {/* Header */}
+      {/* Header con hero + atención + acciones rápidas */}
       <header className="mb-8">
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          <Badge variant="outline" className="gap-1">
-            {TYPE_ICONS[c.type]}
-            {TYPE_LABEL[c.type] ?? c.type}
-          </Badge>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <div className="mb-3 flex flex-wrap items-center gap-2">
+              <Badge variant="outline" className="gap-1">
+                {TYPE_ICONS[c.type]}
+                {TYPE_LABEL[c.type] ?? c.type}
+              </Badge>
+              {c.cites && c.cites.length > 0 && (
+                <Badge className="gap-1 border-amber-500/30 bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                  ⚠ Atención · {c.cites.length} {c.cites.length === 1 ? 'paper' : 'papers'} fundantes
+                </Badge>
+              )}
+            </div>
+            <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
+              {c.name}
+            </h1>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              {c.description}
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button asChild variant="outline" size="sm" className="gap-1.5">
+              <Link href={`/${c.slug}/biblioteca`}>📚 Biblioteca</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="gap-1.5">
+              <Link href={`/${c.slug}/grafo`}>🕸️ Grafo</Link>
+            </Button>
+            <Button size="sm" className="gap-1.5">+ Publicar</Button>
+          </div>
         </div>
-        <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-          {c.name}
-        </h1>
-        <p className="mt-3 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-          {c.description}
-        </p>
       </header>
 
       {/* Dashboard BSC-S/RBM con KPIs P1-P4 + tabs Lista/RBM/Kanban/Grafo */}
