@@ -179,36 +179,7 @@ export function RightPanel() {
               </div>
             )
           ) : (
-            <div className="flex h-full flex-col">
-              <div className="flex-1 overflow-y-auto rounded bg-muted/30 p-3 text-sm text-muted-foreground">
-                <p className="font-medium text-foreground">Asistente conversacional</p>
-                <p className="mt-2 text-xs leading-relaxed">
-                  El chat con Claude Haiku se habilita cuando se configura{' '}
-                  <code className="rounded bg-muted px-1 text-[10px]">ANTHROPIC_API_KEY</code> en Vercel y
-                  el endpoint <code className="rounded bg-muted px-1 text-[10px]">/api/chat</code> esté
-                  cableado (v3.2+).
-                </p>
-                <div className="mt-4 space-y-2 rounded border-l-2 border-primary/30 bg-background p-3">
-                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground">Sugerencias futuras</p>
-                  <ul className="space-y-1 text-xs text-foreground">
-                    <li>• ¿Qué es el Acuerdo CSU 04/2025?</li>
-                    <li>• Resume M05 en 3 puntos</li>
-                    <li>• ¿Cómo conecta esta CoP con el canónico?</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-3 flex gap-2">
-                <input
-                  type="text"
-                  disabled
-                  placeholder="Conexión al modelo en v3.2..."
-                  className="flex-1 rounded-lg border bg-background px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
-                />
-                <Button size="icon" disabled aria-label="Enviar">
-                  <Send className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+            <ChatPane copSlug={copSlug} />
           )}
         </div>
 
@@ -221,6 +192,177 @@ export function RightPanel() {
         </div>
       </div>
     </aside>
+  );
+}
+
+/* ============================================================
+ * ChatPane — interaccion con AI Asistente
+ * ============================================================ */
+function ChatPane({ copSlug }: { copSlug: string | null }) {
+  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
+  const [input, setInput] = useState('');
+  const [model, setModel] = useState<'haiku' | 'kimi'>('haiku');
+  const [streaming, setStreaming] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const suggestions = useMemo(() => {
+    if (copSlug) {
+      const cop = community.find((c) => c.slug === copSlug);
+      const name = cop?.shortName ?? 'esta CoP';
+      return [
+        `¿Cuál es el rol de ${name} en la reforma?`,
+        `Resume los papers que cita ${name}`,
+        `¿Qué BPAs activan a ${name}?`,
+      ];
+    }
+    return [
+      '¿Qué es el Acuerdo CSU 04/2025?',
+      'Resume M05 en 3 puntos',
+      '¿Cómo afecta la reforma al estudiante?',
+    ];
+  }, [copSlug]);
+
+  async function send(userText: string) {
+    if (!userText.trim() || streaming) return;
+    setError(null);
+    const newMessages = [...messages, { role: 'user' as const, content: userText }];
+    setMessages(newMessages);
+    setInput('');
+    setStreaming(true);
+    setMessages((m) => [...m, { role: 'assistant', content: '' }]);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: newMessages,
+          model,
+          activeCop: copSlug,
+        }),
+      });
+
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        setError(errBody.error ?? 'Error en el endpoint /api/chat');
+        setMessages((m) => m.slice(0, -1));
+        return;
+      }
+
+      // Streaming text response
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error('Sin reader de stream');
+      const decoder = new TextDecoder();
+      let acc = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        acc += decoder.decode(value, { stream: true });
+        setMessages((m) => {
+          const copy = [...m];
+          copy[copy.length - 1] = { role: 'assistant', content: acc };
+          return copy;
+        });
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error desconocido');
+      setMessages((m) => m.slice(0, -1));
+    } finally {
+      setStreaming(false);
+    }
+  }
+
+  return (
+    <div className="flex h-full flex-col">
+      <div className="mb-2 flex items-center gap-2 rounded-lg border bg-muted/30 p-1.5">
+        <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Modelo</span>
+        <div className="ml-auto flex gap-1">
+          <button
+            onClick={() => setModel('haiku')}
+            className={cn(
+              'rounded-md px-2 py-0.5 text-[10px] font-medium transition-colors',
+              model === 'haiku' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
+            )}
+            title="Claude Haiku 4.5"
+          >
+            Haiku
+          </button>
+          <button
+            onClick={() => setModel('kimi')}
+            className={cn(
+              'rounded-md px-2 py-0.5 text-[10px] font-medium transition-colors',
+              model === 'kimi' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
+            )}
+            title="Kimi 2.5 (Moonshot AI)"
+          >
+            Kimi
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto space-y-2">
+        {messages.length === 0 && (
+          <div className="space-y-2 rounded bg-muted/30 p-3 text-xs">
+            <p className="font-medium text-foreground">Pregunta sobre el corpus o tu CoP</p>
+            <ul className="space-y-1.5">
+              {suggestions.map((s) => (
+                <li key={s}>
+                  <button
+                    onClick={() => send(s)}
+                    className="w-full rounded border-l-2 border-primary/30 bg-background px-2 py-1.5 text-left text-xs hover:border-primary hover:bg-accent/40"
+                  >
+                    {s}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {messages.map((m, i) => (
+          <div
+            key={i}
+            className={cn(
+              'rounded-lg p-2.5 text-sm',
+              m.role === 'user'
+                ? 'ml-4 bg-primary/10 text-foreground'
+                : 'mr-4 bg-muted/40 text-foreground',
+            )}
+          >
+            <div className="mb-1 text-[9px] uppercase tracking-wide text-muted-foreground">
+              {m.role === 'user' ? 'Tú' : 'Asistente'}
+            </div>
+            <div className="whitespace-pre-wrap text-xs leading-relaxed">
+              {m.content || (streaming ? '...' : '')}
+            </div>
+          </div>
+        ))}
+        {error && (
+          <div className="rounded border border-amber-500/40 bg-amber-500/10 p-2 text-xs text-amber-700 dark:text-amber-300">
+            ⚠ {error}
+          </div>
+        )}
+      </div>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          send(input);
+        }}
+        className="mt-3 flex gap-2"
+      >
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          disabled={streaming}
+          placeholder={streaming ? 'Generando...' : 'Pregunta...'}
+          className="flex-1 rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-60"
+        />
+        <Button type="submit" size="icon" disabled={streaming || !input.trim()} aria-label="Enviar">
+          <Send className="h-4 w-4" />
+        </Button>
+      </form>
+    </div>
   );
 }
 

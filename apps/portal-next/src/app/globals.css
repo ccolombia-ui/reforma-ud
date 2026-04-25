@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -272,6 +273,33 @@ a.wikilink-broken {
   .print-only { display: block !important; }
 }
 .print-only { display: none; }
+
+/* ==========================================================================
+   cmdk command palette
+   ========================================================================== */
+[cmdk-list] { scroll-padding-block: 0.5rem; }
+[cmdk-group-heading] {
+  padding: 0.4rem 0.75rem 0.25rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+.cmdk-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.4rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.cmdk-item[data-selected="true"] {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+.cmdk-item[data-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
 
 /* ==========================================================================
    Sidebar tree

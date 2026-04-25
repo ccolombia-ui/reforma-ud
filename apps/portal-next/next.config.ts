@@ -1,13 +1,14 @@
 import type { NextConfig } from 'next';
 
 /**
- * Static export: todas las rutas son SSG/static, usamos `output: 'export'`
- * para producir HTML plano en `out/` (compatible con pagefind y CDN simple).
- * Velite + grafo corren via `pnpm build` antes de `next build` (ver package.json).
+ * Next default mode (sin output: 'export') para soportar Route Handlers
+ * de la API del Asistente AI. Las paginas de contenido siguen siendo
+ * static via generateStaticParams. Vercel produce .next/ con SSG + SSR híbrido.
+ *
+ * Velite + build-graph + pagefind corren en `pnpm build` antes de `next build`.
  */
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: 'export',
   images: { unoptimized: true },
   trailingSlash: true,
   turbopack: {

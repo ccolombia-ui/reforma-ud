@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Code2, GraduationCap, PanelLeft, PanelRight, ChevronRight } from 'lucide-react';
+import { Code2, GraduationCap, PanelLeft, PanelRight, ChevronRight, Search } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
-import { SearchModal } from '@/components/search/search-modal';
 import { useLeftCollapsed, useRightPanel } from '@/lib/ui-state';
 import { useMemo } from 'react';
 
@@ -87,7 +86,16 @@ export function Header() {
       </nav>
 
       <div className="ml-auto flex items-center gap-1">
-        <SearchModal />
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+          className="hidden sm:inline-flex h-8 items-center gap-2 rounded-md border bg-muted/40 px-2.5 text-xs text-muted-foreground hover:bg-muted hover:text-foreground"
+          aria-label="Abrir paleta de comandos"
+        >
+          <Search className="h-3.5 w-3.5" />
+          <span>Buscar...</span>
+          <kbd className="rounded border bg-background px-1.5 py-0.5 text-[10px] font-mono">⌘K</kbd>
+        </button>
         <Button variant="ghost" size="icon" asChild aria-label="Repositorio en GitHub">
           <a href="https://github.com/ccolombia-ui/reforma-ud" target="_blank" rel="noopener noreferrer">
             <Code2 className="h-4 w-4" />

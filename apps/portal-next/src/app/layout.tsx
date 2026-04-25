@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/header';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Footer } from '@/components/layout/footer';
 import { RightPanel, RightPanelMini } from '@/components/layout/right-panel';
+import { CommandPalette } from '@/components/layout/command-palette';
 
 export const metadata: Metadata = {
   title: {
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </div>
           </div>
           <RightPanelMini />
+          <CommandPalette />
         </ThemeProvider>
       </body>
     </html>

@@ -1,7 +1,10 @@
 import { defineCollection, defineConfig, s } from 'velite';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import remarkWikilinks from './src/lib/remark-wikilinks';
+import remarkObsidianEmbed from './src/lib/remark-obsidian-embed';
 import rehypeCallouts from 'rehype-callouts';
+import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -122,11 +125,17 @@ export default defineConfig({
   },
   mdx: {
     gfm: true,
-    remarkPlugins: [remarkGfm, remarkWikilinks],
+    remarkPlugins: [
+      remarkGfm,
+      remarkMath,           // $...$ y $$...$$
+      remarkObsidianEmbed,  // ![[archivo]]
+      remarkWikilinks,      // [[link]] [[link|alias]] [[link#anchor]]
+    ],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       [rehypeCallouts, { theme: 'obsidian' }],
+      [rehypeKatex, { strict: false, output: 'html', trust: true, macros: { '\\R': '\\mathbb{R}' } }],
       [rehypePrettyCode, { theme: 'github-light-default' }],
     ],
   },
