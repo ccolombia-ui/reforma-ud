@@ -6,7 +6,23 @@ const KEYS = {
   leftSidebar: 'reforma-ud:left-sidebar-collapsed',
   rightPanel: 'reforma-ud:right-panel-collapsed',
   rightTab: 'reforma-ud:right-tab',
+  activeRole: 'reforma-ud:active-role',
+  userName: 'reforma-ud:user-name',
 } as const;
+
+export const ROLES = [
+  { id: 'estudiante',           name: 'Estudiante Soberano',           emoji: '🎓' },
+  { id: 'docente-disenador',    name: 'Docente Diseñador (Arquitecto CCA)', emoji: '🎨' },
+  { id: 'docente-formador',     name: 'Docente Formador (Active Learning)', emoji: '👨‍🏫' },
+  { id: 'docente-investigador', name: 'Docente Investigador (Pasteur Pleno)', emoji: '🔬' },
+  { id: 'docente-emprendedor',  name: 'Docente Emprendedor (Agente Territorial)', emoji: '🚀' },
+  { id: 'docente-director',     name: 'Docente Director (Visionario Estratégico)', emoji: '🏛️' },
+] as const;
+
+export type RoleId = typeof ROLES[number]['id'];
+
+const DEFAULT_ROLE: RoleId = 'docente-investigador';
+const DEFAULT_NAME = 'Carlos C.';
 
 const EVENT = 'reforma-ud:ui-state-change';
 
@@ -116,4 +132,50 @@ export function useRightPanel(defaultTab: 'preguntas' | 'chat' = 'preguntas') {
     write(KEYS.rightTab, t);
   };
   return { collapsed, toggle, tab, setTab } as const;
+}
+
+/** Hook para rol activo + nombre del usuario. Sincronizado entre componentes. */
+export function useActiveProfile() {
+  const [role, setRoleState] = useState<RoleId>(DEFAULT_ROLE);
+  const [name, setNameState] = useState<string>(DEFAULT_NAME);
+
+  useEffect(() => {
+    const r = read(KEYS.activeRole, DEFAULT_ROLE) as RoleId;
+    const n = read(KEYS.userName, DEFAULT_NAME) as string;
+    if (ROLES.some((x) => x.id === r)) setRoleState(r);
+    if (typeof n === 'string' && n.length > 0) setNameState(n);
+
+    const onChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ key: string; value: string | boolean }>).detail;
+      if (detail?.key === KEYS.activeRole && typeof detail.value === 'string') {
+        if (ROLES.some((x) => x.id === detail.value)) setRoleState(detail.value as RoleId);
+      } else if (detail?.key === KEYS.userName && typeof detail.value === 'string') {
+        setNameState(detail.value);
+      }
+    };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === KEYS.activeRole && e.newValue && ROLES.some((x) => x.id === e.newValue)) {
+        setRoleState(e.newValue as RoleId);
+      }
+      if (e.key === KEYS.userName && e.newValue) setNameState(e.newValue);
+    };
+    window.addEventListener(EVENT, onChange);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener(EVENT, onChange);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
+
+  const setRole = (r: RoleId) => {
+    setRoleState(r);
+    write(KEYS.activeRole, r);
+  };
+  const setName = (n: string) => {
+    setNameState(n);
+    write(KEYS.userName, n);
+  };
+
+  const meta = ROLES.find((x) => x.id === role) ?? ROLES[3];
+  return { role, name, setRole, setName, meta } as const;
 }

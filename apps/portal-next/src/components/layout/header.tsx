@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Code2, GraduationCap, PanelLeft, PanelRight, ChevronRight, Search } from 'lucide-react';
+import { Code2, PanelLeft, PanelRight, ChevronRight, Search } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
+import { ProfileMenu } from '@/components/layout/profile-menu';
 import { useLeftCollapsed, useRightPanel } from '@/lib/ui-state';
 import { useMemo } from 'react';
 
@@ -50,9 +51,10 @@ export function Header() {
 
   return (
     <header
-      className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-background/85 px-3 backdrop-blur-md md:px-4"
+      className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b bg-background/85 px-2 backdrop-blur-md md:px-3"
       data-pagefind-ignore
     >
+      {/* Toggle sidebar izq */}
       <Button
         variant="ghost"
         size="icon"
@@ -63,10 +65,13 @@ export function Header() {
         <PanelLeft className="h-4 w-4" />
       </Button>
 
-      <Link href="/" className="flex shrink-0 items-center gap-2 font-bold tracking-tight">
-        <span className="hidden text-base text-primary sm:inline">reforma·ud</span>
+      {/* Logo + Profile area (LEFT) */}
+      <Link href="/" className="hidden shrink-0 items-center gap-1.5 font-bold tracking-tight sm:flex">
+        <span className="text-base text-primary">reforma·ud</span>
       </Link>
+      <ProfileMenu />
 
+      {/* Breadcrumb central */}
       <nav aria-label="Breadcrumb" className="hidden min-w-0 flex-1 items-center gap-1 text-sm md:flex">
         <Link href="/" className="text-muted-foreground hover:text-foreground">
           Inicio
@@ -85,6 +90,7 @@ export function Header() {
         ))}
       </nav>
 
+      {/* Right utilities */}
       <div className="ml-auto flex items-center gap-1">
         <button
           type="button"
@@ -102,15 +108,6 @@ export function Header() {
           </a>
         </Button>
         <ThemeToggle />
-        <div className="ml-1 hidden items-center gap-2 rounded-full border bg-muted/40 px-2 py-1 sm:flex">
-          <div
-            className="flex h-6 w-6 items-center justify-center rounded-full text-white"
-            style={{ background: 'var(--color-brand-purple)' }}
-          >
-            <GraduationCap className="h-3.5 w-3.5" />
-          </div>
-          <span className="text-xs font-medium">UDFJC</span>
-        </div>
         <Button
           variant="ghost"
           size="icon"

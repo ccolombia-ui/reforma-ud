@@ -7,7 +7,7 @@ import { Sparkles, MessageCircleQuestion, BookMarked, FileText, Send, ChevronLef
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { useRightPanel } from '@/lib/ui-state';
+import { useRightPanel, useActiveProfile } from '@/lib/ui-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { canonicPaper, community, note } from '#site/content';
@@ -190,8 +190,19 @@ export function RightPanel() {
             'Sin CoP activa · contexto global'
           )}
         </div>
+        <RoleFooter />
       </div>
     </aside>
+  );
+}
+
+function RoleFooter() {
+  const { meta, name } = useActiveProfile();
+  return (
+    <div className="border-t border-sidebar-border px-3 py-1.5 text-[10px] text-muted-foreground flex items-center gap-1">
+      <span>{meta.emoji}</span>
+      <span className="truncate"><strong className="text-foreground">{name}</strong> · {meta.name}</span>
+    </div>
   );
 }
 
@@ -199,6 +210,7 @@ export function RightPanel() {
  * ChatPane — interaccion con AI Asistente
  * ============================================================ */
 function ChatPane({ copSlug }: { copSlug: string | null }) {
+  const { role: activeRole } = useActiveProfile();
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
   const [input, setInput] = useState('');
   const [model, setModel] = useState<'haiku' | 'kimi'>('haiku');
@@ -239,6 +251,7 @@ function ChatPane({ copSlug }: { copSlug: string | null }) {
           messages: newMessages,
           model,
           activeCop: copSlug,
+          activeRole,
         }),
       });
 
