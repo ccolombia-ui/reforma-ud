@@ -6,6 +6,7 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { Footer } from '@/components/layout/footer';
 import { RightPanel, RightPanelMini } from '@/components/layout/right-panel';
 import { CommandPalette } from '@/components/layout/command-palette';
+import { CCAEarnedModal } from '@/components/layout/cca-earned-modal';
 
 export const metadata: Metadata = {
   title: {
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
           <RightPanelMini />
           <CommandPalette />
+          <CCAEarnedModal />
         </ThemeProvider>
       </body>
     </html>

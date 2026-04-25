@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import { Sparkles, MessageCircleQuestion, BookMarked, FileText, Send, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, MessageCircleQuestion, BookMarked, FileText, Send, ChevronLeft, ChevronRight, Target, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -179,7 +179,7 @@ export function RightPanel() {
               </div>
             )
           ) : (
-            <ChatPane copSlug={copSlug} />
+            <ChatPane copSlug={copSlug} pathname={pathname} />
           )}
         </div>
 
@@ -209,7 +209,7 @@ function RoleFooter() {
 /* ============================================================
  * ChatPane — interaccion con AI Asistente
  * ============================================================ */
-function ChatPane({ copSlug }: { copSlug: string | null }) {
+function ChatPane({ copSlug, pathname }: { copSlug: string | null; pathname: string | null }) {
   const { role: activeRole } = useActiveProfile();
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([]);
   const [input, setInput] = useState('');
@@ -217,7 +217,33 @@ function ChatPane({ copSlug }: { copSlug: string | null }) {
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Detectar contexto de misión activa
+  const missionPaperId = useMemo<string | null>(() => {
+    if (!pathname) return null;
+    const m = pathname.match(/^\/mision\/([^/]+)/);
+    return m ? m[1] : null;
+  }, [pathname]);
+
+  const [missionMode, setMissionMode] = useState<boolean>(!!missionPaperId);
+  // Si el usuario navega a una misión, sugerir activar modo misión por defecto
+  useEffect(() => {
+    if (missionPaperId) setMissionMode(true);
+  }, [missionPaperId]);
+
+  // Reset mensajes cuando cambia el documento de misión para evitar fugas de contexto
+  useEffect(() => {
+    setMessages([]);
+    setError(null);
+  }, [missionPaperId]);
+
   const suggestions = useMemo(() => {
+    if (missionMode && missionPaperId) {
+      return [
+        `Dame una pista para la primera sección de ${missionPaperId.toUpperCase()}`,
+        `¿Qué concepto del glosario aplica aquí?`,
+        `¿Por dónde empiezo a leer?`,
+      ];
+    }
     if (copSlug) {
       const cop = community.find((c) => c.slug === copSlug);
       const name = cop?.shortName ?? 'esta CoP';
@@ -232,7 +258,7 @@ function ChatPane({ copSlug }: { copSlug: string | null }) {
       'Resume M05 en 3 puntos',
       '¿Cómo afecta la reforma al estudiante?',
     ];
-  }, [copSlug]);
+  }, [copSlug, missionMode, missionPaperId]);
 
   async function send(userText: string) {
     if (!userText.trim() || streaming) return;
@@ -252,6 +278,8 @@ function ChatPane({ copSlug }: { copSlug: string | null }) {
           model,
           activeCop: copSlug,
           activeRole,
+          missionMode,
+          missionContext: missionMode && missionPaperId ? { paperId: missionPaperId } : undefined,
         }),
       });
 
@@ -287,6 +315,42 @@ function ChatPane({ copSlug }: { copSlug: string | null }) {
 
   return (
     <div className="flex h-full flex-col">
+      {/* Modo libre / Modo misión */}
+      <div className="mb-2 flex items-center gap-1 rounded-lg border bg-muted/30 p-1">
+        <button
+          onClick={() => setMissionMode(false)}
+          className={cn(
+            'flex-1 inline-flex items-center justify-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium transition-colors',
+            !missionMode ? 'bg-background shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground',
+          )}
+          title="Conversación libre con citaciones del corpus"
+        >
+          <Sparkles className="h-3 w-3" />
+          Modo libre
+        </button>
+        <button
+          onClick={() => setMissionMode(true)}
+          className={cn(
+            'flex-1 inline-flex items-center justify-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium transition-colors',
+            missionMode ? 'bg-amber-500 text-white shadow-sm' : 'text-muted-foreground hover:text-foreground',
+          )}
+          title="Tutor socrático: solo pistas, no respuestas directas"
+        >
+          <Target className="h-3 w-3" />
+          Modo misión
+        </button>
+      </div>
+      {missionMode && (
+        <div className="mb-2 rounded-md border border-amber-500/30 bg-amber-500/5 p-2 text-[10px] text-amber-900 dark:text-amber-200 flex items-start gap-1.5">
+          <Lightbulb className="h-3 w-3 mt-0.5 shrink-0" />
+          <span>
+            Solo pistas, NO respuestas directas. {missionPaperId && (
+              <strong>Contexto: {missionPaperId.toUpperCase()}.</strong>
+            )}
+          </span>
+        </div>
+      )}
+
       <div className="mb-2 flex items-center gap-2 rounded-lg border bg-muted/30 p-1.5">
         <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Modelo</span>
         <div className="ml-auto flex gap-1">

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { canonicPaper } from '#site/content';
 import { MiActividad } from '@/components/home/mi-actividad';
+import { MissionTrackerWidget } from '@/components/home/mission-tracker-widget';
 import { QuickTabs } from '@/components/home/quick-tabs';
 
 const COMUNIDADES = [
@@ -88,6 +89,9 @@ export default function HomePage() {
 
       {/* Mi Actividad personalizada por rol */}
       <MiActividad />
+
+      {/* Mission Tracker — progreso M01→M12 con cascada de unlocks */}
+      <MissionTrackerWidget />
 
       {/* Acceso rápido (Normas/Comunidades/Encuestas/Deliberaciones) */}
       <QuickTabs />
