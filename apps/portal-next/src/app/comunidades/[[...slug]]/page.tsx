@@ -8,6 +8,12 @@ import { Separator } from '@/components/ui/separator';
 import { MDXContent } from '@/components/mdx-content';
 import { PrintButton } from '@/components/print-button';
 import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
+import { DashboardCop } from '@/components/dashboard/dashboard-cop';
+import { ServiceTiles } from '@/components/dashboard/service-tiles';
+import { AsistenteSidebar } from '@/components/dashboard/asistente-sidebar';
+import { BibliotecaView } from '@/components/biblioteca/biblioteca-view';
+import { DocumentReader } from '@/components/biblioteca/document-reader';
+import { getComprehension } from '@/lib/comprehension';
 import { community, note, canonicPaper } from '#site/content';
 import type { Metadata } from 'next';
 
@@ -52,7 +58,30 @@ export function generateStaticParams() {
     .map((c) => ({
       slug: [...c.slug.split('/').slice(1), 'grafo'],
     }));
-  return [...communityParams, ...noteParams, ...graphParams];
+  // Per-CoP biblioteca route: <community-slug>/biblioteca
+  const bibParams = community
+    .filter((c) => c.slug !== 'comunidades')
+    .map((c) => ({
+      slug: [...c.slug.split('/').slice(1), 'biblioteca'],
+    }));
+  // Per-CoP biblioteca/<docId> reader routes
+  const bibDocParams: Array<{ slug: string[] }> = [];
+  for (const c of community) {
+    if (c.slug === 'comunidades') continue;
+    const cites = c.cites ?? [];
+    for (const pid of cites) {
+      bibDocParams.push({
+        slug: [...c.slug.split('/').slice(1), 'biblioteca', pid],
+      });
+    }
+    const notesInVault = note.filter((n) => n.communitySlug === c.slug || n.communitySlug.startsWith(c.slug + '/'));
+    for (const n of notesInVault) {
+      bibDocParams.push({
+        slug: [...c.slug.split('/').slice(1), 'biblioteca', encodeURIComponent(n.slug)],
+      });
+    }
+  }
+  return [...communityParams, ...noteParams, ...graphParams, ...bibParams, ...bibDocParams];
 }
 
 export async function generateMetadata({
@@ -71,6 +100,18 @@ export async function generateMetadata({
       return {
         title: `Grafo · ${c.shortName ?? c.name}`,
         description: `Grafo local de la comunidad ${c.name}.`,
+      };
+    }
+  }
+  // Detect /biblioteca
+  if (segments[segments.length - 1] === 'biblioteca') {
+    const communitySegments = segments.slice(0, -1);
+    const fullSlug = ['comunidades', ...communitySegments].join('/');
+    const c = community.find((x) => x.slug === fullSlug);
+    if (c) {
+      return {
+        title: `Biblioteca · ${c.shortName ?? c.name}`,
+        description: `Documentos de investigación de la comunidad ${c.name} con progreso de lectura.`,
       };
     }
   }
@@ -147,6 +188,63 @@ export default async function CommunityPage({
     return <GraphView community={cg} />;
   }
 
+  // Detect /biblioteca route → render BibliotecaView
+  if (segments[segments.length - 1] === 'biblioteca') {
+    const communitySegments = segments.slice(0, -1);
+    const fullSlug = ['comunidades', ...communitySegments].join('/');
+    const cb = findCommunity(fullSlug);
+    if (!cb) notFound();
+    return <BibliotecaView community={cb} />;
+  }
+  // Detect /biblioteca/<docId> route → render DocumentReader
+  if (segments.length >= 2 && segments[segments.length - 2] === 'biblioteca') {
+    const docId = decodeURIComponent(segments[segments.length - 1]);
+    const communitySegments = segments.slice(0, -2);
+    const fullSlug = ['comunidades', ...communitySegments].join('/');
+    const cb = findCommunity(fullSlug);
+    if (!cb) notFound();
+
+    // Resolver doc: paper canónico o nota
+    const paperDoc = canonicPaper.find((p) => p.id === docId);
+    if (paperDoc) {
+      return (
+        <DocumentReader
+          doc={{
+            id: paperDoc.id,
+            title: paperDoc.title,
+            description: paperDoc.description,
+            body: paperDoc.body,
+            type: 'paper',
+            metaLabels: paperDoc.tags,
+            href: paperDoc.href,
+          }}
+          copSlug={cb.slug}
+          copName={cb.shortName ?? cb.name}
+          comprehension={getComprehension(paperDoc.id)}
+        />
+      );
+    }
+    const noteDoc = note.find((n) => n.slug === docId);
+    if (noteDoc) {
+      return (
+        <DocumentReader
+          doc={{
+            id: noteDoc.slug,
+            title: noteDoc.title,
+            body: noteDoc.body,
+            type: 'note',
+            metaLabels: noteDoc.tags,
+            href: noteDoc.href,
+          }}
+          copSlug={cb.slug}
+          copName={cb.shortName ?? cb.name}
+          comprehension={getComprehension(noteDoc.slug)}
+        />
+      );
+    }
+    notFound();
+  }
+
   const fullSlug = ['comunidades', ...segments].join('/');
 
   // Check if this is a note first
@@ -198,65 +296,25 @@ export default async function CommunityPage({
         </p>
       </header>
 
+      {/* Dashboard BSC-S/RBM con KPIs P1-P4 + tabs Lista/RBM/Kanban/Grafo */}
+      <DashboardCop copSlug={c.slug} />
+
+      <Separator className="my-10" />
+
+      {/* Servicios estilo Creciverso */}
+      <ServiceTiles copSlug={c.slug} />
+
+      {/* Asistente lateral derecho (preguntas + chat futuro) */}
+      <AsistenteSidebar copSlug={c.slug} />
+
+      <Separator className="my-10" />
+
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
         <main className="min-w-0 space-y-10">
-          {/* Sub-comunidades */}
-          {children.length > 0 && (
-            <section>
-              <h2 className="mb-4 text-xl font-semibold">Sub-comunidades</h2>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {children.map((ch) => (
-                  <Link key={ch.slug} href={`/${ch.slug}`} className="group block">
-                    <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md">
-                      <CardHeader>
-                        <div className="mb-2 inline-flex items-center gap-1.5 text-xs uppercase tracking-wide text-muted-foreground">
-                          {TYPE_ICONS[ch.type]}
-                          {TYPE_LABEL[ch.type] ?? ch.type}
-                        </div>
-                        <CardTitle className="text-base leading-snug">
-                          {ch.shortName ?? ch.name}
-                        </CardTitle>
-                        <CardDescription className="line-clamp-2 text-sm">
-                          {ch.description}
-                        </CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Body MDX */}
+          {/* Body MDX (descripción de la CoP) */}
           <section className="prose-paper">
             <MDXContent code={c.body} />
           </section>
-
-          {/* Notas del vault */}
-          {notes.length > 0 && (
-            <section>
-              <Separator className="mb-6" />
-              <h2 className="mb-4 text-xl font-semibold">Notas del vault</h2>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {notes.map((n) => (
-                  <Link key={n.href} href={n.href} className="group block">
-                    <Card className="h-full p-4 transition-all hover:border-primary/50">
-                      <div className="text-sm font-medium">{n.title}</div>
-                      {n.tags.length > 0 && (
-                        <div className="mt-2 flex flex-wrap gap-1">
-                          {n.tags.map((t) => (
-                            <span key={t} className="text-[10px] text-muted-foreground">
-                              #{t}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
         </main>
 
         {/* Right rail */}
@@ -282,13 +340,6 @@ export default async function CommunityPage({
               </div>
             </section>
           )}
-
-          <Button asChild variant="outline" size="sm" className="w-full gap-2">
-            <Link href={`/${c.slug}/grafo`}>
-              <Network className="h-3.5 w-3.5" />
-              Grafo local de la CoP
-            </Link>
-          </Button>
         </aside>
       </div>
     </div>
