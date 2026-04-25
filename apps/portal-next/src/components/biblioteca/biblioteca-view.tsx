@@ -11,6 +11,12 @@ import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { ESTANTES, classifyDoc, type EstanteId } from '@/lib/estantes';
 import { cn } from '@/lib/utils';
+import {
+  KnowledgePipeline,
+  classifyKnowledgeStatus,
+  classifyKnowledgeType,
+  type KnowledgeItem,
+} from './knowledge-pipeline';
 
 type DocItem = {
   id: string;
@@ -104,6 +110,36 @@ export function BibliotecaView({ community: c }: { community: typeof community[n
     if (activeEstante === 'all') return items;
     return items.filter((i) => i.estanteId === activeEstante);
   }, [items, activeEstante]);
+
+  // KnowledgeItem para el pipeline kanban (Draft/Review/Standard × tipo)
+  const knowledgeItems: KnowledgeItem[] = useMemo(() => {
+    const cites = c.cites ?? [];
+    const out: KnowledgeItem[] = [];
+    for (const pid of cites) {
+      const p = canonicPaper.find((x) => x.id === pid);
+      if (!p) continue;
+      out.push({
+        id: p.id,
+        title: p.title,
+        status: classifyKnowledgeStatus({ status: p.status }),
+        type: classifyKnowledgeType({ tags: p.tags, id: p.id }),
+        href: `/${c.slug}/biblioteca/${p.id}`,
+      });
+    }
+    const notesInVault = note.filter(
+      (n) => n.communitySlug === c.slug || n.communitySlug.startsWith(c.slug + '/'),
+    );
+    for (const n of notesInVault) {
+      out.push({
+        id: n.slug,
+        title: n.title,
+        status: classifyKnowledgeStatus({}),
+        type: classifyKnowledgeType({ tags: n.tags, id: n.slug }),
+        href: `/${c.slug}/biblioteca/${encodeURIComponent(n.slug)}`,
+      });
+    }
+    return out;
+  }, [c]);
 
   const totalProgress = items.length > 0
     ? Math.round(items.reduce((acc, i) => acc + i.progress, 0) / items.length)
@@ -209,6 +245,11 @@ export function BibliotecaView({ community: c }: { community: typeof community[n
           </div>
         )}
       </div>
+
+      {/* PIPELINE KANBAN (siempre visible arriba) */}
+      <section className="mb-8">
+        <KnowledgePipeline items={knowledgeItems} />
+      </section>
 
       {/* VISTAS */}
       {view === 'shelves' && (

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library } from 'lucide-react';
+import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { canonicPaper } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
@@ -86,54 +86,39 @@ export function Sidebar() {
   const tree = buildCommunityTree();
   const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
 
-  // collapsed: barra estrecha solo con icons clave
+  // collapsed: barra estrecha con icons clave + opciones
   if (collapsed) {
+    const NavIcon = ({ href, label, Icon, isActive }: { href: string; label: string; Icon: typeof Home; isActive: boolean }) => (
+      <Link
+        href={href}
+        aria-label={label}
+        title={label}
+        className={cn(
+          'group relative inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors',
+          isActive ? 'bg-sidebar-accent text-primary' : 'hover:bg-sidebar-accent',
+        )}
+      >
+        <Icon className="h-4 w-4" />
+        <span className="pointer-events-none absolute left-12 whitespace-nowrap rounded-md border bg-popover px-2 py-1 text-xs text-popover-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100 z-50">
+          {label}
+        </span>
+      </Link>
+    );
     return (
       <nav
         data-pagefind-ignore
         data-sidebar
-        className="hidden h-[calc(100vh-3.5rem)] w-14 shrink-0 flex-col items-center gap-2 border-r bg-sidebar py-3 text-sidebar-foreground md:flex"
+        className="hidden h-[calc(100vh-3.5rem)] w-14 shrink-0 flex-col items-center gap-1 border-r bg-sidebar py-3 text-sidebar-foreground md:flex"
       >
-        <Link
-          href="/"
-          aria-label="Inicio"
-          className={cn(
-            'inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors',
-            pathname === '/' ? 'bg-sidebar-accent text-primary' : 'hover:bg-sidebar-accent',
-          )}
-        >
-          <Home className="h-4 w-4" />
-        </Link>
-        <Link
-          href="/canonico"
-          aria-label="Canónico"
-          className={cn(
-            'inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors',
-            pathname.startsWith('/canonico') ? 'bg-sidebar-accent text-primary' : 'hover:bg-sidebar-accent',
-          )}
-        >
-          <Library className="h-4 w-4" />
-        </Link>
-        <Link
-          href="/canonico/grafo"
-          aria-label="Grafo global"
-          className={cn(
-            'inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors',
-            pathname === '/canonico/grafo' ? 'bg-sidebar-accent text-primary' : 'hover:bg-sidebar-accent',
-          )}
-        >
-          <Network className="h-4 w-4" />
-        </Link>
-        <Link
-          href="/comunidades"
-          aria-label="Comunidades"
-          className={cn(
-            'inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors',
-            pathname.startsWith('/comunidades') ? 'bg-sidebar-accent text-primary' : 'hover:bg-sidebar-accent',
-          )}
-        >
-          <GraduationCap className="h-4 w-4" />
-        </Link>
+        <NavIcon href="/" label="Inicio" Icon={Home} isActive={pathname === '/'} />
+        <NavIcon href="/canonico" label="Canónico · Biblioteca" Icon={Library} isActive={pathname.startsWith('/canonico') && pathname !== '/canonico/grafo'} />
+        <NavIcon href="/canonico/grafo" label="Grafo global del corpus" Icon={Network} isActive={pathname === '/canonico/grafo'} />
+        <div className="my-1 h-px w-8 bg-sidebar-border" />
+        <NavIcon href="/comunidades" label="Comunidades · Hub" Icon={GraduationCap} isActive={pathname === '/comunidades'} />
+        <NavIcon href="/comunidades/gobierno" label="Gobierno" Icon={Landmark} isActive={pathname.startsWith('/comunidades/gobierno')} />
+        <NavIcon href="/comunidades/formacion" label="VR Formación" Icon={BookMarked} isActive={pathname.startsWith('/comunidades/formacion')} />
+        <NavIcon href="/comunidades/investigacion" label="VR Investigación" Icon={Microscope} isActive={pathname.startsWith('/comunidades/investigacion')} />
+        <NavIcon href="/comunidades/extension" label="VR Extensión" Icon={Globe} isActive={pathname.startsWith('/comunidades/extension')} />
         <div className="mt-auto h-px w-8 bg-sidebar-border" />
         <Link
           href="/about"
