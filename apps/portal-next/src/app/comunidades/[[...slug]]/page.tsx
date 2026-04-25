@@ -10,7 +10,6 @@ import { PrintButton } from '@/components/print-button';
 import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
 import { DashboardCop } from '@/components/dashboard/dashboard-cop';
 import { ServiceTiles } from '@/components/dashboard/service-tiles';
-import { AsistenteSidebar } from '@/components/dashboard/asistente-sidebar';
 import { BibliotecaView } from '@/components/biblioteca/biblioteca-view';
 import { DocumentReader } from '@/components/biblioteca/document-reader';
 import { getComprehension } from '@/lib/comprehension';
@@ -303,9 +302,6 @@ export default async function CommunityPage({
 
       {/* Servicios estilo Creciverso */}
       <ServiceTiles copSlug={c.slug} />
-
-      {/* Asistente lateral derecho (preguntas + chat futuro) */}
-      <AsistenteSidebar copSlug={c.slug} />
 
       <Separator className="my-10" />
 
