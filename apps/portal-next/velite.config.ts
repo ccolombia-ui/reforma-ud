@@ -1,7 +1,6 @@
 import { defineCollection, defineConfig, s } from 'velite';
 import remarkGfm from 'remark-gfm';
-// TODO(S2): rehabilitar plugin de wikilinks compatible con MDX + callouts
-// import remarkWikiLink from '@portaljs/remark-wiki-link';
+import remarkWikilinks from './src/lib/remark-wikilinks';
 import rehypeCallouts from 'rehype-callouts';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -123,7 +122,7 @@ export default defineConfig({
   },
   mdx: {
     gfm: true,
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkWikilinks],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap' }],
