@@ -1,11 +1,15 @@
 import type { NextConfig } from 'next';
 
 /**
- * Velite corre en el hook `prebuild` del package.json — no se acopla aquí
- * para evitar conflicto con Turbopack (default en Next 16).
+ * Static export: todas las rutas son SSG/static, usamos `output: 'export'`
+ * para producir HTML plano en `out/` (compatible con pagefind y CDN simple).
+ * Velite + grafo corren via `pnpm build` antes de `next build` (ver package.json).
  */
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  output: 'export',
+  images: { unoptimized: true },
+  trailingSlash: true,
   turbopack: {
     root: __dirname,
   },

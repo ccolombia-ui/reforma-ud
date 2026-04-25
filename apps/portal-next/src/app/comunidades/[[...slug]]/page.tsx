@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { MDXContent } from '@/components/mdx-content';
 import { PrintButton } from '@/components/print-button';
+import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
 import { community, note, canonicPaper } from '#site/content';
 import type { Metadata } from 'next';
 
@@ -45,7 +46,13 @@ export function generateStaticParams() {
   const noteParams = note.map((n) => ({
     slug: n.slug.split('/').slice(1), // strip "comunidades/" prefix
   }));
-  return [...communityParams, ...noteParams];
+  // Per-CoP graph routes: <community-slug>/grafo
+  const graphParams = community
+    .filter((c) => c.slug !== 'comunidades')
+    .map((c) => ({
+      slug: [...c.slug.split('/').slice(1), 'grafo'],
+    }));
+  return [...communityParams, ...noteParams, ...graphParams];
 }
 
 export async function generateMetadata({
@@ -54,7 +61,20 @@ export async function generateMetadata({
   params: Promise<{ slug?: string[] }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const fullSlug = ['comunidades', ...(slug ?? [])].join('/');
+  const segments = slug ?? [];
+  // Detect /grafo as last segment
+  if (segments[segments.length - 1] === 'grafo') {
+    const communitySegments = segments.slice(0, -1);
+    const fullSlug = ['comunidades', ...communitySegments].join('/');
+    const c = community.find((x) => x.slug === fullSlug);
+    if (c) {
+      return {
+        title: `Grafo · ${c.shortName ?? c.name}`,
+        description: `Grafo local de la comunidad ${c.name}.`,
+      };
+    }
+  }
+  const fullSlug = ['comunidades', ...segments].join('/');
   const c = community.find((x) => x.slug === fullSlug);
   if (c) return { title: c.name, description: c.description };
   const n = note.find((x) => x.slug === fullSlug);
@@ -116,7 +136,18 @@ export default async function CommunityPage({
   params: Promise<{ slug?: string[] }>;
 }) {
   const { slug } = await params;
-  const fullSlug = ['comunidades', ...(slug ?? [])].join('/');
+  const segments = slug ?? [];
+
+  // Detect /grafo route → render GraphView
+  if (segments[segments.length - 1] === 'grafo') {
+    const communitySegments = segments.slice(0, -1);
+    const fullSlug = ['comunidades', ...communitySegments].join('/');
+    const cg = findCommunity(fullSlug);
+    if (!cg) notFound();
+    return <GraphView community={cg} />;
+  }
+
+  const fullSlug = ['comunidades', ...segments].join('/');
 
   // Check if this is a note first
   const noteMatch = note.find((n) => n.slug === fullSlug);
@@ -252,14 +283,58 @@ export default async function CommunityPage({
             </section>
           )}
 
-          <Button asChild variant="outline" size="sm" className="w-full gap-2" disabled>
-            <span>
+          <Button asChild variant="outline" size="sm" className="w-full gap-2">
+            <Link href={`/${c.slug}/grafo`}>
               <Network className="h-3.5 w-3.5" />
-              Grafo de la CoP (S3)
-            </span>
+              Grafo local de la CoP
+            </Link>
           </Button>
         </aside>
       </div>
+    </div>
+  );
+}
+
+function GraphView({ community: c }: { community: typeof community[number] }) {
+  const crumbs = buildBreadcrumb(c.slug);
+  const graphFile = c.slug.replace(/\//g, '__') + '.json';
+
+  return (
+    <div className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
+      <nav className="mb-6 flex flex-wrap items-center gap-1 text-sm text-muted-foreground">
+        <Link href="/" className="hover:text-foreground">Inicio</Link>
+        {crumbs.map((cr, i) => (
+          <span key={i} className="flex items-center gap-1">
+            <ChevronRight className="h-3 w-3" />
+            {cr.href ? (
+              <Link href={cr.href} className="hover:text-foreground">{cr.name}</Link>
+            ) : (
+              <span>{cr.name}</span>
+            )}
+          </span>
+        ))}
+        <ChevronRight className="h-3 w-3" />
+        <span className="text-foreground">Grafo</span>
+      </nav>
+
+      <header className="mb-6">
+        <Link
+          href={`/${c.slug}`}
+          className="mb-2 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+        >
+          <ChevronLeft className="h-3.5 w-3.5" />
+          Volver a {c.shortName ?? c.name}
+        </Link>
+        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+          Grafo · {c.shortName ?? c.name}
+        </h1>
+        <p className="mt-2 max-w-3xl text-muted-foreground">
+          Red local del vault: notas de esta comunidad + sub-comunidades + nodos puente
+          (en color claro) hacia los papers canónicos que cita.
+        </p>
+      </header>
+
+      <VisNetworkGraph src={`/static/graphs/${graphFile}`} />
     </div>
   );
 }

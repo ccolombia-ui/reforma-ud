@@ -5,8 +5,10 @@
   "scripts": {
     "velite": "velite build",
     "velite:watch": "velite build --watch",
-    "dev": "velite build && next dev",
-    "build": "velite build && next build",
+    "graph": "node scripts/build-graph.mjs",
+    "pagefind": "pagefind --site out --output-subdir pagefind",
+    "dev": "velite build && node scripts/build-graph.mjs && next dev",
+    "build": "velite build && node scripts/build-graph.mjs && next build && pagefind --site out --output-subdir pagefind",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
@@ -49,6 +51,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "pagefind": "^1.5.2",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.5"

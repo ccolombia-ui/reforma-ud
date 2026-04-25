@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { Search, Code2 } from 'lucide-react';
+import { Code2 } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
+import { SearchModal } from '@/components/search/search-modal';
 
 export function Header() {
   return (
@@ -11,13 +12,7 @@ export function Header() {
       </Link>
 
       <div className="ml-auto flex items-center gap-2">
-        <Button variant="ghost" size="sm" className="search-trigger gap-2 text-muted-foreground" disabled>
-          <Search className="h-4 w-4" />
-          <span className="hidden sm:inline">Buscar...</span>
-          <kbd className="ml-2 hidden rounded border bg-muted px-1.5 py-0.5 text-[10px] font-mono sm:inline-block">
-            /
-          </kbd>
-        </Button>
+        <SearchModal />
         <Button variant="ghost" size="icon" asChild aria-label="Repositorio en GitHub">
           <a
             href="https://github.com/ccolombia-ui/reforma-ud"
