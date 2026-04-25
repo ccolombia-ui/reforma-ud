@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>reforma·ud — Reference Frontend CoP · Escuela de Física</title>
+<script src="https://cdn.tailwindcss.com?plugins=typography,forms,line-clamp"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f172a;
+    --blue: #0284c7;
+    --emerald: #059669;
+    --purple: #7c3aed;
+    --gold: #d97706;
+    --orange: #ea580c;
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface-2: #1f2937;
+    --border: #1f2937;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --accent: var(--blue);
+  }
+  html.light {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --surface-2: #f5f5f4;
+    --border: #e5e7eb;
+    --text: #0f172a;
+    --muted: #64748b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    overflow-x: hidden;
+  }
+  .prose-academic { font-family: 'Crimson Pro', Georgia, serif; line-height: 1.75; font-size: 1.05rem; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  /* scroll containers */
+  .scroll-y { overflow-y: auto; scrollbar-width: thin; }
+  .scroll-y::-webkit-scrollbar { width: 6px; }
+  .scroll-y::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  /* RAG */
+  .rag-green  { background: #10b981; box-shadow: 0 0 0 3px #10b98133; }
+  .rag-amber  { background: #f59e0b; box-shadow: 0 0 0 3px #f59e0b33; }
+  .rag-red    { background: #ef4444; box-shadow: 0 0 0 3px #ef444433; }
+  .rag-gray   { background: #6b7280; }
+  /* Callouts (Obsidian-style) */
+  .callout { border-left: 4px solid; border-radius: 0.5rem; padding: 0.75rem 1rem; margin: 1rem 0; }
+  .callout-abstract { border-color: var(--blue);   background: rgba(2, 132, 199, .08); }
+  .callout-note     { border-color: var(--blue);   background: rgba(2, 132, 199, .08); }
+  .callout-tip      { border-color: var(--emerald);background: rgba(5, 150, 105, .08); }
+  .callout-warning  { border-color: var(--orange); background: rgba(234, 88, 12, .08); }
+  .callout-question { border-color: var(--gold);   background: rgba(217, 119, 6, .08); }
+  .callout-example  { border-color: var(--purple); background: rgba(124, 58, 237, .08); }
+  .callout-title { font-weight: 600; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+  /* tabs */
+  .tab { padding: .5rem .9rem; border-radius: .4rem; font-size: .85rem; font-weight: 500; color: var(--muted); cursor: pointer; transition: all .15s; }
+  .tab:hover { color: var(--text); background: var(--surface-2); }
+  .tab.active { background: var(--surface); color: var(--accent); box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  .tab-track { background: var(--surface-2); padding: .25rem; border-radius: .5rem; display: inline-flex; gap: .25rem; }
+  /* sparkline polyline */
+  .spark { stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  /* card hover */
+  .card-h { transition: all .2s; }
+  .card-h:hover { transform: translateY(-1px); border-color: var(--accent); box-shadow: 0 8px 16px rgba(0,0,0,.15); }
+  /* markdown headings */
+  .prose-academic h1 { font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 .5rem; }
+  .prose-academic h2 { font-size: 1.4rem; font-weight: 600; margin: 2rem 0 .75rem; padding-bottom: .35rem; border-bottom: 1px solid var(--border); }
+  .prose-academic h3 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 .5rem; }
+  .prose-academic p { margin: .5rem 0 1rem; }
+  .prose-academic strong { font-weight: 600; color: var(--text); }
+  .prose-academic ul, .prose-academic ol { margin: .5rem 0 1rem; padding-left: 1.4rem; }
+  .prose-academic li { margin: .25rem 0; }
+  .prose-academic a { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .prose-academic blockquote { border-left: 3px solid var(--border); padding-left: 1rem; color: var(--muted); margin: 1rem 0; }
+  .prose-academic code { font-family: 'JetBrains Mono', monospace; font-size: .85em; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
+  .prose-academic .katex { font-size: 1.05em; }
+  /* graph 3d */
+  .graph-3d-canvas {
+    width: 100%; height: 480px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(2,132,199,.18), transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(124,58,237,.14), transparent 50%),
+      radial-gradient(circle at 50% 60%, rgba(5,150,105,.10), transparent 60%),
+      var(--surface);
+    border-radius: .75rem;
+    position: relative;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .graph-node {
+    position: absolute; border-radius: 50%; cursor: pointer; transition: transform .2s;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .65rem; font-weight: 700; color: white; text-align: center;
+    box-shadow: 0 0 20px currentColor;
+  }
+  .graph-node:hover { transform: scale(1.2); z-index: 10; }
+  .graph-edge { position: absolute; height: 1px; background: var(--border); transform-origin: left center; opacity: .4; }
+  /* notification dot */
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,.6); }
+    50% { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+  }
+  .notif-dot { animation: pulse-dot 1.8s infinite; }
+  /* feed item */
+  .feed-item { transition: background .15s; }
+  .feed-item:hover { background: var(--surface-2); }
+  /* badges */
+  .badge { display: inline-flex; align-items: center; gap: .25rem; padding: 1px 8px; border-radius: 9999px; font-size: .68rem; font-weight: 600; }
+  .badge-blue   { background: rgba(2,132,199,.15);  color: #38bdf8; }
+  .badge-emerald{ background: rgba(5,150,105,.15);  color: #10b981; }
+  .badge-amber  { background: rgba(245,158,11,.15); color: #f59e0b; }
+  .badge-purple { background: rgba(124,58,237,.15); color: #a78bfa; }
+  .badge-rose   { background: rgba(244,63,94,.15);  color: #fb7185; }
+  /* kanban */
+  .kbd { padding: 1px 5px; border: 1px solid var(--border); border-radius: 3px; font-size: .65rem; font-family: 'JetBrains Mono', monospace; background: var(--surface-2); }
+  /* layout shell */
+  .shell {
+    display: grid;
+    grid-template-columns: 256px 1fr 320px;
+    grid-template-rows: 56px 1fr;
+    grid-template-areas: "sidebar header right" "sidebar main right";
+    height: 100vh;
+  }
+  .shell-header { grid-area: header; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .shell-sidebar { grid-area: sidebar; border-right: 1px solid var(--border); background: var(--surface); }
+  .shell-main    { grid-area: main; overflow-y: auto; }
+  .shell-right   { grid-area: right; border-left: 1px solid var(--border); background: var(--surface); }
+  @media (max-width: 1280px) {
+    .shell { grid-template-columns: 220px 1fr 0; grid-template-areas: "sidebar header" "sidebar main"; }
+    .shell-right { display: none; }
+  }
+  /* lucide icons (use unicode mode via class) */
+  .lucide { font-family: 'lucide' !important; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: antialiased; }
+</style>
+</head>
+<body>
+
+<!-- ============== APP SHELL ============== -->
+<div class="shell">
+
+  <!-- HEADER -->
+  <header class="shell-header flex items-center gap-3 px-3">
+    <button onclick="toggleSidebar()" class="p-2 rounded hover:bg-[var(--surface-2)]">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+    </button>
+    <a href="#" class="flex items-center gap-2 font-bold tracking-tight">
+      <span class="text-base text-[var(--blue)]">reforma·ud</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-1 text-sm flex-1 min-w-0">
+      <a href="#" class="text-[var(--muted)] hover:text-[var(--text)]">Inicio</a>
+      <span class="text-[var(--muted)]">›</span>
+      <a href="#" class="text-[var(--muted)] hover:text-[var(--text)]">Comunidades</a>
+      <span class="text-[var(--muted)]">›</span>
+      <a href="#" class="text-[var(--muted)] hover:text-[var(--text)]">VR Formación</a>
+      <span class="text-[var(--muted)]">›</span>
+      <a href="#" class="text-[var(--muted)] hover:text-[var(--text)]">Escuelas</a>
+      <span class="text-[var(--muted)]">›</span>
+      <span class="text-[var(--text)] font-medium">Física Emprendedora</span>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2">
+      <button onclick="alert('Cmd+K demo')" class="hidden sm:inline-flex h-8 items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-2.5 text-xs text-[var(--muted)] hover:text-[var(--text)]">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        Buscar...
+        <span class="kbd">⌘K</span>
+      </button>
+      <!-- notif -->
+      <button class="relative p-2 rounded hover:bg-[var(--surface-2)]" onclick="openNotif()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500 notif-dot"></span>
+      </button>
+      <!-- theme -->
+      <button onclick="toggleTheme()" class="p-2 rounded hover:bg-[var(--surface-2)]">
+        <svg id="icon-theme" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg>
+      </button>
+      <!-- profile -->
+      <button onclick="openProfile()" class="flex items-center gap-2 p-1 rounded-full hover:bg-[var(--surface-2)]">
+        <span class="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--blue)] flex items-center justify-center text-white text-xs font-bold">CC</span>
+        <span class="hidden sm:inline text-xs">Carlos C.</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="shell-sidebar scroll-y flex flex-col" id="sidebar">
+    <div class="p-3 border-b border-[var(--border)]">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[10px] uppercase tracking-wider text-[var(--muted)] font-semibold">Progreso de la CoP</span>
+        <span class="text-xs font-bold">68%</span>
+      </div>
+      <div class="h-1.5 rounded-full bg-[var(--surface-2)] overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-[var(--blue)] to-[var(--emerald)] rounded-full" style="width:68%"></div>
+      </div>
+    </div>
+
+    <!-- nav tree -->
+    <nav class="flex-1 overflow-y-auto px-2 py-3 text-sm">
+      <div class="mb-3">
+        <h3 class="px-2 mb-1 text-[10px] uppercase tracking-wider text-[var(--muted)] font-semibold">📚 Canónico MI-12</h3>
+        <ul class="space-y-0.5">
+          <li><a href="#" class="flex items-center gap-2 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">📖 Biblioteca</a></li>
+          <li><a href="#" class="flex items-center gap-2 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">🕸️ Grafo global</a></li>
+          <li><a href="#" class="flex items-center gap-2 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs"><span class="mono text-[9px] text-[var(--muted)]">M01</span> Mandato CONPES 4069</a></li>
+          <li><a href="#" class="flex items-center gap-2 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs"><span class="mono text-[9px] text-[var(--muted)]">M05</span> BMK-001 Procesos misionales</a></li>
+          <li><a href="#" class="flex items-center gap-2 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs"><span class="mono text-[9px] text-[var(--muted)]">M08</span> Estándares OECD/UDL/ABET</a></li>
+        </ul>
+      </div>
+
+      <div class="mb-3">
+        <h3 class="px-2 mb-1 text-[10px] uppercase tracking-wider text-[var(--muted)] font-semibold">🏛️ Comunidades</h3>
+        <ul class="space-y-0.5">
+          <!-- VR Formación expanded -->
+          <li>
+            <button class="w-full flex items-center gap-2 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="flex-1 text-left">VR Formación</span>
+              <span class="text-[9px] text-[var(--muted)]">72%</span>
+            </button>
+            <ul class="ml-3 border-l border-[var(--border)] pl-2 space-y-0.5">
+              <li>
+                <button class="w-full flex items-center gap-2 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-[11px]">
+                  <span class="flex-1 text-left">Escuelas</span>
+                </button>
+                <ul class="ml-3 border-l border-[var(--border)] pl-2 space-y-0.5">
+                  <li>
+                    <a href="#" class="flex items-center gap-2 px-2 py-1 rounded bg-[var(--surface-2)] text-primary text-[11px] font-semibold border-l-2 border-[var(--accent)]">
+                      <span>Física Emprendedora</span>
+                      <span class="ml-auto text-[9px] text-[var(--muted)]">68%</span>
+                    </a>
+                    <ul class="ml-3 border-l border-[var(--border)] pl-2 space-y-0.5">
+                      <li><a href="#" class="block px-2 py-1 rounded hover:bg-[var(--surface-2)] text-[10.5px]">CABA Magnetismo <span class="text-[9px] text-[var(--muted)] ml-1">42%</span></a></li>
+                      <li><a href="#" class="block px-2 py-1 rounded hover:bg-[var(--surface-2)] text-[10.5px]">CABA Mecánica <span class="text-[9px] text-[var(--muted)] ml-1">85%</span></a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#" class="block px-2 py-1 rounded hover:bg-[var(--surface-2)] text-[11px]">Química Emprendedora <span class="text-[9px] text-[var(--muted)] ml-1">31%</span></a></li>
+                </ul>
+              </li>
+              <li><a href="#" class="block px-2 py-1 rounded hover:bg-[var(--surface-2)] text-[11px]">Facultades</a></li>
+            </ul>
+          </li>
+          <li><a href="#" class="block px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">VR Investigación <span class="text-[9px] text-[var(--muted)] float-right">45%</span></a></li>
+          <li><a href="#" class="block px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">VR Extensión <span class="text-[9px] text-[var(--muted)] float-right">28%</span></a></li>
+          <li><a href="#" class="block px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">Gobierno <span class="text-[9px] text-[var(--muted)] float-right">52%</span></a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- footer stats -->
+    <div class="border-t border-[var(--border)] p-3 grid grid-cols-2 gap-2 text-[10px]">
+      <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full rag-green"></span> 14 leídos</div>
+      <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full rag-amber"></span> 7 en curso</div>
+      <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full rag-red"></span> 2 atrasados</div>
+      <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full rag-gray"></span> 12 sin abrir</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="shell-main">
+
+    <!-- HERO de CoP -->
+    <section class="px-6 pt-6 pb-3 border-b border-[var(--border)]">
+      <div class="flex flex-wrap items-start gap-4 justify-between">
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="badge badge-purple">Escuela Emprendedora Transformativa</span>
+            <span class="badge badge-amber">⚠️ 2 alertas</span>
+          </div>
+          <h1 class="text-3xl font-semibold tracking-tight">Escuela de Física Emprendedora</h1>
+          <p class="mt-2 text-[var(--muted)] max-w-3xl text-sm">
+            CABA-PIIOM en Magnetismo, Mecánica y Termodinámica. Articula docencia + investigación + extensión bajo paradigma transformativo M05.
+            <span class="mono text-[10px] text-[var(--accent)]">cites: m05, m07, m08</span>
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 rounded-md border border-[var(--border)] bg-[var(--surface)] text-xs hover:bg-[var(--surface-2)]">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="inline"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/></svg>
+            Unirme
+          </button>
+          <button class="px-3 py-1.5 rounded-md bg-[var(--blue)] text-white text-xs hover:bg-[var(--blue)]/90">+ Publicar</button>
+        </div>
+      </div>
+
+      <!-- KPI strip P1-P4 -->
+      <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+          <div class="flex items-start justify-between mb-1">
+            <span class="text-[10px] uppercase tracking-wide text-[var(--muted)]">P1 · Compromiso</span>
+            <span class="w-2 h-2 rounded-full rag-green"></span>
+          </div>
+          <div class="flex items-end justify-between gap-2">
+            <div>
+              <div class="text-2xl font-bold">73<span class="text-base text-[var(--muted)]">%</span></div>
+              <div class="text-[10px] text-emerald-500">↑ +12 este mes</div>
+            </div>
+            <svg viewBox="0 0 80 32" width="80" height="32"><polyline class="spark" stroke="#10b981" points="0,24 12,22 24,18 36,20 48,14 60,12 70,8 80,6"/><circle cx="80" cy="6" r="2.5" fill="#10b981"/></svg>
+          </div>
+        </div>
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+          <div class="flex items-start justify-between mb-1">
+            <span class="text-[10px] uppercase tracking-wide text-[var(--muted)]">P2 · Producción</span>
+            <span class="w-2 h-2 rounded-full rag-amber"></span>
+          </div>
+          <div class="flex items-end justify-between gap-2">
+            <div>
+              <div class="text-2xl font-bold">28</div>
+              <div class="text-[10px] text-[var(--muted)]">notas + paquetes CCA</div>
+            </div>
+            <svg viewBox="0 0 80 32" width="80" height="32"><polyline class="spark" stroke="#f59e0b" points="0,28 12,24 24,26 36,22 48,16 60,18 70,14 80,12"/><circle cx="80" cy="12" r="2.5" fill="#f59e0b"/></svg>
+          </div>
+        </div>
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+          <div class="flex items-start justify-between mb-1">
+            <span class="text-[10px] uppercase tracking-wide text-[var(--muted)]">P3 · Impacto</span>
+            <span class="w-2 h-2 rounded-full rag-green"></span>
+          </div>
+          <div class="flex items-end justify-between gap-2">
+            <div>
+              <div class="text-2xl font-bold">5</div>
+              <div class="text-[10px] text-[var(--muted)]">CoPs cruzadas</div>
+            </div>
+            <svg viewBox="0 0 80 32" width="80" height="32"><polyline class="spark" stroke="#10b981" points="0,24 12,20 24,18 36,16 48,18 60,12 70,10 80,8"/><circle cx="80" cy="8" r="2.5" fill="#10b981"/></svg>
+          </div>
+        </div>
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+          <div class="flex items-start justify-between mb-1">
+            <span class="text-[10px] uppercase tracking-wide text-[var(--muted)]">P4 · Sostenibilidad</span>
+            <span class="w-2 h-2 rounded-full rag-amber"></span>
+          </div>
+          <div class="flex items-end justify-between gap-2">
+            <div>
+              <div class="text-2xl font-bold">2</div>
+              <div class="text-[10px] text-[var(--muted)]">CABAs activas</div>
+            </div>
+            <svg viewBox="0 0 80 32" width="80" height="32"><polyline class="spark" stroke="#f59e0b" points="0,16 12,18 24,16 36,14 48,16 60,18 70,14 80,16"/><circle cx="80" cy="16" r="2.5" fill="#f59e0b"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs servicios CoP -->
+      <nav class="mt-6 flex gap-1 overflow-x-auto pb-1 scroll-y" role="tablist">
+        <button class="tab active" data-tab="dashboard" onclick="switchTab('dashboard')">📊 Dashboard</button>
+        <button class="tab" data-tab="feed" onclick="switchTab('feed')">📰 Feed</button>
+        <button class="tab" data-tab="biblioteca" onclick="switchTab('biblioteca')">📚 Biblioteca</button>
+        <button class="tab" data-tab="grafo" onclick="switchTab('grafo')">🕸️ Grafo</button>
+        <button class="tab" data-tab="proyectos" onclick="switchTab('proyectos')">🚀 Proyectos</button>
+        <button class="tab" data-tab="foro" onclick="switchTab('foro')">💬 Foro</button>
+        <button class="tab" data-tab="deliberacion" onclick="switchTab('deliberacion')">🗳️ Deliberación</button>
+        <button class="tab" data-tab="eventos" onclick="switchTab('eventos')">📅 Eventos</button>
+        <button class="tab" data-tab="miembros" onclick="switchTab('miembros')">👥 Miembros</button>
+        <button class="tab" data-tab="logros" onclick="switchTab('logros')">🏅 Logros</button>
+      </nav>
+    </section>
+
+    <!-- ============== TAB CONTENTS ============== -->
+
+    <!-- DASHBOARD -->
+    <section data-content="dashboard" class="content active px-6 py-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+        <!-- RBM tree col 1-2 -->
+        <div class="lg:col-span-2 bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="font-semibold">Cadena RBM · Insumos → Productos → Efectos → Impacto</h2>
+            <div class="tab-track text-[10px]">
+              <button class="tab active">Impacto</button>
+              <button class="tab">Efecto</button>
+              <button class="tab">Producto</button>
+            </div>
+          </div>
+          <!-- mini RBM nodes -->
+          <div class="space-y-2">
+            <div class="flex items-center gap-3 p-2 rounded border-l-4 border-[var(--purple)] bg-[var(--surface-2)]">
+              <div class="w-8 h-8 rounded-lg bg-[var(--purple)] text-white flex items-center justify-center text-xs">⭐</div>
+              <div class="flex-1 min-w-0">
+                <div class="text-xs font-semibold">Impacto · Hake-g ≥ 0.3 sostenido</div>
+                <div class="text-[10px] text-[var(--muted)]">3 cohortes evaluadas · g promedio 0.34</div>
+              </div>
+              <span class="text-lg font-bold text-emerald-500">73%</span>
+            </div>
+            <div class="flex items-center gap-3 p-2 rounded border-l-4 border-[var(--blue)] bg-[var(--surface-2)] ml-4">
+              <div class="w-8 h-8 rounded-lg bg-[var(--blue)] text-white flex items-center justify-center text-xs">🎯</div>
+              <div class="flex-1 min-w-0">
+                <div class="text-xs font-semibold">Efecto · 2 CABAs adoptan paquete CCA</div>
+                <div class="text-[10px] text-[var(--muted)]">Magnetismo (✓ adoptado), Mecánica (en revisión)</div>
+              </div>
+              <span class="text-lg font-bold text-amber-500">50%</span>
+            </div>
+            <div class="flex items-center gap-3 p-2 rounded border-l-4 border-[var(--emerald)] bg-[var(--surface-2)] ml-8">
+              <div class="w-8 h-8 rounded-lg bg-[var(--emerald)] text-white flex items-center justify-center text-xs">📦</div>
+              <div class="flex-1 min-w-0">
+                <div class="text-xs font-semibold">Producto · 28 notas + 4 paquetes CCA</div>
+                <div class="text-[10px] text-[var(--muted)]">Última: "evaluaciones-tipo-magnetismo" · hace 2h</div>
+              </div>
+              <span class="text-lg font-bold text-emerald-500">100%</span>
+            </div>
+            <div class="flex items-center gap-3 p-2 rounded border-l-4 border-[var(--gold)] bg-[var(--surface-2)] ml-12">
+              <div class="w-8 h-8 rounded-lg bg-[var(--gold)] text-white flex items-center justify-center text-xs">💎</div>
+              <div class="flex-1 min-w-0">
+                <div class="text-xs font-semibold">Insumo · 12 docentes + 184 estudiantes activos</div>
+                <div class="text-[10px] text-[var(--muted)]">7 nuevos miembros este mes</div>
+              </div>
+              <span class="text-lg font-bold text-emerald-500">100%</span>
+            </div>
+          </div>
+        </div>
+        <!-- Atención + acciones rápidas -->
+        <div class="space-y-3">
+          <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+            <div class="flex items-center gap-2 text-amber-500 mb-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              <span class="text-xs font-semibold uppercase">Requiere atención</span>
+            </div>
+            <ul class="text-xs space-y-1">
+              <li>• 2 deliberaciones cerrarán en 3 días</li>
+              <li>• FCI no aplicado este semestre en CABA Magnetismo</li>
+            </ul>
+          </div>
+          <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+            <h3 class="text-xs font-semibold mb-2">⚡ Acciones rápidas</h3>
+            <div class="space-y-1.5">
+              <button class="w-full text-left text-xs px-2 py-1.5 rounded hover:bg-[var(--surface-2)]">📝 Crear nota</button>
+              <button class="w-full text-left text-xs px-2 py-1.5 rounded hover:bg-[var(--surface-2)]">🗳️ Abrir deliberación</button>
+              <button class="w-full text-left text-xs px-2 py-1.5 rounded hover:bg-[var(--surface-2)]">📅 Programar evento</button>
+              <button class="w-full text-left text-xs px-2 py-1.5 rounded hover:bg-[var(--surface-2)]">🚀 Lanzar proyecto</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Distribución riesgo -->
+      <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 mb-4">
+        <h2 class="font-semibold mb-3">Distribución de riesgo por documento</h2>
+        <div class="flex items-center gap-6 text-xs">
+          <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full rag-green"></span> LOW: 18</div>
+          <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full rag-amber"></span> MEDIUM: 9</div>
+          <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full rag-red"></span> HIGH: 2</div>
+          <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full rag-gray"></span> UNKNOWN: 6</div>
+        </div>
+        <div class="mt-3 flex h-3 rounded-full overflow-hidden bg-[var(--surface-2)]">
+          <div class="bg-emerald-500" style="width:51%"></div>
+          <div class="bg-amber-500" style="width:26%"></div>
+          <div class="bg-red-500" style="width:6%"></div>
+          <div class="bg-gray-500" style="width:17%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEED estilo Twitter/Facebook -->
+    <section data-content="feed" class="content hidden px-6 py-6">
+      <div class="max-w-2xl mx-auto">
+        <!-- composer -->
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 mb-6">
+          <div class="flex gap-3">
+            <span class="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--blue)] flex items-center justify-center text-white text-xs font-bold shrink-0">CC</span>
+            <div class="flex-1">
+              <textarea placeholder="¿Qué descubriste hoy? Comparte con la CoP..." rows="2" class="w-full bg-transparent text-sm border-0 focus:outline-none focus:ring-0 resize-none placeholder:text-[var(--muted)]"></textarea>
+              <div class="flex items-center justify-between mt-2 pt-2 border-t border-[var(--border)]">
+                <div class="flex gap-1 text-[var(--muted)]">
+                  <button class="p-1.5 rounded hover:bg-[var(--surface-2)]" title="Adjuntar imagen">📷</button>
+                  <button class="p-1.5 rounded hover:bg-[var(--surface-2)]" title="Documento">📎</button>
+                  <button class="p-1.5 rounded hover:bg-[var(--surface-2)]" title="Encuesta">📊</button>
+                  <button class="p-1.5 rounded hover:bg-[var(--surface-2)]" title="Citar paper">📚</button>
+                  <button class="p-1.5 rounded hover:bg-[var(--surface-2)]" title="LaTeX">∑</button>
+                </div>
+                <button class="px-4 py-1.5 rounded-md bg-[var(--blue)] text-white text-xs font-semibold hover:bg-[var(--blue)]/90">Publicar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- post 1: docente publica nueva nota -->
+        <article class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 mb-3 feed-item">
+          <header class="flex items-center gap-3 mb-2">
+            <span class="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--emerald)] to-[var(--blue)] flex items-center justify-center text-white text-xs font-bold">MR</span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-sm font-semibold">María Rodríguez</span>
+                <span class="badge badge-blue">Docente Diseñador</span>
+                <span class="text-[var(--muted)] text-xs">· hace 2 h</span>
+              </div>
+              <div class="text-[10px] text-[var(--muted)]">@maria-r · Programa Física · CABA Magnetismo</div>
+            </div>
+            <button class="p-1 text-[var(--muted)] hover:text-[var(--text)]">⋯</button>
+          </header>
+          <div class="text-sm leading-relaxed mb-3">
+            Acabo de publicar el nuevo paquete CCA <strong>"Evaluaciones tipo Cap.27 Young & Freedman"</strong>. Incluye 12 problemas con FCI, rúbrica xAPI y cobertura de los 4 outcomes de la sección. Si lo aplican en sus cursos, ¿podrían reportarme el Hake-g resultante?
+          </div>
+          <!-- attached doc preview -->
+          <div class="border border-[var(--border)] rounded-lg p-3 mb-3 bg-[var(--surface-2)]">
+            <div class="flex items-center gap-2 text-xs">
+              <span class="w-9 h-9 rounded bg-[var(--gold)] text-white flex items-center justify-center font-bold">📚</span>
+              <div class="min-w-0 flex-1">
+                <div class="font-semibold text-sm truncate">evaluaciones-tipo-magnetismo.mdx</div>
+                <div class="text-[10px] text-[var(--muted)]">Sección · Cap. 27 · 12 problemas · 8 min lectura</div>
+              </div>
+              <button class="px-2 py-1 rounded text-[10px] border border-[var(--border)] hover:bg-[var(--surface)]">Abrir</button>
+            </div>
+          </div>
+          <!-- actions -->
+          <div class="flex items-center gap-1 pt-2 border-t border-[var(--border)] text-[var(--muted)]">
+            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">
+              👍 <span>23</span>
+            </button>
+            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">
+              💬 <span>4</span>
+            </button>
+            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">
+              🔄 Reusar
+            </button>
+            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">
+              ⭐ Guardar
+            </button>
+            <button class="ml-auto flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">
+              ↗
+            </button>
+          </div>
+          <!-- top comment -->
+          <div class="mt-3 pt-3 border-t border-[var(--border)] flex gap-2">
+            <span class="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--orange)] to-[var(--purple)] flex items-center justify-center text-white text-[10px] font-bold shrink-0">JL</span>
+            <div class="flex-1">
+              <div class="bg-[var(--surface-2)] rounded-lg px-3 py-2 text-xs">
+                <span class="font-semibold mr-1">Juan López</span>
+                <span class="text-[var(--muted)] text-[10px]">Active Learning Master</span>
+                <p class="mt-0.5">Lo aplicamos la semana pasada en la cohorte nocturna. <strong>g = 0.41 ↑</strong>. Los problemas 7 y 9 generaron más debate que los demás.</p>
+              </div>
+              <div class="flex items-center gap-3 mt-1 px-2 text-[10px] text-[var(--muted)]">
+                <button class="hover:text-[var(--text)]">Like 8</button>
+                <button class="hover:text-[var(--text)]">Responder</button>
+                <span>· hace 1h</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- post 2: pregunta de estudiante -->
+        <article class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 mb-3 feed-item">
+          <header class="flex items-center gap-3 mb-2">
+            <span class="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--orange)] flex items-center justify-center text-white text-xs font-bold">MS</span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-sm font-semibold">Manuela Santiz</span>
+                <span class="badge badge-emerald">Estudiante Soberano</span>
+                <span class="text-[var(--muted)] text-xs">· hace 5 h</span>
+              </div>
+              <div class="text-[10px] text-[var(--muted)]">@manu-s · Mecánica · 3er semestre</div>
+            </div>
+          </header>
+          <div class="text-sm leading-relaxed mb-3">
+            ¿Alguien tiene una intuición visual de por qué <span class="katex-inline">$\\vec{F} = q\\vec{v} \\times \\vec{B}$</span> es perpendicular a ambos vectores? Vi la regla de la mano derecha pero todavía no me hace clic <i>por qué</i> debe ser así fundamentalmente.
+            <br><br>
+            <span class="text-[var(--muted)]">#magnetismo #intuicion-fisica</span>
+          </div>
+          <div class="flex items-center gap-1 pt-2 border-t border-[var(--border)] text-[var(--muted)]">
+            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">👍 12</button>
+            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">💬 7</button>
+            <button class="flex items-center gap-1 px-2 py-1 rounded hover:bg-[var(--surface-2)] text-xs">📚 Citar paper</button>
+          </div>
+        </article>
+
+        <!-- post 3: actividad sistema -->
+        <article class="bg-[var(--surface)]/50 border border-[var(--border)] rounded-xl p-3 mb-3 feed-item text-xs">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-[var(--gold)]/20 flex items-center justify-center">🏅</span>
+            <span class="text-[var(--muted)]">
+              <strong class="text-[var(--text)]">Camila Vélez</strong> obtuvo la insignia
+              <span class="badge badge-amber">🏆 Pasteur Pleno · Nivel 2</span>
+              al co-publicar su 5° paper con estudiantes en líneas PIIOM.
+            </span>
+            <span class="text-[var(--muted)] ml-auto">hace 8 h</span>
+          </div>
+        </article>
+
+        <!-- post 4: deliberación -->
+        <article class="bg-gradient-to-br from-[var(--orange)]/5 to-transparent border border-[var(--orange)]/30 rounded-xl p-4 mb-3 feed-item">
+          <header class="flex items-center gap-3 mb-2">
+            <span class="w-9 h-9 rounded-full bg-[var(--orange)] flex items-center justify-center text-white">🗳️</span>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-sm font-semibold">Deliberación abierta</span>
+                <span class="badge badge-amber">Fase: Discusión</span>
+                <span class="text-[var(--muted)] text-xs">· cierra en 3 días</span>
+              </div>
+              <div class="text-[10px] text-[var(--muted)]">Convocada por Director de Escuela</div>
+            </div>
+          </header>
+          <h3 class="font-semibold text-sm mb-2">¿Adoptamos la rúbrica xAPI v3 como estándar de la Escuela?</h3>
+          <p class="text-xs text-[var(--muted)] mb-3">3 enmiendas registradas · 24 intervenciones · 67% participación esperada</p>
+          <!-- stepper FIDA -->
+          <div class="flex items-center gap-1 mb-3">
+            <span class="flex-1 h-1.5 rounded-full bg-emerald-500" title="Propuesta"></span>
+            <span class="flex-1 h-1.5 rounded-full bg-amber-500" title="Discusión (actual)"></span>
+            <span class="flex-1 h-1.5 rounded-full bg-[var(--surface-2)]" title="Enmiendas"></span>
+            <span class="flex-1 h-1.5 rounded-full bg-[var(--surface-2)]" title="Votación"></span>
+            <span class="flex-1 h-1.5 rounded-full bg-[var(--surface-2)]" title="Decisión"></span>
+          </div>
+          <div class="flex items-center gap-2 text-[10px] text-[var(--muted)] mb-3">
+            <span>1. Propuesta ✓</span>
+            <span>2. Discusión ●</span>
+            <span>3. Enmiendas</span>
+            <span>4. Votación</span>
+            <span>5. Decisión</span>
+          </div>
+          <div class="flex gap-2">
+            <button class="flex-1 px-3 py-1.5 rounded-md bg-[var(--orange)] text-white text-xs font-semibold">Participar</button>
+            <button class="px-3 py-1.5 rounded-md border border-[var(--border)] text-xs">Ver detalles</button>
+          </div>
+        </article>
+
+        <!-- post 5: encuesta -->
+        <article class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 mb-3 feed-item">
+          <header class="flex items-center gap-3 mb-2">
+            <span class="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--blue)] to-[var(--purple)] flex items-center justify-center text-white text-xs font-bold">JR</span>
+            <div class="flex-1">
+              <span class="text-sm font-semibold">Jorge Rivera</span>
+              <span class="badge badge-purple ml-1">Director</span>
+              <span class="text-[var(--muted)] text-xs ml-1">· hace 1 día</span>
+            </div>
+          </header>
+          <h3 class="font-semibold text-sm mb-3">¿En qué horario funcionaría mejor el seminario quincenal de la Escuela?</h3>
+          <div class="space-y-2 text-xs">
+            <div class="relative h-9 rounded-md bg-[var(--surface-2)] overflow-hidden">
+              <div class="absolute inset-y-0 left-0 bg-emerald-500/30 rounded-l-md" style="width:62%"></div>
+              <div class="absolute inset-0 flex items-center justify-between px-3"><span class="font-medium">Jueves 18:00</span><span class="text-[var(--muted)]">62% · 31 votos</span></div>
+            </div>
+            <div class="relative h-9 rounded-md bg-[var(--surface-2)] overflow-hidden">
+              <div class="absolute inset-y-0 left-0 bg-blue-500/30 rounded-l-md" style="width:24%"></div>
+              <div class="absolute inset-0 flex items-center justify-between px-3"><span class="font-medium">Viernes 16:00</span><span class="text-[var(--muted)]">24% · 12 votos</span></div>
+            </div>
+            <div class="relative h-9 rounded-md bg-[var(--surface-2)] overflow-hidden">
+              <div class="absolute inset-y-0 left-0 bg-amber-500/30 rounded-l-md" style="width:14%"></div>
+              <div class="absolute inset-0 flex items-center justify-between px-3"><span class="font-medium">Sábado 10:00</span><span class="text-[var(--muted)]">14% · 7 votos</span></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-3 text-[10px] text-[var(--muted)]">
+            <span>50 votos · cierra en 5 días</span>
+            <button class="text-[var(--accent)] hover:underline">Ver resultados detallados</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- BIBLIOTECA -->
+    <section data-content="biblioteca" class="content hidden px-6 py-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+        <!-- mini-grafo -->
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="font-semibold flex items-center gap-2">🌌 Grafo de la biblioteca</h2>
+            <span class="text-[10px] text-[var(--muted)]">28 docs · 47 enlaces</span>
+          </div>
+          <div class="graph-3d-canvas" style="height: 240px;">
+            <!-- Mock 3D nodes positioned -->
+            <div class="graph-edge" style="top:50%;left:30%;width:120px;transform:rotate(35deg);"></div>
+            <div class="graph-edge" style="top:55%;left:32%;width:90px;transform:rotate(-15deg);"></div>
+            <div class="graph-edge" style="top:48%;left:45%;width:100px;transform:rotate(60deg);"></div>
+            <div class="graph-edge" style="top:42%;left:55%;width:110px;transform:rotate(-40deg);"></div>
+            <div class="graph-node" style="width:38px;height:38px;background:var(--blue);top:45%;left:30%;color:#67e8f9;">M05</div>
+            <div class="graph-node" style="width:34px;height:34px;background:var(--purple);top:60%;left:45%;color:#c4b5fd;">M07</div>
+            <div class="graph-node" style="width:30px;height:30px;background:var(--gold);top:35%;left:55%;color:#fcd34d;">M08</div>
+            <div class="graph-node" style="width:24px;height:24px;background:var(--emerald);top:55%;left:62%;color:#6ee7b7;">CCA</div>
+            <div class="graph-node" style="width:22px;height:22px;background:var(--orange);top:30%;left:70%;color:#fdba74;">FCI</div>
+            <div class="graph-node" style="width:18px;height:18px;background:#64748b;top:70%;left:35%;color:#cbd5e1;">N1</div>
+            <div class="graph-node" style="width:18px;height:18px;background:#64748b;top:25%;left:40%;color:#cbd5e1;">N2</div>
+            <div class="graph-node" style="width:18px;height:18px;background:#64748b;top:65%;left:75%;color:#cbd5e1;">N3</div>
+          </div>
+          <div class="flex flex-wrap gap-3 mt-3 text-[10px]">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[var(--blue)]"></span>Investigación</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[var(--gold)]"></span>Norma</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[var(--emerald)]"></span>Guía</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[var(--purple)]"></span>Sección</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[var(--orange)]"></span>Deliberación</span>
+          </div>
+        </div>
+        <!-- estadísticas biblio -->
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4">
+          <h2 class="font-semibold mb-3">Tu progreso de lectura</h2>
+          <div class="text-3xl font-bold mb-1">68<span class="text-base text-[var(--muted)]">%</span></div>
+          <div class="text-xs text-[var(--muted)] mb-3">19 de 28 documentos completados · 5 con quiz aprobado</div>
+          <div class="space-y-1.5 text-xs">
+            <div>📜 Normas <span class="text-[var(--muted)]">3/3 ✓</span><div class="h-1 mt-0.5 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-emerald-500 rounded-full" style="width:100%"></div></div></div>
+            <div>🔬 Investigaciones <span class="text-[var(--muted)]">8/12</span><div class="h-1 mt-0.5 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-amber-500 rounded-full" style="width:67%"></div></div></div>
+            <div>📘 Guías <span class="text-[var(--muted)]">5/8</span><div class="h-1 mt-0.5 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-amber-500 rounded-full" style="width:62%"></div></div></div>
+            <div>📚 Secciones <span class="text-[var(--muted)]">3/5</span><div class="h-1 mt-0.5 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-amber-500 rounded-full" style="width:60%"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estantes con docs -->
+      <h2 class="font-semibold mb-3 flex items-center gap-2">📚 Estantes</h2>
+      <div class="space-y-6">
+        <!-- Normas -->
+        <div>
+          <header class="flex items-center justify-between mb-2 pb-2 border-b border-[var(--border)]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-[var(--blue)] text-white flex items-center justify-center">⚖️</div>
+              <div>
+                <h3 class="font-semibold">📜 Normas <span class="badge badge-blue ml-1">3</span></h3>
+                <p class="text-[10px] text-[var(--muted)]">Acuerdos, leyes, decretos vigentes</p>
+              </div>
+            </div>
+          </header>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <article class="card-h border-l-4 border-[var(--blue)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="text-[var(--muted)]">CSU 04/2025</span>
+                <span class="badge badge-emerald">Leído ✓</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">Acuerdo CSU 04/2025</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">Reforma Estatutaria UDFJC. Art. 96-109 régimen estudiantil.</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-emerald-500 rounded-full" style="width:100%"></div></div>
+            </article>
+            <article class="card-h border-l-4 border-[var(--blue)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="text-[var(--muted)]">Ley 30/1992</span>
+                <span class="badge badge-amber">62%</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">Ley 30 de 1992</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">Educación Superior Colombia. Art. 117 autonomía.</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-amber-500 rounded-full" style="width:62%"></div></div>
+            </article>
+            <article class="card-h border-l-4 border-[var(--blue)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="text-[var(--muted)]">CONPES 4069</span>
+                <span class="badge badge-rose">No leído</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">CONPES 4069/2021</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">Política CTI 2022-2031 + misiones transformativas.</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"></div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Investigaciones -->
+        <div>
+          <header class="flex items-center justify-between mb-2 pb-2 border-b border-[var(--border)]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-[var(--purple)] text-white flex items-center justify-center">🔬</div>
+              <div>
+                <h3 class="font-semibold">🔬 Investigaciones <span class="badge badge-purple ml-1">12</span></h3>
+                <p class="text-[10px] text-[var(--muted)]">Papers MI-12 + datasets FAIR + co-authorship</p>
+              </div>
+            </div>
+          </header>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <article class="card-h border-l-4 border-[var(--purple)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="mono text-[var(--muted)]">M05</span>
+                <span class="badge badge-emerald">Guiada · 3 quiz</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">BMK-001 Procesos Misionales 21 IES</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">Benchmark 21 IES con niveles N1-N4 y culture lag</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-emerald-500 rounded-full" style="width:100%"></div></div>
+            </article>
+            <article class="card-h border-l-4 border-[var(--purple)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="mono text-[var(--muted)]">M08</span>
+                <span class="badge badge-amber">67% · LaTeX</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">Estándares OECD/UDL/ABET/CDIO</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">FCI Hestenes 1992 · Hake-g · Backward Design</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-amber-500 rounded-full" style="width:67%"></div></div>
+            </article>
+            <article class="card-h border-l-4 border-[var(--purple)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="mono text-[var(--muted)]">M07</span>
+                <span class="badge badge-rose">No leído</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">21 BPAs activadoras</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">UROP MIT, Stanford OTL, Twente Novel-T</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"></div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Secciones (Young & Freedman) -->
+        <div>
+          <header class="flex items-center justify-between mb-2 pb-2 border-b border-[var(--border)]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-[var(--gold)] text-white flex items-center justify-center">📚</div>
+              <div>
+                <h3 class="font-semibold">📚 Secciones de libro <span class="badge badge-amber ml-1">5</span></h3>
+                <p class="text-[10px] text-[var(--muted)]">Young & Freedman · referenciado desde aleia-mathilde</p>
+              </div>
+            </div>
+            <button class="text-xs text-[var(--accent)] hover:underline">Abrir todas →</button>
+          </header>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <article class="card-h border-l-4 border-[var(--gold)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3 cursor-pointer" onclick="openDoc()">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="mono text-[var(--muted)]">cap-27 · sec-0</span>
+                <span class="badge badge-amber">Leyendo · §1/4</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">27.0 — Introducción al Magnetismo</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">Campo $\\vec{B}$, fuerza $\\vec{F}=q\\vec{v}\\times\\vec{B}$, IRM</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-amber-500 rounded-full" style="width:33%"></div></div>
+            </article>
+            <article class="card-h border-l-4 border-[var(--gold)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="mono text-[var(--muted)]">cap-27 · sec-1</span>
+                <span class="badge badge-emerald">Completo</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">27.1 — Magnetismo</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">Imanes permanentes, campo magnético terrestre</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-emerald-500 rounded-full" style="width:100%"></div></div>
+            </article>
+            <article class="card-h border-l-4 border-[var(--gold)] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3">
+              <div class="flex items-center justify-between mb-2 text-[10px]">
+                <span class="mono text-[var(--muted)]">cap-27 · sec-2</span>
+                <span class="badge badge-rose">Bloqueado</span>
+              </div>
+              <h4 class="font-semibold text-sm mb-1">27.2 — Campo magnético</h4>
+              <p class="text-xs text-[var(--muted)] line-clamp-2">Definición operativa, unidades Tesla</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"></div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documento abierto preview (calidad Young Freedman) -->
+      <div id="doc-reader" class="hidden mt-8 bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 prose-academic">
+        <div class="flex items-center justify-between mb-4 pb-3 border-b border-[var(--border)]">
+          <div class="flex items-center gap-2 text-xs text-[var(--muted)]">
+            <span>Biblioteca</span> ›
+            <span>📚 Secciones</span> ›
+            <span>cap-27</span> ›
+            <span class="text-[var(--text)] font-semibold">27.0 Introducción</span>
+          </div>
+          <button onclick="closeDoc()" class="p-1.5 rounded hover:bg-[var(--surface-2)] text-xs">Cerrar</button>
+        </div>
+        <h1>27.0 — Introducción: Campo Magnético y Fuerzas Magnéticas</h1>
+        <p class="text-sm text-[var(--muted)]">Young & Freedman · Física Vol II · Cap. 27 · 13ed</p>
+
+        <!-- progress -->
+        <div class="my-3 h-1.5 rounded-full bg-[var(--surface-2)]"><div class="h-full bg-amber-500 rounded-full" style="width:33%"></div></div>
+
+        <div class="callout callout-abstract">
+          <div class="callout-title">📋 Metas de Aprendizaje</div>
+          <ul style="margin: .25rem 0 0; font-size: .9rem;">
+            <li>Las propiedades de los imanes y cómo interactúan entre sí.</li>
+            <li>La naturaleza de la fuerza que una partícula cargada en movimiento experimenta en un campo magnético.</li>
+            <li>En qué se diferencian las líneas de campo magnético de las del campo eléctrico.</li>
+            <li>A analizar el movimiento de una partícula cargada en un campo magnético.</li>
+          </ul>
+        </div>
+
+        <h2>Apertura del Capítulo</h2>
+        <figure class="my-4">
+          <div class="aspect-[16/9] bg-gradient-to-br from-amber-200 via-orange-300 to-yellow-200 rounded-lg flex items-center justify-center text-6xl shadow-lg">🦴</div>
+          <figcaption class="text-center text-xs text-[var(--muted)] mt-2">Figura 27.1 — Imagen de Resonancia Magnética (IRM) de un pie</figcaption>
+        </figure>
+
+        <div class="callout callout-question">
+          <div class="callout-title">❓ Pregunta de apertura del libro</div>
+          <p style="margin:0;font-size:.9rem;">Las imágenes de resonancia magnética (IRM) hacen posible ver detalles de los tejidos suaves (como los del pie en la fotografía) que no son visibles en las imágenes de rayos X. No obstante, el tejido suave <strong>no es un material magnético</strong> (no lo atrae un imán). ¿Cómo funcionan las IRM?</p>
+        </div>
+
+        <h2>Texto de Introducción</h2>
+        <p>Todos utilizamos fuerzas magnéticas. Están en el corazón de los <strong>motores eléctricos</strong>, cinescopios de televisión, hornos de microondas, altavoces, impresoras y unidades lectoras de discos. La naturaleza fundamental del magnetismo es la <strong>interacción de las cargas eléctricas en movimiento</strong>.</p>
+
+        <p>Las fuerzas magnéticas ocurren en <strong>dos etapas</strong>:</p>
+        <ol>
+          <li>Una carga o conjunto de cargas en movimiento producen un <strong>campo magnético</strong> <span class="katex"><span class="katex-html"><span class="base"><span class="strut" style="height:0.685em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.685em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">B</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.222em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMaxYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5 3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11 10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63 -1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59 H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359 c-16-25.333-24-45-24-59z"/></svg></span></span></span></span></span></span></span></span></span></span> en el espacio circundante.</li>
+          <li>Una segunda corriente o carga en movimiento responde a ese campo magnético, con lo que experimenta una <strong>fuerza magnética</strong>.</li>
+        </ol>
+
+        <p>La fórmula vectorial fundamental es:</p>
+        <div style="text-align:center; padding: 1rem; background: var(--surface-2); border-radius: .5rem; margin: 1rem 0;">
+          <span style="font-size: 1.4rem;">F⃗ = q v⃗ × B⃗</span>
+          <div style="font-size: .7rem; color: var(--muted); margin-top:.4rem;">eq-27-1 · Ley de Lorentz</div>
+        </div>
+
+        <div class="callout callout-note">
+          <div class="callout-title">💡 Conceptos clave</div>
+          <ul style="margin: .25rem 0 0; font-size: .9rem;">
+            <li><strong>Campo magnético B⃗:</strong> campo vectorial generado por cargas en movimiento.</li>
+            <li><strong>Fuerza magnética:</strong> actúa solo sobre cargas en movimiento; perpendicular a v⃗ y B⃗.</li>
+            <li><strong>Imán permanente:</strong> cuerpo con movimiento coordinado de electrones atómicos.</li>
+          </ul>
+        </div>
+
+        <div class="callout callout-question">
+          <div class="callout-title">❓ Pregunta de comprensión · Sección §1</div>
+          <p style="margin:0 0 .75rem;font-size:.9rem;">¿Cuál es la diferencia clave entre fuerzas eléctricas y magnéticas?</p>
+          <div class="space-y-2 not-prose">
+            <button class="block w-full text-left px-3 py-2 rounded border-2 border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] text-xs">A. Las eléctricas son más fuertes</button>
+            <button class="block w-full text-left px-3 py-2 rounded border-2 border-emerald-500 bg-emerald-500/10 text-xs">B. Las magnéticas solo actúan sobre cargas en movimiento ✓</button>
+            <button class="block w-full text-left px-3 py-2 rounded border-2 border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] text-xs">C. Solo difieren en su magnitud</button>
+            <button class="block w-full text-left px-3 py-2 rounded border-2 border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] text-xs">D. Las eléctricas son perpendiculares</button>
+          </div>
+          <div class="flex gap-2 mt-3 not-prose">
+            <button class="px-3 py-1.5 rounded-md bg-emerald-500 text-white text-xs">✓ Continuar a §2</button>
+            <button class="px-3 py-1.5 rounded-md border border-[var(--border)] text-xs">Saltar pregunta</button>
+          </div>
+        </div>
+
+        <h2>📊 Tabla comparativa IRM</h2>
+        <table style="width:100%; font-size:.85rem; border-collapse: collapse;">
+          <thead style="background: var(--surface-2);">
+            <tr><th style="text-align:left; padding:.5rem; border:1px solid var(--border);">Elemento</th><th style="text-align:left; padding:.5rem; border:1px solid var(--border);">Qué representa</th><th style="text-align:left; padding:.5rem; border:1px solid var(--border);">Por qué importa</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:.5rem; border:1px solid var(--border);">Imagen del pie</td><td style="padding:.5rem; border:1px solid var(--border);">Tejido suave visualizado</td><td style="padding:.5rem; border:1px solid var(--border);">Magnetismo + materia no ferromagnética</td></tr>
+            <tr><td style="padding:.5rem; border:1px solid var(--border);">Campo B⃗ intenso</td><td style="padding:.5rem; border:1px solid var(--border);">Bobinas superconductoras</td><td style="padding:.5rem; border:1px solid var(--border);">Alinea núcleos de hidrógeno</td></tr>
+            <tr><td style="padding:.5rem; border:1px solid var(--border);">Señal RF</td><td style="padding:.5rem; border:1px solid var(--border);">Energía de relajación</td><td style="padding:.5rem; border:1px solid var(--border);">Construye imagen digital</td></tr>
+          </tbody>
+        </table>
+
+        <!-- nav prev/next -->
+        <nav class="flex items-center justify-between mt-8 pt-4 border-t border-[var(--border)] not-prose text-xs">
+          <button class="px-3 py-2 rounded-md border border-[var(--border)] hover:bg-[var(--surface-2)]">← cap-26 · final</button>
+          <span class="text-[var(--muted)]">Sección 1 de 11</span>
+          <button class="px-3 py-2 rounded-md bg-[var(--accent)] text-white">27.1 Magnetismo →</button>
+        </nav>
+
+        <!-- backlinks -->
+        <div class="mt-8 pt-4 border-t border-[var(--border)] not-prose">
+          <h3 class="text-xs uppercase tracking-wide text-[var(--muted)] font-semibold mb-3">Referenciado en</h3>
+          <div class="grid grid-cols-2 gap-2">
+            <a href="#" class="block p-2 rounded border border-[var(--border)] hover:border-[var(--accent)] text-xs">📘 evaluaciones-tipo-magnetismo</a>
+            <a href="#" class="block p-2 rounded border border-[var(--border)] hover:border-[var(--accent)] text-xs">📘 fci-rubrica-cap27</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRAFO -->
+    <section data-content="grafo" class="content hidden px-6 py-6">
+      <div class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="font-semibold">🌌 Grafo de conocimiento de la CoP (3D · Obsidian-style)</h2>
+          <div class="flex gap-2 text-xs">
+            <button class="px-2 py-1 rounded border border-[var(--border)] hover:bg-[var(--surface-2)]">Reset cámara</button>
+            <button class="px-2 py-1 rounded border border-[var(--border)] hover:bg-[var(--surface-2)]">2D</button>
+          </div>
+        </div>
+        <div class="graph-3d-canvas">
+          <!-- mock 3D graph nodes -->
+          <div class="graph-edge" style="top:50%;left:30%;width:200px;transform:rotate(20deg);"></div>
+          <div class="graph-edge" style="top:55%;left:35%;width:160px;transform:rotate(-30deg);"></div>
+          <div class="graph-edge" style="top:48%;left:50%;width:180px;transform:rotate(45deg);"></div>
+          <div class="graph-edge" style="top:30%;left:55%;width:140px;transform:rotate(-15deg);"></div>
+          <div class="graph-edge" style="top:60%;left:45%;width:220px;transform:rotate(70deg);"></div>
+          <div class="graph-edge" style="top:35%;left:70%;width:150px;transform:rotate(-50deg);"></div>
+          <!-- center cluster M05 -->
+          <div class="graph-node" style="width:60px;height:60px;background:var(--purple);top:42%;left:35%;color:#c4b5fd;font-size:.8rem;">M05</div>
+          <div class="graph-node" style="width:50px;height:50px;background:var(--blue);top:50%;left:48%;color:#67e8f9;">M07</div>
+          <div class="graph-node" style="width:46px;height:46px;background:var(--gold);top:30%;left:55%;color:#fcd34d;">M08</div>
+          <div class="graph-node" style="width:40px;height:40px;background:var(--emerald);top:55%;left:62%;color:#6ee7b7;font-size:.6rem;">CCA</div>
+          <div class="graph-node" style="width:35px;height:35px;background:var(--orange);top:35%;left:70%;color:#fdba74;font-size:.6rem;">FCI</div>
+          <!-- notas locales -->
+          <div class="graph-node" style="width:24px;height:24px;background:#64748b;top:65%;left:30%;color:#cbd5e1;font-size:.5rem;">N1</div>
+          <div class="graph-node" style="width:22px;height:22px;background:#64748b;top:25%;left:42%;color:#cbd5e1;font-size:.5rem;">N2</div>
+          <div class="graph-node" style="width:24px;height:24px;background:#64748b;top:70%;left:55%;color:#cbd5e1;font-size:.5rem;">N3</div>
+          <div class="graph-node" style="width:22px;height:22px;background:#64748b;top:30%;left:75%;color:#cbd5e1;font-size:.5rem;">N4</div>
+          <div class="graph-node" style="width:26px;height:26px;background:#64748b;top:60%;left:75%;color:#cbd5e1;font-size:.5rem;">N5</div>
+          <!-- secciones (gold cluster bottom-left) -->
+          <div class="graph-node" style="width:28px;height:28px;background:var(--gold);top:68%;left:40%;color:#fcd34d;font-size:.55rem;">S0</div>
+          <div class="graph-node" style="width:28px;height:28px;background:var(--gold);top:75%;left:48%;color:#fcd34d;font-size:.55rem;">S1</div>
+          <div class="graph-node" style="width:24px;height:24px;background:var(--gold);top:80%;left:42%;color:#fcd34d;font-size:.55rem;">S2</div>
+          <!-- floating controls -->
+          <div class="absolute top-3 right-3 bg-[var(--surface)]/90 border border-[var(--border)] rounded-lg p-2 text-[10px] backdrop-blur">
+            <div class="font-semibold mb-1">Filtrar</div>
+            <label class="flex items-center gap-1 mb-0.5"><input type="checkbox" checked class="rounded">Investigación</label>
+            <label class="flex items-center gap-1 mb-0.5"><input type="checkbox" checked class="rounded">Sección</label>
+            <label class="flex items-center gap-1 mb-0.5"><input type="checkbox" checked class="rounded">Guía</label>
+            <label class="flex items-center gap-1"><input type="checkbox" checked class="rounded">Nota</label>
+          </div>
+        </div>
+        <p class="text-xs text-[var(--muted)] mt-2">Doble-click para abrir nodo · Drag para rotar · Scroll para zoom · Hover muestra título</p>
+      </div>
+    </section>
+
+    <!-- PROYECTOS / KANBAN -->
+    <section data-content="proyectos" class="content hidden px-6 py-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-xl font-semibold">Proyectos activos</h2>
+          <p class="text-sm text-[var(--muted)]">BPAs en ejecución con workflow FIDA</p>
+        </div>
+        <button class="px-3 py-1.5 rounded-md bg-[var(--blue)] text-white text-xs">+ Nuevo proyecto</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div>
+          <div class="flex items-center justify-between mb-2 pb-2 border-b-2 border-gray-500">
+            <h3 class="text-sm font-semibold">Propuesta</h3>
+            <span class="badge">2</span>
+          </div>
+          <div class="space-y-2">
+            <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3 card-h">
+              <span class="badge badge-blue text-[9px]">BP-INT04</span>
+              <h4 class="text-sm font-semibold mt-1">Living Lab Magnetismo Aplicado</h4>
+              <p class="text-[10px] text-[var(--muted)] mt-1">Living Lab con industria local + 12 estudiantes</p>
+              <div class="flex items-center gap-1 mt-2">
+                <span class="w-5 h-5 rounded-full bg-purple-500 text-white text-[9px] flex items-center justify-center">+3</span>
+                <span class="text-[10px] text-[var(--muted)]">3 leads</span>
+              </div>
+            </div>
+            <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3 card-h">
+              <span class="badge badge-blue text-[9px]">BP-I02</span>
+              <h4 class="text-sm font-semibold mt-1">Co-authoring K12 → PhD</h4>
+              <p class="text-[10px] text-[var(--muted)] mt-1">Pipeline de investigación K12 a PhD</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2 pb-2 border-b-2 border-amber-500">
+            <h3 class="text-sm font-semibold">Aprobación</h3>
+            <span class="badge">1</span>
+          </div>
+          <div class="space-y-2">
+            <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3 card-h">
+              <span class="badge badge-amber text-[9px]">BP-F01</span>
+              <h4 class="text-sm font-semibold mt-1">Concept Inventories disciplinares</h4>
+              <p class="text-[10px] text-[var(--muted)] mt-1">FCI + BEMA + EMCA aplicados</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-amber-500 rounded-full" style="width:60%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2 pb-2 border-b-2 border-blue-500">
+            <h3 class="text-sm font-semibold">Ejecución</h3>
+            <span class="badge">2</span>
+          </div>
+          <div class="space-y-2">
+            <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3 card-h">
+              <span class="badge badge-blue text-[9px]">BP-INT01</span>
+              <h4 class="text-sm font-semibold mt-1">Paquete CCA Mecánica</h4>
+              <p class="text-[10px] text-[var(--muted)] mt-1">Backward design + xAPI + UDL</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-blue-500 rounded-full" style="width:75%"></div></div>
+            </div>
+            <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3 card-h">
+              <span class="badge badge-blue text-[9px]">BP-E02</span>
+              <h4 class="text-sm font-semibold mt-1">TTO ético magnetismo</h4>
+              <p class="text-[10px] text-[var(--muted)] mt-1">Spin-off sensores con cooperativa local</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-blue-500 rounded-full" style="width:45%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2 pb-2 border-b-2 border-emerald-500">
+            <h3 class="text-sm font-semibold">Graduado</h3>
+            <span class="badge">3</span>
+          </div>
+          <div class="space-y-2">
+            <div class="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-3 card-h opacity-80">
+              <span class="badge badge-emerald text-[9px]">BP-F05</span>
+              <h4 class="text-sm font-semibold mt-1">Hake-g semestre I 2026</h4>
+              <p class="text-[10px] text-[var(--muted)] mt-1">3 cohortes · g promedio 0.34</p>
+              <div class="h-1 mt-2 bg-[var(--surface-2)] rounded-full"><div class="h-full bg-emerald-500 rounded-full" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORO -->
+    <section data-content="foro" class="content hidden px-6 py-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-xl font-semibold">💬 Foro de discusión</h2>
+            <p class="text-sm text-[var(--muted)]">Hilos asíncronos · estilo Discourse</p>
+          </div>
+          <button class="px-3 py-1.5 rounded-md bg-[var(--blue)] text-white text-xs">+ Nuevo tema</button>
+        </div>
+        <div class="border border-[var(--border)] rounded-lg overflow-hidden">
+          <div class="bg-[var(--surface-2)] grid grid-cols-12 gap-3 px-4 py-2 text-[10px] uppercase tracking-wide text-[var(--muted)] font-semibold">
+            <span class="col-span-6">Tema</span>
+            <span class="col-span-2 text-center">Categoría</span>
+            <span class="col-span-1 text-center">Resp.</span>
+            <span class="col-span-2 text-center">Actividad</span>
+            <span class="col-span-1 text-center">Vistas</span>
+          </div>
+          <div class="divide-y divide-[var(--border)]">
+            <a class="grid grid-cols-12 gap-3 px-4 py-3 items-center hover:bg-[var(--surface-2)] cursor-pointer">
+              <div class="col-span-6 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-emerald-500 text-white text-[9px] flex items-center justify-center font-bold">📌</span>
+                <div class="min-w-0">
+                  <div class="text-sm font-semibold truncate">¿Cómo aplicaron FCI sus colegas en cohortes nocturnas?</div>
+                  <div class="text-[10px] text-[var(--muted)] mt-0.5">por Juan López · 3 docentes responden</div>
+                </div>
+              </div>
+              <span class="col-span-2 text-center"><span class="badge badge-emerald">Pedagogía</span></span>
+              <span class="col-span-1 text-center text-xs font-semibold">12</span>
+              <span class="col-span-2 text-center text-[10px] text-[var(--muted)]">hace 2h</span>
+              <span class="col-span-1 text-center text-xs">456</span>
+            </a>
+            <a class="grid grid-cols-12 gap-3 px-4 py-3 items-center hover:bg-[var(--surface-2)] cursor-pointer">
+              <div class="col-span-6 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-purple-500 text-white text-[9px] flex items-center justify-center">🔥</span>
+                <div class="min-w-0">
+                  <div class="text-sm font-semibold truncate">Compartir notebooks Jupyter para visualizar campo B⃗</div>
+                  <div class="text-[10px] text-[var(--muted)] mt-0.5">por María R · 6 estudiantes piden acceso</div>
+                </div>
+              </div>
+              <span class="col-span-2 text-center"><span class="badge badge-purple">Recursos</span></span>
+              <span class="col-span-1 text-center text-xs font-semibold">8</span>
+              <span class="col-span-2 text-center text-[10px] text-[var(--muted)]">hace 1d</span>
+              <span class="col-span-1 text-center text-xs">231</span>
+            </a>
+            <a class="grid grid-cols-12 gap-3 px-4 py-3 items-center hover:bg-[var(--surface-2)] cursor-pointer">
+              <div class="col-span-6 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-amber-500 text-white text-[9px] flex items-center justify-center">?</span>
+                <div class="min-w-0">
+                  <div class="text-sm font-semibold truncate">Errores comunes en problemas de inducción electromagnética</div>
+                  <div class="text-[10px] text-[var(--muted)] mt-0.5">por Manuela S · pregunta abierta</div>
+                </div>
+              </div>
+              <span class="col-span-2 text-center"><span class="badge badge-amber">Dudas</span></span>
+              <span class="col-span-1 text-center text-xs font-semibold">3</span>
+              <span class="col-span-2 text-center text-[10px] text-[var(--muted)]">hace 3d</span>
+              <span class="col-span-1 text-center text-xs">87</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DELIBERACION -->
+    <section data-content="deliberacion" class="content hidden px-6 py-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-xl font-semibold mb-1">🗳️ Deliberaciones formales</h2>
+        <p class="text-sm text-[var(--muted)] mb-6">Decisiones colegiadas con BPMN-style workflow</p>
+
+        <div class="bg-[var(--surface)] border border-[var(--orange)]/40 rounded-xl p-5 mb-6">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <span class="badge badge-amber mb-2">Fase 2/5 · Discusión</span>
+              <h3 class="text-lg font-semibold">¿Adoptamos la rúbrica xAPI v3 como estándar de la Escuela?</h3>
+              <p class="text-xs text-[var(--muted)] mt-1">Convocada por Director · cierra 28-abr-2026</p>
+            </div>
+            <span class="badge badge-emerald text-[10px]">67% participación</span>
+          </div>
+
+          <!-- BPMN-style stepper -->
+          <div class="flex items-stretch gap-1 my-5">
+            <div class="flex-1 bg-emerald-500 text-white rounded-l-md p-2 text-center">
+              <div class="text-[10px] uppercase tracking-wide">1 · Propuesta</div>
+              <div class="text-xs font-semibold mt-0.5">✓ Cerrada</div>
+            </div>
+            <div class="flex-1 bg-amber-500 text-white p-2 text-center">
+              <div class="text-[10px] uppercase tracking-wide">2 · Discusión</div>
+              <div class="text-xs font-semibold mt-0.5">● 24 intervenciones</div>
+            </div>
+            <div class="flex-1 bg-[var(--surface-2)] p-2 text-center">
+              <div class="text-[10px] uppercase tracking-wide text-[var(--muted)]">3 · Enmiendas</div>
+              <div class="text-xs mt-0.5 text-[var(--muted)]">3 propuestas</div>
+            </div>
+            <div class="flex-1 bg-[var(--surface-2)] p-2 text-center">
+              <div class="text-[10px] uppercase tracking-wide text-[var(--muted)]">4 · Votación</div>
+              <div class="text-xs mt-0.5 text-[var(--muted)]">28-30 abr</div>
+            </div>
+            <div class="flex-1 bg-[var(--surface-2)] rounded-r-md p-2 text-center">
+              <div class="text-[10px] uppercase tracking-wide text-[var(--muted)]">5 · Decisión</div>
+              <div class="text-xs mt-0.5 text-[var(--muted)]">Vinculante</div>
+            </div>
+          </div>
+
+          <!-- enmiendas -->
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold mb-2">3 enmiendas propuestas</h4>
+            <div class="space-y-2">
+              <div class="bg-[var(--surface-2)] rounded-md p-3 text-xs">
+                <div class="flex items-start gap-2">
+                  <span class="badge badge-purple">E1</span>
+                  <div class="flex-1">
+                    <div class="font-semibold mb-0.5">Incluir Open Badge 3.0 verificable</div>
+                    <p class="text-[var(--muted)]">por Camila V. · 12 ↑ apoyos · 2 ↓ objeciones</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-[var(--surface-2)] rounded-md p-3 text-xs">
+                <div class="flex items-start gap-2">
+                  <span class="badge badge-purple">E2</span>
+                  <div class="flex-1">
+                    <div class="font-semibold mb-0.5">Permitir extensión de plazo en evaluación de pares</div>
+                    <p class="text-[var(--muted)]">por Manuela S. · 8 ↑ · 1 ↓</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-[var(--surface-2)] rounded-md p-3 text-xs">
+                <div class="flex items-start gap-2">
+                  <span class="badge badge-purple">E3</span>
+                  <div class="flex-1">
+                    <div class="font-semibold mb-0.5">Pilotar antes de exigir adopción universal</div>
+                    <p class="text-[var(--muted)]">por Juan L. · 18 ↑ · 0 ↓</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <button class="flex-1 px-3 py-2 rounded-md bg-[var(--orange)] text-white text-sm font-semibold">Participar en discusión</button>
+            <button class="px-3 py-2 rounded-md border border-[var(--border)] text-sm">+ Proponer enmienda</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTOS -->
+    <section data-content="eventos" class="content hidden px-6 py-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold">📅 Eventos de la CoP</h2>
+        <div class="flex gap-2">
+          <div class="tab-track text-xs">
+            <button class="tab active">Mes</button>
+            <button class="tab">Semana</button>
+            <button class="tab">Agenda</button>
+          </div>
+          <button class="px-3 py-1.5 rounded-md bg-[var(--blue)] text-white text-xs">+ Nuevo evento</button>
+        </div>
+      </div>
+      <div class="grid grid-cols-7 gap-1 text-xs">
+        <div class="text-center text-[var(--muted)] font-semibold py-1">Lun</div>
+        <div class="text-center text-[var(--muted)] font-semibold py-1">Mar</div>
+        <div class="text-center text-[var(--muted)] font-semibold py-1">Mié</div>
+        <div class="text-center text-[var(--muted)] font-semibold py-1">Jue</div>
+        <div class="text-center text-[var(--muted)] font-semibold py-1">Vie</div>
+        <div class="text-center text-[var(--muted)] font-semibold py-1">Sáb</div>
+        <div class="text-center text-[var(--muted)] font-semibold py-1">Dom</div>
+        <!-- 28 cells -->
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1 text-[var(--muted)]">28</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1 text-[var(--muted)]">29</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1 text-[var(--muted)]">30</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">1</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">2</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">3</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">4</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">5
+          <div class="bg-blue-500/30 text-[8px] rounded px-1 truncate mt-1">Seminario</div>
+        </div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">6</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">7</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">8
+          <div class="bg-purple-500/30 text-[8px] rounded px-1 truncate mt-1">CABA Mtg</div>
+        </div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">9</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">10</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">11</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">12
+          <div class="bg-amber-500/30 text-[8px] rounded px-1 truncate mt-1">FCI Eval</div>
+        </div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">13</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">14</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">15
+          <div class="bg-emerald-500/30 text-[8px] rounded px-1 truncate mt-1">Living Lab</div>
+        </div>
+        <div class="aspect-square bg-[var(--surface)] border-2 border-[var(--accent)] rounded p-1 font-bold">16</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">17</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">18</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">19</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">20</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">21</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">22</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">23</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">24</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">25</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">26</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">27</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">28
+          <div class="bg-orange-500/30 text-[8px] rounded px-1 truncate mt-1">Delib</div>
+        </div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">29</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">30</div>
+        <div class="aspect-square bg-[var(--surface)] border border-[var(--border)] rounded p-1">31</div>
+      </div>
+    </section>
+
+    <!-- MIEMBROS -->
+    <section data-content="miembros" class="content hidden px-6 py-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold">👥 Miembros · 196 activos</h2>
+        <div class="flex gap-2">
+          <input placeholder="Buscar miembro..." class="px-3 py-1.5 rounded-md border border-[var(--border)] bg-[var(--surface)] text-xs w-48">
+          <select class="px-2 py-1.5 rounded-md border border-[var(--border)] bg-[var(--surface)] text-xs">
+            <option>Todos los roles</option>
+            <option>Estudiantes</option>
+            <option>Docentes</option>
+            <option>Director</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <article class="card-h bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 text-center">
+          <span class="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--blue)] mx-auto flex items-center justify-center text-white text-xl font-bold">JR</span>
+          <h3 class="font-semibold text-sm mt-2">Jorge Rivera</h3>
+          <span class="badge badge-purple text-[10px]">Director</span>
+          <p class="text-[10px] text-[var(--muted)] mt-2">Visionario Estratégico · 8 años</p>
+          <div class="flex justify-center gap-3 mt-3 text-[10px]">
+            <span>📚 47</span><span>🏅 12</span><span>⭐ 4.8</span>
+          </div>
+          <button class="mt-2 w-full px-2 py-1 rounded border border-[var(--border)] text-[10px] hover:bg-[var(--surface-2)]">Mensaje</button>
+        </article>
+        <article class="card-h bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 text-center">
+          <span class="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--emerald)] to-[var(--blue)] mx-auto flex items-center justify-center text-white text-xl font-bold">MR</span>
+          <h3 class="font-semibold text-sm mt-2">María Rodríguez</h3>
+          <span class="badge badge-blue text-[10px]">Diseñadora CCA</span>
+          <p class="text-[10px] text-[var(--muted)] mt-2">Arquitecta de paquetes · 5 años</p>
+          <div class="flex justify-center gap-3 mt-3 text-[10px]">
+            <span>📚 23</span><span>🏅 8</span><span>⭐ 4.9</span>
+          </div>
+          <button class="mt-2 w-full px-2 py-1 rounded border border-[var(--border)] text-[10px] hover:bg-[var(--surface-2)]">Mensaje</button>
+        </article>
+        <article class="card-h bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 text-center">
+          <span class="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--orange)] mx-auto flex items-center justify-center text-white text-xl font-bold">JL</span>
+          <h3 class="font-semibold text-sm mt-2">Juan López</h3>
+          <span class="badge badge-emerald text-[10px]">Active Learning M.</span>
+          <p class="text-[10px] text-[var(--muted)] mt-2">Hake-g sostenido · 7 años</p>
+          <div class="flex justify-center gap-3 mt-3 text-[10px]">
+            <span>📚 31</span><span>🏅 6</span><span>⭐ 4.7</span>
+          </div>
+          <button class="mt-2 w-full px-2 py-1 rounded border border-[var(--border)] text-[10px] hover:bg-[var(--surface-2)]">Mensaje</button>
+        </article>
+        <article class="card-h bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 text-center">
+          <span class="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--gold)] to-[var(--orange)] mx-auto flex items-center justify-center text-white text-xl font-bold">CV</span>
+          <h3 class="font-semibold text-sm mt-2">Camila Vélez</h3>
+          <span class="badge badge-purple text-[10px]">Pasteur Pleno N2</span>
+          <p class="text-[10px] text-[var(--muted)] mt-2">Investigadora · 4 años · 12 papers</p>
+          <div class="flex justify-center gap-3 mt-3 text-[10px]">
+            <span>📚 12</span><span>🏅 9</span><span>⭐ 4.9</span>
+          </div>
+          <button class="mt-2 w-full px-2 py-1 rounded border border-[var(--border)] text-[10px] hover:bg-[var(--surface-2)]">Mensaje</button>
+        </article>
+        <article class="card-h bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 text-center">
+          <span class="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--orange)] mx-auto flex items-center justify-center text-white text-xl font-bold">MS</span>
+          <h3 class="font-semibold text-sm mt-2">Manuela Santiz</h3>
+          <span class="badge badge-emerald text-[10px]">Estudiante Soberano</span>
+          <p class="text-[10px] text-[var(--muted)] mt-2">3er semestre · Open Badge x4</p>
+          <div class="flex justify-center gap-3 mt-3 text-[10px]">
+            <span>📚 8</span><span>🏅 4</span><span>⭐ 4.6</span>
+          </div>
+          <button class="mt-2 w-full px-2 py-1 rounded border border-[var(--border)] text-[10px] hover:bg-[var(--surface-2)]">Mensaje</button>
+        </article>
+        <article class="card-h bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 text-center">
+          <span class="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--emerald)] to-[var(--gold)] mx-auto flex items-center justify-center text-white text-xl font-bold">AT</span>
+          <h3 class="font-semibold text-sm mt-2">Andrea Torres</h3>
+          <span class="badge badge-amber text-[10px]">Agente Territorial</span>
+          <p class="text-[10px] text-[var(--muted)] mt-2">Living Labs · 3 spin-offs</p>
+          <div class="flex justify-center gap-3 mt-3 text-[10px]">
+            <span>📚 17</span><span>🏅 7</span><span>⭐ 4.8</span>
+          </div>
+          <button class="mt-2 w-full px-2 py-1 rounded border border-[var(--border)] text-[10px] hover:bg-[var(--surface-2)]">Mensaje</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- LOGROS -->
+    <section data-content="logros" class="content hidden px-6 py-6">
+      <h2 class="text-xl font-semibold mb-1">🏅 Logros e insignias · Open Badge 3.0</h2>
+      <p class="text-sm text-[var(--muted)] mb-6">Credenciales verificables W3C VC + IEEE P2881</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4">
+          <h3 class="font-semibold mb-3">Tu progreso · Manuela Santiz</h3>
+          <div class="flex items-center gap-4 mb-3">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--orange)] flex items-center justify-center text-white text-2xl font-bold shadow-lg">MS</div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">Nivel 3 · Aprendiz Soberano</div>
+              <div class="text-xs text-[var(--muted)] mb-1">2,840 / 4,000 XP</div>
+              <div class="h-2 rounded-full bg-[var(--surface-2)]"><div class="h-full bg-gradient-to-r from-[var(--blue)] to-[var(--purple)] rounded-full" style="width:71%"></div></div>
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-2 text-center">
+            <div><div class="text-2xl font-bold">4</div><div class="text-[10px] text-[var(--muted)]">Insignias</div></div>
+            <div><div class="text-2xl font-bold">12</div><div class="text-[10px] text-[var(--muted)]">Streak (días)</div></div>
+            <div><div class="text-2xl font-bold">8</div><div class="text-[10px] text-[var(--muted)]">Quizzes</div></div>
+            <div><div class="text-2xl font-bold">96%</div><div class="text-[10px] text-[var(--muted)]">Acertividad</div></div>
+          </div>
+        </div>
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4">
+          <h3 class="font-semibold mb-3">🏆 Top contribuyentes</h3>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-center font-bold text-[var(--gold)]">1</span>
+              <span class="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--blue)] flex items-center justify-center text-white text-[10px] font-bold">JR</span>
+              <span class="flex-1">Jorge Rivera</span>
+              <span class="text-[var(--muted)]">12,400 XP</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-center font-bold">2</span>
+              <span class="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--emerald)] to-[var(--blue)] flex items-center justify-center text-white text-[10px] font-bold">MR</span>
+              <span class="flex-1">María Rodríguez</span>
+              <span class="text-[var(--muted)]">9,830 XP</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-center font-bold">3</span>
+              <span class="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--orange)] flex items-center justify-center text-white text-[10px] font-bold">JL</span>
+              <span class="flex-1">Juan López</span>
+              <span class="text-[var(--muted)]">8,210 XP</span>
+            </div>
+            <div class="flex items-center gap-2 bg-[var(--surface-2)] rounded p-1">
+              <span class="w-6 text-center font-bold">7</span>
+              <span class="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--orange)] flex items-center justify-center text-white text-[10px] font-bold">MS</span>
+              <span class="flex-1 font-semibold">Manuela (tú)</span>
+              <span class="text-[var(--muted)]">2,840 XP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="font-semibold mb-3">Catálogo de insignias</h3>
+      <div class="grid grid-cols-3 md:grid-cols-5 gap-3">
+        <div class="text-center">
+          <div class="aspect-square rounded-full bg-gradient-to-br from-[var(--gold)] to-[var(--orange)] flex items-center justify-center text-3xl shadow-lg mb-1">🏆</div>
+          <div class="text-xs font-semibold">Pasteur Pleno</div>
+          <div class="text-[10px] text-[var(--muted)]">Co-author 5 papers</div>
+        </div>
+        <div class="text-center">
+          <div class="aspect-square rounded-full bg-gradient-to-br from-[var(--blue)] to-[var(--purple)] flex items-center justify-center text-3xl shadow-lg mb-1">🎯</div>
+          <div class="text-xs font-semibold">Hake-g 0.4+</div>
+          <div class="text-[10px] text-[var(--muted)]">Aprendizaje sostenido</div>
+        </div>
+        <div class="text-center">
+          <div class="aspect-square rounded-full bg-gradient-to-br from-[var(--emerald)] to-[var(--blue)] flex items-center justify-center text-3xl shadow-lg mb-1">🌍</div>
+          <div class="text-xs font-semibold">Living Lab</div>
+          <div class="text-[10px] text-[var(--muted)]">Spin-off territorial</div>
+        </div>
+        <div class="text-center">
+          <div class="aspect-square rounded-full bg-gradient-to-br from-[var(--purple)] to-[var(--orange)] flex items-center justify-center text-3xl shadow-lg mb-1 opacity-40 grayscale">🔥</div>
+          <div class="text-xs font-semibold opacity-60">Maratón Quizzes</div>
+          <div class="text-[10px] text-[var(--muted)]">10/10 perfectos</div>
+        </div>
+        <div class="text-center">
+          <div class="aspect-square rounded-full bg-gradient-to-br from-[var(--gold)] to-[var(--purple)] flex items-center justify-center text-3xl shadow-lg mb-1 opacity-40 grayscale">⚡</div>
+          <div class="text-xs font-semibold opacity-60">Embajador</div>
+          <div class="text-[10px] text-[var(--muted)]">Reforma completa</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RIGHT PANEL · ASISTENTE -->
+  <aside class="shell-right scroll-y flex flex-col">
+    <header class="flex items-center justify-between p-3 border-b border-[var(--border)]">
+      <div class="flex items-center gap-2">
+        <span class="w-6 h-6 rounded-md bg-gradient-to-br from-[var(--blue)] to-[var(--purple)] flex items-center justify-center text-white text-xs">✨</span>
+        <span class="font-semibold text-sm">Asistente</span>
+      </div>
+      <div class="flex gap-1 text-[9px]">
+        <button class="px-1.5 py-0.5 rounded bg-[var(--blue)] text-white font-medium">Haiku</button>
+        <button class="px-1.5 py-0.5 rounded text-[var(--muted)] hover:bg-[var(--surface-2)]">Kimi</button>
+      </div>
+    </header>
+
+    <!-- tabs -->
+    <div class="flex border-b border-[var(--border)] text-xs">
+      <button class="flex-1 py-2 border-b-2 border-[var(--accent)] text-[var(--accent)] font-medium">Preguntas <span class="badge badge-amber text-[9px] ml-1">3</span></button>
+      <button class="flex-1 py-2 border-b-2 border-transparent text-[var(--muted)]">Chat</button>
+      <button class="flex-1 py-2 border-b-2 border-transparent text-[var(--muted)]">DM <span class="badge badge-rose text-[9px] ml-1">2</span></button>
+    </div>
+
+    <div class="p-3 flex-1 overflow-y-auto">
+      <p class="text-[10px] uppercase tracking-wide text-[var(--muted)] mb-2">3 pendientes en esta CoP</p>
+
+      <a href="#" class="block rounded-lg border border-[var(--border)] bg-[var(--surface-2)] hover:bg-[var(--surface)] p-3 mb-2">
+        <div class="flex items-center justify-between text-[9px] uppercase tracking-wide text-[var(--muted)] mb-1">
+          <span>📚 cap-27 · sec-0</span>
+          <span class="badge badge-amber">§3 de 4</span>
+        </div>
+        <div class="text-xs font-medium leading-snug">¿Diferencia esencial entre fuerza eléctrica y magnética?</div>
+        <div class="text-[10px] text-[var(--muted)] mt-1">Comprensión · 2 min</div>
+      </a>
+
+      <a href="#" class="block rounded-lg border border-[var(--border)] bg-[var(--surface-2)] hover:bg-[var(--surface)] p-3 mb-2">
+        <div class="flex items-center justify-between text-[9px] uppercase tracking-wide text-[var(--muted)] mb-1">
+          <span>🔬 M08</span>
+          <span class="badge badge-amber">§2 de 4</span>
+        </div>
+        <div class="text-xs font-medium leading-snug">Define Hake-g y umbral de aceptación</div>
+        <div class="text-[10px] text-[var(--muted)] mt-1">Diseño curricular · 3 min</div>
+      </a>
+
+      <a href="#" class="block rounded-lg border border-[var(--border)] bg-[var(--surface-2)] hover:bg-[var(--surface)] p-3 mb-3">
+        <div class="flex items-center justify-between text-[9px] uppercase tracking-wide text-[var(--muted)] mb-1">
+          <span>📜 CSU 04/2025</span>
+          <span class="badge badge-amber">Art. 96</span>
+        </div>
+        <div class="text-xs font-medium leading-snug">¿Qué cambia en mi régimen estudiantil?</div>
+        <div class="text-[10px] text-[var(--muted)] mt-1">Norma · 5 min</div>
+      </a>
+
+      <p class="text-[10px] uppercase tracking-wide text-[var(--muted)] mb-2 mt-4">💡 Sugerencias</p>
+      <div class="space-y-1.5 text-[11px]">
+        <button class="w-full text-left px-2 py-2 rounded border-l-2 border-[var(--accent)]/40 bg-[var(--surface-2)] hover:bg-[var(--surface)]">¿Cómo conecta la Escuela con M05?</button>
+        <button class="w-full text-left px-2 py-2 rounded border-l-2 border-[var(--accent)]/40 bg-[var(--surface-2)] hover:bg-[var(--surface)]">Resume las enmiendas de la deliberación activa</button>
+        <button class="w-full text-left px-2 py-2 rounded border-l-2 border-[var(--accent)]/40 bg-[var(--surface-2)] hover:bg-[var(--surface)]">¿Qué BPAs me servirían según mi perfil?</button>
+      </div>
+    </div>
+
+    <!-- chat input -->
+    <div class="p-3 border-t border-[var(--border)]">
+      <div class="flex gap-1 mb-1">
+        <input placeholder="Pregúntale al corpus..." class="flex-1 px-3 py-2 rounded-md border border-[var(--border)] bg-[var(--surface)] text-xs focus:outline-none focus:ring-2 focus:ring-[var(--accent)]">
+        <button class="p-2 rounded-md bg-[var(--blue)] text-white">↑</button>
+      </div>
+      <p class="text-[9px] text-[var(--muted)] text-center">Cita siempre · respuestas streamed · contexto: Escuela Física</p>
+    </div>
+  </aside>
+
+</div>
+
+<!-- Notification panel (hidden by default) -->
+<div id="notif-panel" class="hidden fixed top-14 right-4 z-50 w-80 bg-[var(--surface)] border border-[var(--border)] rounded-lg shadow-xl">
+  <header class="flex items-center justify-between p-3 border-b border-[var(--border)]">
+    <h3 class="font-semibold text-sm">Notificaciones · 5 nuevas</h3>
+    <button onclick="document.getElementById('notif-panel').classList.add('hidden')" class="text-[var(--muted)] hover:text-[var(--text)]">✕</button>
+  </header>
+  <div class="max-h-96 overflow-y-auto divide-y divide-[var(--border)]">
+    <div class="p-3 hover:bg-[var(--surface-2)] cursor-pointer">
+      <div class="flex items-start gap-2">
+        <span class="w-2 h-2 rounded-full bg-blue-500 mt-1.5"></span>
+        <div class="flex-1 text-xs">
+          <strong>María R.</strong> citó tu nota en <em>"evaluaciones-tipo-magnetismo"</em>
+          <div class="text-[10px] text-[var(--muted)] mt-0.5">hace 5 min</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-3 hover:bg-[var(--surface-2)] cursor-pointer">
+      <div class="flex items-start gap-2">
+        <span class="w-2 h-2 rounded-full bg-amber-500 mt-1.5"></span>
+        <div class="flex-1 text-xs">
+          Se abrió la <strong>Deliberación · rúbrica xAPI v3</strong>. Cierra en 3 días.
+          <div class="text-[10px] text-[var(--muted)] mt-0.5">hace 1h</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-3 hover:bg-[var(--surface-2)] cursor-pointer">
+      <div class="flex items-start gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 mt-1.5"></span>
+        <div class="flex-1 text-xs">
+          Camila V. obtuvo <span class="badge badge-amber">🏅 Pasteur Pleno N2</span>
+          <div class="text-[10px] text-[var(--muted)] mt-0.5">hace 8h</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-3 hover:bg-[var(--surface-2)] cursor-pointer">
+      <div class="flex items-start gap-2">
+        <span class="w-2 h-2 rounded-full bg-purple-500 mt-1.5"></span>
+        <div class="flex-1 text-xs">
+          <strong>Juan L.</strong> respondió a tu pregunta sobre <em>regla de la mano derecha</em>
+          <div class="text-[10px] text-[var(--muted)] mt-0.5">hace 1d</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-3 hover:bg-[var(--surface-2)] cursor-pointer">
+      <div class="flex items-start gap-2">
+        <span class="w-2 h-2 rounded-full bg-rose-500 mt-1.5"></span>
+        <div class="flex-1 text-xs">
+          Recordatorio: aplicar <strong>FCI</strong> antes del 12 de mayo.
+          <div class="text-[10px] text-[var(--muted)] mt-0.5">programado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-tab="${name}"]`).classList.add('active');
+  document.querySelectorAll('[data-content]').forEach(c => c.classList.add('hidden'));
+  document.querySelector(`[data-content="${name}"]`).classList.remove('hidden');
+}
+function toggleTheme() {
+  document.documentElement.classList.toggle('dark');
+  document.documentElement.classList.toggle('light');
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('hidden');
+}
+function openNotif() {
+  document.getElementById('notif-panel').classList.toggle('hidden');
+}
+function openProfile() { alert('Profile dropdown · placeholder'); }
+function openDoc() {
+  document.getElementById('doc-reader').classList.remove('hidden');
+  document.getElementById('doc-reader').scrollIntoView({behavior:'smooth'});
+}
+function closeDoc() {
+  document.getElementById('doc-reader').classList.add('hidden');
+}
+// Cmd+K listener
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    alert('Cmd+K palette · navegar/buscar/preguntar/ejecutar acciones');
+  }
+});
+</script>
+</body>
+</html>
