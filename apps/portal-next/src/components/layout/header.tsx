@@ -66,7 +66,14 @@ export function Header() {
       </Button>
 
       {/* Logo + Profile area (LEFT) */}
-      <Link href="/" className="hidden shrink-0 items-center gap-1.5 font-bold tracking-tight sm:flex">
+      <Link href="/" className="hidden shrink-0 items-center gap-2 font-bold tracking-tight sm:flex">
+        <img
+          src="/logo-udfjc.svg"
+          alt="UDFJC"
+          width={28}
+          height={28}
+          className="h-7 w-7 rounded-full bg-white"
+        />
         <span className="text-base text-primary">reforma·ud</span>
       </Link>
       <ProfileMenu />
