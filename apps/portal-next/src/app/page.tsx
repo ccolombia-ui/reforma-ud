@@ -1,10 +1,12 @@
 import Link from 'next/link';
-import { ArrowRight, BookMarked, Building2, GraduationCap, Microscope, Globe, Network, Sparkles } from 'lucide-react';
+import { ArrowRight, BookMarked, Building2, GraduationCap, Microscope, Globe, Network } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { canonicPaper } from '#site/content';
+import { MiActividad } from '@/components/home/mi-actividad';
+import { QuickTabs } from '@/components/home/quick-tabs';
 
 const COMUNIDADES = [
   {
@@ -53,56 +55,55 @@ export default function HomePage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
-      {/* Hero */}
-      <section className="mb-12">
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <Badge variant="secondary" className="font-mono uppercase">CSU 04/2025</Badge>
-          <span className="text-muted-foreground">Reforma Vinculante UDFJC</span>
+    <div className="mx-auto w-full max-w-6xl px-4 py-6 md:px-8 space-y-8">
+      {/* Hero compacto */}
+      <section className="flex flex-wrap items-end justify-between gap-4">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            <Badge variant="secondary" className="font-mono uppercase">CSU 04/2025</Badge>
+            <span className="text-muted-foreground">Reforma Vinculante UDFJC</span>
+          </div>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+            La Reforma UDFJC <span className="text-primary">explicada desde tu rol.</span>
+          </h1>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+            Portal de la <strong className="text-foreground">Reforma Vinculante</strong> UDFJC · Anclado en
+            CONPES 4069/2021 + PIIOM · Corpus de <strong className="text-foreground">12 investigaciones</strong> +
+            comunidades organizativas + grafos de conocimiento.
+          </p>
         </div>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-          La Reforma UDFJC
-          <span className="block text-primary">explicada desde tu rol.</span>
-        </h1>
-        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Portal de la <strong className="text-foreground">Reforma Vinculante</strong> de la Universidad
-          Distrital Francisco José de Caldas. Anclado en CONPES 4069/2021 y las misiones transformativas
-          del PIIOM. Corpus de <strong className="text-foreground">12 investigaciones</strong> + comunidades
-          organizativas con grafos de conocimiento.
-        </p>
-        <div className="mt-7 flex flex-wrap gap-3">
-          <Button asChild size="lg" className="gap-2">
+        <div className="flex flex-wrap gap-2">
+          <Button asChild size="sm" className="gap-1.5">
             <Link href="/canonico">
-              <BookMarked className="h-4 w-4" />
-              Explorar Canónico
-              <ArrowRight className="h-4 w-4" />
+              <BookMarked className="h-3.5 w-3.5" /> Canónico
             </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="gap-2">
-            <Link href="/comunidades">
-              <Sparkles className="h-4 w-4" />
-              Ver comunidades
-            </Link>
-          </Button>
-          <Button asChild variant="ghost" size="lg" className="gap-2">
+          <Button asChild variant="outline" size="sm" className="gap-1.5">
             <Link href="/canonico/grafo">
-              <Network className="h-4 w-4" />
-              Grafo del corpus
+              <Network className="h-3.5 w-3.5" /> Grafo
             </Link>
           </Button>
         </div>
       </section>
 
-      {/* KPIs con sparklines */}
-      <section className="mb-14 grid grid-cols-2 gap-3 md:grid-cols-4">
+      {/* Mi Actividad personalizada por rol */}
+      <MiActividad />
+
+      {/* Acceso rápido (Normas/Comunidades/Encuestas/Deliberaciones) */}
+      <QuickTabs />
+
+      {/* KPIs con sparklines del corpus global */}
+      <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <KPICard label="Investigaciones" value={`${counts.total}`} sub="canónico MI-12" accent="var(--color-brand-blue)" sparkline={[3,5,7,9,10,11,12,12]} sparkColor="#0284c7" />
         <KPICard label="En revisión" value={`${counts.red}`} sub="estado RED · TDD" accent="var(--color-brand-orange)" sparkline={[12,12,11,11,10,9,9,counts.red]} sparkColor="#ea580c" />
         <KPICard label="Comunidades" value="5" sub="tipos por organigrama" accent="var(--color-brand-purple)" sparkline={[1,2,3,3,4,5,5,5]} sparkColor="#7c3aed" />
         <KPICard label="BPAs" value="21" sub="buenas prácticas activadoras" accent="var(--color-brand-emerald)" sparkline={[8,12,15,17,18,20,21,21]} sparkColor="#059669" />
       </section>
 
-      {/* Comunidades */}
-      <section className="mb-14">
+      <Separator />
+
+      {/* Comunidades cards detalladas */}
+      <section>
         <div className="mb-5 flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">Comunidades de la reforma</h2>
@@ -136,10 +137,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Separator className="my-12" />
+      <Separator />
 
       {/* Corpus */}
-      <section className="mb-12">
+      <section>
         <div className="mb-5 flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">Corpus MI-12 · Hoja de ruta CRISP-DM</h2>
