@@ -26,15 +26,24 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="min-h-screen antialiased">
         <ThemeProvider>
           <div className="flex min-h-screen">
-            <aside className="hidden w-72 flex-shrink-0 border-r md:block">
+            <aside
+              data-pagefind-ignore
+              className="hidden w-72 flex-shrink-0 border-r md:block"
+            >
               <div className="sticky top-0 h-screen">
                 <Sidebar />
               </div>
             </aside>
             <div className="flex min-w-0 flex-1 flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
+              <div data-pagefind-ignore>
+                <Header />
+              </div>
+              <main data-pagefind-body className="flex-1">
+                {children}
+              </main>
+              <div data-pagefind-ignore>
+                <Footer />
+              </div>
             </div>
           </div>
         </ThemeProvider>
