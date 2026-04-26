@@ -40,7 +40,7 @@ const canonicPaper = defineCollection({
           })
         )
         .default([]),
-      body: s.mdx(),
+      body: s.markdown(),
       toc: s.toc(),
       metadata: s.metadata(),
       slug: s.path(),
@@ -71,7 +71,7 @@ const community = defineCollection({
       shortName: s.string().optional(),
       description: s.string(),
       cites: s.array(s.string()).default([]),
-      body: s.mdx(),
+      body: s.markdown(),
       toc: s.toc(),
       slug: s.path(),
     })
@@ -95,7 +95,7 @@ const note = defineCollection({
       title: s.string(),
       tags: s.array(s.string()).default([]),
       cites: s.array(s.string()).default([]),
-      body: s.mdx(),
+      body: s.markdown(),
       toc: s.toc(),
       slug: s.path(),
     })
@@ -124,7 +124,7 @@ export default defineConfig({
     community,
     note,
   },
-  mdx: {
+  markdown: {
     gfm: true,
     remarkPlugins: [
       remarkGfm,
@@ -136,8 +136,8 @@ export default defineConfig({
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       [rehypeCallouts, { theme: 'obsidian' }],
-      // rehype-raw convierte nodos `raw` (HTML embebido) en elementos hast válidos
-      // para el compilador MDX. Necesario para callouts y bloques HTML inline.
+      // rehype-raw convierte nodos `raw` (HTML embebido) en elementos hast válidos.
+      // Necesario para callouts y bloques HTML inline en pipeline markdown.
       rehypeRaw,
       [rehypeKatex, { strict: false, output: 'html', trust: true, macros: { '\\R': '\\mathbb{R}' } }],
       [rehypePrettyCode, { theme: 'github-light-default' }],

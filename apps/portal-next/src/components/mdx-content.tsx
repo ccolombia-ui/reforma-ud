@@ -1,23 +1,15 @@
-import * as runtime from 'react/jsx-runtime';
+/**
+ * MDXContent — drop-in renderer.
+ *
+ * Velite ahora compila el body como HTML string (markdown puro con remark+rehype +
+ * obsidian-callouts + wikilinks + KaTeX + Mermaid). Lo renderizamos via
+ * `dangerouslySetInnerHTML` cuando no necesitamos interceptar elementos.
+ *
+ * Para hover-preview de wikilinks, ver `mdx-with-hover-preview.tsx` que usa
+ * html-react-parser para convertir HTML → React y reemplazar `<a class="wikilink">`
+ * con `<WikiLinkPreview>`.
+ */
 
-type MDXComponents = Record<string, React.ComponentType<Record<string, unknown>>>;
-
-type MDXModule = {
-  default: React.ComponentType<{ components?: MDXComponents }>;
-};
-
-const useMDXComponent = (code: string): MDXModule['default'] => {
-  const fn = new Function(code);
-  return (fn({ ...runtime }) as MDXModule).default;
-};
-
-export function MDXContent({
-  code,
-  components,
-}: {
-  code: string;
-  components?: MDXComponents;
-}) {
-  const Component = useMDXComponent(code);
-  return <Component components={components} />;
+export function MDXContent({ code }: Readonly<{ code: string }>) {
+  return <div dangerouslySetInnerHTML={{ __html: code }} />;
 }
