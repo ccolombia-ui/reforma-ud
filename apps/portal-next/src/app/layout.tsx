@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/footer';
 import { RightPanel, RightPanelMini } from '@/components/layout/right-panel';
 import { CommandPalette } from '@/components/layout/command-palette';
 import { CCAEarnedModal } from '@/components/layout/cca-earned-modal';
+import { GraphProvider } from '@/lib/graph-context';
 
 export const metadata: Metadata = {
   title: {
@@ -28,20 +29,22 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="es" suppressHydrationWarning>
       <body className="min-h-screen antialiased">
         <ThemeProvider>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <div className="flex flex-1 min-h-0">
-              <Sidebar />
-              <main data-pagefind-body className="min-w-0 flex-1 overflow-x-hidden">
-                {children}
-                <Footer />
-              </main>
-              <RightPanel />
+          <GraphProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <div className="flex flex-1 min-h-0">
+                <Sidebar />
+                <main data-pagefind-body className="min-w-0 flex-1 overflow-x-hidden">
+                  {children}
+                  <Footer />
+                </main>
+                <RightPanel />
+              </div>
             </div>
-          </div>
-          <RightPanelMini />
-          <CommandPalette />
-          <CCAEarnedModal />
+            <RightPanelMini />
+            <CommandPalette />
+            <CCAEarnedModal />
+          </GraphProvider>
         </ThemeProvider>
       </body>
     </html>

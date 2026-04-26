@@ -9,6 +9,8 @@ import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
 import { cn } from '@/lib/utils';
 import { SidebarMissionsWidget } from '@/components/layout/sidebar-missions-widget';
+import { useGraphContext } from '@/lib/graph-context';
+import { Graph3DFilters } from '@/components/graph/graph-3d';
 
 const TYPE_ICONS: Record<string, React.ReactNode> = {
   gobierno: <Landmark className="h-3.5 w-3.5" />,
@@ -203,6 +205,8 @@ export function Sidebar() {
   const [width, setWidth] = useLeftWidth();
   const tree = buildCommunityTree();
   const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
+  const graph = useGraphContext();
+  const isOnGraph = pathname === '/canonico/grafo' || pathname.startsWith('/canonico/grafo/');
 
   // collapsed: barra estrecha con icons clave + opciones
   if (collapsed) {
@@ -257,8 +261,20 @@ export function Sidebar() {
       {/* Misiones activas — pertenencia + resultados al tope */}
       <SidebarMissionsWidget />
 
+      {/* Filtros contextuales del grafo (solo en /canonico/grafo) */}
+      {isOnGraph && graph && (
+        <section className="border-b border-sidebar-border max-h-[60%] overflow-hidden flex flex-col">
+          <div className="px-2 py-1 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground/80 bg-sidebar-accent/30">
+            Filtros · Grafo global
+          </div>
+          <div className="flex-1 min-h-0 overflow-y-auto">
+            <Graph3DFilters controller={graph} />
+          </div>
+        </section>
+      )}
+
       {/* Navegación principal */}
-      <div className="flex-1 overflow-y-auto px-1.5 py-2 text-sm">
+      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-1.5 py-2 text-sm">
         <SectionToggle id="canonico" emoji="📚" title="Canónico MI-12">
           <ul className="space-y-0.5">
             <li>

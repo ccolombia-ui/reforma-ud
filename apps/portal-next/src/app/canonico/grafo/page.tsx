@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Group, Panel, Separator } from 'react-resizable-panels';
-import { ChevronLeft, Box, Square, Filter, GripVertical, Maximize2, Minimize2, RefreshCw, Tag } from 'lucide-react';
+import { ChevronLeft, Box, Square, GripVertical, Maximize2, Minimize2, RefreshCw, Tag } from 'lucide-react';
 import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
-import { useGraph3DController, Graph3DCanvas, Graph3DFilters, Graph3DDetail } from '@/components/graph/graph-3d';
+import { Graph3DCanvas, Graph3DDetail } from '@/components/graph/graph-3d';
+import { useGraphContext } from '@/lib/graph-context';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -15,7 +16,7 @@ export default function GrafoGlobalPage() {
   const [mode, setMode] = useState<ViewMode>('3d');
 
   return (
-    <div className="mx-auto w-full max-w-[1600px] px-4 py-8 md:px-8 space-y-4">
+    <div className="mx-auto w-full max-w-[1600px] px-4 py-6 md:px-6 space-y-3">
       {/* Top nav */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Link href="/canonico" className="inline-flex items-center gap-1 hover:text-foreground">
@@ -27,12 +28,12 @@ export default function GrafoGlobalPage() {
       </div>
 
       {/* Hero compacto */}
-      <header className="flex flex-wrap items-end justify-between gap-4">
+      <header className="flex flex-wrap items-end justify-between gap-3">
         <div className="min-w-0">
           <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">Grafo global del corpus</h1>
-          <p className="mt-1 max-w-3xl text-sm text-muted-foreground">
-            Red de conocimiento: 12 papers canónicos M01-M12 + comunidades + notas de los vaults.
-            Las aristas son citas (<code>cites</code>) y wikilinks.
+          <p className="mt-1 max-w-3xl text-xs text-muted-foreground">
+            Red de conocimiento: 12 papers M01-M12 + comunidades + notas.
+            Filtros y categorías en el sidebar izquierdo.
           </p>
         </div>
         {/* Toggle 2D / 3D */}
@@ -54,10 +55,10 @@ export default function GrafoGlobalPage() {
               'inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors',
               mode === '3d' ? 'bg-background shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground',
             )}
-            title="Vista 3D — three.js con filtros laterales tipo Obsidian"
+            title="Vista 3D — three.js con detalle a la derecha"
           >
             <Box className="h-3.5 w-3.5" />
-            3D + filtros
+            3D
           </button>
         </div>
       </header>
@@ -65,66 +66,42 @@ export default function GrafoGlobalPage() {
       {mode === '2d' ? (
         <VisNetworkGraph src="/static/graph-global.json" />
       ) : (
-        <Graph3DSplitWorkspace src="/static/graph-global.json" />
+        <Graph3DWorkspace />
       )}
     </div>
   );
 }
 
 /* ============================================================
- * Layout Obsidian-style: filtros (izquierda) | canvas (centro) | detalle (derecha)
+ * Workspace 3D: canvas full + detalle del nodo a la derecha (filtros vienen del sidebar global)
  * ============================================================ */
 
-/** Calcula el % default del panel del canvas según paneles laterales abiertos. */
-function computeCanvasSize(filtersOpen: boolean, detailVisible: boolean): number {
-  if (detailVisible) return filtersOpen ? 60 : 75;
-  return filtersOpen ? 82 : 100;
-}
-
-function Graph3DSplitWorkspace({ src }: Readonly<{ src: string }>) {
-  const controller = useGraph3DController(src);
-  const [filtersOpen, setFiltersOpen] = useState(true);
+function Graph3DWorkspace() {
+  const controller = useGraphContext();
   const [fullscreen, setFullscreen] = useState(false);
 
+  if (!controller) {
+    // Fallback (no debería pasar — el Provider activa cuando estamos en /canonico/grafo)
+    return (
+      <div className="h-[calc(100vh-14rem)] min-h-[560px] rounded-lg border bg-muted/20 flex items-center justify-center text-sm text-muted-foreground">
+        Inicializando contexto del grafo...
+      </div>
+    );
+  }
+
   const detailVisible = !!controller.selected;
-  const canvasDefaultSize = computeCanvasSize(filtersOpen, detailVisible);
 
   return (
     <div className={cn(
       'rounded-lg border bg-background overflow-hidden',
-      fullscreen ? 'fixed inset-3 z-50 shadow-2xl' : 'h-[calc(100vh-14rem)] min-h-[560px]',
+      fullscreen ? 'fixed inset-3 z-50 shadow-2xl' : 'h-[calc(100vh-12rem)] min-h-[560px]',
     )}>
       <Group orientation="horizontal" id="graph-3d-workspace" className="flex h-full">
-        {/* LEFT — Filtros */}
-        {filtersOpen && (
-          <>
-            <Panel id="filters" defaultSize={18} minSize={14} maxSize={32} className="overflow-hidden">
-              <Graph3DFilters controller={controller} onClose={() => setFiltersOpen(false)} />
-            </Panel>
-            <Separator className="group relative w-1 bg-border hover:bg-primary/40 data-[dragging=true]:bg-primary transition-colors cursor-col-resize">
-              <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 flex items-center pointer-events-none">
-                <GripVertical className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-            </Separator>
-          </>
-        )}
-
         {/* CENTER — Canvas */}
-        <Panel id="canvas" defaultSize={canvasDefaultSize} minSize={30} className="overflow-hidden relative">
+        <Panel id="canvas" defaultSize={detailVisible ? 75 : 100} minSize={30} className="overflow-hidden relative">
           <Graph3DCanvas controller={controller} />
           {/* Floating controls top-right del canvas */}
           <div className="absolute top-2 right-2 flex gap-1.5">
-            {!filtersOpen && (
-              <Button
-                variant="secondary"
-                size="icon"
-                className="h-8 w-8 shadow-md"
-                onClick={() => setFiltersOpen(true)}
-                aria-label="Mostrar filtros"
-              >
-                <Filter className="h-4 w-4" />
-              </Button>
-            )}
             <Button
               variant={controller.showLabels ? 'default' : 'secondary'}
               size="icon"
@@ -144,6 +121,7 @@ function Graph3DSplitWorkspace({ src }: Readonly<{ src: string }>) {
                 ref?.zoomToFit?.(400);
               }}
               aria-label="Centrar grafo"
+              title="Centrar grafo"
             >
               <RefreshCw className="h-4 w-4" />
             </Button>
@@ -153,6 +131,7 @@ function Graph3DSplitWorkspace({ src }: Readonly<{ src: string }>) {
               className="h-8 w-8 shadow-md"
               onClick={() => setFullscreen((v) => !v)}
               aria-label="Pantalla completa"
+              title="Pantalla completa"
             >
               {fullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
             </Button>
@@ -167,7 +146,7 @@ function Graph3DSplitWorkspace({ src }: Readonly<{ src: string }>) {
                 <GripVertical className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </Separator>
-            <Panel id="detail" defaultSize={22} minSize={16} maxSize={35} className="overflow-hidden">
+            <Panel id="detail" defaultSize={25} minSize={18} maxSize={40} className="overflow-hidden">
               <Graph3DDetail controller={controller} />
             </Panel>
           </>
