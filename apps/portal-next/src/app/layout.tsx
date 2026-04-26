@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/footer';
 import { RightPanel, RightPanelMini } from '@/components/layout/right-panel';
 import { CommandPalette } from '@/components/layout/command-palette';
 import { CCAEarnedModal } from '@/components/layout/cca-earned-modal';
+import { ChangelogDrawer } from '@/components/layout/changelog-drawer';
 import { GraphProvider } from '@/lib/graph-context';
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <RightPanelMini />
             <CommandPalette />
             <CCAEarnedModal />
+            <ChangelogDrawer />
           </GraphProvider>
         </ThemeProvider>
       </body>

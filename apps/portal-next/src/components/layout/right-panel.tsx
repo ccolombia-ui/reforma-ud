@@ -481,11 +481,22 @@ function ChatPane({ copSlug, pathname }: { copSlug: string | null; pathname: str
                 : 'mr-4 bg-muted/40 text-foreground',
             )}
           >
-            <div className="mb-1 text-[9px] uppercase tracking-wide text-muted-foreground">
-              {m.role === 'user' ? 'Tú' : 'Asistente'}
+            <div className="mb-1 flex items-center justify-between text-[9px] uppercase tracking-wide text-muted-foreground">
+              <span>{m.role === 'user' ? 'Tú' : 'Asistente'}</span>
+              {m.role === 'assistant' && i === messages.length - 1 && streaming && !m.content && (
+                <span className="text-[8px] normal-case tracking-normal text-primary/80 italic">
+                  Buscando en el corpus...
+                </span>
+              )}
             </div>
             <div className="whitespace-pre-wrap text-xs leading-relaxed">
-              {m.content || (streaming ? '...' : '')}
+              {m.content ? (
+                m.content
+              ) : streaming && m.role === 'assistant' ? (
+                <span className="typing-indicator text-muted-foreground">
+                  <span /><span /><span />
+                </span>
+              ) : null}
             </div>
           </div>
         ))}

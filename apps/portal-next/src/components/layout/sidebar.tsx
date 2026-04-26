@@ -392,8 +392,10 @@ function SidebarResizableNav({
       {/* Drag handle: 4 px hot-zone con halo en hover */}
       <button
         type="button"
-        aria-label="Ajustar ancho del sidebar"
+        aria-label="Ajustar ancho del sidebar (doble-clic: reset)"
         onPointerDown={onPointerDown}
+        onDoubleClick={() => setWidth(288)}
+        title="Arrastrar para ajustar · Doble-clic: reset"
         className={cn(
           'group absolute top-0 right-0 h-full w-1 cursor-col-resize z-30',
           'before:absolute before:inset-y-0 before:-right-1 before:w-3 before:content-[""]',

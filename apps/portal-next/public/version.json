@@ -1,0 +1,27 @@
+{
+  "version": "v3.3",
+  "buildDate": "2026-04-26",
+  "commit": "d61f1b0",
+  "changes": [
+    {
+      "title": "Audit 20 gaps + Sprint A/B aplicados",
+      "summary": "Skeletons en /canonico, focus-rings uniformes, KaTeX dark fix, tooltips con atajos, wikilinks rotos visibles, print CSS limpio, AI typing indicator, EmptyState component."
+    },
+    {
+      "title": "Filtros del grafo en sidebar global",
+      "summary": "Los filtros de /canonico/grafo ahora viven en el sidebar izquierdo bajo 'Filtros · Grafo global' (Obsidian-style). El canvas ocupa el área completa."
+    },
+    {
+      "title": "Sidebar izquierdo redimensionable + Misiones al tope",
+      "summary": "Drag handle a la derecha del sidebar, doble-clic resetea a 288px. Widget de misión activa con progreso al tope. Títulos de sección compactos."
+    },
+    {
+      "title": "Right Panel ampliado: Outline + Refs + Preg + Chat",
+      "summary": "TOC navegable con scroll-spy, backlinks agrupados por kind, deshabilitados sin doc activo."
+    },
+    {
+      "title": "Tabs Obsidian-style + hover-preview de wikilinks",
+      "summary": "Ctrl+click → nueva pestaña, Mid-click → background, hover sobre wikilink muestra preview MDX del destino."
+    }
+  ]
+}
