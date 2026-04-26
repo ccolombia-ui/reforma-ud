@@ -58,9 +58,15 @@ for (const file of sources) {
   destFm = destFm.replace(/^status:\s*\w+/m, 'status: green');
 
   // Limpiar wikilinks relativos al glosario/sources del libro
-  const cleanedBody = sourceBody
+  let cleanedBody = sourceBody
     .replaceAll(/!\[\[\.{2}\/[^/\]]+\/([^\]]+?)\]\]/g, '![[$1]]')
     .replaceAll(/\[\[\.{2}\/[^/\]]+\/([^|\]]+?)(\|[^\]]+)?\]\]/g, '[[$1$2]]');
+
+  // Escapar comparaciones numéricas que MDX confunde con JSX:
+  //   <5% → \<5%  ·  <10K → \<10K  ·  <2 → \<2
+  cleanedBody = cleanedBody.replaceAll(/<(\d)/g, '\\<$1');
+  // Expandir autolinks markdown <https://...> → [url](url) (MDX no acepta el shorthand)
+  cleanedBody = cleanedBody.replaceAll(/<(https?:\/\/[^>\s]+)>/g, '[$1]($1)');
 
   const out = `${destFm}${cleanedBody.startsWith('\n') ? '' : '\n'}${cleanedBody}`;
   fs.writeFileSync(destFile, out, 'utf-8');

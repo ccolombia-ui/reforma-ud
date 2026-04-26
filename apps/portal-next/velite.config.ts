@@ -8,6 +8,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeRaw from 'rehype-raw';
 
 // Canonical papers (M01-M12) — the theoretical base
 const canonicPaper = defineCollection({
@@ -135,6 +136,9 @@ export default defineConfig({
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       [rehypeCallouts, { theme: 'obsidian' }],
+      // rehype-raw convierte nodos `raw` (HTML embebido) en elementos hast válidos
+      // para el compilador MDX. Necesario para callouts y bloques HTML inline.
+      rehypeRaw,
       [rehypeKatex, { strict: false, output: 'html', trust: true, macros: { '\\R': '\\mathbb{R}' } }],
       [rehypePrettyCode, { theme: 'github-light-default' }],
     ],
