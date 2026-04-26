@@ -1,14 +1,41 @@
 import { defineCollection, defineConfig, s } from 'velite';
+import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
-import remarkWikilinks from './src/lib/remark-wikilinks';
-import remarkObsidianEmbed from './src/lib/remark-obsidian-embed';
+import wikiLinkPlugin from '@flowershow/remark-wiki-link';
 import rehypeCallouts from 'rehype-callouts';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeRaw from 'rehype-raw';
+
+/**
+ * Recolecta todos los `.md`/`.mdx` bajo content/ para alimentar
+ * `@flowershow/remark-wiki-link` (necesario en format: 'shortestPossible'
+ * para resolver `[[m04]]` → `canonico/m04.mdx`).
+ */
+function collectFiles(rootDir: string, baseDir = rootDir, acc: string[] = []): string[] {
+  for (const entry of readdirSync(rootDir, { withFileTypes: true })) {
+    const full = join(rootDir, entry.name);
+    if (entry.isDirectory()) {
+      collectFiles(full, baseDir, acc);
+    } else if (/\.(mdx?|md)$/i.test(entry.name)) {
+      acc.push(full.slice(baseDir.length + 1).replaceAll('\\', '/'));
+    }
+  }
+  return acc;
+}
+
+const contentFiles = collectFiles('content');
+
+// Permalinks: M01-M12 → /canonico/m##  ·  notes & community resuelven via urlResolver
+const permalinks: Record<string, string> = {};
+for (const f of contentFiles) {
+  const m = f.match(/^canonico\/(m\d{2})\.mdx?$/i);
+  if (m) permalinks[f] = `/canonico/${m[1].toLowerCase()}`;
+}
 
 // Canonical papers (M01-M12) — the theoretical base
 const canonicPaper = defineCollection({
@@ -129,8 +156,34 @@ export default defineConfig({
     remarkPlugins: [
       remarkGfm,
       remarkMath,           // $...$ y $$...$$
-      remarkObsidianEmbed,  // ![[archivo]]
-      remarkWikilinks,      // [[link]] [[link|alias]] [[link#anchor]]
+      // @flowershow/remark-wiki-link 3.4 — SOTA Obsidian wikilinks + embeds
+      // Soporta: [[link]], [[link|alias]], [[link#heading]], ![[image.png|200x300]],
+      //          ![[video.mp4]], ![[audio.mp3]], ![[doc.pdf]]
+      // newClassName='wikilink-broken' preserva G07 (broken-link visible CSS)
+      [wikiLinkPlugin, {
+        format: 'shortestPossible',
+        files: contentFiles,
+        permalinks,
+        className: 'wikilink',
+        newClassName: 'wikilink-broken',
+        // urlResolver recibe { filePath, heading?, isEmbed }. Devuelve URL final.
+        urlResolver: ({ filePath, heading }: { filePath: string; heading?: string; isEmbed: boolean }) => {
+          // Quitar extensión .md/.mdx
+          const noExt = filePath.replace(/\.(mdx?|md)$/i, '');
+          // Si es paper canónico m##: /canonico/m##
+          const mMatch = noExt.match(/(?:^|\/)(m\d{2})$/i);
+          let url: string;
+          if (mMatch) {
+            url = `/canonico/${mMatch[1].toLowerCase()}`;
+          } else if (noExt.startsWith('comunidades/')) {
+            url = `/${noExt}`;
+          } else {
+            // Fallback: ruta directa
+            url = `/${noExt.replace(/^\//, '')}`;
+          }
+          return heading ? `${url}#${heading.replace(/^#/, '')}` : url;
+        },
+      }],
     ],
     rehypePlugins: [
       rehypeSlug,
