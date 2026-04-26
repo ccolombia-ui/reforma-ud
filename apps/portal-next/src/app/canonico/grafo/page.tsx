@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Group, Panel, Separator } from 'react-resizable-panels';
-import { ChevronLeft, Box, Square, Filter, GripVertical, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
+import { ChevronLeft, Box, Square, Filter, GripVertical, Maximize2, Minimize2, RefreshCw, Tag } from 'lucide-react';
 import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
 import { useGraph3DController, Graph3DCanvas, Graph3DFilters, Graph3DDetail } from '@/components/graph/graph-3d';
 import { Button } from '@/components/ui/button';
@@ -75,12 +75,19 @@ export default function GrafoGlobalPage() {
  * Layout Obsidian-style: filtros (izquierda) | canvas (centro) | detalle (derecha)
  * ============================================================ */
 
+/** Calcula el % default del panel del canvas según paneles laterales abiertos. */
+function computeCanvasSize(filtersOpen: boolean, detailVisible: boolean): number {
+  if (detailVisible) return filtersOpen ? 60 : 75;
+  return filtersOpen ? 82 : 100;
+}
+
 function Graph3DSplitWorkspace({ src }: Readonly<{ src: string }>) {
   const controller = useGraph3DController(src);
   const [filtersOpen, setFiltersOpen] = useState(true);
   const [fullscreen, setFullscreen] = useState(false);
 
   const detailVisible = !!controller.selected;
+  const canvasDefaultSize = computeCanvasSize(filtersOpen, detailVisible);
 
   return (
     <div className={cn(
@@ -103,7 +110,7 @@ function Graph3DSplitWorkspace({ src }: Readonly<{ src: string }>) {
         )}
 
         {/* CENTER — Canvas */}
-        <Panel id="canvas" defaultSize={detailVisible ? (filtersOpen ? 60 : 75) : (filtersOpen ? 82 : 100)} minSize={30} className="overflow-hidden relative">
+        <Panel id="canvas" defaultSize={canvasDefaultSize} minSize={30} className="overflow-hidden relative">
           <Graph3DCanvas controller={controller} />
           {/* Floating controls top-right del canvas */}
           <div className="absolute top-2 right-2 flex gap-1.5">
@@ -118,6 +125,16 @@ function Graph3DSplitWorkspace({ src }: Readonly<{ src: string }>) {
                 <Filter className="h-4 w-4" />
               </Button>
             )}
+            <Button
+              variant={controller.showLabels ? 'default' : 'secondary'}
+              size="icon"
+              className="h-8 w-8 shadow-md"
+              onClick={controller.toggleLabels}
+              aria-label={controller.showLabels ? 'Ocultar etiquetas' : 'Mostrar etiquetas'}
+              title={controller.showLabels ? 'Ocultar etiquetas de nodos' : 'Mostrar etiquetas de nodos'}
+            >
+              <Tag className="h-4 w-4" />
+            </Button>
             <Button
               variant="secondary"
               size="icon"

@@ -138,15 +138,21 @@ export function useLeftWidth() {
   return [width, setLeftWidth] as const;
 }
 
+export type RightTab = 'preguntas' | 'chat' | 'outline' | 'backlinks';
+const VALID_RIGHT_TABS: readonly RightTab[] = ['preguntas', 'chat', 'outline', 'backlinks'] as const;
+function isRightTab(v: string): v is RightTab {
+  return (VALID_RIGHT_TABS as readonly string[]).includes(v);
+}
+
 /** Default: EXPANDIDO. Tab Preguntas por defecto. */
-export function useRightPanel(defaultTab: 'preguntas' | 'chat' = 'preguntas') {
+export function useRightPanel(defaultTab: RightTab = 'preguntas') {
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const [tab, setTabState] = useState<'preguntas' | 'chat'>(defaultTab);
+  const [tab, setTabState] = useState<RightTab>(defaultTab);
 
   useEffect(() => {
     setCollapsed(read(KEYS.rightPanel, false) as boolean);
     const t = read(KEYS.rightTab, defaultTab) as string;
-    if (t === 'preguntas' || t === 'chat') setTabState(t);
+    if (isRightTab(t)) setTabState(t);
 
     const onChange = (e: Event) => {
       const detail = (e as CustomEvent<{ key: string; value: boolean | string }>).detail;
@@ -154,7 +160,7 @@ export function useRightPanel(defaultTab: 'preguntas' | 'chat' = 'preguntas') {
         setCollapsed(detail.value as boolean);
       } else if (detail?.key === KEYS.rightTab) {
         const v = detail.value as string;
-        if (v === 'preguntas' || v === 'chat') setTabState(v);
+        if (isRightTab(v)) setTabState(v);
       }
     };
     const onStorage = (e: StorageEvent) => {
@@ -163,7 +169,7 @@ export function useRightPanel(defaultTab: 'preguntas' | 'chat' = 'preguntas') {
       }
       if (e.key === KEYS.rightTab) {
         const v = e.newValue;
-        if (v === 'preguntas' || v === 'chat') setTabState(v);
+        if (v && isRightTab(v)) setTabState(v);
       }
     };
     window.addEventListener(EVENT, onChange);
@@ -181,7 +187,7 @@ export function useRightPanel(defaultTab: 'preguntas' | 'chat' = 'preguntas') {
       return next;
     });
   };
-  const setTab = (t: 'preguntas' | 'chat') => {
+  const setTab = (t: RightTab) => {
     setTabState(t);
     write(KEYS.rightTab, t);
   };

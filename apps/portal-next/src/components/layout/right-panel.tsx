@@ -3,13 +3,16 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import { Sparkles, MessageCircleQuestion, BookMarked, FileText, Send, ChevronLeft, ChevronRight, Target, Lightbulb } from 'lucide-react';
+import { Sparkles, MessageCircleQuestion, BookMarked, FileText, Send, ChevronLeft, ChevronRight, Target, Lightbulb, ListTree, Link2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useRightPanel, useActiveProfile } from '@/lib/ui-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
+import { getActiveDocFromPath } from '@/lib/active-doc';
+import { OutlinePanel } from '@/components/biblioteca/outline-panel';
+import { BacklinksPanel } from '@/components/biblioteca/backlinks-panel';
 import { canonicPaper, community, note } from '#site/content';
 
 type PendingItem = {
@@ -43,6 +46,22 @@ export function RightPanel() {
   const { collapsed, tab, setTab } = useRightPanel();
   const pathname = usePathname();
   const copSlug = inferCopFromPath(pathname);
+  const activeDoc = useMemo(() => getActiveDocFromPath(pathname), [pathname]);
+
+  // Auto-switch a outline cuando entras a un doc y estás en preguntas vacío
+  useEffect(() => {
+    if (activeDoc && tab === 'preguntas') {
+      // No forzar cambio — solo sugerir si el usuario nunca abrió outline
+      // Mantenemos comportamiento explicito: no auto-cambiamos.
+    }
+  }, [activeDoc, tab]);
+
+  // Si activeDoc desaparece y estamos en outline/backlinks → fallback a preguntas
+  useEffect(() => {
+    if (!activeDoc && (tab === 'outline' || tab === 'backlinks')) {
+      setTab('preguntas');
+    }
+  }, [activeDoc, tab, setTab]);
 
   const [readingState, setReadingState] = useState<ReadingState | null>(null);
   useEffect(() => {
@@ -121,65 +140,79 @@ export function RightPanel() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 border-b border-sidebar-border">
-          <button
+        <div className="grid grid-cols-4 border-b border-sidebar-border">
+          <TabButton
+            active={tab === 'outline'}
+            onClick={() => setTab('outline')}
+            Icon={ListTree}
+            label="Outline"
+            disabled={!activeDoc}
+          />
+          <TabButton
+            active={tab === 'backlinks'}
+            onClick={() => setTab('backlinks')}
+            Icon={Link2}
+            label="Refs"
+            disabled={!activeDoc}
+          />
+          <TabButton
+            active={tab === 'preguntas'}
             onClick={() => setTab('preguntas')}
-            className={cn(
-              'flex items-center justify-center gap-1.5 border-b-2 px-3 py-2 text-sm font-medium transition-colors',
-              tab === 'preguntas' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground',
-            )}
-          >
-            <MessageCircleQuestion className="h-3.5 w-3.5" />
-            Preguntas
-          </button>
-          <button
+            Icon={MessageCircleQuestion}
+            label="Preg"
+            badge={pending.length > 0 ? pending.length : undefined}
+          />
+          <TabButton
+            active={tab === 'chat'}
             onClick={() => setTab('chat')}
-            className={cn(
-              'flex items-center justify-center gap-1.5 border-b-2 px-3 py-2 text-sm font-medium transition-colors',
-              tab === 'chat' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground',
-            )}
-          >
-            <Sparkles className="h-3.5 w-3.5" />
-            Chat
-          </button>
+            Icon={Sparkles}
+            label="Chat"
+          />
         </div>
 
-        <div className="flex-1 overflow-y-auto p-3">
-          {tab === 'preguntas' ? (
-            pending.length === 0 ? (
-              <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-sm text-muted-foreground">
-                <Sparkles className="h-6 w-6 text-emerald-500" />
-                <p className="font-medium text-foreground">Todo al día</p>
-                <p className="text-xs">No hay preguntas de comprensión pendientes {copSlug ? 'en esta CoP' : 'en el portal'}.</p>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
-                  {pending.length} pendiente{pending.length === 1 ? '' : 's'}
-                </p>
-                {pending.map((p) => (
-                  <Link
-                    key={p.href}
-                    href={p.href}
-                    className="block rounded-lg border bg-background p-3 transition-all hover:border-primary/50 hover:bg-accent/40"
-                  >
-                    <div className="mb-1 flex items-center justify-between gap-2 text-[10px] uppercase tracking-wide text-muted-foreground">
-                      <span className="inline-flex items-center gap-1">
-                        {p.type === 'paper' ? <BookMarked className="h-3 w-3" /> : <FileText className="h-3 w-3" />}
-                        {p.type === 'paper' ? p.docId.toUpperCase() : 'nota'}
-                      </span>
-                      <span className="truncate">{p.copName}</span>
-                    </div>
-                    <div className="line-clamp-2 text-sm font-medium leading-snug">{p.title}</div>
-                    <Badge variant="outline" className="mt-2 text-[10px]">
-                      {p.remaining} / {p.total} pendientes
-                    </Badge>
-                  </Link>
-                ))}
-              </div>
-            )
-          ) : (
-            <ChatPane copSlug={copSlug} pathname={pathname} />
+        <div className="flex-1 overflow-hidden">
+          {tab === 'outline' && <OutlinePanel doc={activeDoc} />}
+          {tab === 'backlinks' && <BacklinksPanel doc={activeDoc} />}
+          {tab === 'preguntas' && (
+            <div className="h-full overflow-y-auto p-3">
+              {pending.length === 0 ? (
+                <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-sm text-muted-foreground">
+                  <Sparkles className="h-6 w-6 text-emerald-500" />
+                  <p className="font-medium text-foreground">Todo al día</p>
+                  <p className="text-xs">No hay preguntas de comprensión pendientes {copSlug ? 'en esta CoP' : 'en el portal'}.</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                    {pending.length} pendiente{pending.length === 1 ? '' : 's'}
+                  </p>
+                  {pending.map((p) => (
+                    <Link
+                      key={p.href}
+                      href={p.href}
+                      className="block rounded-lg border bg-background p-3 transition-all hover:border-primary/50 hover:bg-accent/40"
+                    >
+                      <div className="mb-1 flex items-center justify-between gap-2 text-[10px] uppercase tracking-wide text-muted-foreground">
+                        <span className="inline-flex items-center gap-1">
+                          {p.type === 'paper' ? <BookMarked className="h-3 w-3" /> : <FileText className="h-3 w-3" />}
+                          {p.type === 'paper' ? p.docId.toUpperCase() : 'nota'}
+                        </span>
+                        <span className="truncate">{p.copName}</span>
+                      </div>
+                      <div className="line-clamp-2 text-sm font-medium leading-snug">{p.title}</div>
+                      <Badge variant="outline" className="mt-2 text-[10px]">
+                        {p.remaining} / {p.total} pendientes
+                      </Badge>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          {tab === 'chat' && (
+            <div className="h-full overflow-hidden p-3">
+              <ChatPane copSlug={copSlug} pathname={pathname} />
+            </div>
           )}
         </div>
 
@@ -193,6 +226,49 @@ export function RightPanel() {
         <RoleFooter />
       </div>
     </aside>
+  );
+}
+
+/* ============================================================
+ * TabButton — botón unificado de las 4 tabs del panel
+ * ============================================================ */
+function TabButton({
+  active,
+  onClick,
+  Icon,
+  label,
+  disabled,
+  badge,
+}: Readonly<{
+  active: boolean;
+  onClick: () => void;
+  Icon: typeof Sparkles;
+  label: string;
+  disabled?: boolean;
+  badge?: number;
+}>) {
+  return (
+    <button
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      className={cn(
+        'relative flex flex-col items-center justify-center gap-0.5 border-b-2 px-2 py-2 text-[10px] font-medium transition-colors',
+        active && !disabled
+          ? 'border-primary text-primary'
+          : disabled
+            ? 'border-transparent text-muted-foreground/40 cursor-not-allowed'
+            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/40',
+      )}
+      title={disabled ? `${label} (requiere documento activo)` : label}
+    >
+      <Icon className="h-3.5 w-3.5" />
+      <span>{label}</span>
+      {badge !== undefined && (
+        <Badge variant="secondary" className="absolute top-1 right-1 h-3.5 min-w-3.5 px-1 text-[8px]">
+          {badge}
+        </Badge>
+      )}
+    </button>
   );
 }
 

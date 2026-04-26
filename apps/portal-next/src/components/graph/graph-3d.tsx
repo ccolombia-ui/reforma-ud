@@ -3,14 +3,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Search, Filter, X, ExternalLink, Maximize2, Minimize2, Loader2, RefreshCw } from 'lucide-react';
+import { Search, Filter, X, ExternalLink, Maximize2, Minimize2, Loader2, RefreshCw, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
-// react-force-graph-3d depende de three.js — sólo cliente
+// react-force-graph-3d + three.js — sólo cliente
 const ForceGraph3D = dynamic(() => import('react-force-graph-3d'), { ssr: false });
+// SpriteText para labels permanentes 3D
+const loadSpriteText = () => import('three-spritetext').then((m) => m.default);
 
 export type GraphNode = {
   id: string;
@@ -94,6 +96,7 @@ export function useGraph3DController(src: string) {
   const [enabledGroups, setEnabledGroups] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState('');
   const [selected, setSelected] = useState<GraphNode | null>(null);
+  const [showLabels, setShowLabels] = useState<boolean>(false);
   // Ref del network para acciones imperativas (fit / refresh)
   const fgRef = useRef<unknown>(null);
 
@@ -142,6 +145,10 @@ export function useGraph3DController(src: string) {
     return { nodes, links };
   }, [data, enabledGroups, searchQuery]);
 
+  function toggleLabels() {
+    setShowLabels((v) => !v);
+  }
+
   function toggleGroup(g: string) {
     setEnabledGroups((s) => {
       const next = new Set(s);
@@ -167,6 +174,8 @@ export function useGraph3DController(src: string) {
     filteredData,
     selected,
     setSelected,
+    showLabels,
+    toggleLabels,
     fgRef,
   };
 }
@@ -178,6 +187,8 @@ export function useGraph3DController(src: string) {
 export function Graph3DCanvas({ controller }: Readonly<{ controller: Graph3DController }>) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ width: 800, height: 600 });
+  type SpriteCtor = new (text?: string, height?: number, color?: string) => unknown;
+  const [SpriteText, setSpriteText] = useState<SpriteCtor | null>(null);
 
   useEffect(() => {
     if (!wrapperRef.current) return;
@@ -190,7 +201,34 @@ export function Graph3DCanvas({ controller }: Readonly<{ controller: Graph3DCont
     return () => ro.disconnect();
   }, []);
 
-  const { loading, error, filteredData, setSelected, fgRef, data } = controller;
+  // Lazy-load three-spritetext solo cuando se piden labels
+  useEffect(() => {
+    if (controller.showLabels && !SpriteText) {
+      loadSpriteText().then((Cls) => setSpriteText(() => Cls as unknown as SpriteCtor));
+    }
+  }, [controller.showLabels, SpriteText]);
+
+  const { loading, error, filteredData, setSelected, fgRef, data, showLabels } = controller;
+
+  // nodeThreeObject: cuando showLabels=true y SpriteText cargado, devuelve sprite con texto
+  const nodeThreeObject = useMemo(() => {
+    if (!showLabels || !SpriteText) return undefined;
+    return (n: GraphNode) => {
+      const sprite = new SpriteText(n.label, 4, '#ffffff') as {
+        material: { depthWrite: boolean };
+        backgroundColor?: string;
+        borderColor?: string;
+        borderWidth?: number;
+        padding?: number;
+      };
+      sprite.material.depthWrite = false;
+      sprite.backgroundColor = 'rgba(15,23,42,0.85)';
+      sprite.borderColor = nodeColor(n);
+      sprite.borderWidth = 0.5;
+      sprite.padding = 2;
+      return sprite as unknown as object;
+    };
+  }, [showLabels, SpriteText]);
 
   return (
     <div ref={wrapperRef} className="relative h-full w-full overflow-hidden bg-black">
@@ -235,6 +273,8 @@ export function Graph3DCanvas({ controller }: Readonly<{ controller: Graph3DCont
           enableNavigationControls
           showNavInfo={false}
           cooldownTicks={120}
+          nodeThreeObject={nodeThreeObject}
+          nodeThreeObjectExtend
         />
       )}
 
