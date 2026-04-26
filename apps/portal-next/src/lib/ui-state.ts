@@ -6,6 +6,7 @@ const KEYS = {
   leftSidebar: 'reforma-ud:left-sidebar-collapsed',
   leftSidebarWidth: 'reforma-ud:left-sidebar-width',
   rightPanel: 'reforma-ud:right-panel-collapsed',
+  rightPanelWidth: 'reforma-ud:right-panel-width',
   rightTab: 'reforma-ud:right-tab',
   activeRole: 'reforma-ud:active-role',
   userName: 'reforma-ud:user-name',
@@ -14,6 +15,10 @@ const KEYS = {
 export const LEFT_SIDEBAR_MIN = 200;
 export const LEFT_SIDEBAR_MAX = 480;
 export const LEFT_SIDEBAR_DEFAULT = 288; // ~ w-72
+
+export const RIGHT_SIDEBAR_MIN = 280;
+export const RIGHT_SIDEBAR_MAX = 720;
+export const RIGHT_SIDEBAR_DEFAULT = 320; // ~ w-80
 
 export const ROLES = [
   { id: 'estudiante',           name: 'Estudiante Soberano',           emoji: '🎓' },
@@ -138,14 +143,63 @@ export function useLeftWidth() {
   return [width, setLeftWidth] as const;
 }
 
-export type RightTab = 'preguntas' | 'chat' | 'outline' | 'backlinks';
-const VALID_RIGHT_TABS: readonly RightTab[] = ['preguntas', 'chat', 'outline', 'backlinks'] as const;
+/** Ancho del right panel en px. Persiste y se sincroniza entre instancias. v4.4 */
+export function useRightWidth() {
+  const [width, setWidth] = useState<number>(RIGHT_SIDEBAR_DEFAULT);
+
+  useEffect(() => {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      const raw = localStorage.getItem(KEYS.rightPanelWidth);
+      if (raw) {
+        const n = parseInt(raw, 10);
+        if (Number.isFinite(n) && n >= RIGHT_SIDEBAR_MIN && n <= RIGHT_SIDEBAR_MAX) {
+          setWidth(n);
+        }
+      }
+    } catch {}
+
+    const onChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ key: string; value: string | number }>).detail;
+      if (detail?.key === KEYS.rightPanelWidth) {
+        const n = typeof detail.value === 'number' ? detail.value : parseInt(String(detail.value), 10);
+        if (Number.isFinite(n)) setWidth(n);
+      }
+    };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === KEYS.rightPanelWidth && e.newValue) {
+        const n = parseInt(e.newValue, 10);
+        if (Number.isFinite(n)) setWidth(n);
+      }
+    };
+    window.addEventListener(EVENT, onChange);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener(EVENT, onChange);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
+
+  const setRightWidth = (n: number) => {
+    const clamped = Math.max(RIGHT_SIDEBAR_MIN, Math.min(RIGHT_SIDEBAR_MAX, Math.round(n)));
+    setWidth(clamped);
+    try {
+      localStorage.setItem(KEYS.rightPanelWidth, String(clamped));
+      window.dispatchEvent(new CustomEvent(EVENT, { detail: { key: KEYS.rightPanelWidth, value: clamped } }));
+    } catch {}
+  };
+
+  return [width, setRightWidth] as const;
+}
+
+export type RightTab = 'chat' | 'backlinks' | 'comunidad';
+const VALID_RIGHT_TABS: readonly RightTab[] = ['chat', 'backlinks', 'comunidad'] as const;
 function isRightTab(v: string): v is RightTab {
   return (VALID_RIGHT_TABS as readonly string[]).includes(v);
 }
 
-/** Default: EXPANDIDO. Tab Preguntas por defecto. */
-export function useRightPanel(defaultTab: RightTab = 'preguntas') {
+/** Default: EXPANDIDO. Tab Comunidad por defecto cuando hay doc activo. */
+export function useRightPanel(defaultTab: RightTab = 'comunidad') {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [tab, setTabState] = useState<RightTab>(defaultTab);
 

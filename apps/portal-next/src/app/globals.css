@@ -467,3 +467,57 @@ textarea:focus-visible,
 }
 .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
 .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ==========================================================================
+   v4.4 — Scrollbars invisibles + fade-bottom indicator (Apple-like)
+   ========================================================================== */
+
+/* Hide scrollbar pero mantener funcional. Apply via class .no-chrome-scroll */
+.no-chrome-scroll {
+  scrollbar-width: none;            /* Firefox */
+  -ms-overflow-style: none;         /* IE/Edge legacy */
+}
+.no-chrome-scroll::-webkit-scrollbar {
+  display: none;                    /* Chrome/Safari */
+}
+
+/* Aplicar global a sidebars + main para uniformidad */
+nav[data-sidebar] [class*="overflow-y-auto"],
+aside[data-right-panel] [class*="overflow-y-auto"],
+main {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
+}
+nav[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar,
+aside[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar {
+  width: 4px;
+}
+nav[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar-track,
+aside[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+nav[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar-thumb,
+aside[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.15);
+  border-radius: 9999px;
+}
+nav[data-sidebar] [class*="overflow-y-auto"]:hover::-webkit-scrollbar-thumb,
+aside[data-right-panel] [class*="overflow-y-auto"]:hover::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.35);
+}
+
+/* Fade-bottom indicator: gradiente sutil al fondo de contenedores con overflow */
+.scroll-fade-bottom {
+  position: relative;
+}
+.scroll-fade-bottom[data-overflow="true"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 4px;
+  height: 24px;
+  background: linear-gradient(to top, var(--background) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 10;
+}

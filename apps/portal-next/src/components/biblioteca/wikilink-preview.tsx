@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense, createContext, useContext, useMemo, useState } from 'react';
+import { Suspense, createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { ExternalLink, BookMarked, FileText, AlertTriangle } from 'lucide-react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
@@ -152,8 +152,25 @@ function WikiLinkPreviewInner({
     );
   }
 
+  // v4.3a — Esc cierra el hover card globalmente (paridad Obsidian)
+  useEffect(() => {
+    if (!opened) return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpened(false);
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [opened]);
+
+  function handleContentKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setOpened(false);
+    }
+  }
+
   return (
-    <HoverCard openDelay={300} closeDelay={120} onOpenChange={setOpened}>
+    <HoverCard openDelay={300} closeDelay={250} open={opened} onOpenChange={setOpened}>
       <HoverCardTrigger asChild>
         <Link
           href={href}
@@ -169,7 +186,11 @@ function WikiLinkPreviewInner({
           side="top"
           align="start"
           sideOffset={6}
-          className="w-[440px] max-h-[420px] overflow-y-auto p-0"
+          collisionPadding={12}
+          avoidCollisions
+          className="w-[440px] max-h-[420px] overflow-y-auto p-0 focus-visible:ring-2 focus-visible:ring-primary"
+          onKeyDown={handleContentKeyDown}
+          tabIndex={-1}
         >
           <HoverDepthCtx.Provider value={hoverDepth + 1}>
             <PreviewBody resolved={resolved} />

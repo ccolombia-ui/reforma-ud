@@ -2,17 +2,18 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
-import { Sparkles, MessageCircleQuestion, BookMarked, FileText, Send, ChevronLeft, ChevronRight, Target, Lightbulb, ListTree, Link2 } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Sparkles, Send, ChevronLeft, ChevronRight, Target, Lightbulb, Link2, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { useRightPanel, useActiveProfile } from '@/lib/ui-state';
+import { useRightPanel, useActiveProfile, useRightWidth } from '@/lib/ui-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { getActiveDocFromPath } from '@/lib/active-doc';
 import { OutlinePanel } from '@/components/biblioteca/outline-panel';
 import { BacklinksPanel } from '@/components/biblioteca/backlinks-panel';
+import { ComunidadPanel } from '@/components/biblioteca/comunidad-panel';
 import { canonicPaper, community, note } from '#site/content';
 
 type PendingItem = {
@@ -44,39 +45,55 @@ function inferCopFromPath(pathname: string | null): string | null {
 
 export function RightPanel() {
   const { collapsed, tab, setTab } = useRightPanel();
+  const [width, setWidth] = useRightWidth();
   const pathname = usePathname();
   const copSlug = inferCopFromPath(pathname);
   const activeDoc = useMemo(() => getActiveDocFromPath(pathname), [pathname]);
 
-  // Auto-switch a outline cuando entras a un doc y estás en preguntas vacío
-  useEffect(() => {
-    if (activeDoc && tab === 'preguntas') {
-      // No forzar cambio — solo sugerir si el usuario nunca abrió outline
-      // Mantenemos comportamiento explicito: no auto-cambiamos.
-    }
-  }, [activeDoc, tab]);
+  // v4.4 — Drag-resize del right panel (handle en borde IZQUIERDO)
+  const dragStart = useRef<{ x: number; w: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
 
-  // Si activeDoc desaparece y estamos en outline/backlinks → fallback a preguntas
+  const onPointerMove = useCallback((e: PointerEvent) => {
+    if (!dragStart.current) return;
+    const dx = dragStart.current.x - e.clientX; // invertido: arrastrar a la izq = más ancho
+    setWidth(dragStart.current.w + dx);
+  }, [setWidth]);
+
+  const onPointerUp = useCallback(() => {
+    dragStart.current = null;
+    setDragging(false);
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  }, [onPointerMove]);
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    e.preventDefault();
+    dragStart.current = { x: e.clientX, w: width };
+    setDragging(true);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+  }, [width, onPointerMove, onPointerUp]);
+
+  useEffect(() => () => {
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+  }, [onPointerMove, onPointerUp]);
+
+  // v4.3 — Si activeDoc desaparece y estamos en una tab que requiere doc activo
+  // (backlinks o comunidad), fallback a chat.
   useEffect(() => {
-    if (!activeDoc && (tab === 'outline' || tab === 'backlinks')) {
-      setTab('preguntas');
+    if (!activeDoc && (tab === 'backlinks' || tab === 'comunidad')) {
+      setTab('chat');
     }
   }, [activeDoc, tab, setTab]);
 
-  // G04 — counts para badges de tabs
-  const outlineCount = useMemo(() => {
-    type TocItem = { items?: TocItem[] };
-    const toc = activeDoc?.toc;
-    if (!toc) return 0;
-    function flat(arr: TocItem[] | undefined): number {
-      if (!arr) return 0;
-      let n = arr.length;
-      for (const e of arr) if (e.items) n += flat(e.items);
-      return n;
-    }
-    return flat(toc as TocItem[]);
-  }, [activeDoc]);
-
+  // v4.3 — counts para badges de tabs (Outline ya no es tab del right-panel,
+  // outlineCount eliminado; backlinkCount aún usado por tab "Refs")
   const [backlinkCount, setBacklinkCount] = useState<number>(0);
   useEffect(() => {
     if (!activeDoc) { setBacklinkCount(0); return; }
@@ -157,8 +174,33 @@ export function RightPanel() {
   return (
     <aside
       data-pagefind-ignore
-      className="hidden w-80 shrink-0 flex-col border-l bg-sidebar text-sidebar-foreground lg:flex"
+      data-right-panel
+      style={{ width: `${width}px` }}
+      className={cn(
+        'hidden shrink-0 flex-col border-l bg-sidebar text-sidebar-foreground lg:flex relative',
+        dragging && 'select-none',
+      )}
     >
+      {/* Drag handle borde izquierdo · v4.4 */}
+      <button
+        type="button"
+        aria-label="Ajustar ancho del panel asistente (doble-clic: reset)"
+        title="Arrastrar para ajustar · Doble-clic: reset"
+        onPointerDown={onPointerDown}
+        onDoubleClick={() => setWidth(320)}
+        className={cn(
+          'group absolute top-0 left-0 h-full w-1 cursor-col-resize z-30',
+          'before:absolute before:inset-y-0 before:-left-1 before:w-3 before:content-[""]',
+          'hover:bg-primary/30 active:bg-primary/60',
+          dragging && 'bg-primary/60',
+        )}
+        style={{ touchAction: 'none' }}
+      />
+      {dragging && (
+        <span className="pointer-events-none absolute top-2 left-2 z-40 rounded bg-background/90 backdrop-blur px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground border">
+          {width}px
+        </span>
+      )}
       <div className="sticky top-14 flex h-[calc(100vh-3.5rem)] flex-col">
         <div className="flex items-center gap-2 border-b border-sidebar-border px-4 py-3">
           <Sparkles className="h-4 w-4 text-primary" />
@@ -170,15 +212,9 @@ export function RightPanel() {
           )}
         </div>
 
-        <div className="grid grid-cols-4 border-b border-sidebar-border">
-          <TabButton
-            active={tab === 'outline'}
-            onClick={() => setTab('outline')}
-            Icon={ListTree}
-            label="Outline"
-            disabled={!activeDoc}
-            badge={outlineCount > 0 ? outlineCount : undefined}
-          />
+        <div className="grid grid-cols-3 border-b border-sidebar-border">
+          {/* v4.3 — Outline movido a sidebar izquierda permanente. Preguntas → inline.
+              Tabs activos: Refs · Comunidad (agrega presaberes/preguntas/aportes) · Chat */}
           <TabButton
             active={tab === 'backlinks'}
             onClick={() => setTab('backlinks')}
@@ -188,11 +224,11 @@ export function RightPanel() {
             badge={backlinkCount > 0 ? backlinkCount : undefined}
           />
           <TabButton
-            active={tab === 'preguntas'}
-            onClick={() => setTab('preguntas')}
-            Icon={MessageCircleQuestion}
-            label="Preg"
-            badge={pending.length > 0 ? pending.length : undefined}
+            active={tab === 'comunidad'}
+            onClick={() => setTab('comunidad')}
+            Icon={Users}
+            label="Comunidad"
+            disabled={!activeDoc}
           />
           <TabButton
             active={tab === 'chat'}
@@ -203,44 +239,8 @@ export function RightPanel() {
         </div>
 
         <div className="flex-1 overflow-hidden">
-          {tab === 'outline' && <OutlinePanel doc={activeDoc} />}
           {tab === 'backlinks' && <BacklinksPanel doc={activeDoc} />}
-          {tab === 'preguntas' && (
-            <div className="h-full overflow-y-auto p-3">
-              {pending.length === 0 ? (
-                <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-sm text-muted-foreground">
-                  <Sparkles className="h-6 w-6 text-emerald-500" />
-                  <p className="font-medium text-foreground">Todo al día</p>
-                  <p className="text-xs">No hay preguntas de comprensión pendientes {copSlug ? 'en esta CoP' : 'en el portal'}.</p>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
-                    {pending.length} pendiente{pending.length === 1 ? '' : 's'}
-                  </p>
-                  {pending.map((p) => (
-                    <Link
-                      key={p.href}
-                      href={p.href}
-                      className="block rounded-lg border bg-background p-3 transition-all hover:border-primary/50 hover:bg-accent/40"
-                    >
-                      <div className="mb-1 flex items-center justify-between gap-2 text-[10px] uppercase tracking-wide text-muted-foreground">
-                        <span className="inline-flex items-center gap-1">
-                          {p.type === 'paper' ? <BookMarked className="h-3 w-3" /> : <FileText className="h-3 w-3" />}
-                          {p.type === 'paper' ? p.docId.toUpperCase() : 'nota'}
-                        </span>
-                        <span className="truncate">{p.copName}</span>
-                      </div>
-                      <div className="line-clamp-2 text-sm font-medium leading-snug">{p.title}</div>
-                      <Badge variant="outline" className="mt-2 text-[10px]">
-                        {p.remaining} / {p.total} pendientes
-                      </Badge>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+          {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
           {tab === 'chat' && (
             <div className="h-full overflow-hidden p-3">
               <ChatPane copSlug={copSlug} pathname={pathname} />
