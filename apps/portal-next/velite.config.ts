@@ -1,5 +1,5 @@
 import { defineCollection, defineConfig, s } from 'velite';
-import { readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -11,6 +11,44 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeRaw from 'rehype-raw';
 import rehypeMermaid from 'rehype-mermaid';
+
+// v4.5c D5 — Carga la bibliografía para resolver `[@key]` a `(Autor, año)`
+// durante el build de Velite. Es un read-once al iniciar el proceso.
+type RefEntry = { author: string; year: number; title?: string; url?: string | null; journal?: string; publisher?: string };
+let REFERENCES: Record<string, RefEntry> = {};
+try {
+  const raw = readFileSync(join(process.cwd(), 'src', 'lib', 'references.json'), 'utf8');
+  REFERENCES = JSON.parse(raw) as Record<string, RefEntry>;
+  delete (REFERENCES as Record<string, unknown>)._meta;
+} catch (e) {
+  console.warn('[velite] references.json no encontrado — citas APA no resolverán', e);
+}
+
+function shortAuthor(author: string): string {
+  // "Apellido, Nombre" → "Apellido"; "X et al." → "X et al."; "Autor1 & Autor2" → "Autor1 & Autor2"
+  if (author.includes(' et al.')) return author;
+  const firstComma = author.indexOf(',');
+  if (firstComma > 0) return author.slice(0, firstComma);
+  return author;
+}
+
+function transformApaCites(html: string): string {
+  // Reemplaza [@key], [@key, p. X], [-@key] → <a class="apa-cite" data-cite-key="key">(Autor, Año)</a>
+  // Pandoc syntax soportada (mínima): `[@key]`, `[-@key]` (suprimir autor), `[@key1; @key2]` (múltiples).
+  return html.replace(
+    /\[(-?)@([a-zA-Z][a-zA-Z0-9_-]+)(?:\s*,?\s*p\.?\s*[\d-]+)?\]/g,
+    (full, suppress, key) => {
+      const ref = REFERENCES[key];
+      if (!ref) {
+        return `<a class="apa-cite apa-cite-broken" data-cite-key="${key}" title="Cita no resuelta">[@${key}]</a>`;
+      }
+      const text = suppress
+        ? `(${ref.year})`
+        : `(${shortAuthor(ref.author)}, ${ref.year})`;
+      return `<a class="apa-cite" data-cite-key="${key}">${text}</a>`;
+    },
+  );
+}
 
 /**
  * Recolecta todos los `.md`/`.mdx` bajo content/ para alimentar
@@ -68,12 +106,37 @@ const canonicPaper = defineCollection({
           })
         )
         .default([]),
+      // v4.5c D6 · Relaciones tipadas. Todas opcionales — un paper sin relations
+      // sigue funcionando. `cites` se mantiene como atajo plano para compat.
+      relations: s
+        .object({
+          pre: s.array(s.string()).default([]),       // pre-saberes
+          pos: s.array(s.string()).default([]),       // pos-saberes
+          co: s
+            .array(
+              s.object({
+                autor: s.string(),
+                pct: s.number().optional(),
+              })
+            )
+            .default([]),
+          custom: s.record(s.array(s.string())).default({}),
+        })
+        .default({ pre: [], pos: [], co: [], custom: {} }),
+      cites: s.array(s.string()).default([]),
       body: s.markdown(),
       toc: s.toc(),
       metadata: s.metadata(),
       slug: s.path(),
     })
-    .transform((data) => ({ ...data, href: `/canonico/${data.id}` })),
+    .transform((data) => ({
+      ...data,
+      // v4.5c D5 — post-procesa `[@key]` en el HTML compilado a `<a class="apa-cite">…</a>`.
+      // El componente cliente <ApaCite> intercepta esos anchors via mdx-with-hover-preview
+      // y muestra hover popover con metadata bibliográfica.
+      body: transformApaCites(data.body),
+      href: `/canonico/${data.id}`,
+    })),
 });
 
 // Communities = organizational units (Gobierno + VRs + Facultades + Escuelas + ...)

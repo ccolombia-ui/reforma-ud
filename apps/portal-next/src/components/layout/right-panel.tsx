@@ -12,7 +12,7 @@ import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { getActiveDocFromPath } from '@/lib/active-doc';
 import { ConexionesTab } from '@/components/biblioteca/conexiones-tab';
-import { BacklinksPanel } from '@/components/biblioteca/backlinks-panel';
+import { RefsPanel } from '@/components/biblioteca/refs-panel';
 import { ComunidadPanel } from '@/components/biblioteca/comunidad-panel';
 import { canonicPaper, community, note } from '#site/content';
 
@@ -250,7 +250,7 @@ export function RightPanel() {
 
         <div className="flex-1 overflow-hidden">
           {tab === 'conexiones' && <ConexionesTab doc={activeDoc} />}
-          {tab === 'refs' && <BacklinksPanel doc={activeDoc} />}
+          {tab === 'refs' && <RefsPanel doc={activeDoc} />}
           {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
           {tab === 'asistente' && (
             <div className="h-full overflow-hidden p-3">
