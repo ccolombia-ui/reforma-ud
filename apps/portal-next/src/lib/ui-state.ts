@@ -4,11 +4,16 @@ import { useEffect, useState } from 'react';
 
 const KEYS = {
   leftSidebar: 'reforma-ud:left-sidebar-collapsed',
+  leftSidebarWidth: 'reforma-ud:left-sidebar-width',
   rightPanel: 'reforma-ud:right-panel-collapsed',
   rightTab: 'reforma-ud:right-tab',
   activeRole: 'reforma-ud:active-role',
   userName: 'reforma-ud:user-name',
 } as const;
+
+export const LEFT_SIDEBAR_MIN = 200;
+export const LEFT_SIDEBAR_MAX = 480;
+export const LEFT_SIDEBAR_DEFAULT = 288; // ~ w-72
 
 export const ROLES = [
   { id: 'estudiante',           name: 'Estudiante Soberano',           emoji: '🎓' },
@@ -82,6 +87,55 @@ export function useLeftCollapsed() {
     });
   };
   return [c, toggle] as const;
+}
+
+/** Ancho del sidebar izquierdo en px. Persiste y se sincroniza entre instancias. */
+export function useLeftWidth() {
+  const [width, setWidth] = useState<number>(LEFT_SIDEBAR_DEFAULT);
+
+  useEffect(() => {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      const raw = localStorage.getItem(KEYS.leftSidebarWidth);
+      if (raw) {
+        const n = parseInt(raw, 10);
+        if (Number.isFinite(n) && n >= LEFT_SIDEBAR_MIN && n <= LEFT_SIDEBAR_MAX) {
+          setWidth(n);
+        }
+      }
+    } catch {}
+
+    const onChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ key: string; value: string | number }>).detail;
+      if (detail?.key === KEYS.leftSidebarWidth) {
+        const n = typeof detail.value === 'number' ? detail.value : parseInt(String(detail.value), 10);
+        if (Number.isFinite(n)) setWidth(n);
+      }
+    };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === KEYS.leftSidebarWidth && e.newValue) {
+        const n = parseInt(e.newValue, 10);
+        if (Number.isFinite(n)) setWidth(n);
+      }
+    };
+    window.addEventListener(EVENT, onChange);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener(EVENT, onChange);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
+
+  const setLeftWidth = (n: number) => {
+    const clamped = Math.max(LEFT_SIDEBAR_MIN, Math.min(LEFT_SIDEBAR_MAX, Math.round(n)));
+    setWidth(clamped);
+    try {
+      localStorage.setItem(KEYS.leftSidebarWidth, String(clamped));
+      window.dispatchEvent(new CustomEvent(EVENT, { detail: { key: KEYS.leftSidebarWidth, value: clamped } }));
+    } catch {}
+  };
+
+  return [width, setLeftWidth] as const;
 }
 
 /** Default: EXPANDIDO. Tab Preguntas por defecto. */

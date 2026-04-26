@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { canonicPaper } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
-import { useLeftCollapsed } from '@/lib/ui-state';
+import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
 import { cn } from '@/lib/utils';
+import { SidebarMissionsWidget } from '@/components/layout/sidebar-missions-widget';
 
 const TYPE_ICONS: Record<string, React.ReactNode> = {
   gobierno: <Landmark className="h-3.5 w-3.5" />,
@@ -56,17 +57,18 @@ function SectionToggle({
   }
 
   return (
-    <section className="mb-3">
+    <section className="mb-2">
       <button
         type="button"
         onClick={handleToggle}
-        className="group flex w-full items-center gap-1.5 rounded px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground hover:bg-sidebar-accent hover:text-foreground"
+        className="group flex w-full items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground/80 hover:bg-sidebar-accent hover:text-foreground"
         aria-expanded={open}
       >
-        <ChevronDown className={cn('h-3 w-3 transition-transform', !open && '-rotate-90')} />
-        <span>{emoji} {title}</span>
+        <ChevronDown className={cn('h-2.5 w-2.5 transition-transform', !open && '-rotate-90')} />
+        <span className="opacity-80">{emoji}</span>
+        <span>{title}</span>
       </button>
-      {open && <div className="mt-1">{children}</div>}
+      {open && <div className="mt-0.5">{children}</div>}
     </section>
   );
 }
@@ -198,6 +200,7 @@ function TreeItem({ node, currentPath, depth = 0 }: { node: TreeNode; currentPat
 export function Sidebar() {
   const pathname = usePathname() ?? '/';
   const [collapsed] = useLeftCollapsed();
+  const [width, setWidth] = useLeftWidth();
   const tree = buildCommunityTree();
   const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
 
@@ -250,19 +253,12 @@ export function Sidebar() {
   }
 
   return (
-    <nav
-      data-sidebar
-      data-pagefind-ignore
-      className="hidden h-[calc(100vh-3.5rem)] w-72 shrink-0 flex-col overflow-y-auto border-r bg-sidebar text-sidebar-foreground md:flex"
-    >
-      <div className="border-b border-sidebar-border px-4 py-4">
-        <Link href="/" className="block text-base font-bold tracking-tight">
-          reforma·ud
-        </Link>
-        <p className="text-xs text-muted-foreground">Acuerdo CSU 04/2025</p>
-      </div>
+    <SidebarResizableNav width={width} setWidth={setWidth}>
+      {/* Misiones activas — pertenencia + resultados al tope */}
+      <SidebarMissionsWidget />
 
-      <div className="flex-1 overflow-y-auto px-2 py-3 text-sm">
+      {/* Navegación principal */}
+      <div className="flex-1 overflow-y-auto px-1.5 py-2 text-sm">
         <SectionToggle id="canonico" emoji="📚" title="Canónico MI-12">
           <ul className="space-y-0.5">
             <li>
@@ -311,9 +307,91 @@ export function Sidebar() {
         </SectionToggle>
       </div>
 
-      <div className="border-t border-sidebar-border px-3 py-2 text-[10px] text-muted-foreground">
-        v3.2 · CC BY-SA 4.0
+      <div className="border-t border-sidebar-border px-3 py-1.5 text-[9px] text-muted-foreground/70 flex items-center justify-between">
+        <span className="font-mono">CSU 04/2025</span>
+        <span>v3.2 · CC BY-SA 4.0</span>
       </div>
+    </SidebarResizableNav>
+  );
+}
+
+/* ============================================================
+ * SidebarResizableNav — envolvente con drag handle redimensionable
+ * ============================================================ */
+
+function SidebarResizableNav({
+  width,
+  setWidth,
+  children,
+}: Readonly<{
+  width: number;
+  setWidth: (n: number) => void;
+  children: React.ReactNode;
+}>) {
+  const startRef = useRef<{ x: number; w: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+
+  const onPointerMove = useCallback((e: PointerEvent) => {
+    if (!startRef.current) return;
+    const dx = e.clientX - startRef.current.x;
+    setWidth(startRef.current.w + dx);
+  }, [setWidth]);
+
+  const onPointerUp = useCallback(() => {
+    startRef.current = null;
+    setDragging(false);
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  }, [onPointerMove]);
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    e.preventDefault();
+    startRef.current = { x: e.clientX, w: width };
+    setDragging(true);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+  }, [width, onPointerMove, onPointerUp]);
+
+  // Cleanup en desmontaje
+  useEffect(() => () => {
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+  }, [onPointerMove, onPointerUp]);
+
+  return (
+    <nav
+      data-sidebar
+      data-pagefind-ignore
+      style={{ width: `${width}px` }}
+      className={cn(
+        'hidden h-[calc(100vh-3.5rem)] shrink-0 flex-col overflow-hidden border-r bg-sidebar text-sidebar-foreground md:flex relative',
+        dragging && 'select-none',
+      )}
+    >
+      {children}
+      {/* Drag handle: 4 px hot-zone con halo en hover */}
+      <button
+        type="button"
+        aria-label="Ajustar ancho del sidebar"
+        onPointerDown={onPointerDown}
+        className={cn(
+          'group absolute top-0 right-0 h-full w-1 cursor-col-resize z-30',
+          'before:absolute before:inset-y-0 before:-right-1 before:w-3 before:content-[""]',
+          'hover:bg-primary/30 active:bg-primary/60',
+          dragging && 'bg-primary/60',
+        )}
+        style={{ touchAction: 'none' }}
+      />
+      {/* Min/max indicator durante drag */}
+      {dragging && (
+        <span className="pointer-events-none absolute top-2 right-2 z-40 rounded bg-background/90 backdrop-blur px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground border">
+          {width}px
+        </span>
+      )}
     </nav>
   );
 }
