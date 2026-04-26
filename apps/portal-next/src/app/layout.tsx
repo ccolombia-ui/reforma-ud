@@ -9,6 +9,7 @@ import { CommandPalette } from '@/components/layout/command-palette';
 import { CCAEarnedModal } from '@/components/layout/cca-earned-modal';
 import { ChangelogDrawer } from '@/components/layout/changelog-drawer';
 import { GraphProvider } from '@/lib/graph-context';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: {
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <CommandPalette />
             <CCAEarnedModal />
             <ChangelogDrawer />
+            <Toaster position="top-right" richColors closeButton />
           </GraphProvider>
         </ThemeProvider>
       </body>

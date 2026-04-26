@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { CheckCircle2, XCircle, Sparkles, ArrowRight, SkipForward } from 'lucide-react';
+import { toast } from 'sonner';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -100,7 +101,18 @@ export function SectionGate({
           ) : (
             <>
               {isCorrect ? (
-                <Button onClick={() => onComplete('correct')} size="sm" className="gap-1.5">
+                <Button
+                  onClick={() => {
+                    toast.success('¡Sección verificada!', {
+                      description: 'Tu progreso quedó registrado. La siguiente sección está disponible.',
+                      icon: '✨',
+                      duration: 3500,
+                    });
+                    onComplete('correct');
+                  }}
+                  size="sm"
+                  className="gap-1.5"
+                >
                   Continuar a la siguiente sección <ArrowRight className="h-3.5 w-3.5" />
                 </Button>
               ) : (

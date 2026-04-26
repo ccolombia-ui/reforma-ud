@@ -3,15 +3,44 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Command } from 'cmdk';
-import { Search, Hash, BookMarked, FileText, Network, Library, Sparkles, Sun, Moon, Code2, Home, GraduationCap } from 'lucide-react';
+import { Search, Hash, BookMarked, FileText, Network, Library, Sparkles, Sun, Moon, Code2, Home, GraduationCap, Clock } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { canonicPaper, community, note } from '#site/content';
+
+const HISTORY_KEY = 'reforma-ud:cmdk-history';
+const HISTORY_MAX = 5;
+
+type HistoryItem = { href: string; title: string; type: 'paper' | 'community' | 'note' | 'action' };
+
+function loadHistory(): HistoryItem[] {
+  if (typeof localStorage === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw) as HistoryItem[];
+  } catch {
+    return [];
+  }
+}
+
+function pushHistory(item: HistoryItem) {
+  try {
+    const cur = loadHistory().filter((h) => h.href !== item.href);
+    const next = [item, ...cur].slice(0, HISTORY_MAX);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+  } catch {}
+}
 
 export function CommandPalette() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const { setTheme, theme } = useTheme();
+
+  useEffect(() => {
+    if (open) setHistory(loadHistory());
+  }, [open]);
 
   // open on /, Cmd+K, Ctrl+K
   useEffect(() => {
@@ -59,9 +88,10 @@ export function CommandPalette() {
     return { papers, cops, notes };
   }, []);
 
-  function go(href: string) {
+  function go(href: string, title?: string, type: HistoryItem['type'] = 'action') {
     setOpen(false);
     setQuery('');
+    if (title) pushHistory({ href, title, type });
     router.push(href);
   }
 
@@ -89,6 +119,26 @@ export function CommandPalette() {
         <Command.Empty className="px-3 py-8 text-center text-sm text-muted-foreground">
           Sin resultados.
         </Command.Empty>
+
+        {/* G17 — Recientes (últimos 5 docs visitados) */}
+        {!query && history.length > 0 && (
+          <Command.Group heading="Recientes" className="text-xs">
+            {history.map((h) => (
+              <Command.Item
+                key={`hist-${h.href}`}
+                value={`reciente ${h.title}`}
+                onSelect={() => go(h.href, h.title, h.type)}
+                className="cmdk-item"
+              >
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate">{h.title}</div>
+                  <div className="font-mono text-[10px] text-muted-foreground">{h.type}</div>
+                </div>
+              </Command.Item>
+            ))}
+          </Command.Group>
+        )}
 
         <Command.Group heading="Acciones" className="text-xs">
           <Command.Item value="home inicio" onSelect={() => go('/')} className="cmdk-item">
@@ -125,7 +175,7 @@ export function CommandPalette() {
             <Command.Item
               key={p.id}
               value={`${p.id} ${p.title} ${p.meta}`}
-              onSelect={() => go(p.href)}
+              onSelect={() => go(p.href, p.title, 'paper')}
               className="cmdk-item"
             >
               <BookMarked className="h-4 w-4 text-muted-foreground" />
@@ -142,7 +192,7 @@ export function CommandPalette() {
             <Command.Item
               key={c.id}
               value={`${c.id} ${c.title} ${c.meta}`}
-              onSelect={() => go(c.href)}
+              onSelect={() => go(c.href, c.title, 'community')}
               className="cmdk-item"
             >
               <Hash className="h-4 w-4 text-muted-foreground" />
@@ -159,7 +209,7 @@ export function CommandPalette() {
             <Command.Item
               key={n.id}
               value={`${n.id} ${n.title} ${n.meta}`}
-              onSelect={() => go(n.href)}
+              onSelect={() => go(n.href, n.title, 'note')}
               className="cmdk-item"
             >
               <FileText className="h-4 w-4 text-muted-foreground" />

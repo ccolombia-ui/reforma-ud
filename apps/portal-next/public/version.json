@@ -1,8 +1,12 @@
 {
-  "version": "v3.3",
+  "version": "v3.4",
   "buildDate": "2026-04-26",
-  "commit": "d61f1b0",
+  "commit": "fb5b548+",
   "changes": [
+    {
+      "title": "20/20 gaps de usabilidad cerrados",
+      "summary": "Tabs con keyboard nav (Ctrl+Tab / Ctrl+W), badges con count en outline y refs, history en cmdk (Recientes), hover-preview con limite de nesting, toasts al verificar misiones, jerarquia visual home en 3 niveles."
+    },
     {
       "title": "Audit 20 gaps + Sprint A/B aplicados",
       "summary": "Skeletons en /canonico, focus-rings uniformes, KaTeX dark fix, tooltips con atajos, wikilinks rotos visibles, print CSS limpio, AI typing indicator, EmptyState component."

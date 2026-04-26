@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense, useMemo, useState } from 'react';
+import { Suspense, createContext, useContext, useMemo, useState } from 'react';
 import { ExternalLink, BookMarked, FileText, AlertTriangle } from 'lucide-react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
@@ -9,6 +9,9 @@ import { canonicPaper, community, note } from '#site/content';
 import { MDXContent } from '@/components/mdx-content';
 import { useDocTabs } from '@/lib/doc-tabs';
 import { cn } from '@/lib/utils';
+
+/** G18 — limita la profundidad de hover-cards anidados (max 1 nivel). */
+const HoverDepthCtx = createContext<number>(0);
 
 type ResolvedDoc =
   | { kind: 'paper'; id: string; title: string; description: string; href: string; body: string; number: number }
@@ -104,6 +107,9 @@ function WikiLinkPreviewInner({
   const [opened, setOpened] = useState(false);
   const resolved = useMemo(() => resolveHref(href), [href]);
   const { replaceActive, openInNewTab, openInBackground } = useDocTabs();
+  const hoverDepth = useContext(HoverDepthCtx);
+  // G18 — bloquea hover-card si ya estamos dentro de otra (máx 1 nivel)
+  const allowHover = hoverDepth < 1;
 
   const triggerClassName = cn(
     'wikilink underline decoration-dotted underline-offset-2 hover:decoration-solid transition-all',
@@ -132,6 +138,20 @@ function WikiLinkPreviewInner({
     }
   }
 
+  if (!allowHover) {
+    // En hover-card anidado: link plano sin preview (evita pirámide)
+    return (
+      <Link
+        href={href}
+        className={triggerClassName}
+        onClick={handleClick}
+        onAuxClick={handleAuxClick}
+      >
+        {children}
+      </Link>
+    );
+  }
+
   return (
     <HoverCard openDelay={300} closeDelay={120} onOpenChange={setOpened}>
       <HoverCardTrigger asChild>
@@ -151,7 +171,9 @@ function WikiLinkPreviewInner({
           sideOffset={6}
           className="w-[440px] max-h-[420px] overflow-y-auto p-0"
         >
-          <PreviewBody resolved={resolved} />
+          <HoverDepthCtx.Provider value={hoverDepth + 1}>
+            <PreviewBody resolved={resolved} />
+          </HoverDepthCtx.Provider>
         </HoverCardContent>
       )}
     </HoverCard>

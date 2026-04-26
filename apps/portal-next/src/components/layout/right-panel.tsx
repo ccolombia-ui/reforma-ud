@@ -63,6 +63,36 @@ export function RightPanel() {
     }
   }, [activeDoc, tab, setTab]);
 
+  // G04 — counts para badges de tabs
+  const outlineCount = useMemo(() => {
+    type TocItem = { items?: TocItem[] };
+    const toc = activeDoc?.toc;
+    if (!toc) return 0;
+    function flat(arr: TocItem[] | undefined): number {
+      if (!arr) return 0;
+      let n = arr.length;
+      for (const e of arr) if (e.items) n += flat(e.items);
+      return n;
+    }
+    return flat(toc as TocItem[]);
+  }, [activeDoc]);
+
+  const [backlinkCount, setBacklinkCount] = useState<number>(0);
+  useEffect(() => {
+    if (!activeDoc) { setBacklinkCount(0); return; }
+    let cancelled = false;
+    fetch('/static/graph-global.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((g: { edges?: Array<{ to: string }> } | null) => {
+        if (cancelled || !g?.edges) return;
+        const docId = activeDoc.id.toLowerCase();
+        const n = g.edges.filter((e) => e.to.toLowerCase() === docId).length;
+        setBacklinkCount(n);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [activeDoc]);
+
   const [readingState, setReadingState] = useState<ReadingState | null>(null);
   useEffect(() => {
     setReadingState(getReadingState());
@@ -147,6 +177,7 @@ export function RightPanel() {
             Icon={ListTree}
             label="Outline"
             disabled={!activeDoc}
+            badge={outlineCount > 0 ? outlineCount : undefined}
           />
           <TabButton
             active={tab === 'backlinks'}
@@ -154,6 +185,7 @@ export function RightPanel() {
             Icon={Link2}
             label="Refs"
             disabled={!activeDoc}
+            badge={backlinkCount > 0 ? backlinkCount : undefined}
           />
           <TabButton
             active={tab === 'preguntas'}
