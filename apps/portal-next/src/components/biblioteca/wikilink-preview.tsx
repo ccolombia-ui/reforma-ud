@@ -1,12 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { Suspense, useMemo, useState } from 'react';
 import { ExternalLink, BookMarked, FileText, AlertTriangle } from 'lucide-react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
 import { canonicPaper, community, note } from '#site/content';
 import { MDXContent } from '@/components/mdx-content';
+import { useDocTabs } from '@/lib/doc-tabs';
 import { cn } from '@/lib/utils';
 
 type ResolvedDoc =
@@ -67,7 +68,31 @@ function resolveHref(href: string): ResolvedDoc {
   return { kind: 'broken', href };
 }
 
-export function WikiLinkPreview({
+export function WikiLinkPreview(props: Readonly<{
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}>) {
+  return (
+    <Suspense fallback={<FallbackLink {...props} />}>
+      <WikiLinkPreviewInner {...props} />
+    </Suspense>
+  );
+}
+
+function FallbackLink({ href, className, children }: Readonly<{
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}>) {
+  return (
+    <Link href={href} className={cn('wikilink', className)}>
+      {children}
+    </Link>
+  );
+}
+
+function WikiLinkPreviewInner({
   href,
   className,
   children,
@@ -78,6 +103,7 @@ export function WikiLinkPreview({
 }>) {
   const [opened, setOpened] = useState(false);
   const resolved = useMemo(() => resolveHref(href), [href]);
+  const { replaceActive, openInNewTab, openInBackground } = useDocTabs();
 
   const triggerClassName = cn(
     'wikilink underline decoration-dotted underline-offset-2 hover:decoration-solid transition-all',
@@ -85,10 +111,36 @@ export function WikiLinkPreview({
     className,
   );
 
+  /** Click handler con modificadores estilo Obsidian. */
+  function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (resolved.kind === 'broken') return;
+    // Permitir ctrl+shift / meta+shift abrir en nueva ventana del navegador (default browser)
+    if (e.shiftKey) return;
+    e.preventDefault();
+    if (e.ctrlKey || e.metaKey) {
+      openInNewTab(href);
+    } else {
+      replaceActive(href);
+    }
+  }
+
+  function handleAuxClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    // Mid-click → background tab
+    if (e.button === 1 && resolved.kind !== 'broken') {
+      e.preventDefault();
+      openInBackground(href);
+    }
+  }
+
   return (
     <HoverCard openDelay={300} closeDelay={120} onOpenChange={setOpened}>
       <HoverCardTrigger asChild>
-        <Link href={href} className={triggerClassName}>
+        <Link
+          href={href}
+          className={triggerClassName}
+          onClick={handleClick}
+          onAuxClick={handleAuxClick}
+        >
           {children}
         </Link>
       </HoverCardTrigger>

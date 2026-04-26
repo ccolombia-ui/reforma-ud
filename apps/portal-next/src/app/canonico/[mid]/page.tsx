@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
+import { DocTabsBar } from '@/components/biblioteca/doc-tabs-bar';
 import { PrintButton } from '@/components/print-button';
 import { SplitWorkArea } from '@/components/biblioteca/split-work-area';
 import { canonicPaper, note } from '#site/content';
@@ -53,6 +54,8 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
   return (
     <SplitWorkArea paperId={mid}>
       <article className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
+      {/* Tabs estilo Obsidian (sólo si hay >1 tab) */}
+      <DocTabsBar />
       {/* Top nav */}
       <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground no-print">
         <Link href="/canonico" className="inline-flex items-center gap-1 hover:text-foreground">
