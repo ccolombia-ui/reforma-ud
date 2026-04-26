@@ -1,30 +1,119 @@
 ---
 id: m10
 number: 10
-title: "TDABC para IES públicas"
-description: "Time-Driven Activity-Based Costing aplicado al costeo educativo público."
+title: "\"TDABC para IES públicas\""
+description: "\"Time-Driven Activity-Based Costing aplicado al costeo educativo público.\""
 crispPhase: evaluation
 rutaClark: [R1]
-status: red
-tags: [m10, reforma-udfjc, crisp-evaluation]
+status: green
+tags: "[m10, reforma-udfjc, crisp-evaluation]"
 ---
-# M10 — Gobernanza + Financiacion diversificada
 
-> **Estado**: En preparacion — los 5 tracks Sonnet estan elaborando este paper.
-> Ruta Clark dominante: **R-3 (Sector)**
 
-## Pregunta trazadora
+# §10 · TDABC para IES Públicas: CCR + 12 Time Equations piloto Física
 
-*Este paper responde a la pregunta trazadora que se articula con el ciclo CRISP-DM del proyecto MI-12.*
-
-## Contenido (en construccion)
-
-El paper estara disponible en este portal en cuanto el track Sonnet correspondiente
-complete su elaboracion y el sync automatico desde Google Drive lo publique.
-
-El sync corre automaticamente cada 10 minutos desde la fuente editorial en Google Drive.
-
+> [!abstract] §0 · Abstract
+> Esta sección documenta la implementación del **Time-Driven Activity-Based Costing (TDABC)** [@kaplananderson2004tdabc] en su variante **Lite** para la UDFJC, aprovechando que la institución ya publica 45 procedimientos PHVA en SIGUD/DARUMA y que el [[glo-ccr-capacity-cost-rate|CCR]] DVE está empíricamente calibrado con 13.715 contratos ejecutados 2020-2025. Contribución principal: **12 time equations** que cubren los 3 procesos misionales (Docencia, Investigación, Extensión), con drivers observables en sistemas operativos existentes y trazabilidad directa a procedimientos DARUMA.
 
 ---
 
-*CC BY-SA 4.0 · Carlos Camilo Madera Sepulveda · CPS-939-2026 · UDFJC*
+## §1 · Pregunta trazadora
+
+> ¿Cómo calcular el costo real de una actividad académica en una IES pública colombiana **sin esperar** a que maduren BPMN completo y BIM-7D, manteniendo rigor metodológico y trazabilidad auditable?
+
+---
+
+## §2 · TDABC Lite vs Completa
+
+| | Lite | Completa |
+|---|---|---|
+| Granularidad | Proceso → Actividad | Actividad → Evento × Espacio |
+| Input | SIGUD + presupuesto + carga | BPMN + BIM-7D + IFC |
+| Salida | CCR + 12 TE × 3 procesos | Costo por actividad × espacio × evento |
+| Tiempo | 2-3 semanas | 3-6 meses |
+| Precisión | ±15-20% | ±5% |
+
+UDFJC adopta **RUTA LITE** porque la urgencia CSU 2026-2Q lo requiere y BPMN institucional es fragmentario.
+
+---
+
+## §3 · Las 12 Time Equations
+
+| TE | Proceso | Actividad | Driver |
+|---|---|---|---|
+| TE-D-01 | Docencia | Preparación clase | min_clase × factor_complejidad |
+| TE-D-02 | Docencia | Clase magistral | min_clase × factor_grupo |
+| TE-D-03 | Docencia | Evaluación | num_estudiantes × factor_examen |
+| TE-D-04 | Docencia | Tutoría individual | num_estudiantes × min_tutoria |
+| TE-I-01 | Investigación | Diseño experimental | proyecto_complejidad |
+| TE-I-02 | Investigación | Trabajo de campo | num_visitas × min_visita |
+| TE-I-03 | Investigación | Análisis y publicación | productos_estimados |
+| TE-I-04 | Investigación | Mentoring estudiantes investigación | num_estudiantes × min_mentor |
+| TE-E-01 | Extensión | Diseño proyecto | proyecto_complejidad_ext |
+| TE-E-02 | Extensión | Ejecución territorial | num_jornadas × min_jornada |
+| TE-E-03 | Extensión | Acompañamiento beneficiarios | num_beneficiarios × min_acomp |
+| TE-E-04 | Extensión | Sistematización | productos_extension |
+
+> [!bug] DT-MI12-10-01 · Detalle de β_i para cada TE
+> Migrar las 12 ecuaciones t = t_0 + Σ β_i × X_i con valores específicos de t_0 y β_i calibrados desde DARUMA.
+
+---
+
+## §4 · Figuras (1 mermaid)
+
+![[fig-MI12-112--m10-fig-01]]
+
+> [!bug] DT-MI12-10-02 · Captions y migrar figuras locales de M10 (5 figuras locales que ya estaban atomizadas en M10/02-figuras/)
+> Las 5 figuras de M10 atomizadas localmente (fig-M10-01..05) deben revisarse: 1 ya migrada al capítulo (fig-MI12-112), las 4 restantes deben migrarse o consolidarse.
+
+---
+
+## §5 · Conceptos Clave
+
+(TDABC, CCR, time equation, SIGUD, DARUMA — pendiente glosario)
+
+> [!bug] DT-MI12-10-03 · Glosario TDABC/CCR/time-equation
+> Crear glo-tdabc, glo-time-equation, glo-ccr-capacity-cost-rate (compartido con §09).
+
+---
+
+## §6 · Articulación con SOTA
+
+UDFJC TDABC Lite vs SOTA:
+- Kaplan & Anderson (2004) - referente original.
+- Cheporov (2015) - aplicación universidad rusa.
+- MDPI (2024) - aplicaciones recientes.
+
+> [!bug] DT-MI12-10-04 · Tabla comparativa SOTA Kaplan/Cheporov/MDPI vs propuesta UDFJC
+> Migrar tabla de M10 §6.
+
+---
+
+## §7 · Deudas Técnicas
+
+| ID | Descripción | Impacto |
+|---|---|---|
+| DT-MI12-10-01 | β_i de las 12 TE | Alto |
+| DT-MI12-10-02 | Migración figuras M10 locales | Medio |
+| DT-MI12-10-03 | Glosario TDABC | Medio |
+| DT-MI12-10-04 | Tabla SOTA comparativa | Medio |
+| DT-MI12-10-05 | Status DRAFT → FINAL pendiente peer review | Alto |
+
+---
+
+## §8 · Referencias
+
+`@kaplananderson2004tdabc` (pendiente añadir al .bib).
+
+> [!bug] DT-MI12-10-06 · Referencias TDABC al .bib
+> Añadir: Kaplan, R. S., & Anderson, S. R. (2004). Time-driven activity-based costing. *HBR* 82(11), 131-138; Cheporov (2015), MDPI (2024).
+
+---
+
+## Historial §10
+
+| 1.0.0 | 2026-04-25 | Atomización desde M10-v1.0.0. 1 figura extraída a nivel capítulo. Status DRAFT. |
+
+---
+
+*CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-04-25 · sec-MI12-10 v1.0.0 (DRAFT)*
