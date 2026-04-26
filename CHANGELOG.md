@@ -6,6 +6,47 @@
 
 ---
 
+## [v4.0.0-rc.1] — 2026-04-26 · Op A · Obsidian-engine SOTA + Cherry-pick Flowershow
+
+> Release Candidate. Migración mayor del pipeline MDX → Markdown puro siguiendo
+> el verdict del audit `AUDIT-flowershow-v4.md` (Opción A: cherry-pick).
+
+### Added
+- **Op A migration**: `s.mdx()` → `s.markdown()` en Velite — sintaxis Obsidian 100% sin transformaciones JSX-escape.
+- **html-react-parser** para interceptar `<a class="wikilink">` y enchufar `<WikiLinkPreview>` en el output HTML.
+- **TOC IntersectionObserver** mejorado con rootMargin -20%/-70% (patrón Flowershow `table-of-contents.tsx`).
+- **8 audits SOTA** publicados en `docs/audit/`:
+  - `AUDIT-obsidian-engine-sota.md` — síntesis cruzada con audit externo aleia-zen
+  - `AUDIT-flowershow-v4.md` — deep dive Flowershow + 3 opciones migración + verdict
+  - 8 ADRs cristalizados (ADR-OBS-08 a 15)
+- **Tag `v3.4-stable`** como rollback point seguro al último deploy verde confirmado en producción.
+
+### Changed
+- `MDXContent` ahora renderiza HTML string vía `dangerouslySetInnerHTML` (más seguro y rápido que `new Function(code)`).
+- `MDXWithHoverPreview` reescrito con `html-react-parser` para interceptar wikilinks en HTML compilado.
+
+### Removed
+- Dependencia `@portaljs/remark-wiki-link@1.2` — no se usaba (nuestro `remark-wikilinks.ts` es custom). Bundle delta: -2 KB.
+- Lógica de escape `<digit` y autolinks `<https://...>` en `import-book-sections.mjs` (ya no necesaria con markdown puro).
+
+### Verdict del audit Flowershow
+- **NO migrar a Quartz** (rewrite Preact, costo prohibitivo)
+- **NO usar npm `obsidian`** (solo tipos Electron, inútil)
+- **NO Full migration a Flowershow** (+400-600 KB bundle MUI/ag-grid/Typesense, LCP regresión 600-900 ms)
+- **SÍ Cherry-pick**: ya tenemos 90% del valor; los componentes únicos nuestros (Mission Tracker, AI, 6 roles, sidebar redimensionable, hover-preview, graph 3D) superan a Flowershow main.
+
+### Pendiente para v4.0.0 (post-RC)
+- Portar parser Obsidian Bases (Flowershow `lib/remark-obsidian-bases.ts` MIT) cuando haya `.base` files en el corpus.
+- Reescribir vistas Bases con shadcn (cards/list/table) — NO copiar las MUI/ag-grid de Flowershow.
+- Validar bundle con `source-map-explorer` (target < +25 KB gzip).
+
+### Rollback
+```bash
+git checkout v3.4-stable    # Punto verde confirmado en prod
+```
+
+---
+
 ## [v3.5] — 2026-04-26 · Sprint S+5 · Corpus real
 
 ### Added

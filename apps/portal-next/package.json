@@ -16,7 +16,6 @@
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.71",
     "@ai-sdk/openai-compatible": "^2.0.41",
-    "@portaljs/remark-wiki-link": "^1.2.0",
     "@tanstack/react-table": "^8.21.3",
     "@types/three": "^0.184.0",
     "ai": "^6.0.168",

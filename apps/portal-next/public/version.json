@@ -1,31 +1,27 @@
 {
-  "version": "v3.4",
+  "version": "v4.0.0-rc.1",
   "buildDate": "2026-04-26",
-  "commit": "fb5b548+",
+  "commit": "post-4b9838a",
   "changes": [
     {
-      "title": "20/20 gaps de usabilidad cerrados",
-      "summary": "Tabs con keyboard nav (Ctrl+Tab / Ctrl+W), badges con count en outline y refs, history en cmdk (Recientes), hover-preview con limite de nesting, toasts al verificar misiones, jerarquia visual home en 3 niveles."
+      "title": "v4.0 RC1 · Op A markdown puro (Obsidian-engine SOTA)",
+      "summary": "El portal pasó de s.mdx() a s.markdown() en Velite. Resultado: sintaxis Obsidian al 100% sin transformaciones — `<5%`, `<https://url>`, callouts y HTML inline funcionan nativamente. El motor de wikilinks propio se mantiene; html-react-parser intercepta para hover-preview."
     },
     {
-      "title": "Audit 20 gaps + Sprint A/B aplicados",
-      "summary": "Skeletons en /canonico, focus-rings uniformes, KaTeX dark fix, tooltips con atajos, wikilinks rotos visibles, print CSS limpio, AI typing indicator, EmptyState component."
+      "title": "Corpus real M01-M12 importado del libro UDFJC",
+      "summary": "12 secciones MI-12 del capítulo de libro reemplazan los stubs. ~3300 líneas de contenido académico FINAL. Importador idempotente desde Drive sync."
     },
     {
-      "title": "Filtros del grafo en sidebar global",
-      "summary": "Los filtros de /canonico/grafo ahora viven en el sidebar izquierdo bajo 'Filtros · Grafo global' (Obsidian-style). El canvas ocupa el área completa."
+      "title": "8 audits SOTA publicados",
+      "summary": "AUDIT-obsidian-engine-sota + AUDIT-flowershow-v4 cierran el bucle: 8 ADRs cristalizados (ADR-OBS-08 a 15). Verdict: cherry-pick selectivo de Flowershow, NO migrar a Quartz, NO usar npm `obsidian` (closed)."
     },
     {
-      "title": "Sidebar izquierdo redimensionable + Misiones al tope",
-      "summary": "Drag handle a la derecha del sidebar, doble-clic resetea a 288px. Widget de misión activa con progreso al tope. Títulos de sección compactos."
+      "title": "TOC IntersectionObserver pulido (patrón Flowershow)",
+      "summary": "OutlinePanel ahora usa rootMargin -20%/-70% con thresholds [0, 0.5, 1] — match con apps/flowershow/components/public/table-of-contents.tsx para active-section más estable al hacer scroll."
     },
     {
-      "title": "Right Panel ampliado: Outline + Refs + Preg + Chat",
-      "summary": "TOC navegable con scroll-spy, backlinks agrupados por kind, deshabilitados sin doc activo."
-    },
-    {
-      "title": "Tabs Obsidian-style + hover-preview de wikilinks",
-      "summary": "Ctrl+click → nueva pestaña, Mid-click → background, hover sobre wikilink muestra preview MDX del destino."
+      "title": "Removida dep no usada @portaljs/remark-wiki-link",
+      "summary": "Nuestro src/lib/remark-wikilinks.ts es 100% custom (broken-link detection G07). La dep estaba sin importar. Bundle delta: -2 KB."
     }
   ]
 }

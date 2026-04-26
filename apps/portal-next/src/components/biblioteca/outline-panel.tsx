@@ -25,7 +25,9 @@ export function OutlinePanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // El primer heading visible es el activo
+        // Patrón Flowershow (apps/flowershow/components/public/table-of-contents.tsx):
+        // el heading "activo" es el primer visible en zona top 20% — bottom 70%.
+        // Esto evita que un heading cerca del footer "robe" foco al hacer scroll.
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
@@ -34,8 +36,8 @@ export function OutlinePanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
         }
       },
       {
-        rootMargin: '-15% 0px -70% 0px', // sweet spot para "current section"
-        threshold: 0,
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: [0, 0.5, 1],
       },
     );
 
