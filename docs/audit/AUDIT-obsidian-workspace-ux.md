@@ -287,6 +287,17 @@ Workspace
 - **G.3**: Hover-to-reveal sidebars.
 - **G.4**: Sync workspace state a server (per-user) cuando tengamos auth.
 
+### Sprint S+5 — "Stress test con corpus real del capítulo de libro"
+Una vez completados S+1 a S+4, importar al `content/` el corpus del capítulo de libro UDFJC Reforma Vinculante para validar el comportamiento del grafo, los wikilinks y la búsqueda con conceptos académicos reales.
+
+- **Origen**: `H:\.shortcut-targets-by-id\1ondN7t4ewb2w-aN6iNesoT8yJGVqKpR2\daath-zen\R002-daath-cortex\20--udfjc-reforma-vinculante\3-diseño-capitulo-libro\` (~277 archivos `.md`).
+- **Estructura origen** organizada en: `01-secciones`, `02-figuras`, `03-evaluaciones`, `10-ecuaciones`, `20-estrategias`, `30-ejemplos`, `40-problemas`, `41-preguntas-analisis`, `50-resumen`, `60-glosario`, `99--sources`.
+- **H.1**: Mapeo origen→velite — script que adapta los `.md` del libro al schema de Velite (frontmatter normalizado, paths, tags, `cites` resueltos a M01-M12).
+- **H.2**: Validar grafo con corpus real — verificar que las 277 entradas no rompen el render 2D/3D ni la búsqueda; ajustar `forceAtlas2` si hay clusters densos.
+- **H.3**: Probar hover-preview en wikilinks reales del capítulo (con KaTeX, figuras y tablas).
+- **H.4**: Métrica de éxito: bundle size delta < +500 KB, LCP `/canonico/grafo` ≤ 2.5 s, 0 errores de wikilinks rotos sin marcar.
+- **Post-criterio**: ningún cambio en la app — sólo verificación. Si algo se rompe, abrir issue separado.
+
 ---
 
 ## 9. Métricas de éxito
