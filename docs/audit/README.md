@@ -11,6 +11,9 @@
 | 3 | [`AUDIT-sota-frontend-cop.md`](./AUDIT-sota-frontend-cop.md) | **Audit** | SOTA 2026 para frontend Next.js + Vercel orientado a CoPs. 10 librerías UI, 6 patrones UX, 10 community apps inspiradoras, anti-patrones |
 | 4 | [`REFERENCE-frontend-cop-sota.html`](./REFERENCE-frontend-cop-sota.html) | **Mockup HTML** | Referencia visual interactiva (single-file HTML). Abrir en navegador para ver toda la visión: app shell, 10 servicios CoP, calidad académica Young & Freedman, asistente con selector Haiku/Kimi |
 | 5 | [`AUDIT-obsidian-workspace-ux.md`](./AUDIT-obsidian-workspace-ux.md) | **Audit** | SOTA 2026 para replicar la UX de Obsidian (tabs+dock, hover-preview, file tree, grafo interactivo) en biblioteca. dockview vs react-mosaic, react-arborist, Radix HoverCard, cytoscape vs vis-network. Roadmap 4 sprints, 7 ADRs, anti-patterns |
+| 6 | [`AUDIT-usability-gaps-20.md`](./AUDIT-usability-gaps-20.md) | **Audit** | Top 20 gaps de usabilidad ranked por ROI. Todos cerrados en v3.4 (Sprints A-D) |
+| 7 | [`AUDIT-obsidian-engine-sota.md`](./AUDIT-obsidian-engine-sota.md) | **Audit** | Síntesis cruzada SOTA: Flowershow MIT, ecosistema portaljs, decisión Op A `s.markdown()`. 8 ADRs, plan 4 fases ϕ1-ϕ4 |
+| 8 | [`AUDIT-flowershow-v4.md`](./AUDIT-flowershow-v4.md) | **Audit** | Deep dive Flowershow: inventario 20+ componentes, comparativa v3.5 vs FS, 3 opciones de migración (Cherry-pick / Hybrid / Full). **Verdict: Opción A** — bump wiki-link 3.4 + parser Bases + TOC. Sin regresar el stack. Checklist 20 pasos |
 
 ## Cómo se usan juntos
 
