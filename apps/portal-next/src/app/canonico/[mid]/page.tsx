@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { DocTabsBar } from '@/components/biblioteca/doc-tabs-bar';
+import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
 import { PrintButton } from '@/components/print-button';
 import { SplitWorkArea } from '@/components/biblioteca/split-work-area';
 import { canonicPaper, note } from '#site/content';
@@ -123,6 +124,8 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
           {/* Body */}
           <div className="prose-paper">
             <MDXWithHoverPreview code={paper.body} />
+            {/* Render Mermaid diagrams client-side (Vercel CI no tiene Chromium) */}
+            <MermaidRenderer deps={[mid]} />
           </div>
 
           {/* Backlinks */}

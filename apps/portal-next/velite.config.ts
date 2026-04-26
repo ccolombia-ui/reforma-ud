@@ -192,9 +192,11 @@ export default defineConfig({
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       [rehypeCallouts, { theme: 'obsidian' }],
-      // rehype-mermaid 3 — convierte ```mermaid blocks en SVG inline en build time
-      // strategy 'inline-svg' = SVG estático sin runtime mermaid (perfecto para SSG)
-      [rehypeMermaid, { strategy: 'inline-svg', errorFallback: (node: unknown, error: unknown) => { console.warn('Mermaid error:', error); return node; } }],
+      // rehype-mermaid 3 con strategy 'pre-mermaid':
+      // No usa Chromium (que NO está disponible en Vercel CI sin postinstall).
+      // El plugin solo añade class='mermaid' al <pre> y un cliente lo renderiza.
+      // Componente cliente: src/components/mermaid-renderer.tsx — lazy-load + useEffect.
+      [rehypeMermaid, { strategy: 'pre-mermaid', errorFallback: (node: unknown, error: unknown) => { console.warn('Mermaid error:', error); return node; } }],
       rehypeRaw,
       [rehypeKatex, { strict: false, output: 'html', trust: true, macros: { '\\R': '\\mathbb{R}' } }],
       [rehypePrettyCode, { theme: 'github-light-default' }],
