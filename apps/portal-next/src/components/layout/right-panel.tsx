@@ -181,24 +181,30 @@ export function RightPanel() {
         dragging && 'select-none',
       )}
     >
-      {/* Drag handle borde izquierdo · v4.4 */}
+      {/* Drag handle borde izquierdo · v4.4 mejorado · grip dots visibles */}
       <button
         type="button"
         aria-label="Ajustar ancho del panel asistente (doble-clic: reset)"
-        title="Arrastrar para ajustar · Doble-clic: reset"
+        title="Arrastrar para ajustar · Doble-clic: reset a 320px"
         onPointerDown={onPointerDown}
         onDoubleClick={() => setWidth(320)}
         className={cn(
-          'group absolute top-0 left-0 h-full w-1 cursor-col-resize z-30',
+          'group absolute top-0 left-0 h-full w-1.5 cursor-col-resize z-30 transition-colors',
           'before:absolute before:inset-y-0 before:-left-1 before:w-3 before:content-[""]',
-          'hover:bg-primary/30 active:bg-primary/60',
+          'hover:bg-primary/40 active:bg-primary/60',
           dragging && 'bg-primary/60',
         )}
         style={{ touchAction: 'none' }}
-      />
+      >
+        <span className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-0.5 opacity-0 group-hover:opacity-60 transition-opacity">
+          <span className="h-0.5 w-0.5 rounded-full bg-current"></span>
+          <span className="h-0.5 w-0.5 rounded-full bg-current"></span>
+          <span className="h-0.5 w-0.5 rounded-full bg-current"></span>
+        </span>
+      </button>
       {dragging && (
-        <span className="pointer-events-none absolute top-2 left-2 z-40 rounded bg-background/90 backdrop-blur px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground border">
-          {width}px
+        <span className="pointer-events-none fixed top-16 right-2 z-50 rounded bg-background/95 backdrop-blur px-2 py-1 font-mono text-[11px] text-foreground border-2 border-primary shadow-md">
+          ⟷ {width}px
         </span>
       )}
       <div className="sticky top-14 flex h-[calc(100vh-3.5rem)] flex-col">

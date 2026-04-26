@@ -10,6 +10,7 @@ import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
 import { ComprehensionInline } from '@/components/biblioteca/comprehension-inline';
 import { PresaberesCallout } from '@/components/biblioteca/presaberes-callout';
 import { AportesPanel } from '@/components/biblioteca/aportes-panel';
+import { ComparativeSplit, CompareButton } from '@/components/biblioteca/comparative-split';
 import { PrintButton } from '@/components/print-button';
 import { SplitWorkArea } from '@/components/biblioteca/split-work-area';
 import { canonicPaper, note } from '#site/content';
@@ -56,6 +57,7 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
   const backlinks = note.filter((n) => n.cites?.includes(mid));
 
   return (
+    <ComparativeSplit>
     <SplitWorkArea paperId={mid}>
       <article className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
       {/* Tabs estilo Obsidian (sólo si hay >1 tab) */}
@@ -100,7 +102,8 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
                   {paper.metadata.wordCount.toLocaleString()} palabras
                 </span>
               )}
-              <div className="ml-auto no-print">
+              <div className="ml-auto no-print flex items-center gap-2">
+                <CompareButton currentPaperId={mid} />
                 <PrintButton />
               </div>
             </div>
@@ -170,6 +173,7 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
       </div>
     </article>
     </SplitWorkArea>
+    </ComparativeSplit>
   );
 }
 
