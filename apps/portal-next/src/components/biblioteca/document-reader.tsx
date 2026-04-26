@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { MDXContent } from '@/components/mdx-content';
+import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { PrintButton } from '@/components/print-button';
 import { SectionGate } from './section-gate';
 import { getReadingState, markSection, type SectionStatus } from '@/lib/reading-state';
@@ -196,7 +196,7 @@ export function DocumentReader({
                         {/* Si es la sección actual, render del cuerpo MDX completo solo en la primera sección */}
                         {idx === 0 && (
                           <div className="prose-paper">
-                            <MDXContent code={doc.body} />
+                            <MDXWithHoverPreview code={doc.body} />
                           </div>
                         )}
 
@@ -258,7 +258,7 @@ export function DocumentReader({
           ) : (
             <>
               <div className="prose-paper">
-                <MDXContent code={doc.body} />
+                <MDXWithHoverPreview code={doc.body} />
               </div>
               <Separator />
               <div className="flex justify-between">

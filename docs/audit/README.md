@@ -10,6 +10,7 @@
 | 2 | [`AUDIT-aleia-bereshit-frontend.md`](./AUDIT-aleia-bereshit-frontend.md) | **Audit** | Análisis exhaustivo del dashboard `aleia-bereshit-rosy.vercel.app/admin/monitoring` (techo de calidad a igualar). Sitemap, secuencia, ER, 23 componentes, brechas |
 | 3 | [`AUDIT-sota-frontend-cop.md`](./AUDIT-sota-frontend-cop.md) | **Audit** | SOTA 2026 para frontend Next.js + Vercel orientado a CoPs. 10 librerías UI, 6 patrones UX, 10 community apps inspiradoras, anti-patrones |
 | 4 | [`REFERENCE-frontend-cop-sota.html`](./REFERENCE-frontend-cop-sota.html) | **Mockup HTML** | Referencia visual interactiva (single-file HTML). Abrir en navegador para ver toda la visión: app shell, 10 servicios CoP, calidad académica Young & Freedman, asistente con selector Haiku/Kimi |
+| 5 | [`AUDIT-obsidian-workspace-ux.md`](./AUDIT-obsidian-workspace-ux.md) | **Audit** | SOTA 2026 para replicar la UX de Obsidian (tabs+dock, hover-preview, file tree, grafo interactivo) en biblioteca. dockview vs react-mosaic, react-arborist, Radix HoverCard, cytoscape vs vis-network. Roadmap 4 sprints, 7 ADRs, anti-patterns |
 
 ## Cómo se usan juntos
 

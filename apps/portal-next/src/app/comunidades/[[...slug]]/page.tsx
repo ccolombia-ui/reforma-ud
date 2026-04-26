@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { MDXContent } from '@/components/mdx-content';
+import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { PrintButton } from '@/components/print-button';
 import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
 import { DashboardCop } from '@/components/dashboard/dashboard-cop';
@@ -327,7 +327,7 @@ export default async function CommunityPage({
         <main className="min-w-0 space-y-10">
           {/* Body MDX (descripción de la CoP) */}
           <section className="prose-paper">
-            <MDXContent code={c.body} />
+            <MDXWithHoverPreview code={c.body} />
           </section>
         </main>
 
@@ -457,7 +457,7 @@ function NotePage({ note: n }: { note: typeof note[number] }) {
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_240px]">
         <div className="prose-paper">
-          <MDXContent code={n.body} />
+          <MDXWithHoverPreview code={n.body} />
         </div>
         {cited.length > 0 && (
           <aside className="lg:sticky lg:top-20 lg:self-start no-print">

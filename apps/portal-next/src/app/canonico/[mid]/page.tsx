@@ -4,7 +4,7 @@ import { ChevronLeft, Clock, FileText, Hash } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { MDXContent } from '@/components/mdx-content';
+import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { PrintButton } from '@/components/print-button';
 import { SplitWorkArea } from '@/components/biblioteca/split-work-area';
 import { canonicPaper, note } from '#site/content';
@@ -119,7 +119,7 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
 
           {/* Body */}
           <div className="prose-paper">
-            <MDXContent code={paper.body} />
+            <MDXWithHoverPreview code={paper.body} />
           </div>
 
           {/* Backlinks */}
