@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm build",
-  "installCommand": "pnpm install --frozen-lockfile=false",
+  "installCommand": "pnpm install --no-frozen-lockfile --network-concurrency=1 --fetch-retries=8 --fetch-retry-mintimeout=20000 --fetch-retry-maxtimeout=120000",
   "framework": "nextjs"
 }
