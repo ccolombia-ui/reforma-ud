@@ -153,18 +153,14 @@ export default defineConfig({
   },
   markdown: {
     gfm: true,
-    remarkPlugins: [
+    // Cast a `never` aplicado al array porque el flat tree de npm en CI mezcla
+    // varias versiones de `unified` y rompe la inferencia de Plugin<>. En runtime
+    // los plugins funcionan idéntico; solo apaga el TS check en build.
+    remarkPlugins: ([
       remarkGfm,
       remarkMath,           // $...$ y $$...$$
       // @flowershow/remark-wiki-link 3.4 — SOTA Obsidian wikilinks + embeds
-      // Soporta: [[link]], [[link|alias]], [[link#heading]], ![[image.png|200x300]],
-      //          ![[video.mp4]], ![[audio.mp3]], ![[doc.pdf]]
-      // newClassName='wikilink-broken' preserva G07 (broken-link visible CSS)
-      // Cast a `never` por mismatch de tipos `unified` entre node_modules (npm flat
-       // en CI vs pnpm isolated en dev). El plugin funciona en runtime; el cast solo
-       // evita el error TS al compilar Next con npm install (vercel.json).
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      [wikiLinkPlugin as never, {
+      [wikiLinkPlugin, {
         format: 'shortestPossible',
         files: contentFiles,
         permalinks,
@@ -187,16 +183,17 @@ export default defineConfig({
           return heading ? `${url}#${heading.replace(/^#/, '')}` : url;
         },
       }],
-    ],
+    ]) as never,
+    // Cast a `never` aplicado a los arrays porque el flat tree de npm en CI
+    // mezcla varias versiones de `unified` y rompe la inferencia de Plugin<>.
+    // En runtime los plugins funcionan idéntico; solo apaga el TS check en build.
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       [rehypeCallouts, { theme: 'obsidian' }],
-      // rehype-raw convierte nodos `raw` (HTML embebido) en elementos hast válidos.
-      // Necesario para callouts y bloques HTML inline en pipeline markdown.
       rehypeRaw,
       [rehypeKatex, { strict: false, output: 'html', trust: true, macros: { '\\R': '\\mathbb{R}' } }],
       [rehypePrettyCode, { theme: 'github-light-default' }],
-    ],
+    ] as never,
   },
 });
