@@ -363,27 +363,65 @@ textarea:focus-visible,
 }
 
 /* ==========================================================================
-   G16 — Print stylesheet (papers limpios)
+   G16 (v4.2) — Print stylesheet · papers limpios + selectors estrictos
    ========================================================================== */
 @media print {
-  [data-sidebar],
-  [data-pagefind-ignore]:is(aside),
-  header[data-pagefind-ignore],
-  .no-print {
+  /* Reset agresivo — todo en negro sobre blanco */
+  html, body { background: white !important; color: black !important; }
+
+  /* Ocultar UI chrome */
+  nav[data-sidebar],
+  aside[data-sidebar],
+  aside.right-panel,
+  aside[data-pagefind-ignore],
+  header,
+  footer,
+  .no-print,
+  [data-no-print] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Forzar visibilidad y reset layout para article y main */
+  body, body > div, main, article, .prose-paper {
+    display: block !important;
+    visibility: visible !important;
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* SplitWorkArea / Group (react-resizable-panels): aplanar en print */
+  [data-panel-group], [data-panel] {
+    display: block !important;
+    flex: none !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
+  /* Evitar separadores y resize handles */
+  [data-panel-resize-handle-id], [data-resize-handle] {
     display: none !important;
   }
-  main {
-    width: 100% !important;
-    max-width: none !important;
-    padding: 0 !important;
-  }
+
+  /* Tipografía print-grade */
   .prose-paper {
-    font-size: 11pt;
+    font-size: 11pt !important;
     line-height: 1.5;
-    color: #000;
+    color: black !important;
+  }
+  .prose-paper h1, .prose-paper h2, .prose-paper h3,
+  .prose-paper h4, .prose-paper p, .prose-paper li {
+    color: black !important;
   }
   a {
-    color: #0284c7;
+    color: #0284c7 !important;
     text-decoration: underline;
   }
   a[href^="http"]::after {
@@ -391,9 +429,21 @@ textarea:focus-visible,
     font-size: 0.85em;
     color: #555;
   }
+
+  /* Mermaid SVG — preservar visual */
+  svg { max-width: 100% !important; height: auto !important; }
+
   /* Evitar saltos de página en figuras y tablas */
-  figure, table, pre { page-break-inside: avoid; }
-  h1, h2, h3 { page-break-after: avoid; }
+  figure, table, pre, .callout { page-break-inside: avoid; break-inside: avoid; }
+  h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+
+  /* Callouts visibles en print */
+  .callout {
+    border-left: 4px solid #555 !important;
+    background: #f8f8f8 !important;
+    padding: 0.5em 1em !important;
+    margin: 1em 0 !important;
+  }
 }
 
 /* ==========================================================================

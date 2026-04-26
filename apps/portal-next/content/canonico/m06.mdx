@@ -51,11 +51,189 @@ Los **Dublin Descriptors** (Bologna Process) definen niveles de cualificación E
 
 ### §3.1 Figuras del modelo CCA
 
-![[fig-MI12-65--m06-fig-01]]
-![[fig-MI12-66--m06-fig-02]]
-![[fig-MI12-67--m06-fig-03]]
-![[fig-MI12-68--m06-fig-04]]
-![[fig-MI12-69--m06-fig-05]]
+
+```mermaid
+erDiagram
+    ESCUELA ||--|{ CABA : "contiene (subcomunidad)"
+    CABA ||--|{ PAQUETE_CCA : "gestiona"
+    CABA ||--|{ DOCENTE : "aglutina por sub-disciplina"
+    PAQUETE_CCA ||--|{ V1_COMPRENSIVA : "contiene"
+    PAQUETE_CCA ||--|{ V2_EXPERIMENTAL : "contiene"
+    PAQUETE_CCA ||--|{ V3_TRANSFORMATIVA : "contiene"
+    DOCENTE ||--|| ROL_DIRECTOR : "puede ser"
+    DOCENTE ||--|| ROL_DISENADOR : "puede ser"
+    DOCENTE ||--|| ROL_FORMADOR : "puede ser"
+    DOCENTE ||--|| ROL_INVESTIGADOR : "puede ser"
+    DOCENTE ||--|| ROL_EMPRENDEDOR : "puede ser"
+    ESTUDIANTE ||--|{ PAQUETE_CCA : "vive (V1 AND V2 AND V3)"
+    ESTUDIANTE ||--|| OPEN_BADGE : "recibe al completar"
+
+    CABA {
+        string tipo "Comunidad Academica de Base"
+        string funcion "Produce conocimiento, vitaliza R1-R6, gestiona Paquetes CCA"
+        string fuente "M12 POC v4.2 erDiagram"
+    }
+    PAQUETE_CCA {
+        string capa1 "Nucleo Semantico"
+        string capa2 "Envoltorio Disciplinar"
+        string capa3 "Capa Tecnologica xAPI"
+        string regla "V1 AND V2 AND V3 simultaneas"
+    }
+```
+
+*Fig-MI12-65 — Diagrama M06 #1 (caption original no recuperado en extracción)*
+
+*Figura 65 · m06 fig 01*
+
+
+```mermaid
+flowchart TB
+    subgraph CCA["MODELO CCA — Competencia-Conocimiento-Atómica"]
+        direction TB
+
+        subgraph L3["Capa 3 — Tecnológica (Trazabilidad y Portabilidad Inter-Institucional)"]
+            direction LR
+            xapi["xAPI 2.0\nADL Initiative\nRegistro granular\nde experiencias"]
+            badges["Open Badges 3.0\n1EdTech / IMS Global\nCertificación atómica\nverificable públicamente"]
+            clr["CLR 2.0\n1EdTech Consortium\nPortafolio integral\nW3C Verifiable Credentials"]
+        end
+
+        subgraph L2["Capa 2 — Envoltorio Disciplinar (Contextualización por Área del Conocimiento)"]
+            direction LR
+            env1["Ingeniería Eléctrica\nTransformadores y generadores"]
+            env2["Ingeniería Electrónica\nSensores inductivos y circuitos"]
+            env3["Mecatrónica\nActuadores lineales y levitación"]
+        end
+
+        subgraph L1["Capa 1 — Núcleo Semántico (Portabilidad e Interoperabilidad)"]
+            nucleo["Concepto Atómico: Ley de Faraday\nIndependiente del dominio disciplinar\nOntología formal interoperable\nPortable entre instituciones"]
+        end
+    end
+
+    nucleo --> env1
+    nucleo --> env2
+    nucleo --> env3
+    env1 & env2 & env3 --> xapi
+    env1 & env2 & env3 --> badges
+    env1 & env2 & env3 --> clr
+```
+
+*Fig-MI12-66 — MODELO [[glo-cca|CCA]] — Competencia-Conocimiento-Atómica (M06 fig #2)*
+
+*Figura 66 · m06 fig 02*
+
+
+```mermaid
+flowchart LR
+    subgraph V1["V1 — Comprensiva\nOperada por las Escuelas (Art. 69 Acuerdo 004/2025)"]
+        v1p["Dublin Descriptors:\nConocer → Comprender\n→ Aplicar → Evaluar/Crear"]
+        v1e["Evidencias:\nExámenes · Coloquios\nEnsayos analíticos"]
+    end
+
+    subgraph V2["V2 — Experimental\nOperada por los Institutos (Art. 74 Acuerdo 004/2025)"]
+        v2p["Dublin Descriptors:\nReplicar → Adaptar\n→ Diseñar → Publicar/Patentar"]
+        v2f["Marco: Cuadrante de Pasteur\n(Stokes, 1997)"]
+        v2e["Evidencias:\nPrototipos · Datasets\nPublicaciones arbitradas"]
+    end
+
+    subgraph V3["V3 — Transformativa\nOperada por los Centros (Art. 78 Acuerdo 004/2025)"]
+        v3p["Dublin Descriptors:\nIdentificar → Proponer\n→ Implementar → Escalar"]
+        v3e["Evidencias:\nMétricas de impacto\nverificables por terceros"]
+    end
+
+    INT["CCA COMPLETO\nV1 AND V2 AND V3\nActivación simultánea en 16 semanas\n48 horas distribuidas por función misional"]
+
+    V1 ==> INT
+    V2 ==> INT
+    V3 ==> INT
+```
+
+*Fig-MI12-67 — V1 — Comprensiva
+Operada por las Escuelas (Art. 69 Acuerdo 004/2025) (M06 fig #3)*
+
+*Figura 67 · m06 fig 03*
+
+
+```mermaid
+sequenceDiagram
+    participant DIR as Director (DIR)
+    participant DIS as Diseñador (DIS)
+    participant FAC as Formador (FAC)
+    participant PAS as Investigador-Pasteur (PAS)
+    participant COP as Emprendedor (COP)
+    participant EST as Estudiante (EST)
+
+    rect rgb(220, 240, 255)
+        Note over DIR,EST: FASE 0 — DISEÑO (Pre-semestre)
+        DIR->>DIS: T1 — Aprobar diseño CCA en Consejo de Escuela
+        DIR->>DIS: T2 — Diseñar plan 16 semanas (Núcleo + Envoltorio + V1/V2/V3)
+    end
+
+    rect rgb(255, 248, 200)
+        Note over DIR,EST: FASE 1 — ACTIVACIÓN (Semanas 1-4) · R1 y R4 se activan
+        FAC->>EST: T3 — Iniciar dimensión V1 en aula (Comprensiva)
+        PAS->>EST: T4 — Iniciar dimensión V2 en semillero/laboratorio (Experimental)
+        COP->>EST: T5 — Iniciar dimensión V3 en territorio (Transformativa)
+        Note over EST: T6 — Estudiante vive V1 AND V2 AND V3 como experiencia integrada
+    end
+
+    rect rgb(230, 245, 230)
+        Note over DIR,EST: FASES 2-3 — OPERACIÓN Y CONSOLIDACIÓN (Semanas 5-15) · R2, R3, R5 se activan
+        FAC->>EST: T3 continúa — V1 progresiva con evaluaciones parciales
+        PAS->>EST: T4 continúa — V2 con dataset en construcción
+        COP->>EST: T5 continúa — V3 con artefacto territorial en desarrollo
+    end
+
+    rect rgb(255, 225, 225)
+        Note over DIR,EST: FASE 4 — CIERRE (Semana 16) · R6 se activa
+        FAC->>DIR: T7 — Verificar logro V1
+        PAS->>DIR: T7 — Verificar logro V2
+        COP->>DIR: T7 — Verificar logro V3
+        DIS->>EST: T8 — Emitir Open Badge 3.0 · Registrar en CLR 2.0 (xAPI 2.0)
+        PAS->>DIR: T9 — Rendir cuentas al CNA (Factores 3, 9, 10)
+    end
+```
+
+*Fig-MI12-68 — Diagrama M06 #4 (caption original no recuperado en extracción)*
+
+*Figura 68 · m06 fig 04*
+
+
+```mermaid
+gantt
+    title Roadmap CCA — Recertificación Progresiva UDFJC 2026-2034
+    dateFormat YYYY
+    axisFormat %Y
+
+    section Fase 0 — Inventario
+    Diagnóstico portafolio Decreto 1330          :done,   f0a, 2026, 2027
+    Identificar oportunidades de migración CCA   :done,   f0b, 2026, 2027
+
+    section Fase 1 — Piloto
+    CCA Electromagnetismo — primer piloto CABA   :active, f1a, 2026, 2027
+    1 CCA por cada nueva Escuela UDFJC           :active, f1b, 2026, 2027
+
+    section Fase 2 — Primer Anillo
+    20% de programas recertificados bajo CCA     :        f2a, 2027, 2029
+    Priorizar ciclos de renovación Reg. Calificado :      f2b, 2027, 2029
+
+    section Fase 3 — Expansión
+    60% de programas recertificados bajo CCA     :        f3a, 2029, 2032
+    TTO-UDFJC activa · Sistema CRIS instalado    :        f3b, 2029, 2032
+
+    section Fase 4 — Consolidación
+    100% programas UDFJC operando bajo CCA       :        f4a, 2032, 2034
+    Modelo publicado para replicación nacional   :        f4b, 2033, 2034
+
+    section Gobernanza Continua
+    BSC-s + RBM-GAC + TDIQ v5.1                 :crit,   gov, 2026, 2034
+    Auditorías CNA · Reportes públicos anuales   :        aud, 2026, 2034
+```
+
+*Fig-MI12-69 — Diagrama M06 #5 (caption original no recuperado en extracción)*
+
+*Figura 69 · m06 fig 05*
+
 
 ---
 

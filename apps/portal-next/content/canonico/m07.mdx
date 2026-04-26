@@ -39,32 +39,796 @@ tags: [m07, reforma-udfjc, crisp-data-prep]
 
 ## §2 · Figuras y diagramas (26 mermaids)
 
-![[fig-MI12-70--m07-fig-01]]
-![[fig-MI12-71--m07-fig-02]]
-![[fig-MI12-72--m07-fig-03]]
-![[fig-MI12-73--m07-fig-04]]
-![[fig-MI12-74--m07-fig-05]]
-![[fig-MI12-75--m07-fig-06]]
-![[fig-MI12-76--m07-fig-07]]
-![[fig-MI12-77--m07-fig-08]]
-![[fig-MI12-78--m07-fig-09]]
-![[fig-MI12-79--m07-fig-10]]
-![[fig-MI12-80--m07-fig-11]]
-![[fig-MI12-81--m07-fig-12]]
-![[fig-MI12-82--m07-fig-13]]
-![[fig-MI12-83--m07-fig-14]]
-![[fig-MI12-84--m07-fig-15]]
-![[fig-MI12-85--m07-fig-16]]
-![[fig-MI12-86--m07-fig-17]]
-![[fig-MI12-87--m07-fig-18]]
-![[fig-MI12-88--m07-fig-19]]
-![[fig-MI12-89--m07-fig-20]]
-![[fig-MI12-90--m07-fig-21]]
-![[fig-MI12-91--m07-fig-22]]
-![[fig-MI12-92--m07-fig-23]]
-![[fig-MI12-93--m07-fig-24]]
-![[fig-MI12-94--m07-fig-25]]
-![[fig-MI12-95--m07-fig-26]]
+
+```mermaid
+flowchart TB
+    QMT["🎯 QMT: INNOVACIÓN TRANSFORMATIVA<br/>(Meta-propósito del sistema)"]
+    PM1["📚 PM1: FORMACIÓN"]
+    PM2["🔬 PM2: INVESTIGACIÓN"]
+    PM3["🌍 PM3: EXTENSIÓN"]
+
+    QMT --> PM1
+    QMT --> PM2
+    QMT --> PM3
+
+    PM1 -->|"R1: Semilleros"| PM2
+    PM2 -->|"R2: Currículo Vivo"| PM1
+    PM2 -->|"R3: Transferencia"| PM3
+    PM3 -->|"R4: Problemas Reales"| PM2
+    PM3 -->|"R5: Aprendizaje Experiencial"| PM1
+    PM1 -->|"R6: Egresados Agentes"| PM3
+```
+
+*Fig-MI12-70 — 🎯 QMT: INNOVACIÓN TRANSFORMATIVA (M07 fig #1)*
+
+*Figura 70 · m07 fig 01*
+
+
+```mermaid
+flowchart TB
+    PROBLEMA["🔴 Problema central<br/>(gap observable UDFJC 2026)"]
+
+    subgraph CausasDirectas["Causas directas: 4 comportamientos AUSENTES (Cap-FY)"]
+        CD1["CD-F1 Formación"]
+        CD2["CD-F2 Investigación"]
+        CD3["CD-F3 Extensión"]
+        CD4["CD-F4 Living-Lab / Integración"]
+    end
+
+    subgraph CausasIndirectas["Causas indirectas: 5 capacidades AUSENTES (Rutas Clark)"]
+        CI1["CI-R1 Núcleo Directivo"]
+        CI2["CI-R2 Periferia"]
+        CI3["CI-R3 Financiamiento"]
+        CI4["CI-R4 Heartland"]
+        CI5["CI-R5 Cultura"]
+    end
+
+    CI1 & CI2 & CI3 & CI4 & CI5 --> CD1
+    CI1 & CI2 & CI3 & CI4 & CI5 --> CD2
+    CI1 & CI2 & CI3 & CI4 & CI5 --> CD3
+    CI1 & CI2 & CI3 & CI4 & CI5 --> CD4
+
+    CD1 & CD2 & CD3 & CD4 --> PROBLEMA
+
+    style PROBLEMA fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-71 — 🔴 Problema central (M07 fig #2)*
+
+*Figura 71 · m07 fig 02*
+
+
+```mermaid
+flowchart TB
+    P["🔴 0% currículo compartido cross-Escuela · <5% interactúan inter-Escuela"]
+    CD1["CD-F1 Docentes no enseñan cursos cross-Escuela"]
+    CD2["CD-F2 Estudiantes sin fundamentos comunes para UROP"]
+    CD3["CD-F3 Proyectos territoriales sin lenguaje cross"]
+    CD4["CD-F4 CABAs no pueden ser cross-Escuela sin Core"]
+    CI1["CI-R1 CSU sin capacidad reforma curricular cross"]
+    CI4["CI-R4 Docentes no adoptan Core en Plan Individual"]
+    CI5["CI-R5 Identidad de facultad, no de universidad"]
+    CI1 --> CD1
+    CI1 --> CD2
+    CI1 --> CD3
+    CI1 --> CD4
+    CI4 --> CD1
+    CI4 --> CD2
+    CI5 --> CD1
+    CI5 --> CD3
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-72 — 🔴 0% currículo compartido cross-Escuela · <5% interactúan inter-Escuela (M07 fig #3)*
+
+*Figura 72 · m07 fig 03*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Aula magistral sin PBL · V1∧V2∧V3 desarticulado"]
+    CD1["CD-F1 Syllabus sin rúbrica PBL ni proyecto real"]
+    CD2["CD-F2 Sin conexión aula-grupo de investigación"]
+    CD3["CD-F3 Proyectos sin vínculo empresa/territorio"]
+    CD4["CD-F4 CABAs no diseñan retos transversales PBL"]
+    CI4["CI-R4 Docentes sin incentivo a rediseñar syllabus"]
+    CI2["CI-R2 Sin alianzas empresa/SED para retos"]
+    CI5["CI-R5 Cultura del contenido vs. cultura del reto"]
+    CI4 --> CD1
+    CI4 --> CD2
+    CI2 --> CD3
+    CI2 --> CD4
+    CI5 --> CD1
+    CI5 --> CD3
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-73 — 🔴 Aula magistral sin PBL · V1∧V2∧V3 desarticulado (M07 fig #4)*
+
+*Figura 73 · m07 fig 04*
+
+
+```mermaid
+flowchart TB
+    P["🔴 <5% créditos libre elección · planes rígidos"]
+    CD1["CD-F1 Planes rígidos sin electivas ni Wrappers"]
+    CD2["CD-F2 Estudiantes no pueden tomar UROP como electiva"]
+    CD3["CD-F3 Sin electivas de extensión territorial"]
+    CD4["CD-F4 CABAs sin oferta electiva inter-Escuela"]
+    CI1["CI-R1 CSU sin reforma Acu 009/2006 plan-malla"]
+    CI5["CI-R5 Cultura del plan cerrado vs. trayectoria abierta"]
+    CI1 --> CD1
+    CI1 --> CD2
+    CI1 --> CD3
+    CI1 --> CD4
+    CI5 --> CD1
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-74 — 🔴 <5% créditos libre elección · planes rígidos (M07 fig #5)*
+
+*Figura 74 · m07 fig 05*
+
+
+```mermaid
+flowchart TB
+    P["🔴 0% co-op creditizado · V3 ausente"]
+    CD1["CD-F1 Plan de estudios sin bloques co-op"]
+    CD3["CD-F3 Emprendedor sin matching formal"]
+    CD4["CD-F4 CABAs no orquestan co-op cross-Escuela"]
+    CI2["CI-R2 Sin convenios marco co-op con industria"]
+    CI3["CI-R3 Sin rubro presupuestal remuneración"]
+    CI1["CI-R1 Acu 009/2006 no creditiza co-op"]
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD1
+    CI3 --> CD3
+    CI1 --> CD1
+    CI1 --> CD4
+    CD1 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-75 — 🔴 0% co-op creditizado · V3 ausente (M07 fig #6)*
+
+*Figura 75 · m07 fig 06*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Sin ciclo propedéutico SENA-SED-UDFJC operativo"]
+    CD1["CD-F1 Programas sin homologación técnica"]
+    CD3["CD-F3 Extensión no opera en SED/SENA"]
+    CD4["CD-F4 Sin CABAs puente UDFJC-SENA-SED"]
+    CI1["CI-R1 Sin convenio marco UDFJC-SENA-SED"]
+    CI2["CI-R2 Sin unidad coordinadora ciclos"]
+    CI5["CI-R5 Cultura elitista sin integración técnica"]
+    CI1 --> CD1
+    CI1 --> CD3
+    CI1 --> CD4
+    CI2 --> CD3
+    CI2 --> CD4
+    CI5 --> CD1
+    CI5 --> CD4
+    CD1 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-76 — 🔴 Sin ciclo propedéutico SENA-SED-UDFJC operativo (M07 fig #7)*
+
+*Figura 76 · m07 fig 07*
+
+
+```mermaid
+flowchart TB
+    P["🔴 <5% estudiantes pregrado investigan creditizadamente (MIT ~90%)"]
+    CD1["CD-F1 Syllabus no reconocen UROP como crédito obligatorio"]
+    CD2["CD-F2 Grupos operan con 2-3 voluntarios; sin marketplace de plazas"]
+    CD3["CD-F3 Resultados UROP no llegan al territorio"]
+    CD4["CD-F4 CABAs no orquestan UROP cross-programa"]
+    CI1["CI-R1 CSU no ejecuta Acu 04/2025; escalafón no reconoce mentoría"]
+    CI2["CI-R2 CABAs disciplinares inexistentes como marketplace UROP"]
+    CI3["CI-R3 Sin rubro presupuestal UROP (remuneración + mentoría)"]
+    CI4["CI-R4 Docentes no adoptan mentoría UROP en Plan Individual"]
+    CI5["CI-R5 Investigar NO es la norma"]
+    CI1 --> CD1
+    CI1 --> CD2
+    CI1 --> CD4
+    CI2 --> CD2
+    CI2 --> CD4
+    CI3 --> CD2
+    CI3 --> CD3
+    CI4 --> CD1
+    CI4 --> CD2
+    CI5 --> CD1
+    CI5 --> CD2
+    CI5 --> CD3
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-77 — 🔴 <5% estudiantes pregrado investigan creditizadamente (MIT ~90%) (M07 fig #8)*
+
+*Figura 77 · m07 fig 08*
+
+
+```mermaid
+flowchart TB
+    P["🔴 $0 ingresos PI · sin incentivo docente a transferencia"]
+    CD2["CD-F2 Docentes no registran disclosures"]
+    CD3["CD-F3 Sin proceso TTO-licenciamiento activo"]
+    CD4["CD-F4 CABAs sin detección de resultados comerciables"]
+    CI1["CI-R1 Estatuto PI 2012 no reformado"]
+    CI3["CI-R3 Sin participación 50-30-20 inventor"]
+    CI4["CI-R4 Docentes sin cultura de PI"]
+    CI1 --> CD2
+    CI1 --> CD3
+    CI1 --> CD4
+    CI3 --> CD2
+    CI3 --> CD3
+    CI4 --> CD2
+    CI4 --> CD3
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-78 — 🔴 $0 ingresos PI · sin incentivo docente a transferencia (M07 fig #9)*
+
+*Figura 78 · m07 fig 09*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Sin CRIS operativo · agenda investigativa no expuesta"]
+    CD1["CD-F1 Currículo no se nutre de líneas activas"]
+    CD2["CD-F2 Estudiantes no descubren mentores UROP"]
+    CD3["CD-F3 Sociedad no ve la agenda UDFJC"]
+    CD4["CD-F4 CABAs sin perfil público"]
+    CI2["CI-R2 Sin unidad de gestión CRIS institucional"]
+    CI3["CI-R3 Sin licencia ni mantenimiento VIVO"]
+    CI1["CI-R1 Sin mandato CSU de publicación perfiles"]
+    CI2 --> CD1
+    CI2 --> CD2
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD2
+    CI3 --> CD4
+    CI1 --> CD2
+    CI1 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-79 — 🔴 Sin CRIS operativo · agenda investigativa no expuesta (M07 fig #10)*
+
+*Figura 79 · m07 fig 10*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Sin política OA vinculante · repositorio subutilizado"]
+    CD2["CD-F2 Grupos no publican preprints en OA"]
+    CD1["CD-F1 Currículo no aprovecha hallazgos institucionales"]
+    CD3["CD-F3 Sociedad sin acceso a saber UDFJC"]
+    CD4["CD-F4 CABAs sin datasets abiertos"]
+    CI1["CI-R1 Sin resolución rectoral OA"]
+    CI2["CI-R2 DSpace sin workflows activos"]
+    CI5["CI-R5 Cultura del paper propietario"]
+    CI1 --> CD2
+    CI1 --> CD3
+    CI2 --> CD2
+    CI2 --> CD4
+    CI5 --> CD2
+    CI5 --> CD1
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-80 — 🔴 Sin política OA vinculante · repositorio subutilizado (M07 fig #11)*
+
+*Figura 80 · m07 fig 11*
+
+
+```mermaid
+flowchart TB
+    P["🔴 0 spin-offs formalizados · sin pre-incubadora ni equity"]
+    CD2["CD-F2 Grupos no identifican potencial comercial"]
+    CD3["CD-F3 Sin marco normativo spin-off"]
+    CD4["CD-F4 CABAs sin ruta a pre-incubadora"]
+    CI1["CI-R1 Sin Acuerdo CSU de participación equity"]
+    CI2["CI-R2 Sin pre-incubadora ni Centro Emprendimiento"]
+    CI3["CI-R3 Sin fondo capital semilla UDFJC"]
+    CI1 --> CD3
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD2
+    CI3 --> CD3
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-81 — 🔴 0 spin-offs formalizados · sin pre-incubadora ni equity (M07 fig #12)*
+
+*Figura 81 · m07 fig 12*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Sin TTO operativo · invenciones sin vehículo a mercado"]
+    CD2["CD-F2 Docentes sin soporte para disclosures"]
+    CD3["CD-F3 Sin oficina de licenciamiento"]
+    CD4["CD-F4 CABAs sin flujo hacia TTO"]
+    CI1["CI-R1 Sin Resolución Rectoral creación TTO"]
+    CI2["CI-R2 Sin estructura de Centro con TTO"]
+    CI3["CI-R3 Sin staff dedicado"]
+    CI1 --> CD3
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD2
+    CI3 --> CD3
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-82 — 🔴 Sin TTO operativo · invenciones sin vehículo a mercado (M07 fig #13)*
+
+*Figura 82 · m07 fig 13*
+
+
+```mermaid
+flowchart TB
+    P["🔴 UDFJC sin presencia formal en 20 localidades · sin ODS · sin THE Impact · R4/R5/R6 rotas"]
+    CD1["CD-F1 Cursos sin casos territoriales reales"]
+    CD2["CD-F2 Grupos no enmarcan preguntas desde ODS"]
+    CD3["CD-F3 Sin ALMA-T / CAP operando en localidades"]
+    CD4["CD-F4 Sin Living Labs territoriales"]
+    CI1["CI-R1 Sin convenio marco UDFJC-Alcaldía"]
+    CI2["CI-R2 Sin unidades de frontera territoriales (ALMA-T)"]
+    CI3["CI-R3 Sin rubro ni contratos con Alcaldías locales"]
+    CI4["CI-R4 Docentes sin mentoría territorial creditizada"]
+    CI5["CI-R5 Egresados no vistos como agentes territoriales"]
+    CI1 --> CD2
+    CI1 --> CD3
+    CI1 --> CD4
+    CI2 --> CD2
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD2
+    CI3 --> CD3
+    CI3 --> CD4
+    CI4 --> CD1
+    CI4 --> CD2
+    CI5 --> CD1
+    CI5 --> CD2
+    CI5 --> CD3
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-83 — 🔴 UDFJC sin presencia formal en 20 localidades · sin ODS · sin THE Impact · R4/R5/R6 rotas (M07 fig #14)*
+
+*Figura 83 · m07 fig 14*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Educación continua dispersa · <$200M COP/año · sin marketplace"]
+    CD2["CD-F2 Hallazgos no llegan a mercado profesional"]
+    CD3["CD-F3 Oferta fragmentada por Facultad"]
+    CD4["CD-F4 CABAs sin línea de educación continua"]
+    CI1["CI-R1 Sin resolución institucional Ed. Continua"]
+    CI2["CI-R2 Sin plataforma marketplace institucional"]
+    CI3["CI-R3 Sin modelo de pricing ni reparto de ingresos"]
+    CI5["CI-R5 Docentes sin cultura de oferta continua"]
+    CI1 --> CD3
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD3
+    CI5 --> CD3
+    CI5 --> CD4
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-84 — 🔴 Educación continua dispersa · <$200M COP/año · sin marketplace (M07 fig #15)*
+
+*Figura 84 · m07 fig 15*
+
+
+```mermaid
+flowchart TB
+    P["🔴 0 colegios SED con convenio operativo · UDFJC invisible en media"]
+    CD3["CD-F3 Extensión no opera en colegios SED"]
+    CD4["CD-F4 Sin Living Labs con estudiantes media"]
+    CD1["CD-F1 Sin módulos UDFJC para último año media"]
+    CI1["CI-R1 Sin convenio marco UDFJC-SED"]
+    CI2["CI-R2 Sin unidad coordinadora articulación media"]
+    CI5["CI-R5 Cultura sin diálogo con media pública"]
+    CI1 --> CD1
+    CI1 --> CD3
+    CI1 --> CD4
+    CI2 --> CD3
+    CI2 --> CD4
+    CI5 --> CD1
+    CI5 --> CD3
+    CD1 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-85 — 🔴 0 colegios SED con convenio operativo · UDFJC invisible en media (M07 fig #16)*
+
+*Figura 85 · m07 fig 16*
+
+
+```mermaid
+flowchart TB
+    P["🔴 UDFJC sin misión operacionalizada · declaraciones abstractas sin mecanismo"]
+    CD1["CD-F1 Currículos sin componente obligatorio común de proyecto distrital"]
+    CD2["CD-F2 Grupos sin líneas alineadas a agenda institucional"]
+    CD3["CD-F3 Extensión territorial sin articulación con la misión"]
+    CD4["CD-F4 Sin CABAs territoriales cross-Escuela bajo propósito compartido"]
+    CI1["CI-R1 CSU no emite Acuerdo Proyecto Bogotá"]
+    CI2["CI-R2 Sin convenios marco con Alcaldía/SED/localidades"]
+    CI3["CI-R3 Sin rubro permanente territorial misional"]
+    CI4["CI-R4 Docentes sin Plan Individual alineado"]
+    CI5["CI-R5 Comunidad sin vocación distrital como identidad"]
+    CI1 --> CD1
+    CI1 --> CD2
+    CI1 --> CD3
+    CI1 --> CD4
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD2
+    CI3 --> CD3
+    CI3 --> CD4
+    CI4 --> CD1
+    CI4 --> CD2
+    CI5 --> CD1
+    CI5 --> CD2
+    CI5 --> CD3
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-86 — 🔴 UDFJC sin misión operacionalizada · declaraciones abstractas sin mecanismo (M07 fig #17)*
+
+*Figura 86 · m07 fig 17*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Acuerdo 009/2006 no creditiza investigación ni extensión · CCA V1∧V2∧V3 bloqueada"]
+    CD1["CD-F1 Planes sin bloques V2/V3 creditizables"]
+    CD2["CD-F2 UROP no contabiliza como crédito formal"]
+    CD3["CD-F3 Co-op y extensión no creditizadas"]
+    CD4["CD-F4 CABAs sin Wrappers V2/V3 institucionalizados"]
+    CI1["CI-R1 CSU sin reforma Acu 009/2006"]
+    CI4["CI-R4 Docentes sin reconocimiento mentoría en escalafón"]
+    CI5["CI-R5 Cultura del crédito como hora-cátedra"]
+    CI1 --> CD1
+    CI1 --> CD2
+    CI1 --> CD3
+    CI1 --> CD4
+    CI4 --> CD1
+    CI4 --> CD2
+    CI5 --> CD1
+    CI5 --> CD2
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-87 — 🔴 Acuerdo 009/2006 no creditiza investigación ni extensión · [[glo-cca|CCA]] V1∧V2∧V3 bloqueada (M07 fig #18)*
+
+*Figura 87 · m07 fig 18*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Sin CLR ni Open Badges operativos · competencias no certificables"]
+    CD1["CD-F1 CCAs sin badges al completarse"]
+    CD4["CD-F4 CABAs sin mecanismo de certificación"]
+    CD3["CD-F3 Co-op y extensión sin certificación digital"]
+    CI1["CI-R1 Sin política CLR institucional"]
+    CI2["CI-R2 Sin sistema LRS (Learning Record Store)"]
+    CI3["CI-R3 Sin licencias ni staff dedicado"]
+    CI1 --> CD1
+    CI1 --> CD4
+    CI2 --> CD1
+    CI2 --> CD4
+    CI3 --> CD1
+    CI3 --> CD4
+    CI3 --> CD3
+    CD1 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-88 — 🔴 Sin CLR ni Open Badges operativos · competencias no certificables (M07 fig #19)*
+
+*Figura 88 · m07 fig 19*
+
+
+```mermaid
+flowchart TB
+    P["🔴 UDFJC sin espacios Design Factory cross-Escuela · silos sin lugar"]
+    CD1["CD-F1 Sin asignaturas cross-Escuela en espacio compartido"]
+    CD2["CD-F2 Grupos no co-publican entre Facultades"]
+    CD3["CD-F3 Extensión opera por Facultad, no integrada"]
+    CD4["CD-F4 Sin Living Labs operativos en campus"]
+    CI1["CI-R1 Sin reglamento CABA Design Factory"]
+    CI2["CI-R2 Sin convenios empresas/alcaldías/academia"]
+    CI3["CI-R3 Sin modelo sostenibilidad industria + patrocinios"]
+    CI4["CI-R4 Incentivos no reconocen interdisciplina"]
+    CI5["CI-R5 Estudiantes no viven interdisciplina"]
+    CI1 --> CD1
+    CI1 --> CD2
+    CI1 --> CD3
+    CI1 --> CD4
+    CI2 --> CD2
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD2
+    CI3 --> CD3
+    CI3 --> CD4
+    CI4 --> CD1
+    CI4 --> CD2
+    CI5 --> CD1
+    CI5 --> CD2
+    CI5 --> CD3
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-89 — 🔴 UDFJC sin espacios Design Factory cross-Escuela · silos sin lugar (M07 fig #20)*
+
+*Figura 89 · m07 fig 20*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Duplicación programática · capacidad docente atomizada"]
+    CD1["CD-F1 Planes sin Cores compartidos"]
+    CD4["CD-F4 Sin CABAs disciplinares como unidad de entrega"]
+    CD2["CD-F2 Sin liberación de capacidad para investigar"]
+    CI1["CI-R1 CSU sin decisión de consolidación"]
+    CI4["CI-R4 Docentes temen pérdida de territorio"]
+    CI5["CI-R5 Cultura de 'cada programa su feudo'"]
+    CI1 --> CD1
+    CI1 --> CD4
+    CI4 --> CD1
+    CI4 --> CD4
+    CI5 --> CD1
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-90 — 🔴 Duplicación programática · capacidad docente atomizada (M07 fig #21)*
+
+*Figura 90 · m07 fig 21*
+
+
+```mermaid
+flowchart TB
+    P["🔴 Graduación ~42% · deserción alta primeros 3 semestres"]
+    CD1["CD-F1 Aulas sin mentoría personalizada"]
+    CD2["CD-F2 Semilleros no actúan como ancla de permanencia"]
+    CD4["CD-F4 Sin CABA de seguimiento estudiantes en riesgo"]
+    CI2["CI-R2 Sin unidad S4 Inteligencia VSM"]
+    CI4["CI-R4 Docentes sin rol mentor formalizado"]
+    CI5["CI-R5 Cultura del 'filtro' vs. acompañamiento"]
+    CI2 --> CD1
+    CI2 --> CD2
+    CI2 --> CD4
+    CI4 --> CD1
+    CI4 --> CD2
+    CI5 --> CD1
+    CI5 --> CD4
+    CD1 --> P
+    CD2 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-91 — 🔴 Graduación ~42% · deserción alta primeros 3 semestres (M07 fig #22)*
+
+*Figura 91 · m07 fig 22*
+
+
+```mermaid
+flowchart TB
+    P["🔴 <$500M COP/año extensión productiva · laboratorios ociosos"]
+    CD3["CD-F3 Sin portafolio institucional de servicios"]
+    CD4["CD-F4 CABAs sin rol comercial"]
+    CD2["CD-F2 R4 territorial no alimenta R3 productiva"]
+    CI2["CI-R2 Sin TTO/Centro con operación comercial"]
+    CI3["CI-R3 Sin modelo de pricing ni incentivos reparto"]
+    CI5["CI-R5 Cultura del 'no comercializar saber'"]
+    CI2 --> CD3
+    CI2 --> CD4
+    CI3 --> CD3
+    CI3 --> CD4
+    CI5 --> CD3
+    CI5 --> CD4
+    CD2 --> P
+    CD3 --> P
+    CD4 --> P
+    style P fill:#B71C1C,color:#fff
+```
+
+*Fig-MI12-92 — 🔴 <$500M COP/año extensión productiva · laboratorios ociosos (M07 fig #23)*
+
+*Figura 92 · m07 fig 23*
+
+
+```mermaid
+flowchart LR
+    INT02["🔑 INT02<br/>Créditos inv/ext<br/>PRE-REQUISITO<br/>Año 0"]
+    INT01["⭐ INT01<br/>Misión operacional<br/>ANCLA<br/>Año 0"]
+    I01["⭐ I01<br/>UROP piloto<br/>ANCLA<br/>Año 1"]
+    INT04["⭐ INT04<br/>CABA Design Factory<br/>ANCLA<br/>Año 1"]
+    F01["⭐ F01<br/>Concepto compartido<br/>ANCLA<br/>Año 2-3"]
+    E02["⭐ E02<br/>Extensión territorial<br/>ANCLA<br/>Año 2-3"]
+
+    INT02 --> I01
+    INT02 --> F01
+    INT02 --> INT04
+    INT01 --> I01
+    INT01 --> INT04
+    I01 --> F01
+    INT04 --> F01
+    INT04 --> E02
+    INT01 --> E02
+
+    style INT02 fill:#FFE082,stroke:#F57C00,stroke-width:3px
+    style INT01 fill:#B39DDB,stroke:#311B92,stroke-width:3px
+    style INT04 fill:#B39DDB,stroke:#311B92,stroke-width:3px
+    style I01 fill:#81D4FA,stroke:#01579B,stroke-width:3px
+    style F01 fill:#A5D6A7,stroke:#1B5E20,stroke-width:3px
+    style E02 fill:#A5D6A7,stroke:#1B5E20,stroke-width:3px
+```
+
+*Fig-MI12-93 — 🔑 INT02 (M07 fig #24)*
+
+*Figura 93 · m07 fig 24*
+
+
+```mermaid
+gantt
+    title Plan mínimo viable — 5 anclas + INT02 pre-requisito (2026–2034)
+    dateFormat YYYY
+    axisFormat %Y
+
+    section Año 0 (normativo)
+    INT02 Créditos inv/ext (pre-req)    :crit, int02, 2026, 1y
+    INT01 Misión operacionalizada       :crit, int01, 2026, 1y
+
+    section Año 1 (pilotos)
+    I01 UROP piloto (10 grupos)         :active, i01, 2027, 1y
+    INT04 2 CABAs Design Factory        :active, int04, 2027, 1y
+
+    section Año 2-3 (consolidación)
+    F01 Concepto compartido rollout     :f01, 2028, 2y
+    E02 Extensión territorial ODS       :e02, 2028, 2y
+
+    section Año 4-8 (escala)
+    Escala + Periodo 2 gobierno         :2030, 4y
+```
+
+*Fig-MI12-94 — Diagrama M07 #25 (caption original no recuperado en extracción)*
+
+*Figura 94 · m07 fig 25*
+
+
+```mermaid
+stateDiagram-v2
+    direction LR
+
+    [*] --> Desconocida : antes del piloto
+
+    state "⚫ Desconocida" as Desconocida {
+        d_def : BPA no está en agenda institucional
+        d_R : Ninguna R activa
+    }
+
+    state "🔴 Declarada" as Declarada {
+        decl_def : Existe marco normativo (Acuerdo/Resolución)
+        decl_R : R-1 activada
+        decl_ind : ≥1 documento oficial sobre la BPA
+    }
+
+    state "🟠 Estructurada" as Estructurada {
+        estr_def : Hay plan operativo + unidad responsable + presupuesto
+        estr_R : + R-2 + R-3 parcial
+        estr_ind : Plan publicado, responsable designado, partida presupuestal
+    }
+
+    state "🟡 Operativa" as Operativa {
+        oper_def : Ejecutándose con métricas medibles
+        oper_R : + R-3 consolidada + R-4
+        oper_ind : ≥50% docentes involucrados, ≥1 cohorte completa
+    }
+
+    state "🟢 Institucionalizada" as Instit {
+        instit_def : Parte de la rutina; cohortes nuevas la heredan
+        instit_R : + R-5 activada
+        instit_ind : Encuesta clima G4, sin necesidad de campeones heroicos
+    }
+
+    Desconocida --> Declarada : CSU/Rectoría aprueba · R-1 Núcleo Directivo
+    Declarada --> Estructurada : Unidad responsable + R-2 Periferia + R-3 parcial
+    Estructurada --> Operativa : Recursos sostenidos + docentes · R-3 pleno + R-4 Heartland
+    Operativa --> Instit : Cultura instalada · R-5 Cultura Emprendedora
+
+    Instit --> [*] : BPA integrada arquetípicamente
+
+    Declarada --> Desconocida : revocación (Acuerdo derogado)
+    Estructurada --> Declarada : vaciamiento (presupuesto recortado)
+    Operativa --> Estructurada : reversión (docentes se retiran)
+    Instit --> Operativa : fragilidad cultural (nuevo rector reinicia)
+```
+
+*Fig-MI12-95 — Diagrama M07 #26 (caption original no recuperado en extracción)*
+
+*Figura 95 · m07 fig 26*
+
 
 > [!bug] DT-MI12-07-01 · Captions descriptivos de las 26 figuras
 > Asignar título y caption a cada una de las 26 figuras (Fig-MI12-70 a Fig-MI12-95) basado en el contexto del original M07.

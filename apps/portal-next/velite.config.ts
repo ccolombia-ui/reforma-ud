@@ -10,6 +10,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeRaw from 'rehype-raw';
+import rehypeMermaid from 'rehype-mermaid';
 
 /**
  * Recolecta todos los `.md`/`.mdx` bajo content/ para alimentar
@@ -191,6 +192,9 @@ export default defineConfig({
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       [rehypeCallouts, { theme: 'obsidian' }],
+      // rehype-mermaid 3 — convierte ```mermaid blocks en SVG inline en build time
+      // strategy 'inline-svg' = SVG estático sin runtime mermaid (perfecto para SSG)
+      [rehypeMermaid, { strategy: 'inline-svg', errorFallback: (node: unknown, error: unknown) => { console.warn('Mermaid error:', error); return node; } }],
       rehypeRaw,
       [rehypeKatex, { strict: false, output: 'html', trust: true, macros: { '\\R': '\\mathbb{R}' } }],
       [rehypePrettyCode, { theme: 'github-light-default' }],

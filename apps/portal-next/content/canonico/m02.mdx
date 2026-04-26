@@ -66,7 +66,43 @@ El ACU-004-25 operacionaliza el mandato normativo descrito en §01 de este capí
 
 **Mode 3** [@carayannis2006mode3]: ecosistema fractal de investigación, educación e innovación (FREIE). La innovación no es un proceso añadido; es la **propiedad emergente** del sistema cuando los tres procesos misionales se retroalimentan correctamente.
 
-![[fig-MI12-08--evolucion-mode-1-2-3]]
+
+```mermaid
+flowchart LR
+    subgraph M1["Mode 1 — Gibbons et al. 1994"]
+        direction TB
+        A1["Disciplinario · Jerárquico<br/>Homogéneo · Interno"]
+        B1["Universidad<br/>produce"]
+        C1["Sociedad<br/>recibe"]
+        A1 --> B1 -->|"difusión lineal"| C1
+    end
+    subgraph M2["Mode 2 — Nowotny et al. 2003"]
+        direction TB
+        A2["Transdisciplinario<br/>Contextualizado · Distribuido"]
+        B2["Universidad<br/>+ actores externos"]
+        C2["Sociedad<br/>co-produce"]
+        A2 --> B2 <-->|"diálogo bidireccional"| C2
+    end
+    subgraph M3["Mode 3 — Carayannis & Campbell 2006"]
+        direction TB
+        A3["Fractal · Ecosistémico<br/>Emergente · FREIE"]
+        PM1["Formación"]
+        PM2["Investigación"]
+        PM3["Extensión"]
+        PM1 <--> PM2 <--> PM3 <--> PM1
+        A3 -.->|"orienta"| PM1
+    end
+    M1 -->|"1ª ruptura:<br/>conocimiento en uso"| M2
+    M2 -->|"2ª ruptura:<br/>innovación como propiedad<br/>emergente sistémica"| M3
+    M3 ==>|"⚠️ innovación NO es proceso adicional<br/>es propiedad del sistema"| OMT["🧭 ΩMT<br/>emerge de PM1+PM2+PM3"]
+    style OMT fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style M3 fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
+```
+
+*Fig-MI12-08 — Evolución Mode 1 → Mode 2 → Mode 3: la innovación como propiedad emergente sistémica, no como proceso adicional*
+
+*Figura 08 · evolucion mode 1 2 3*
+
 
 > [!important] Implicación para el ciclo virtuoso
 > En Mode 3, la innovación **no puede ser un cuarto proceso** porque no es un proceso paralelo que se añade: es la propiedad que emerge cuando PM1, PM2 y PM3 se conectan sistémicamente.
@@ -79,7 +115,40 @@ El ACU-004-25 operacionaliza el mandato normativo descrito en §01 de este capí
 | **Quadruple Helix** | Carayannis & Campbell [-@carayannis2009quadruple] | + Sociedad civil y medios | La universidad como agente de democracia cognitiva |
 | **Quintuple Helix** | Carayannis et al. [-@carayannis2012quintuple] | + Entorno natural | La innovación debe ser ecológicamente consciente |
 
-![[fig-MI12-09--triple-quadruple-quintuple-helix]]
+
+```mermaid
+flowchart TB
+    subgraph TH["Triple Helix — Etzkowitz & Leydesdorff 1995"]
+        direction LR
+        U1["🏛️ Universidad"] <--> I1["🏭 Industria"] <--> G1["🏛️ Gobierno"] <--> U1
+    end
+    subgraph QH["Quadruple Helix — Carayannis & Campbell 2009"]
+        direction LR
+        U2["🏛️ Universidad"] <--> I2["🏭 Industria"]
+        G2["🏛️ Gobierno"] <--> C2["👥 Sociedad Civil"]
+        U2 <--> G2
+        I2 <--> C2
+    end
+    subgraph QnH["Quintuple Helix — Carayannis et al. 2012"]
+        direction LR
+        U3["🏛️ Universidad"] <--> I3["🏭 Industria"]
+        G3["🏛️ Gobierno"] <--> C3["👥 Sociedad Civil"]
+        N3["🌿 Entorno Natural"]
+        U3 <--> G3
+        I3 <--> C3
+        C3 <--> N3
+        N3 <--> U3
+    end
+    TH -->|"+ democracia cognitiva"| QH
+    QH -->|"+ sostenibilidad ecológica"| QnH
+    QnH -.->|"Universidad = actor ecosistémico<br/>Innovación = resultado de interfaces,<br/>NO función interna"| IMP["🧭 ΩMT<br/>meta-propósito del ecosistema"]
+    style IMP fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+```
+
+*Fig-MI12-09 — Expansión de actores en el modelo de hélices: la innovación como fenómeno de interfaces ecosistémicas*
+
+*Figura 09 · triple quadruple quintuple helix*
+
 
 La universidad en el modelo de hélices es un *actor ecosistémico*, no una máquina de cuatro engranajes. La innovación no es función interna: es resultado de la interacción del ecosistema.
 
@@ -87,7 +156,30 @@ La universidad en el modelo de hélices es un *actor ecosistémico*, no una máq
 
 **Clark** [-@clark1998entrepreneurial] estudia cinco universidades europeas transformadas y extrae cinco vías simultáneas de transformación.
 
-![[fig-MI12-10--cinco-vias-clark]]
+
+```mermaid
+flowchart TB
+    subgraph VIAS["5 Vías SIMULTÁNEAS — Clark 1998 (activación paralela, no secuencial)"]
+        R1C["🏛️ R-1<br/>Núcleo Directivo<br/>Fortalecido<br/>Gobernanza ágil + legítima"]
+        R2C["🌐 R-2<br/>Periferia de Desarrollo<br/>Expandida<br/>CABAs · Institutos · TTO · Labs"]
+        R3C["💰 R-3<br/>Financiamiento<br/>Diversificado<br/>PIIOM · contratos · PI · educación continua"]
+        R4C["🔬 R-4<br/>Heartland Académico<br/>Estimulado<br/>Docentes Pasteur Pleno · UROP creditizado"]
+        R5C["🚀 R-5<br/>Cultura Emprendedora<br/>Integrada<br/>Identidad institucional vivida"]
+    end
+    R1C & R2C & R3C & R4C ==>|"condición necesaria<br/>para R-5"| R5C
+    R5C -.->|"también precondición<br/>de R-1 a R-4<br/>(Clark 1998, cap. 6)"| R1C
+    R1C & R2C & R3C & R4C & R5C ==>|"5 vías simultáneas"| RESULTADO["🏆 Universidad Emprendedora<br/>(ΩMT vivido como cultura)"]
+    WARN["⚠️ Activación parcial es peor<br/>que no activar ninguna:<br/>genera estructuras sin cultura"]
+    RESULTADO -.-> WARN
+    style R5C fill:#FFF9C4,stroke:#F9A825,stroke-width:2px
+    style RESULTADO fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style WARN fill:#FFCDD2,stroke:#C62828
+```
+
+*Fig-MI12-10 — Las 5 vías de Clark (1998): simultáneas, interdependientes, con R-5 como resultado y precondición*
+
+*Figura 10 · cinco vias clark*
+
 
 > La vía más relevante (y la más difícil) es R-5: la cultura emprendedora **no es un departamento** sino una **propiedad cultural transversal**. Clark no propone crear una "oficina de emprendimiento" sino transformar la institución entera.
 
@@ -97,11 +189,60 @@ La universidad en el modelo de hélices es un *actor ecosistémico*, no una máq
 
 **Geels** [-@geels2002mlp; -@geels2007typology] explica cómo ocurren las transiciones sociotécnicas mediante tres niveles anidados:
 
-![[fig-MI12-05--mlp-geels]]
+
+```mermaid
+graph TB
+    subgraph LANDSCAPE["🌍 PAISAJE — Macro-contexto (cambios lentos pero poderosos)"]
+        L1["Cambio climático · Digitalización · Desigualdad"]
+    end
+
+    subgraph REGIME["🏭 RÉGIMEN DOMINANTE — Sistema sociotécnico actual"]
+        R1["Departamentalización · Métricas papers/rankings · Separación misional"]
+        R2["Financiación por competencia individual · Innovación = Frame 2"]
+    end
+
+    subgraph NICHES["🌱 NICHOS TRANSFORMATIVOS — Espacios protegidos"]
+        N1["CABAs · Semilleros transdisciplinarios · Living labs"]
+        N2["Proyectos misiones PIIOM · Coaliciones triple hélice"]
+    end
+
+    LANDSCAPE -.->|"Presión (CONPES 4069, PIIOM, ACU-004-25)"| REGIME
+    NICHES -->|"Innovaciones radicales que desafían el régimen"| REGIME
+    LANDSCAPE -.->|"Ventanas de oportunidad"| NICHES
+
+    style LANDSCAPE fill:#FFCDD2,stroke:#C62828,stroke-width:2px
+    style REGIME fill:#FFF9C4,stroke:#F57F17,stroke-width:3px
+    style NICHES fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px
+```
+
+*Fig-MI12-05 — [[glo-mlp-geels|MLP]] de Geels aplicado a UDFJC: Paisaje, Régimen dominante y Nichos transformativos*
+
+*Figura 05 · mlp geels*
+
 
 **Geels & Schot** [-@geels2007typology] identifican cuatro patrones de transición según la naturaleza de la presión del paisaje y la madurez de los nichos:
 
-![[fig-MI12-11--cuatro-patrones-transicion-geels]]
+
+```mermaid
+flowchart LR
+    subgraph PATRONES["4 Patrones de Transición — Geels & Schot 2007"]
+        P1["1️⃣ TRANSFORMACIÓN<br/>Presión paisaje: moderada<br/>Régimen se adapta gradualmente<br/>Nicho: complementario"]
+        P2["2️⃣ SUSTITUCIÓN<br/>Presión paisaje: fuerte<br/>Régimen: inflexible<br/>Nicho maduro lo reemplaza"]
+        P3["3️⃣ RECONFIGURACIÓN ⭐<br/>Nicho se integra al régimen<br/>Genera cambios en cascada<br/>CABAs como agentes de cambio"]
+        P4["4️⃣ DESALINEACIÓN-REALINEACIÓN<br/>Crisis sistémica del régimen<br/>Nuevo régimen emerge de nichos<br/>Cambio abrupto"]
+    end
+    UDFJC["🏛️ ACU-004-25<br/>como ventana<br/>de oportunidad"]
+    UDFJC ==>|"patrón probable<br/>para UDFJC"| P3
+    P3 -.->|"CABAs (nichos) se integran<br/>al régimen vía ACU-004-25<br/>y generan cambios en cascada"| EFECTO["Reconfiguración<br/>Sub-N1 → N4<br/>por irradiación"]
+    style P3 fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style UDFJC fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+    style EFECTO fill:#FFF9C4,stroke:#F9A825
+```
+
+*Fig-MI12-11 — 4 patrones de transición sociotécnica (Geels & Schot, 2007): el patrón de Reconfiguración es el más probable para UDFJC*
+
+*Figura 11 · cuatro patrones transicion geels*
+
 
 > [!info] El ACU-004-25 como ventana de oportunidad
 > La reforma estatutaria es exactamente el tipo de perturbación de paisaje que puede acelerar la Reconfiguración: legitima los nichos, les da marco legal y los conecta con financiamiento PIIOM.
@@ -116,7 +257,37 @@ La universidad en el modelo de hélices es un *actor ecosistémico*, no una máq
 | **Frame 2**: Sistemas de Innovación | 1980s-2010s | ¿Cómo conectar actores? | Redes, clusters, triple helix | Crecimiento económico como fin; no cuestiona dirección |
 | **Frame 3**: Cambio Transformativo | 2010s→ | ¿*Hacia dónde* dirigir la innovación? | **Direccionalidad** → misiones transformativas | Requiere repensar el propósito institucional |
 
-![[fig-MI12-12--evolucion-frame-1-2-3]]
+
+```mermaid
+flowchart LR
+    subgraph F1["Frame 1 — R&D (1945–1980s)"]
+        Q1["❓ ¿Cómo producir<br/>más ciencia?"]
+        M1["📊 Inversión investigación<br/>básica → spillovers"]
+        L1["❌ Lineal<br/>No cuestiona dirección"]
+    end
+    subgraph F2["Frame 2 — Sistemas de Innovación (1980s–2010s)"]
+        Q2["❓ ¿Cómo conectar<br/>actores?"]
+        M2["🕸️ Redes · clusters<br/>Triple Helix"]
+        L2["❌ Crecimiento econ.<br/>como fin único"]
+    end
+    subgraph F3["Frame 3 — Cambio Transformativo (2010s→)"]
+        Q3["❓ ¿HACIA DÓNDE<br/>dirigir la innovación?"]
+        M3["🧭 Direccionalidad<br/>→ misiones transformativas"]
+        L3["✅ Reorienta propósito<br/>institucional completo"]
+    end
+    F1 -->|"Insuficiente:<br/>no cuestiona la<br/>dirección del cambio"| F2
+    F2 -->|"Insuficiente:<br/>no cuestiona el<br/>propósito institucional"| F3
+    F3 ==>|"Habilita"| OMT["🧭 ΩMT<br/>Meta-Telos Transformativo<br/>UDFJC"]
+    style F3 fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style OMT fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style F1 fill:#FFCDD2,stroke:#C62828
+    style F2 fill:#FFF9C4,stroke:#F9A825
+```
+
+*Fig-MI12-12 — Evolución [[glo-frame-1|Frame 1]] → [[glo-frame-2|Frame 2]] → [[glo-frame-3|Frame 3]] (Schot & Steinmueller, 2018): la pregunta pasa de "cuánto" a "hacia dónde"*
+
+*Figura 12 · evolucion frame 1 2 3*
+
 
 > Frame 3 no propone una "Vicerrectoría de Transformación". Propone que *todas las políticas* de ciencia, tecnología e innovación se reorienten hacia misiones transformativas.
 
@@ -124,13 +295,62 @@ La universidad en el modelo de hélices es un *actor ecosistémico*, no una máq
 
 [@stokes1997pasteur] desmonta la dicotomía básica/aplicada con una matriz 2×2:
 
-![[fig-MI12-13--cuadrante-pasteur]]
+
+```mermaid
+flowchart TB
+    subgraph MATRIX["Cuadrante de Pasteur — Stokes 1997"]
+        subgraph TOP["Busca entendimiento fundamental"]
+            BOHR["🔵 BOHR<br/>Ciencia pura<br/>Sin consideración de uso<br/>(física teórica clásica)"]
+            PASTEUR["🟢 PASTEUR ← R4 ciclo virtuoso<br/>Investigación orientada por misión<br/>Fundamental + uso transformativo<br/>(vacunas, agua, energía)"]
+        end
+        subgraph BOT["No busca entendimiento fundamental"]
+            VACIO["⬜ (vacío)"]
+            EDISON["🟡 EDISON<br/>Desarrollo aplicado<br/>Con consideración de uso<br/>(ingeniería de producto)"]
+        end
+    end
+    NOTE["R4 (Problemas Reales → PM2):<br/>Los problemas del territorio<br/>generan preguntas de investigación<br/>de frontera en el Cuadrante Pasteur"]
+    PASTEUR ==> NOTE
+    style PASTEUR fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style NOTE fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+    style VACIO fill:#F5F5F5,stroke:#9E9E9E
+```
+
+*Fig-MI12-13 — Cuadrante de Pasteur (Stokes, 1997): la retroalimentación R4 del ciclo virtuoso opera exactamente en el cuadrante Pasteur*
+
+*Figura 13 · cuadrante pasteur*
+
 
 ### §2.7 La Espiral SECI y el *Ba* — Nonaka & Takeuchi
 
 [@nonaka1995knowledgecreating] proponen que la creación de conocimiento organizacional opera como espiral continua (SECI) en contextos compartidos (*Ba*).
 
-![[fig-MI12-07--seci-ba-caba]]
+
+```mermaid
+graph TB
+    subgraph BA["🏛️ Ba — Contexto Compartido Universitario (CABA como Ba institucional)"]
+        S["🤝 SOCIALIZACIÓN<br/>(Tácito → Tácito)<br/>Semilleros · CABAs · convivencia<br/>↔ R1"]
+        E["📝 EXTERNALIZACIÓN<br/>(Tácito → Explícito)<br/>Tesis · publicaciones · patentes<br/>↔ R3"]
+        C["📚 COMBINACIÓN<br/>(Explícito → Explícito)<br/>Repositorios · ontologías · KGs<br/>↔ E2 Aprendizaje Soberano"]
+        I["💼 INTERNALIZACIÓN<br/>(Explícito → Tácito)<br/>Co-op · PBL territorial · prácticas<br/>↔ R5"]
+    end
+    S -->|"articular conceptos"| E
+    E -->|"sistematizar"| C
+    C -->|"aprender haciendo"| I
+    I -->|"nueva experiencia:<br/>REINICIA ESPIRAL"| S
+    NOTE["⚠️ Ruptura en cualquier conversión<br/>detiene la espiral completa.<br/>Una unidad de innovación separada rompe I (Internalización):<br/>aisla innovación del aula y el territorio."]
+    BA -.-> NOTE
+    style BA fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+    style NOTE fill:#FFCDD2,stroke:#C62828,stroke-width:2px
+    style S fill:#E8F5E9,stroke:#2E7D32
+    style E fill:#FFF9C4,stroke:#F9A825
+    style C fill:#F3E5F5,stroke:#6A1B9A
+    style I fill:#FFF3E0,stroke:#E65100
+```
+
+*Fig-MI12-07 — Espiral SECI de Nonaka & Takeuchi (1995) aplicada al ciclo virtuoso: la [[glo-caba|CABA]] como Ba institucional*
+
+*Figura 07 · seci ba caba*
+
 
 **La ruptura de cualquier conversión detiene la espiral**: si la investigación no se incorpora al currículo (R2 bloqueada), el conocimiento se estanca. Una unidad de innovación separada rompe estructuralmente la Internalización al aislar la innovación del aula y el territorio.
 
@@ -138,7 +358,32 @@ La universidad en el modelo de hélices es un *actor ecosistémico*, no una máq
 
 [@prahalad1990core] definen las *core competencies* como capacidades que: (1) dan acceso a múltiples mercados, (2) contribuyen significativamente al valor percibido, (3) son difíciles de imitar.
 
-![[fig-MI12-14--core-competencies-prahalad]]
+
+```mermaid
+flowchart TB
+    subgraph CRITERIOS["3 Criterios de Competencia de Núcleo — Prahalad & Hamel 1990"]
+        C1["🌐 Acceso a múltiples dominios<br/>Responder a múltiples desafíos<br/>sociales simultáneos"]
+        C2["🎯 Contribución al valor percibido<br/>Impacto medible en comunidades,<br/>territorios y ecosistemas"]
+        C3["🔒 Difícil de imitar<br/>Conocimiento especializado<br/>+ contexto territorial único"]
+    end
+    PM1["🎓 PM1<br/>Formación<br/>interdisciplinaria"]
+    PM2["🔬 PM2<br/>Investigación<br/>orientada a misiones"]
+    PM3["🌍 PM3<br/>Extensión<br/>territorial"]
+    OMT["🧭 ΩMT<br/>direccionalidad"]
+    OMT -->|"orienta"| PM1 & PM2 & PM3
+    PM1 & PM2 & PM3 ==>|"interacción virtuosa<br/>orientada por ΩMT"| E1["💎 E1: Competencias de Núcleo<br/>institucionales UDFJC<br/>(resultado emergente)"]
+    C1 & C2 & C3 -.->|"criterios que<br/>deben cumplirse"| E1
+    NOTE["No se fabrican en un departamento<br/>de innovación: EMERGEN de la interacción<br/>virtuosa PM1+PM2+PM3 orientada por ΩMT"]
+    E1 -.-> NOTE
+    style E1 fill:#FFF9C4,stroke:#F9A825,stroke-width:3px
+    style OMT fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px
+    style NOTE fill:#E8F5E9,stroke:#2E7D32
+```
+
+*Fig-MI12-14 — Emergencia de Competencias de Núcleo (E1): los 3 criterios de Prahalad & Hamel aplicados a IES pública*
+
+*Figura 14 · core competencies prahalad*
+
 
 Las competencias de núcleo universitarias no se fabrican en un departamento de innovación: **emergen** de la interacción virtuosa entre PM1, PM2 y PM3 orientada por ΩMT.
 
@@ -146,13 +391,55 @@ Las competencias de núcleo universitarias no se fabrican en un departamento de 
 
 [@wenger1998cop]: las CoPs son "grupos que comparten una preocupación o pasión y aprenden a hacerlo mejor mientras interactúan regularmente". Son la unidad social primaria de aprendizaje.
 
-![[fig-MI12-15--cops-caba-super-cop]]
+
+```mermaid
+flowchart TB
+    subgraph COPS["Comunidades de Práctica — Wenger 1998"]
+        SEM["🌱 Semilleros<br/>CoP de aprendizaje<br/>investigativo<br/>Activada por: R1"]
+        GI["🔬 Grupos de Investigación<br/>CoP de producción<br/>de conocimiento<br/>Activada por: R3, R4"]
+        EXT["🌍 Redes de Extensión<br/>CoP de apropiación<br/>social del conocimiento<br/>Activada por: R5, R6"]
+        DOC["🎓 Comunidad Docente<br/>CoP de práctica<br/>pedagógica<br/>Activada por: R2"]
+    end
+    SEM & GI & EXT & DOC ==>|"conecta · orquesta<br/>· protege"| CABA["🏛️ CABA<br/>Super-CoP Transdisciplinaria<br/>Comunidad Académica de Base<br/>(opera sin esperar departamentos)"]
+    CABA ==>|"activa simultáneamente"| R16["R1 · R2 · R3 · R4 · R5 · R6"]
+    CABA ==>|"opera como"| NICHO["⚡ Nicho Transformativo<br/>(Geels MLP)"]
+    R16 ==>|"cuando todas ≥ 70%"| E123["💎 E1 · E2 · E3<br/>resultados emergentes"]
+    style CABA fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style NICHO fill:#FFF9C4,stroke:#F9A825,stroke-width:2px
+    style E123 fill:#FFF9C4,stroke:#F9A825,stroke-width:2px
+```
+
+*Fig-MI12-15 — Red de CoPs convergiendo en la [[glo-caba|CABA]] como super-CoP transdisciplinaria y nodo vitalizador del ciclo virtuoso*
+
+*Figura 15 · cops caba super cop*
+
 
 ### §2.10 La Tercera Misión — Compagnucci & Spigarelli
 
 [@compagnucci2020thirdmission] concluyen que la tercera misión es un fenómeno *multidisciplinario, complejo y evolutivo* que no se reduce a transferencia tecnológica.
 
-![[fig-MI12-16--evolucion-tercera-mision]]
+
+```mermaid
+flowchart LR
+    subgraph EVO["Evolución conceptual de la Tercera Misión"]
+        TM1["📄 Transferencia Tecnológica<br/>Patentes · spin-offs · TTO<br/>(Frame 2 · énfasis comercial)"]
+        TM2["🤝 Compromiso Social<br/>Civic engagement · Talloires<br/>Service-learning<br/>(Frame 2+ · énfasis cívico)"]
+        TM3["♻️ Co-creación Sostenible<br/>Trencher et al. 2014<br/>Proyectos con comunidades<br/>(Frame 3 · énfasis territorial)"]
+        TM4["🌐 Misión Integrada<br/>Mode 3 · Ecosistema fractal<br/>Carayannis 2012<br/>(ΩMT · distinción disuelta)"]
+    end
+    TM1 -->|"amplía hacia<br/>lo cívico"| TM2
+    TM2 -->|"amplía hacia<br/>la sostenibilidad"| TM3
+    TM3 -->|"disuelve la<br/>distinción misional"| TM4
+    TM4 ==>|"La evidencia NO soporta misión separada<br/>Sí soporta principio<br/>organizador integrador"| OMT["🧭 ΩMT<br/>Meta-propósito que da<br/>coherencia a PM1+PM2+PM3"]
+    style TM4 fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px
+    style OMT fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style TM1 fill:#FFCDD2,stroke:#C62828
+```
+
+*Fig-MI12-16 — Evolución de la Tercera Misión: de transferencia tecnológica a misión integrada bajo ΩMT*
+
+*Figura 16 · evolucion tercera mision*
+
 
 **Conclusión de la literatura**: la evidencia **no soporta** una cuarta misión separada. Sí soporta un principio organizador que dé coherencia y direccionalidad a las tres existentes.
 
@@ -160,7 +447,31 @@ Las competencias de núcleo universitarias no se fabrican en un departamento de 
 
 [@beer1979heart] propone el VSM: cinco sistemas anidados donde System 5 (identidad/ethos/propósito) no es un sistema operativo más; es el que da razón de ser a los sistemas 1-4.
 
-![[fig-MI12-17--vsm-beer-omt]]
+
+```mermaid
+flowchart TB
+    S5["🧭 System 5 — Identidad / Ethos / Propósito<br/>Define la razón de ser · No tiene presupuesto operativo propio<br/>⟷ ΩMT: Innovación Transformativa como meta-telos"]
+    S4["🔭 System 4 — Inteligencia / Monitoreo Externo<br/>Observa entorno · identifica oportunidades y amenazas<br/>⟷ Observatorio de Capacidades UDFJC"]
+    S3["🏛️ System 3 — Control / Coordinación Interna<br/>Asigna recursos · coordina operaciones institucionales<br/>⟷ Consejo de Misiones Transformativas"]
+    S2["🔄 System 2 — Coordinación / Anti-oscilación<br/>Previene conflictos entre unidades operativas<br/>⟷ Coordinaciones de Retroalimentación R1–R6"]
+    S1["⚙️ System 1 — Operaciones (múltiples unidades autónomas)<br/>Realiza las actividades misionales de la organización<br/>⟷ CABAs · Escuelas · Institutos · Centros"]
+    S5 ==>|"orienta sin operar directamente"| S4
+    S4 ==>|"informa"| S3
+    S3 ==>|"coordina"| S2
+    S2 ==>|"sincroniza"| S1
+    S1 -.->|"retroalimenta capacidades"| S3
+    S4 -.->|"señales del entorno"| S5
+    NOTE["S5 NO es un proceso operativo adicional:<br/>es la identidad institucional.<br/>ΩMT tampoco es un proceso adicional."]
+    S5 -.-> NOTE
+    style S5 fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style S1 fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+    style NOTE fill:#FFF9C4,stroke:#F9A825,stroke-width:2px
+```
+
+*Fig-MI12-17 — VSM de Beer (1979) aplicado a UDFJC: ΩMT como System 5, las CABAs como System 1*
+
+*Figura 17 · vsm beer omt*
+
 
 **ΩMT como System 5**: la innovación transformativa opera exactamente como System 5 — define la identidad institucional y la dirección estratégica sin ser una unidad operativa.
 
@@ -168,7 +479,29 @@ Las competencias de núcleo universitarias no se fabrican en un departamento de 
 
 [@markard2012transitions; @kohler2019agenda] proponen que cualquier transición sociotécnica debe gestionarse en seis dimensiones interdependientes.
 
-![[fig-MI12-18--seis-dimensiones-markard]]
+
+```mermaid
+flowchart TB
+    OMT["🧭 ΩMT — Meta-Telos Institucional<br/>(gestión integrada de las 6 dimensiones)"]
+    D1["🎯 D1: Visión / Direccionalidad<br/>ΩMT como meta-propósito<br/>Frame 3 · ACU-004-25"]
+    D2["🕸️ D2: Redes / Actores<br/>Triple Helix territorial<br/>CABAs · alianzas PIIOM"]
+    D3["📚 D3: Aprendizaje / Reflexividad<br/>Espiral SECI<br/>6 retroalimentaciones R1–R6"]
+    D4["💪 D4: Poder / Recursos<br/>Autonomía universitaria<br/>Clark R-3 · Fondo Especial"]
+    D5["🧪 D5: Experimentación<br/>Nichos protegidos<br/>CABAs · living labs · semilleros"]
+    D6["⏳ D6: Tiempo / Temporalidad<br/>Horizonte 5–10 años<br/>Sub-N1 → N4 por fases"]
+    OMT ==> D1 & D2 & D3 & D4 & D5 & D6
+    D1 & D2 & D3 & D4 & D5 & D6 ==>|"gestión INTEGRADA<br/>(no secuencial)"| TRANS["⚡ Transición Sociotécnica<br/>Sub-N1 → N4<br/>(Reconfiguración Geels)"]
+    WARN["⚠️ Markard et al. 2012:<br/>Las 6 dimensiones son interdependientes.<br/>ΩMT sin recursos (D4) ni redes (D2)<br/>es solo retórica estatutaria."]
+    TRANS -.-> WARN
+    style OMT fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style TRANS fill:#FFF9C4,stroke:#F9A825,stroke-width:2px
+    style WARN fill:#FFCDD2,stroke:#C62828
+```
+
+*Fig-MI12-18 — Las 6 dimensiones de Markard et al. (2012) integradas bajo ΩMT para la transición UDFJC Sub-N1 → N4*
+
+*Figura 18 · seis dimensiones markard*
+
 
 > Las seis dimensiones deben gestionarse de manera integrada. Un ΩMT sin recursos (Dimensión 4) ni redes (Dimensión 2) es solo retórica.
 
@@ -197,7 +530,42 @@ La literatura especializada documenta un patrón recurrente de fracaso en instit
 
 #### §4.1.2 La evidencia a favor de ΩMT
 
-![[fig-MI12-03--anti-patron-vs-omt]]
+
+```mermaid
+flowchart TB
+    subgraph ERRONEO["❌ Anti-patrón histórico (Departamentalizado — Falla documentada)"]
+        direction LR
+        PM4["Unidad de<br/>Innovación<br/>🏢"]
+        VD["Formación<br/>🎓"]
+        VI["Investigación<br/>🔬"]
+        VE["Extensión<br/>🌍"]
+        PM4 -.->|"intenta coordinar<br/>(fracasa)"| VD
+        PM4 -.->|"intenta coordinar<br/>(fracasa)"| VI
+        PM4 -.->|"intenta coordinar<br/>(fracasa)"| VE
+    end
+
+    subgraph CORRECTO["✅ Modelo ΩMT (Transversal — Éxito)"]
+        direction TB
+        OMT["🧭 ΩMT<br/>Innovación Transformativa<br/>Meta-Telos Institucional"]
+        F["PM1<br/>Formación<br/>🎓"]
+        I["PM2<br/>Investigación<br/>🔬"]
+        E["PM3<br/>Extensión<br/>🌍"]
+        OMT ==>|"direccionalidad"| F
+        OMT ==>|"direccionalidad"| I
+        OMT ==>|"direccionalidad"| E
+        F <-->|"R1,R2,R6"| I
+        I <-->|"R3,R4"| E
+        E <-->|"R5"| F
+    end
+
+    style OMT fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style PM4 fill:#FFCDD2,stroke:#D32F2F,stroke-width:2px
+```
+
+*Fig-MI12-03 — Anti-patrón departamentalizado vs. modelo transversal (ΩMT): diferencia ontológica de nivel*
+
+*Figura 03 · anti patron vs omt*
+
 
 En el modelo correcto, ΩMT está en un **nivel ontológico diferente** al de los procesos misionales: no compite con PM1-PM3 ni los sustituye; los orienta hacia misiones transformativas mientras ellos se retroalimentan mutuamente.
 
@@ -205,7 +573,39 @@ En el modelo correcto, ΩMT está en un **nivel ontológico diferente** al de lo
 
 Las retroalimentaciones son **bucles bidireccionales** entre los tres procesos misionales. Cuando están activas simultáneamente, forman el ciclo virtuoso. Cuando están rotas, la universidad opera en silos y no genera resultados emergentes.
 
-![[fig-MI12-04--ciclo-virtuoso-r1-r6]]
+
+```mermaid
+flowchart LR
+    OMT["🧭 ΩMT<br/>Innovación Transformativa<br/>(meta-propósito)"]
+
+    OMT ==>|"direccionalidad"| PM1
+    OMT ==>|"direccionalidad"| PM2
+    OMT ==>|"direccionalidad"| PM3
+
+    PM1["🎓 PM1 Formación<br/>(Escuela + Facilitador)"]
+    PM2["🔬 PM2 Investigación<br/>(Instituto + Cuadrante Pasteur)"]
+    PM3["🌍 PM3 Extensión<br/>(Centro + Emprendedor)"]
+
+    PM1 -->|"R1: Semilleros<br/>estudiantes → UROP"| PM2
+    PM2 -->|"R2: Currículo Vivo<br/>hallazgos → aula"| PM1
+    PM2 -->|"R3: Transferencia<br/>TTO, spin-offs"| PM3
+    PM3 -->|"R4: Problemas Reales<br/>territorio → laboratorio"| PM2
+    PM3 -->|"R5: Aprendizaje Experiencial<br/>Co-op, PBL territorial"| PM1
+    PM1 -->|"R6: Egresados Agentes<br/>red viva al territorio"| PM3
+
+    PM1 & PM2 & PM3 -.->|"emerge"| CORE["💎 E1: Competencias de Núcleo<br/>E2: Aprendizaje Soberano<br/>E3: Nichos Transformativos"]
+
+    style OMT fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style PM1 fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+    style PM2 fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
+    style PM3 fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+    style CORE fill:#FFF9C4,stroke:#F9A825,stroke-width:3px
+```
+
+*Fig-MI12-04 — Ciclo virtuoso completo: 6 retroalimentaciones R1–R6 y 3 resultados emergentes E1–E3*
+
+*Figura 04 · ciclo virtuoso r1 r6*
+
 
 Las seis retroalimentaciones (síntesis de los detalles AS-IS/TO-BE):
 
@@ -232,14 +632,66 @@ Los resultados emergentes no se "producen" en ningún proceso específico: **eme
 > [!info] Fuente de la taxonomía
 > La taxonomía N1-N4 de madurez universitaria es resultado del proyecto de investigación **BMK-001** [@maderasepulveda2026bmk001] que analizó 21 instituciones de referencia global con 751 documentos normativos.
 
-![[fig-MI12-19--taxonomia-bmk-001]]
+
+```mermaid
+flowchart LR
+    subgraph MADUREZ["Taxonomía de Madurez BMK-001 (por proceso misional)"]
+        SN1["⚫ Sub-N1<br/>Islas autónomas<br/>sin coordinación"]
+        N1M["N1<br/>Departamental<br/>clásico"]
+        N2M["N2<br/>Escuela<br/>temática"]
+        N3M["N3<br/>Cross-<br/>disciplinar"]
+        N4M["N4<br/>Integrada<br/>form-inv"]
+    end
+    PM1["🎓 PM1 Formación"] --> SN1
+    PM2["🔬 PM2 Investigación"] --> N1M
+    PM3["🌍 PM3 Extensión"] --> N1M
+    SN1 -.->|"reforma lineal:<br/>generaciones"| N1M
+    N1M --> N2M --> N3M --> N4M
+    SN1 ==>|"⚡ SALTO CUÁNTICO<br/>vía CABAs"| N4M
+    style SN1 fill:#424242,color:#fff,stroke:#C62828,stroke-width:3px
+    style N4M fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+    style PM1 fill:#FFCDD2,stroke:#C62828,stroke-width:2px
+    style PM2 fill:#FFE0B2,stroke:#E65100,stroke-width:2px
+    style PM3 fill:#FFE0B2,stroke:#E65100,stroke-width:2px
+```
+
+*Fig-MI12-19 — Posición UDFJC AS-IS en la taxonomía BMK-001: Sub-N1 en Formación, N1 en Investigación y Extensión*
+
+*Figura 19 · taxonomia bmk 001*
+
 
 > [!warning] La UDFJC no es N1 uniforme
 > El diagnóstico BMK-001 revela que la UDFJC tiene **tres estadios distintos por proceso misional**: Sub-N1 en Formación (sin departamentos reales, solo islas programa), N1 incipiente en Investigación (82 grupos Minciencias, 200+ semilleros sin crédito) y N1 en Extensión. La reforma lineal tardaría generaciones. La ruta propuesta es el salto cuántico vía CABAs.
 
 #### §4.4.2 El salto cuántico: Sub-N1 → N4 vía nichos
 
-![[fig-MI12-06--salto-cuantico-caba]]
+
+```mermaid
+flowchart LR
+    SUB_N1["⚫ Sub-N1 UDFJC AS-IS<br/>Programa-formación-clásico<br/>(islas sin departamento)"]
+    N1["N1<br/>Departamental clásico"]
+    N2["N2<br/>Escuela temática"]
+    N3["N3<br/>Cross-disciplinar"]
+    N4["N4<br/>Integrada form-inv"]
+
+    SUB_N1 -->|"ni siquiera el primer paso:<br/>crear departamentos<br/>(no hecho aún)"| N1
+    N1 -->|"peldaño siguiente"| N2
+    N2 -->|"..."| N3
+    N3 -->|"..."| N4
+
+    SUB_N1 ==>|"⚡ SALTO CUÁNTICO<br/>vía nichos transformativos<br/>(CABAs) que brincan a N4<br/>en su dominio específico"| N4
+
+    style SUB_N1 fill:#424242,color:#fff,stroke:#C62828,stroke-width:3px
+    style N1 fill:#FFCDD2,stroke:#C62828
+    style N2 fill:#FFE0B2,stroke:#E65100
+    style N3 fill:#FFF9C4,stroke:#F9A825
+    style N4 fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px
+```
+
+*Fig-MI12-06 — Taxonomía Sub-N1 → N4 con salto cuántico mediado por CABAs (patrón de Reconfiguración Geels)*
+
+*Figura 06 · salto cuantico caba*
+
 
 La reforma lineal (Sub-N1 → N1 → N2 → N3 → N4) tomaría generaciones y casi siempre fracasa. La alternativa es activar **nichos transformativos** (CABAs, escuelas piloto) que salten directamente a N4 en su dominio específico.
 

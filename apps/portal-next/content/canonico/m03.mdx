@@ -91,7 +91,31 @@ Los seis roles docentes (referencia §02 y §04 del capítulo): 🎓 Estudiante 
 
 ### §3.2 Matriz roles × estándares
 
-![[fig-MI12-20--matriz-roles-jtbd-estandares]]
+
+```mermaid
+flowchart TB
+    NIVEL_1[Nivel 1 · Institucional<br/>ISO 21001 · SIGUD · MIPG · CNA Institucional]
+    NIVEL_2[Nivel 2 · Programa<br/>CNA programa · ABET · ARCU-SUR]
+    NIVEL_3[Nivel 3 · Diseño curricular<br/>CDIO · TUNING-AL · EUR-ACE · UDL 3.0]
+    NIVEL_4[Nivel 4 · Disciplinar<br/>ABET EAC/CAC/ETAC/ANSAC · PHYS21 · ACS · CUPM · V&C · InTASC · NASAD/NASM/NAST/NASD · WHO · APA]
+
+    NIVEL_1 --> NIVEL_2
+    NIVEL_2 --> NIVEL_3
+    NIVEL_3 --> NIVEL_4
+    NIVEL_4 -.alimenta.-> NIVEL_3
+    NIVEL_3 -.alimenta.-> NIVEL_2
+    NIVEL_2 -.alimenta.-> NIVEL_1
+
+    style NIVEL_1 fill:#E3F2FD,stroke:#1976D2
+    style NIVEL_2 fill:#E8F5E9,stroke:#2E7D32
+    style NIVEL_3 fill:#FFF3E0,stroke:#EF6C00
+    style NIVEL_4 fill:#F3E5F5,stroke:#7B1FA2
+```
+
+*Fig-MI12-20 — Matriz roles [[glo-jtbd-christensen|JTBD]] × estándares (M03)*
+
+*Figura 20 · matriz roles jtbd estandares*
+
 
 > [!bug] DT-MI12-03-01 — Detalle por celda de matriz roles × estándares pendiente de ampliación
 > La fig-MI12-20 muestra la matriz visual; el detalle textual de cada celda (qué hace cada rol con cada estándar) está en M03 §3.2 original (`2-resultado-consolidados/M03-estandares-internacionales/M03-estandares-internacionales.md`) y debe migrarse a esta sección como tablas en versiones futuras.
@@ -159,7 +183,38 @@ IUPAP (International Union of Pure and Applied Physics), AAPT (American Associat
 
 ### §5.1 Heatmap aplicabilidad: 9 Escuelas UDFJC × 8 estándares principales
 
-![[fig-MI12-21--heatmap-escuelas-estandares]]
+
+```mermaid
+gantt
+    title Adopcion priorizada de estandares internacionales por Escuela UDFJC
+    dateFormat  YYYY-MM
+    axisFormat %Y
+
+    section Transversal
+    ISO 21001:2018 - fase normativa        :iso1, 2026-05, 18M
+    ISO 21001:2018 - certificacion         :iso2, after iso1, 24M
+    TUNING-AL - mapeo en Escuelas          :tun1, 2026-06, 12M
+
+    section Ingenierias
+    CDIO adopcion marco + pilotos          :cd1, 2026-06, 24M
+    ABET EAC autoevaluacion 2 programas    :ab1, after cd1, 18M
+    ABET EAC acreditacion formal           :ab2, after ab1, 18M
+
+    section Ciencias Basicas
+    PHYS21+ACS+CUPM+VC mapping             :cb1, 2026-08, 18M
+    ABET ANSAC autoevaluacion              :cb2, after cb1, 18M
+
+    section Educacion
+    InTASC + UDL 3.0 obligatorio           :ed1, 2026-05, 12M
+
+    section Internacional
+    ARCU-SUR postulacion (CNA>=6a)         :ar1, 2027-06, 24M
+```
+
+*Fig-MI12-21 — Heatmap aplicabilidad 9 Escuelas UDFJC × 8 estándares (M03)*
+
+*Figura 21 · heatmap escuelas estandares*
+
 
 ### §5.2 Articulación con normatividad colombiana
 

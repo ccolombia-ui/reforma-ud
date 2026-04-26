@@ -71,7 +71,23 @@ DVE (Docente de Vinculación Especial): CCR ≈ 28.500 COP/hora basado en 13.715
 
 ## §7 · Figuras (1 mermaid)
 
-![[fig-MI12-111--m09-fig-01]]
+
+```mermaid
+flowchart LR
+    M09["M09<br/>Presupuesto NICSP+CCP"] -- "CCR docente/admin<br/>+ reglas R1-R10" --> M10["M10<br/>TDABC time equations"]
+    M09 -- "masa salarial<br/>+ restricción Fondo" --> M12["M12<br/>Escenarios S0-S5"]
+    M09 -- "estructura cuentas<br/>para cruzar MEN" --> M11["M11<br/>Datasets MEN"]
+
+    style M09 fill:#1565C0,color:#fff
+    style M10 fill:#1565C0,color:#fff
+    style M11 fill:#1565C0,color:#fff
+    style M12 fill:#7B1FA2,color:#fff
+```
+
+*Fig-MI12-111 — M09 (M09 fig #1)*
+
+*Figura 111 · m09 fig 01*
+
 
 > [!bug] DT-MI12-09-04 · Caption de fig-MI12-111
 

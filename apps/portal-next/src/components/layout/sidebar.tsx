@@ -185,7 +185,7 @@ function PaperItem({ paper, pathname, filter }: Readonly<{ paper: Paper; pathnam
       {isActive && toc && toc.length > 0 && filter.length === 0 && (
         <ul className="ml-1 mt-0.5 space-y-0 border-l border-primary/30 pl-2">
           {toc.map((entry) => (
-            <TocSidebarItem key={entry.url} entry={entry} depth={0} />
+            <TocSidebarItem key={entry.url} entry={entry} depth={0} autoExpandActive={false} />
           ))}
         </ul>
       )}
@@ -193,20 +193,22 @@ function PaperItem({ paper, pathname, filter }: Readonly<{ paper: Paper; pathnam
   );
 }
 
-/** Recursive TOC item con scroll-spy. Highlight del heading actual. */
-function TocSidebarItem({ entry, depth }: Readonly<{ entry: TocEntry; depth: number }>) {
+/** Recursive TOC item con scroll-spy + progressive disclosure (default colapsado a nivel 0). */
+function TocSidebarItem({ entry, depth, autoExpandActive }: Readonly<{ entry: TocEntry; depth: number; autoExpandActive: boolean }>) {
   const id = entry.url.replace(/^#/, '');
   const [active, setActive] = useState(false);
+  const hasChildren = entry.items && entry.items.length > 0;
+  // Default: nivel 0 expandido, nivel 1+ colapsado. Se auto-expande si hay hijo activo.
+  const [expanded, setExpanded] = useState(depth === 0);
 
   useEffect(() => {
-    if (depth > 1) return; // solo scroll-spy nivel top + 1 sub
+    if (depth > 1) return;
     const el = id ? document.getElementById(id) : null;
     if (!el) return;
     const observer = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
-          if (e.isIntersecting) setActive(true);
-          else setActive(false);
+          setActive(e.isIntersecting);
         }
       },
       { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.5, 1] },
@@ -215,24 +217,131 @@ function TocSidebarItem({ entry, depth }: Readonly<{ entry: TocEntry; depth: num
     return () => observer.disconnect();
   }, [id, depth]);
 
+  // Auto-expand si soy ancestro del heading activo (autoExpandActive viene del padre)
+  useEffect(() => {
+    if (autoExpandActive) setExpanded(true);
+  }, [autoExpandActive]);
+
+  // Detectar si algún descendant está activo (señal para auto-expand padre)
+  const [childActive, setChildActive] = useState(false);
+
   return (
     <li>
-      <a
-        href={entry.url}
-        className={cn(
-          'block rounded py-0.5 text-[10px] leading-tight transition-colors border-l-2',
-          active
-            ? 'border-primary bg-primary/10 text-foreground font-medium'
-            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/30',
+      <div className="flex items-start group/toc">
+        {hasChildren ? (
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); setExpanded((v) => !v); }}
+            className="shrink-0 mt-0.5 rounded p-0.5 text-muted-foreground/60 hover:text-foreground hover:bg-accent/40"
+            aria-label={expanded ? 'Contraer' : 'Expandir'}
+            aria-expanded={expanded}
+          >
+            <ChevronDown className={cn('h-2.5 w-2.5 transition-transform', !expanded && '-rotate-90')} />
+          </button>
+        ) : (
+          <span className="w-3.5 shrink-0" />
         )}
-        style={{ paddingLeft: `${0.4 + depth * 0.6}rem`, paddingRight: '0.25rem' }}
-      >
-        {entry.title}
-      </a>
-      {entry.items && entry.items.length > 0 && depth < 2 && (
-        <ul className="space-y-0">
-          {entry.items.map((sub) => (
-            <TocSidebarItem key={sub.url} entry={sub} depth={depth + 1} />
+        <a
+          href={entry.url}
+          className={cn(
+            'flex-1 block rounded py-0.5 text-[10px] leading-tight transition-colors border-l-2',
+            active
+              ? 'border-primary bg-primary/10 text-foreground font-medium'
+              : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/30',
+          )}
+          style={{ paddingLeft: '0.4rem', paddingRight: '0.25rem' }}
+        >
+          {entry.title}
+        </a>
+      </div>
+      {hasChildren && expanded && (
+        <ul className="space-y-0 ml-3.5">
+          {entry.items!.map((sub) => (
+            <TocSidebarItemWithSpy
+              key={sub.url}
+              entry={sub}
+              depth={depth + 1}
+              onActiveChange={(active) => active && setChildActive(true)}
+              autoExpandActive={childActive}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
+
+/** Variante que reporta active al padre (para auto-expand). */
+function TocSidebarItemWithSpy({
+  entry,
+  depth,
+  onActiveChange,
+  autoExpandActive,
+}: Readonly<{
+  entry: TocEntry;
+  depth: number;
+  onActiveChange?: (active: boolean) => void;
+  autoExpandActive: boolean;
+}>) {
+  const id = entry.url.replace(/^#/, '');
+  const [active, setActive] = useState(false);
+  const hasChildren = entry.items && entry.items.length > 0;
+  const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    if (depth > 2) return;
+    const el = id ? document.getElementById(id) : null;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          setActive(e.isIntersecting);
+          onActiveChange?.(e.isIntersecting);
+        }
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.5, 1] },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [id, depth, onActiveChange]);
+
+  useEffect(() => {
+    if (autoExpandActive) setExpanded(true);
+  }, [autoExpandActive]);
+
+  return (
+    <li>
+      <div className="flex items-start">
+        {hasChildren ? (
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); setExpanded((v) => !v); }}
+            className="shrink-0 mt-0.5 rounded p-0.5 text-muted-foreground/60 hover:text-foreground hover:bg-accent/40"
+            aria-label={expanded ? 'Contraer' : 'Expandir'}
+            aria-expanded={expanded}
+          >
+            <ChevronDown className={cn('h-2.5 w-2.5 transition-transform', !expanded && '-rotate-90')} />
+          </button>
+        ) : (
+          <span className="w-3.5 shrink-0" />
+        )}
+        <a
+          href={entry.url}
+          className={cn(
+            'flex-1 block rounded py-0.5 text-[10px] leading-tight transition-colors border-l-2',
+            active
+              ? 'border-primary bg-primary/10 text-foreground font-medium'
+              : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/30',
+          )}
+          style={{ paddingLeft: '0.4rem', paddingRight: '0.25rem' }}
+        >
+          {entry.title}
+        </a>
+      </div>
+      {hasChildren && expanded && depth < 2 && (
+        <ul className="space-y-0 ml-3.5">
+          {entry.items!.map((sub) => (
+            <TocSidebarItemWithSpy key={sub.url} entry={sub} depth={depth + 1} autoExpandActive={false} />
           ))}
         </ul>
       )}

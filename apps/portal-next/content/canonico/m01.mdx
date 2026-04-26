@@ -130,7 +130,47 @@ Análisis documental crítico de fuentes primarias normativas, aplicando el mét
 
 ### §4.1 La cadena normativa: diagrama maestro
 
-![[fig-MI12-01--cadena-normativa]]
+
+```mermaid
+graph LR
+    MCU2020["🌐 MCU 2020<br/>Magna Charta Universitatum<br/>'Autonomía positiva:<br/>responsabilidad de contribuir'"]
+    SCHOT["📐 Frame 3<br/>Schot & Steinmueller 2018<br/>'Direccionalidad transformativa'"]
+    ODS["🌍 ODS 2030 / OCDE<br/>Referentes globales"]
+
+    CONST["🏛️ Constitución 1991<br/>Art. 69<br/>'Autonomía funcional<br/>e instrumental<br/>NO absoluta'"]
+    LEY30["📜 Ley 30/1992<br/>Art. 6<br/>'Deber de resolver<br/>necesidades nacionales'"]
+    CONPES4069["🎯 CONPES 4069/2021<br/>Política Nacional CTI<br/>'ADOPTA FRAME 3<br/>5 Misiones PIIOM'"]
+    CONPES3934["🌱 CONPES 3934/2018<br/>Política Crecimiento Verde<br/>'Bioeconomía · Circularidad<br/>Negocios verdes'"]
+    PIIOM["📊 PIIOM 2022-2026<br/>5 Misiones Transformativas<br/>MinCiencias"]
+    ACU["✅ Acuerdo CSU 04/2025<br/>Estatuto General UDFJC<br/>Art. 98-100-107-109"]
+
+    MCU2020 -.->|"referente<br/>internacional"| CONST
+    SCHOT -.->|"marco conceptual"| CONPES4069
+    ODS -.->|"referente global"| CONPES4069
+    CONST -->|"limita y dirige"| LEY30
+    LEY30 -->|"obliga alineación"| CONPES4069
+    LEY30 -->|"obliga sostenibilidad"| CONPES3934
+    CONPES4069 ==>|"OBLIGA"| PIIOM
+    CONPES3934 ==>|"OBLIGA"| PIIOM
+    PIIOM ==>|"OPERACIONALIZA"| ACU
+
+    style MCU2020 fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+    style SCHOT fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+    style CONST fill:#FFEBEE,stroke:#C62828,stroke-width:3px
+    style LEY30 fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+    style CONPES4069 fill:#FFCDD2,stroke:#C62828,stroke-width:4px
+    style CONPES3934 fill:#C8E6C9,stroke:#1B5E20,stroke-width:2px
+    style PIIOM fill:#FFCDD2,stroke:#C62828,stroke-width:4px
+    style ACU fill:#E8F5E9,stroke:#2E7D32,stroke-width:3px
+```
+
+*Fig-MI12-01 — Diagrama maestro de la cadena normativa multinivel: de MCU 2020 y [[glo-frame-3|Frame 3]] al [[glo-acu-004-25|Acuerdo CSU 04/2025]] vía Constitución 1991, Ley 30/1992, [[glo-conpes-4069|CONPES 4069/2021]], [[glo-conpes-3934|CONPES 3934/2018]] y [[glo-piiom|PIIOM 2022-2026]].*
+
+> [!info] Lectura de la cadena
+> Los dos CONPES (4069/2021 y 3934/2018) son el **nodo crítico**: son la bisagra entre el ordenamiento constitucional y el programa operativo PIIOM. El ACU-004-25 no es el origen de la reforma — es el punto de llegada de una obligación que nació en la Constitución y fue concretada por la política nacional CTI.
+
+*Figura 01 · cadena normativa*
+
 
 ### §4.2 Constitución Política de Colombia, Artículo 69 (1991)
 
@@ -257,7 +297,43 @@ El glosario consolidado del capítulo cap-MI12 establece definiciones unívocas 
 
 La diferencia entre la UDFJC anterior (Acuerdo CSU 03 de 1997) y la proyectada (ACU-004-25) no es cosmética — es una **re-ontologización** de la estructura organizativa:
 
-![[fig-MI12-02--re-ontologizacion]]
+
+```mermaid
+flowchart LR
+    subgraph ASIS["🔴 AS-IS UDFJC (Acuerdo CSU 03/1997)"]
+        M1["Misión:<br/>Democratizar acceso<br/>al conocimiento"]
+        D1["Departamentos<br/>administrativos<br/>(silo por facultad)"]
+        F1["Formación desarticulada<br/>de investigación"]
+    end
+
+    subgraph TOBE["🟢 TO-BE UDFJC (ACU-004-25 · 2025)"]
+        M2["Misión:<br/>Conocimiento para<br/>la vida digna<br/>+ PIIOM + Crecimiento Verde"]
+        E1["Escuelas por campo<br/>del conocimiento<br/>(integradoras)"]
+        I1["Institutos:<br/>Investigación-creación<br/>(modo 2/3)"]
+        C1["Centros:<br/>Retorno al territorio<br/>(extensión transformativa)"]
+
+        E1 -->|"Currículo vivo R2"| I1
+        I1 -->|"Problemas reales R4"| C1
+        C1 -.->|"Retroalimentación R3"| I1
+        I1 -.->|"Actualización R2"| E1
+    end
+
+    M1 --> M2
+    D1 -.->|"Re-ontologización"| E1
+    F1 -.->|"Articulación R1-R6"| I1
+
+    style ASIS fill:#FFCDD2,stroke:#C62828,stroke-width:2px
+    style TOBE fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px
+    style M2 fill:#4CAF50,color:#fff
+```
+
+*Fig-MI12-02 — Re-ontologización organizativa de la UDFJC: del modelo departamentos-silo (Acuerdo CSU 03/1997) al modelo Escuelas-Institutos-Centros con retroalimentaciones R1-R6 entre procesos misionales (ACU-004-25, 2025).*
+
+> [!important] El mandato de la re-ontologización
+> El ACU-004-25 no simplemente cambia nombres (Facultades → Escuelas): cambia la **lógica de coordinación**. El paso de "departamento administrativo" (silo por facultad) a "Escuela por campo del conocimiento" ([[glo-caba|CABA]] transversal) es la operacionalización del [[glo-frame-3|Frame 3]] a nivel organizativo: la universidad deja de ser una suma de departamentos que producen conocimiento y se convierte en un ecosistema que lo co-crea con el territorio.
+
+*Figura 02 · re ontologizacion*
+
 
 ---
 

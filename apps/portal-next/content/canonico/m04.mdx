@@ -73,39 +73,470 @@ Wenger-Trayner [-@wenger1998cop; @wengertrayner2015landscape] extienden el model
 
 (M04 contiene 17 diagramas Mermaid de JTBD canvas, ODI matrices, arquetipos V1-V5, etc.)
 
-![[fig-MI12-23--m04-fig-01]]
 
-![[fig-MI12-24--m04-fig-02]]
+```mermaid
+flowchart LR
+    S1["1️⃣ Definir"] --> S2["2️⃣ Localizar"]
+    S2 --> S3["3️⃣ Preparar"]
+    S3 --> S4["4️⃣ Confirmar"]
+    S4 --> S5["5️⃣ Ejecutar"]
+    S5 --> S6["6️⃣ Monitorear"]
+    S6 --> S7["7️⃣ Modificar"]
+    S7 --> S8["8️⃣ Concluir"]
+    style S1 fill:#FFECB3
+    style S5 fill:#C8E6C9
+    style S8 fill:#E3F2FD
+```
 
-![[fig-MI12-25--m04-fig-03]]
+*Fig-MI12-23 — 1️⃣ Definir (M04 fig #1)*
 
-![[fig-MI12-26--m04-fig-04]]
+*Figura 23 · m04 fig 01*
 
-![[fig-MI12-27--m04-fig-05]]
 
-![[fig-MI12-28--m04-fig-06]]
 
-![[fig-MI12-29--m04-fig-07]]
+```mermaid
+flowchart LR
+    F0["F0 · Context Setup<br/>(Executor + Switch Interview)"] --> F1
+    F1["F1 · Job Definition<br/>(Job Statement + Four Forces)"] --> F2
+    F2["F2 · Outcomes + Job Map<br/>(8 steps · outcomes)"] --> F3
+    F3["F3 · Opportunity Scoring<br/>(Importancia × Satisfacción)"] --> F4
+    F4["F4 · Segmentation<br/>(clusters por unmet needs)"] --> F5
+    F5["F5 · Value Fit + Bridge<br/>(Feature → Outcome)"] -.->|ciclo| F0
+    style F1 fill:#FFECB3
+    style F3 fill:#C8E6C9
+    style F5 fill:#E3F2FD
+```
 
-![[fig-MI12-30--m04-fig-08]]
+*Fig-MI12-24 — F0 · Context Setup (M04 fig #2)*
 
-![[fig-MI12-31--m04-fig-09]]
+*Figura 24 · m04 fig 02*
 
-![[fig-MI12-32--m04-fig-10]]
 
-![[fig-MI12-33--m04-fig-11]]
 
-![[fig-MI12-34--m04-fig-12]]
+```mermaid
+flowchart TB
+    JE["🎯 Job Executor<br/>Miembro de la Comunidad UDFJC"]
+    EST["🎓 Estudiante Soberano<br/>Art. 12-13"]
+    DOC["Docentes Art. 9-11"]
+    ADM["Personal Administrativo<br/>Art. 14-15"]
+    EGR["Egresados<br/>Art. 16-17"]
+    OD["Órganos de Dirección<br/>Art. 8"]
 
-![[fig-MI12-35--m04-fig-13]]
+    JE --> EST
+    JE --> DOC
+    JE --> ADM
+    JE --> EGR
+    JE --> OD
 
-![[fig-MI12-36--m04-fig-14]]
+    DOC --> DIS["📐 Diseñador"]
+    DOC --> FAC["🎤 Facilitador"]
+    DOC --> PAS["🔬 Pasteur"]
+    DOC --> COP["🌍 Coop"]
+    DOC --> DIR["🏛️ Director"]
 
-![[fig-MI12-37--m04-fig-15]]
+    style JE fill:#FFF3E0,stroke:#FF9800,stroke-width:3px
+    style EST fill:#FFECB3
+    style DIR fill:#FFECB3
+    style DIS fill:#FFECB3
+    style FAC fill:#FFECB3
+    style PAS fill:#FFECB3
+    style COP fill:#FFECB3
+```
 
-![[fig-MI12-38--m04-fig-16]]
+*Fig-MI12-25 — 🎯 Job Executor (M04 fig #3)*
 
-![[fig-MI12-39--m04-fig-17]]
+*Figura 25 · m04 fig 03*
+
+
+
+```mermaid
+flowchart LR
+    subgraph ODI["8 pasos ODI"]
+        S1[1 DEFINIR] --> S2[2 LOCALIZAR] --> S3[3 PREPARAR] --> S4[4 CONFIRMAR]
+        S4 --> S5[5 EJECUTAR] --> S6[6 MONITOREAR] --> S7[7 MODIFICAR] --> S8[8 CONCLUIR]
+    end
+    subgraph FASES["Fases reforma"]
+        F1[Orientación] ~~~ F2[Acceso] ~~~ F3[Formación] ~~~ F4[Validación]
+        F4 ~~~ F5[Participación] ~~~ F6[Seguimiento] ~~~ F6b[Ajuste] ~~~ F7[Consolidación]
+    end
+    S1 -.-> F1
+    S2 -.-> F2
+    S3 -.-> F3
+    S4 -.-> F4
+    S5 -.-> F5
+    S6 -.-> F6
+    S7 -.-> F6b
+    S8 -.-> F7
+    style S5 fill:#C8E6C9
+    style F5 fill:#C8E6C9
+```
+
+*Fig-MI12-26 — 8 pasos [[glo-odi-ulwick|ODI]] (M04 fig #4)*
+
+*Figura 26 · m04 fig 04*
+
+
+
+```mermaid
+flowchart LR
+    DIR["🏛️ Director"] --habilita--> DIS["📐 Diseñador"]
+    DIR --habilita--> PAS["🔬 Pasteur"]
+    DIR --habilita--> COP["🌍 Coop"]
+    DIS --habilita--> FAC["🎤 Facilitador"]
+    FAC --habilita--> EST["🎓 Estudiante"]
+    PAS --colabora-con--> COP
+    PAS --habilita--> EST
+    COP --habilita--> EST
+    EST --R1..R6--> DIR
+    style DIR fill:#FFD54F
+    style EST fill:#81C784
+```
+
+*Fig-MI12-27 — 🏛️ Director (M04 fig #5)*
+
+*Figura 27 · m04 fig 05*
+
+
+
+```mermaid
+flowchart TB
+    subgraph GOB["Gobernanza Escuela"]
+        DIR["🏛️ Docente Director<br/>(Visionario Estratégico)"]
+    end
+    
+    subgraph DOC["Roles Docentes Operativos"]
+        DIS["📐 Docente Diseñador<br/>(Arquitecto CCA)"]
+        FOR["🎤 Docente Formador<br/>(Active Learning Master)"]
+        INV["🔬 Docente Investigador<br/>(Pasteur Pleno)"]
+        EMP["🌍 Docente Emprendedor<br/>(Agente Territorial)"]
+    end
+    
+    subgraph EST["Receptor Primario del Valor Educativo"]
+        ES["🎓 Estudiante Soberano"]
+    end
+    
+    DIR -->|orquesta SGE| DIS
+    DIR -->|orquesta SGE| FOR
+    DIR -->|orquesta SGE| INV
+    DIR -->|orquesta SGE| EMP
+    
+    DIS -->|entrega Paquete CCA| FOR
+    DIS -->|entrega Paquete CCA| INV
+    DIS -->|entrega Paquete CCA| EMP
+    
+    FOR -->|facilita V1| ES
+    INV -->|co-authoring V2| ES
+    EMP -->|co-op territorial V3| ES
+    
+    ES -->|retroalimenta xAPI| DIR
+    ES -.->|genera evidencia para acreditación| DIR
+    
+    INV <-->|articula PIIOM| EMP
+    FOR <-->|coordina V1/V2| INV
+    
+    classDef gob fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef doc fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef est fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    
+    class DIR gob
+    class DIS,FOR,INV,EMP doc
+    class ES est
+```
+
+*Fig-MI12-28 — Gobernanza Escuela (M04 fig #6)*
+
+*Figura 28 · m04 fig 06*
+
+
+
+```mermaid
+erDiagram
+    ESTUDIANTE_SOBERANO ||--|{ PAQUETE_CCA : "participa_en"
+    ESTUDIANTE_SOBERANO ||--|{ ESCUELA_TEMATICA : "adscrito_a"
+    ESTUDIANTE_SOBERANO ||--|{ COP_TRANSVERSAL : "participa_en"
+    ESTUDIANTE_SOBERANO ||--|{ LIVING_LAB : "desarrolla_V3_en"
+    ESTUDIANTE_SOBERANO ||--o{ OPEN_BADGE : "obtiene"
+    
+    PAQUETE_CCA ||--|{ DIMENSION_V1 : "contiene_formativa"
+    PAQUETE_CCA ||--|{ DIMENSION_V2 : "contiene_investigativa"
+    PAQUETE_CCA ||--|{ DIMENSION_V3 : "contiene_extension"
+    PAQUETE_CCA ||--|{ DOCENTE_DISENADOR : "diseñado_por"
+    
+    DIMENSION_V1 ||--|{ DOCENTE_FORMADOR : "facilitada_por"
+    DIMENSION_V2 ||--|{ DOCENTE_INVESTIGADOR : "guiada_por"
+    DIMENSION_V3 ||--|{ DOCENTE_EMPRENDEDOR : "habilitada_por"
+    
+    ESCUELA_TEMATICA ||--|{ DOCENTE_DIRECTOR : "orquestada_por"
+    
+    ESTUDIANTE_SOBERANO {
+        string identificador PK
+        string escuela_adscripcion
+        string arquetipo "as-is_intermedia_to-be"
+        float autonomia_score "0-1"
+    }
+    
+    PAQUETE_CCA {
+        string id PK
+        string core_semantico
+        string wrapper_dominio
+        boolean rubricas_v1_v2_v3
+        boolean trazable_xapi
+    }
+    
+    OPEN_BADGE {
+        string id PK
+        string issuer "UDFJC"
+        string competencia_certificada
+        boolean portable_3_0
+    }
+```
+
+*Fig-MI12-29 — Diagrama M04 #7 (caption original no recuperado en extracción)*
+
+*Figura 29 · m04 fig 07*
+
+
+
+```mermaid
+erDiagram
+    ESTUDIANTE ||--|{ CORE_JOB_REFORMA : ejecuta
+    CORE_JOB_REFORMA ||--|{ EMOTIONAL_JOBS : tiene
+    CORE_JOB_REFORMA ||--|{ RELATED_JOBS : habilitado_por
+    ESTUDIANTE ||--|| PORTAL_MODULO : consume
+    ESTUDIANTE {
+        string rol "Aprendiz Soberano"
+        string arquetipo_to_be "Soberano con agenda propia"
+    }
+    CORE_JOB_REFORMA {
+        string statement "Comprender y ejercer influencia deliberativa"
+        float opp_score_inferido "16.5/20 (under-served)"
+    }
+    EMOTIONAL_JOBS {
+        string positivo_clave "Pertenencia (5/5)"
+        string negativo_clave "Incertidumbre (5/5)"
+    }
+    PORTAL_MODULO {
+        string primario "Foros + Wiki + Dashboard"
+    }
+```
+
+*Fig-MI12-30 — Diagrama M04 #8 (caption original no recuperado en extracción)*
+
+*Figura 30 · m04 fig 08*
+
+
+
+```mermaid
+erDiagram
+    DISENADOR ||--|{ CURRICULO : produce
+    CURRICULO ||--|| ACU_04_2025 : conforme_con
+    DISENADOR ||--|{ CORE_JOB_REFORMA_DIS : ejecuta
+    CORE_JOB_REFORMA_DIS ||--|{ PROPUESTA_ENMIENDA : genera
+    DISENADOR {
+        string rol "Arquitecto CCA"
+        string arquetipo_to_be "Diseñador con trazabilidad norma-outcome"
+    }
+    CORE_JOB_REFORMA_DIS {
+        string statement "Incorporar mandatos en diseño backward"
+        float opp_score_inferido "14.0/20 (under-served)"
+    }
+```
+
+*Fig-MI12-31 — Diagrama M04 #9 (caption original no recuperado en extracción)*
+
+*Figura 31 · m04 fig 09*
+
+
+
+```mermaid
+erDiagram
+    FACILITADOR ||--|{ CLASE : ejecuta
+    CLASE ||--|| SYLLABUS : implementa
+    SYLLABUS ||--|| ACU_04_2025 : alineado_con
+    FACILITADOR ||--|{ RETROALIMENTACION : reporta
+    FACILITADOR {
+        string rol "Active Learning Master"
+        string arquetipo_to_be "FCI/CSEM g>=0.3 + SCALE-UP"
+    }
+    CLASE {
+        string actividad "V1 Comprensiva (active learning)"
+    }
+```
+
+*Fig-MI12-32 — Diagrama M04 #10 (caption original no recuperado en extracción)*
+
+*Figura 32 · m04 fig 10*
+
+
+
+```mermaid
+erDiagram
+    PASTEUR ||--|{ GRUPO_CVLAC : lidera
+    GRUPO_CVLAC ||--|| INSTITUTO_PROPUESTO : migra_a
+    PASTEUR ||--|{ CORE_JOB_REFORMA_PAS : ejecuta
+    CORE_JOB_REFORMA_PAS ||--|{ PROPUESTA_REAGRUPAMIENTO : genera
+    PASTEUR {
+        string rol "Pasteur Pleno"
+        string arquetipo_to_be "co-authoring UG + dataset abierto"
+    }
+```
+
+*Fig-MI12-33 — Diagrama M04 #11 (caption original no recuperado en extracción)*
+
+*Figura 33 · m04 fig 11*
+
+
+
+```mermaid
+erDiagram
+    COOP ||--|{ CONVENIO : gestiona
+    CONVENIO ||--|| SOCIO_EXTERNO : con
+    COOP ||--|{ LIVING_LAB : activa
+    COOP ||--|{ SPIN_OFF : habilita
+    COOP {
+        string rol "Agente Territorial"
+        string arquetipo_to_be "TTO + spin-offs + living labs"
+    }
+```
+
+*Fig-MI12-34 — Diagrama M04 #12 (caption original no recuperado en extracción)*
+
+*Figura 34 · m04 fig 12*
+
+
+
+```mermaid
+erDiagram
+    DIRECTOR ||--|{ ESCUELA : gobierna
+    ESCUELA ||--|{ ROL : contiene
+    DIRECTOR ||--|| CSU : reporta_a
+    DIRECTOR ||--|{ RIESGO_REFORMA : gestiona
+    DIRECTOR {
+        string rol "Visionario Estratégico"
+        string arquetipo_to_be "Dashboard + risk-based + predictivo"
+    }
+    RIESGO_REFORMA {
+        string dimension "Normativo / Operativo / Cultural / Financiero"
+    }
+```
+
+*Fig-MI12-35 — Diagrama M04 #13 (caption original no recuperado en extracción)*
+
+*Figura 35 · m04 fig 13*
+
+
+
+```mermaid
+flowchart TB
+    subgraph ACTORES["6 Arquetipos TO-BE"]
+        EST["🎓 Soberano Reformador<br/>(V1+V3 líder)"]
+        DIR["🏛️ Visionario Estratégico<br/>(V4 líder)"]
+        DIS["📐 Arquitecto CCA<br/>(V5 líder)"]
+        FAC["🎤 Active Learning Master<br/>(V4 líder aula)"]
+        PAS["🔬 Pasteur Pleno<br/>(V1+V2+V4 líder)"]
+        COP["🌍 Agente Territorial<br/>(V2 líder)"]
+    end
+    DIR -->|orquesta| DIS
+    DIS -->|diseña| FAC
+    DIS -->|habilita| PAS
+    DIS -->|habilita| COP
+    FAC -->|facilita| EST
+    PAS -->|guía| EST
+    COP -->|territorializa| EST
+    EST -.R1-R6.-> DIR
+    style EST fill:#F9A825,color:#000
+```
+
+*Fig-MI12-36 — 6 Arquetipos TO-BE (M04 fig #14)*
+
+*Figura 36 · m04 fig 14*
+
+
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> ASIS
+    state "AS-IS (actual)" as ASIS {
+        A1: Información dispersa en PDFs
+        A2: Deliberación limitada a representantes
+        A3: Sin trazabilidad propuesta → decisión
+        A4: Roles en silos
+    }
+    state "Transición" as TRANS {
+        T1: Portal MVP lanzado
+        T2: Onboarding por estamento
+        T3: Migración de contenido normativo a Wiki
+        T4: Activación foros por Escuela
+    }
+    state "TO-BE (post-portal)" as TOBE {
+        B1: Información diferenciada por rol
+        B2: Deliberación abierta a todos
+        B3: Trazabilidad bidireccional completa
+        B4: CoP viva con artefactos tangibles
+    }
+    ASIS --> TRANS: decisión CSU + recursos
+    TRANS --> TOBE: adopción ≥ 30%
+    TOBE --> [*]: madurez G4
+```
+
+*Fig-MI12-37 — Diagrama M04 #15 (caption original no recuperado en extracción)*
+
+*Figura 37 · m04 fig 15*
+
+
+
+```mermaid
+sequenceDiagram
+    actor USR as Usuario nuevo
+    participant ONBD as Onboarding personalizado
+    participant DASH as Dashboard de rol
+    participant COMM as Comunidad (foros)
+
+    USR->>ONBD: Selecciona su rol
+    ONBD->>USR: Muestra 1er mensaje clave de mitigación emocional del rol
+    Note right of ONBD: Estudiante: "Tu voz cuenta igual"<br/>Director: "Tu riesgo es visible"<br/>Pasteur: "Tu línea sigue"
+    ONBD->>DASH: Redirige a vista personalizada
+    DASH->>USR: Muestra 3 prioridades del rol
+    USR->>COMM: Sugiere 1er post relevante para comentar
+    COMM-->>USR: Feedback de primera contribución (badge)
+```
+
+*Fig-MI12-38 — Diagrama M04 #16 (caption original no recuperado en extracción)*
+
+*Figura 38 · m04 fig 16*
+
+
+
+```mermaid
+sequenceDiagram
+    actor Ana
+    participant Onbd as Onboarding
+    participant Wiki
+    participant Forum as Foros
+    participant Prop as Propuestas
+    participant Dash as Dashboard
+
+    Ana->>Onbd: Ingresa por primera vez (Paso 1 Definir)
+    Onbd->>Ana: Vista estudiante, 3 prioridades, badge "Inscrito"
+    Ana->>Wiki: Busca "créditos 5° semestre Física" (Paso 2 Localizar)
+    Wiki-->>Ana: Art. 47 + resumen + impacto por cohorte
+    Ana->>Forum: Lee debate de pares en "Reforma Física" (Paso 3 Preparar)
+    Forum-->>Ana: 17 mensajes, 3 posturas identificadas
+    Ana->>Wiki: Verifica 2 datos citados (Paso 4 Confirmar)
+    Ana->>Prop: Presenta propuesta de ajuste al Art. 47 (Paso 5 Ejecutar)
+    Prop-->>Ana: Confirmación + ID de trazabilidad
+    Ana->>Dash: Monitorea debate sobre su propuesta (Paso 6 Monitorear)
+    Dash-->>Ana: Propuesta tiene 12 apoyos + 3 objeciones
+    Ana->>Prop: Responde objeciones con fuente normativa (Paso 7 Modificar)
+    Ana->>Dash: Ve decisión del Consejo de Escuela (Paso 8 Concluir)
+    Dash-->>Ana: Propuesta adoptada parcialmente · Badge "Ciudadano Reformador"
+```
+
+*Fig-MI12-39 — Diagrama M04 #17 (caption original no recuperado en extracción)*
+
+*Figura 39 · m04 fig 17*
+
 
 
 > [!bug] DT-MI12-04-01 · Captions de figuras M04 perdidos en extracción automática

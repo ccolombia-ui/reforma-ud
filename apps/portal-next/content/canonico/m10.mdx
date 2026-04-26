@@ -61,7 +61,23 @@ UDFJC adopta **RUTA LITE** porque la urgencia CSU 2026-2Q lo requiere y BPMN ins
 
 ## §4 · Figuras (1 mermaid)
 
-![[fig-MI12-112--m10-fig-01]]
+
+```mermaid
+flowchart LR
+    M09["M09<br/>Presupuesto NICSP"] -- "CCR 24 cat<br/>+ masa salarial" --> M10
+    M10 -- "12 TE × 3 procesos<br/>+ costo piloto 5 prog" --> M12["M12<br/>Escenarios S0-S5"]
+    M11["M11<br/>Datasets MEN"] -- "n_inscritos SNIES<br/>n_grupos SPADIES<br/>emplea OLE" --> M10
+
+    style M09 fill:#1565C0,color:#fff
+    style M10 fill:#FF9800,color:#fff
+    style M11 fill:#2E7D32,color:#fff
+    style M12 fill:#7B1FA2,color:#fff
+```
+
+*Fig-MI12-112 — M09 (M10 fig #1)*
+
+*Figura 112 · m10 fig 01*
+
 
 > [!bug] DT-MI12-10-02 · Captions y migrar figuras locales de M10 (5 figuras locales que ya estaban atomizadas en M10/02-figuras/)
 > Las 5 figuras de M10 atomizadas localmente (fig-M10-01..05) deben revisarse: 1 ya migrada al capítulo (fig-MI12-112), las 4 restantes deben migrarse o consolidarse.
