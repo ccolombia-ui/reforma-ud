@@ -66,7 +66,7 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
         <span className="font-mono">M{String(paper.number).padStart(2, '0')}</span>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
+      <div className="min-w-0">
         <main className="min-w-0">
           {/* Hero */}
           <header className="mb-8">
@@ -152,48 +152,11 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
             reforma·ud · CSU 04/2025 · M{String(paper.number).padStart(2, '0')} · CC BY-SA 4.0
           </div>
         </main>
-
-        {/* TOC sidebar */}
-        {paper.toc && paper.toc.length > 0 && (
-          <aside className="hidden lg:block no-print">
-            <div className="sticky top-20">
-              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                En esta página
-              </h3>
-              <nav className="text-sm">
-                <ul className="space-y-1">
-                  {paper.toc.map((entry) => (
-                    <TocItem key={entry.url} entry={entry} />
-                  ))}
-                </ul>
-              </nav>
-            </div>
-          </aside>
-        )}
       </div>
     </article>
     </SplitWorkArea>
   );
 }
 
-type TocEntry = { title: string; url: string; items?: TocEntry[] };
-
-function TocItem({ entry, depth = 0 }: { entry: TocEntry; depth?: number }) {
-  return (
-    <li style={{ paddingLeft: depth * 12 }}>
-      <a
-        href={entry.url}
-        className="block py-0.5 text-muted-foreground hover:text-foreground"
-      >
-        {entry.title}
-      </a>
-      {entry.items && entry.items.length > 0 && (
-        <ul className="space-y-1">
-          {entry.items.map((sub) => (
-            <TocItem key={sub.url} entry={sub} depth={depth + 1} />
-          ))}
-        </ul>
-      )}
-    </li>
-  );
-}
+// El TOC ahora vive en el sidebar izquierdo (PaperItem.toc inline) y en el right-panel
+// (Outline tab). Ya no se renderiza en la página del paper para liberar espacio central.

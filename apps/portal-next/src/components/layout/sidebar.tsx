@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles, Atom, X } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { canonicPaper } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
+import { getActiveDocFromPath } from '@/lib/active-doc';
 import { cn } from '@/lib/utils';
 import { SidebarMissionsWidget } from '@/components/layout/sidebar-missions-widget';
 import { useGraphContext } from '@/lib/graph-context';
@@ -75,15 +76,32 @@ function SectionToggle({
   );
 }
 
-/** Sub-sección colapsable de los 12 papers del canónico */
-function PapersSubsection({
+/* ============================================================
+ * ReformaCuanticaSection — folder con 12 papers + TOC inline del activo
+ * Estructura jerárquica navegable Obsidian-style:
+ *   Reforma Cuántica
+ *     ├── M01 ← (si activo, expande con TOC)
+ *     │     ├── §0 Abstract
+ *     │     ├── §1 Introducción
+ *     │     └── ...
+ *     ├── M02
+ *     └── ...
+ * ============================================================ */
+
+type Paper = { id: string; number: number; title: string; href: string };
+
+type TocEntry = { title: string; url: string; items?: TocEntry[] };
+
+function ReformaCuanticaSection({
   papers,
   pathname,
-}: {
-  papers: Array<{ id: string; number: number; title: string; href: string }>;
+  filter,
+}: Readonly<{
+  papers: Paper[];
   pathname: string;
-}) {
-  const storageKey = 'reforma-ud:sidebar-papers-list';
+  filter: string;
+}>) {
+  const storageKey = 'reforma-ud:sidebar-reforma-cuantica';
   const isOnPaper = pathname.startsWith('/canonico/m');
   const [open, setOpen] = useState<boolean>(isOnPaper);
 
@@ -98,12 +116,23 @@ function PapersSubsection({
   function handleToggle() {
     setOpen((v) => {
       const next = !v;
-      try {
-        localStorage.setItem(storageKey, String(next));
-      } catch {}
+      try { localStorage.setItem(storageKey, String(next)); } catch {}
       return next;
     });
   }
+
+  // Filtrar papers por el query del search box
+  const q = filter.trim().toLowerCase();
+  const filtered = useMemo(() => {
+    if (!q) return papers;
+    return papers.filter((p) =>
+      p.id.toLowerCase().includes(q) ||
+      p.title.toLowerCase().includes(q),
+    );
+  }, [papers, q]);
+
+  // Cuando hay filtro, abrimos automáticamente
+  const effectiveOpen = open || q.length > 0;
 
   return (
     <li>
@@ -111,30 +140,99 @@ function PapersSubsection({
         type="button"
         onClick={handleToggle}
         className="group flex w-full items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent"
-        aria-expanded={open}
+        aria-expanded={effectiveOpen}
       >
-        <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !open && '-rotate-90')} />
-        <BookMarked className="h-3.5 w-3.5" />
-        <span className="flex-1 text-left">12 papers M01-M12</span>
-        <span className="text-[9px] text-muted-foreground">{papers.length}</span>
+        <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !effectiveOpen && '-rotate-90')} />
+        <Atom className="h-3.5 w-3.5 text-primary/80" />
+        <span className="flex-1 text-left font-medium">Reforma Cuántica</span>
+        <span className="text-[9px] text-muted-foreground">{filtered.length}</span>
       </button>
-      {open && (
+      {effectiveOpen && (
         <ul className="ml-3 space-y-0.5 border-l border-sidebar-border pl-2 mt-0.5">
-          {papers.map((p) => (
-            <li key={p.id}>
-              <Link
-                href={p.href}
-                className={cn(
-                  'flex items-center gap-1.5 rounded px-2 py-1 text-[11px] hover:bg-sidebar-accent',
-                  pathname === p.href && 'bg-sidebar-accent font-semibold text-sidebar-primary',
-                )}
-              >
-                <span className="font-mono text-[9px] text-muted-foreground">
-                  M{String(p.number).padStart(2, '0')}
-                </span>
-                <span className="truncate">{p.title.replace(/^M\d+\s*[—-]\s*/i, '').slice(0, 32)}</span>
-              </Link>
-            </li>
+          {filtered.map((p) => (
+            <PaperItem key={p.id} paper={p} pathname={pathname} filter={q} />
+          ))}
+          {filtered.length === 0 && (
+            <li className="px-2 py-1 text-[10px] text-muted-foreground italic">Sin coincidencias</li>
+          )}
+        </ul>
+      )}
+    </li>
+  );
+}
+
+/** Una entrada de paper en el sidebar. Si el paper es el activo, expande con TOC inline. */
+function PaperItem({ paper, pathname, filter }: Readonly<{ paper: Paper; pathname: string; filter: string }>) {
+  const isActive = pathname === paper.href || pathname === `${paper.href}/`;
+  const activeDoc = isActive ? getActiveDocFromPath(pathname) : null;
+  const toc = activeDoc?.toc as TocEntry[] | undefined;
+
+  return (
+    <li>
+      <Link
+        href={paper.href}
+        className={cn(
+          'flex items-center gap-1.5 rounded px-2 py-1 text-[11px] hover:bg-sidebar-accent',
+          isActive && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+        )}
+      >
+        <span className="font-mono text-[9px] text-muted-foreground">
+          M{String(paper.number).padStart(2, '0')}
+        </span>
+        <span className="truncate">{paper.title.replace(/^M\d+\s*[—-]\s*/i, '').slice(0, 36)}</span>
+      </Link>
+      {/* TOC inline cuando el paper es el activo (no si hay filtro) */}
+      {isActive && toc && toc.length > 0 && filter.length === 0 && (
+        <ul className="ml-1 mt-0.5 space-y-0 border-l border-primary/30 pl-2">
+          {toc.map((entry) => (
+            <TocSidebarItem key={entry.url} entry={entry} depth={0} />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
+
+/** Recursive TOC item con scroll-spy. Highlight del heading actual. */
+function TocSidebarItem({ entry, depth }: Readonly<{ entry: TocEntry; depth: number }>) {
+  const id = entry.url.replace(/^#/, '');
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    if (depth > 1) return; // solo scroll-spy nivel top + 1 sub
+    const el = id ? document.getElementById(id) : null;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setActive(true);
+          else setActive(false);
+        }
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.5, 1] },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [id, depth]);
+
+  return (
+    <li>
+      <a
+        href={entry.url}
+        className={cn(
+          'block rounded py-0.5 text-[10px] leading-tight transition-colors border-l-2',
+          active
+            ? 'border-primary bg-primary/10 text-foreground font-medium'
+            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/30',
+        )}
+        style={{ paddingLeft: `${0.4 + depth * 0.6}rem`, paddingRight: '0.25rem' }}
+      >
+        {entry.title}
+      </a>
+      {entry.items && entry.items.length > 0 && depth < 2 && (
+        <ul className="space-y-0">
+          {entry.items.map((sub) => (
+            <TocSidebarItem key={sub.url} entry={sub} depth={depth + 1} />
           ))}
         </ul>
       )}
@@ -207,6 +305,7 @@ export function Sidebar() {
   const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
   const graph = useGraphContext();
   const isOnGraph = pathname === '/canonico/grafo' || pathname.startsWith('/canonico/grafo/');
+  const [filter, setFilter] = useState('');
 
   // collapsed: barra estrecha con icons clave + opciones
   if (collapsed) {
@@ -273,6 +372,30 @@ export function Sidebar() {
         </section>
       )}
 
+      {/* Search box inline (filtra navegación) */}
+      <div className="px-2 pt-2 pb-1">
+        <div className="relative">
+          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+          <input
+            type="text"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            placeholder="Filtrar..."
+            className="w-full rounded-md border bg-background pl-7 pr-7 py-1 text-[11px] focus:outline-none focus:ring-1 focus:ring-primary"
+          />
+          {filter && (
+            <button
+              type="button"
+              onClick={() => setFilter('')}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-muted-foreground hover:text-foreground"
+              aria-label="Limpiar filtro"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          )}
+        </div>
+      </div>
+
       {/* Navegación principal */}
       <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-1.5 py-2 text-sm">
         <SectionToggle id="canonico" emoji="📚" title="Canónico MI-12">
@@ -285,8 +408,13 @@ export function Sidebar() {
                   pathname === '/canonico' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
                 )}
               >
-                <Library className="h-3.5 w-3.5" /> Biblioteca
+                <Library className="h-3.5 w-3.5" />
+                <span className="flex-1">Biblioteca</span>
               </Link>
+              {/* Reforma Cuántica vive DENTRO de la biblioteca, anidado visualmente */}
+              <ul className="ml-3 mt-0.5 border-l border-sidebar-border pl-2">
+                <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
+              </ul>
             </li>
             <li>
               <Link
@@ -299,7 +427,6 @@ export function Sidebar() {
                 <Network className="h-3.5 w-3.5" /> Grafo global
               </Link>
             </li>
-            <PapersSubsection papers={papers} pathname={pathname} />
           </ul>
         </SectionToggle>
 
