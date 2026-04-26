@@ -4,37 +4,38 @@ import { useEffect, useState } from 'react';
 import { MessageSquarePlus, Trash2, Send } from 'lucide-react';
 import { useActiveProfile } from '@/lib/ui-state';
 import {
-  getAportes,
-  addAporte,
-  removeAporte,
+  getDeliberacion,
+  addContribucion,
+  removeContribucion,
   INTENT_META,
-  type Aporte,
-  type AporteIntent,
-} from '@/lib/aportes-state';
+  type Contribucion,
+  type ContribucionIntent,
+} from '@/lib/deliberacion-state';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 /**
- * AportesPanel — bottom-up: lector aporta al documento.
- * Renderiza al final del paper (después de Comprensión).
+ * DeliberacionPanel — espacio bidireccional de la comunidad sobre el documento.
+ * Renombrado en v4.5b D8 (antes "AportesPanel"). La unidad sigue siendo
+ * `Contribucion`; el espacio es la "Deliberación" (Habermas-style).
  *
- * Lista aportes existentes + form para añadir nuevo.
+ * Renderiza al final del paper (después de Comprensión).
  * MVP: persistencia localStorage. v5+ con backend.
  */
-export function AportesPanel({ paperId }: Readonly<{ paperId: string }>) {
+export function DeliberacionPanel({ paperId }: Readonly<{ paperId: string }>) {
   const { name, role, meta } = useActiveProfile();
-  const [aportes, setAportes] = useState<Aporte[]>([]);
+  const [items, setItems] = useState<Contribucion[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [content, setContent] = useState('');
-  const [intent, setIntent] = useState<AporteIntent>('idea');
+  const [intent, setIntent] = useState<ContribucionIntent>('idea');
 
   useEffect(() => {
-    setAportes(getAportes(paperId));
-    const onChange = () => setAportes(getAportes(paperId));
-    window.addEventListener('aportes-change', onChange);
+    setItems(getDeliberacion(paperId));
+    const onChange = () => setItems(getDeliberacion(paperId));
+    window.addEventListener('deliberacion-change', onChange);
     window.addEventListener('storage', onChange);
     return () => {
-      window.removeEventListener('aportes-change', onChange);
+      window.removeEventListener('deliberacion-change', onChange);
       window.removeEventListener('storage', onChange);
     };
   }, [paperId]);
@@ -42,7 +43,7 @@ export function AportesPanel({ paperId }: Readonly<{ paperId: string }>) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!content.trim()) return;
-    addAporte({
+    addContribucion({
       paperId,
       intent,
       content: content.trim(),
@@ -59,14 +60,14 @@ export function AportesPanel({ paperId }: Readonly<{ paperId: string }>) {
         <div>
           <h2 className="inline-flex items-center gap-2 text-lg font-bold tracking-tight">
             <MessageSquarePlus className="h-4 w-4 text-purple-500" />
-            Aportes de la comunidad
+            Deliberación de la comunidad
           </h2>
           <p className="text-xs text-muted-foreground mt-1">
-            Tu retorno enriquece el documento. Comparte ideas, dudas, alertas o señales de utilidad.
+            La comunidad razona pública y argumentadamente sobre este documento. Aporta ideas, dudas, alertas o señales de utilidad.
           </p>
         </div>
         <span className="shrink-0 rounded-md border bg-purple-500/5 px-2 py-1 text-[11px] font-mono text-purple-600 dark:text-purple-400">
-          {aportes.length} {aportes.length === 1 ? 'aporte' : 'aportes'}
+          {items.length} {items.length === 1 ? 'contribución' : 'contribuciones'}
         </span>
       </div>
 
@@ -79,12 +80,12 @@ export function AportesPanel({ paperId }: Readonly<{ paperId: string }>) {
           className="w-full gap-2 border-dashed text-purple-600 dark:text-purple-400 hover:bg-purple-500/5"
         >
           <MessageSquarePlus className="h-3.5 w-3.5" />
-          Añadir un aporte
+          Añadir una contribución
         </Button>
       ) : (
         <form onSubmit={handleSubmit} className="rounded-lg border-l-4 border-purple-500 bg-purple-500/5 p-3 space-y-2">
           <div className="flex items-center gap-1 flex-wrap">
-            {(Object.keys(INTENT_META) as AporteIntent[]).map((i) => (
+            {(Object.keys(INTENT_META) as ContribucionIntent[]).map((i) => (
               <button
                 key={i}
                 type="button"
@@ -104,7 +105,7 @@ export function AportesPanel({ paperId }: Readonly<{ paperId: string }>) {
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Tu aporte sobre este documento... (markdown soportado)"
+            placeholder="Tu razonamiento sobre este documento... (markdown soportado)"
             rows={3}
             autoFocus
             className="w-full rounded-md border bg-background px-2 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary"
@@ -126,10 +127,10 @@ export function AportesPanel({ paperId }: Readonly<{ paperId: string }>) {
       )}
 
       {/* Lista */}
-      {aportes.length > 0 && (
+      {items.length > 0 && (
         <ul className="mt-3 space-y-2">
-          {aportes.map((a) => (
-            <AporteCard key={a.id} aporte={a} onRemove={() => removeAporte(a.id)} />
+          {items.map((c) => (
+            <ContribucionCard key={c.id} item={c} onRemove={() => removeContribucion(c.id)} />
           ))}
         </ul>
       )}
@@ -137,9 +138,9 @@ export function AportesPanel({ paperId }: Readonly<{ paperId: string }>) {
   );
 }
 
-function AporteCard({ aporte, onRemove }: Readonly<{ aporte: Aporte; onRemove: () => void }>) {
-  const meta = INTENT_META[aporte.intent];
-  const date = new Date(aporte.createdAt).toLocaleDateString('es-CO', { day: 'numeric', month: 'short' });
+function ContribucionCard({ item, onRemove }: Readonly<{ item: Contribucion; onRemove: () => void }>) {
+  const meta = INTENT_META[item.intent];
+  const date = new Date(item.createdAt).toLocaleDateString('es-CO', { day: 'numeric', month: 'short' });
   return (
     <li className={cn(
       'rounded-lg border-l-4 bg-card p-3 group',
@@ -154,16 +155,16 @@ function AporteCard({ aporte, onRemove }: Readonly<{ aporte: Aporte; onRemove: (
             <span>{meta.emoji}</span>
             <span className="font-medium uppercase tracking-wide">{meta.label}</span>
             <span>·</span>
-            <span>{aporte.authorName}</span>
+            <span>{item.authorName}</span>
             <span>·</span>
-            <time dateTime={aporte.createdAt}>{date}</time>
+            <time dateTime={item.createdAt}>{date}</time>
           </div>
-          <p className="mt-1 text-sm whitespace-pre-wrap leading-relaxed">{aporte.content}</p>
+          <p className="mt-1 text-sm whitespace-pre-wrap leading-relaxed">{item.content}</p>
         </div>
         <button
           type="button"
           onClick={onRemove}
-          aria-label="Eliminar aporte"
+          aria-label="Eliminar contribución"
           className="shrink-0 opacity-0 group-hover:opacity-100 rounded p-1 text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-opacity"
         >
           <Trash2 className="h-3.5 w-3.5" />

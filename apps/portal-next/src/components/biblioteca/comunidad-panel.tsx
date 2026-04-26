@@ -6,11 +6,11 @@ import { BookOpen, Sparkles, MessageSquarePlus, ChevronRight, ExternalLink, Tras
 import { canonicPaper } from '#site/content';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState, type SectionStatus } from '@/lib/reading-state';
-import { getAportes, removeAporte, INTENT_META, type Aporte } from '@/lib/aportes-state';
+import { getDeliberacion, removeContribucion, INTENT_META, type Contribucion } from '@/lib/deliberacion-state';
 import { cn } from '@/lib/utils';
 import type { ActiveDoc } from '@/lib/active-doc';
 
-type SubTab = 'presaberes' | 'preguntas' | 'aportes';
+type SubTab = 'presaberes' | 'preguntas' | 'deliberacion';
 
 /**
  * ComunidadPanel — vista agregada del documento activo en 3 sub-secciones:
@@ -23,19 +23,19 @@ type SubTab = 'presaberes' | 'preguntas' | 'aportes';
 export function ComunidadPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
   const [sub, setSub] = useState<SubTab>('presaberes');
   const [readingState, setReadingState] = useState<ReadingState | null>(null);
-  const [aportes, setAportes] = useState<Aporte[]>([]);
+  const [contribuciones, setContribuciones] = useState<Contribucion[]>([]);
 
   useEffect(() => {
     setReadingState(getReadingState());
-    if (doc) setAportes(getAportes(doc.id));
+    if (doc) setContribuciones(getDeliberacion(doc.id));
     const onReading = () => setReadingState(getReadingState());
-    const onAportes = () => doc && setAportes(getAportes(doc.id));
+    const onDelib = () => doc && setContribuciones(getDeliberacion(doc.id));
     window.addEventListener('reading-state-change', onReading);
-    window.addEventListener('aportes-change', onAportes);
-    window.addEventListener('storage', () => { onReading(); onAportes(); });
+    window.addEventListener('deliberacion-change', onDelib);
+    window.addEventListener('storage', () => { onReading(); onDelib(); });
     return () => {
       window.removeEventListener('reading-state-change', onReading);
-      window.removeEventListener('aportes-change', onAportes);
+      window.removeEventListener('deliberacion-change', onDelib);
     };
   }, [doc]);
 
@@ -103,11 +103,11 @@ export function ComunidadPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
           badge={`${verified}/${sectionsWithQ.length}`}
         />
         <SubTabBtn
-          active={sub === 'aportes'}
-          onClick={() => setSub('aportes')}
+          active={sub === 'deliberacion'}
+          onClick={() => setSub('deliberacion')}
           Icon={MessageSquarePlus}
-          label="Aportes"
-          count={aportes.length}
+          label="Delib"
+          count={contribuciones.length}
         />
       </div>
 
@@ -118,8 +118,8 @@ export function ComunidadPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
         {sub === 'preguntas' && (
           <PreguntasList sections={sectionsWithQ} doc={doc} readingState={readingState} />
         )}
-        {sub === 'aportes' && (
-          <AportesList aportes={aportes} />
+        {sub === 'deliberacion' && (
+          <DeliberacionList items={contribuciones} />
         )}
       </div>
     </div>
@@ -218,18 +218,18 @@ function PreguntasList({
   );
 }
 
-function AportesList({ aportes }: Readonly<{ aportes: Aporte[] }>) {
-  if (aportes.length === 0) {
-    return <Empty msg="Sin aportes aún. Sé el primero en este doc." />;
+function DeliberacionList({ items }: Readonly<{ items: Contribucion[] }>) {
+  if (items.length === 0) {
+    return <Empty msg="Sin contribuciones aún. Sé el primero en deliberar." />;
   }
   return (
     <ul className="space-y-2">
-      {aportes.map((a) => {
-        const meta = INTENT_META[a.intent];
-        const date = new Date(a.createdAt).toLocaleDateString('es-CO', { day: 'numeric', month: 'short' });
+      {items.map((c) => {
+        const meta = INTENT_META[c.intent];
+        const date = new Date(c.createdAt).toLocaleDateString('es-CO', { day: 'numeric', month: 'short' });
         return (
           <li
-            key={a.id}
+            key={c.id}
             className={cn(
               'group rounded-md border-l-2 bg-card px-2 py-1.5',
               meta.color === 'amber' && 'border-amber-500',
@@ -242,13 +242,13 @@ function AportesList({ aportes }: Readonly<{ aportes: Aporte[] }>) {
               <span className="shrink-0 text-sm">{meta.emoji}</span>
               <div className="min-w-0 flex-1">
                 <div className="text-[9px] uppercase tracking-wide text-muted-foreground">
-                  {a.authorName} · {date}
+                  {c.authorName} · {date}
                 </div>
-                <p className="text-[11px] mt-0.5 line-clamp-3">{a.content}</p>
+                <p className="text-[11px] mt-0.5 line-clamp-3">{c.content}</p>
               </div>
               <button
                 type="button"
-                onClick={() => removeAporte(a.id)}
+                onClick={() => removeContribucion(c.id)}
                 aria-label="Eliminar"
                 className="shrink-0 opacity-0 group-hover:opacity-100 rounded p-0.5 text-muted-foreground hover:text-destructive transition-opacity"
               >

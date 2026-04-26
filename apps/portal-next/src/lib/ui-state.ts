@@ -8,6 +8,7 @@ const KEYS = {
   rightPanel: 'reforma-ud:right-panel-collapsed',
   rightPanelWidth: 'reforma-ud:right-panel-width',
   rightTab: 'reforma-ud:right-tab',
+  conexionesSubTab: 'reforma-ud:conexiones-subtab',
   activeRole: 'reforma-ud:active-role',
   userName: 'reforma-ud:user-name',
 } as const;
@@ -192,21 +193,40 @@ export function useRightWidth() {
   return [width, setRightWidth] as const;
 }
 
-export type RightTab = 'chat' | 'backlinks' | 'comunidad';
-const VALID_RIGHT_TABS: readonly RightTab[] = ['chat', 'backlinks', 'comunidad'] as const;
+// v4.5b D2 — 4 tabs. `conexiones` agrupa sub-tabs esquema/grafo/evolucion.
+// Migración: legacy 'chat' → 'asistente', 'backlinks' → 'refs'.
+export type RightTab = 'conexiones' | 'refs' | 'comunidad' | 'asistente';
+const VALID_RIGHT_TABS: readonly RightTab[] = ['conexiones', 'refs', 'comunidad', 'asistente'] as const;
 function isRightTab(v: string): v is RightTab {
   return (VALID_RIGHT_TABS as readonly string[]).includes(v);
 }
+function normalizeRightTab(v: string | null): RightTab | null {
+  if (!v) return null;
+  if (v === 'chat') return 'asistente';
+  if (v === 'backlinks') return 'refs';
+  return isRightTab(v) ? v : null;
+}
 
-/** Default: EXPANDIDO. Tab Comunidad por defecto cuando hay doc activo. */
-export function useRightPanel(defaultTab: RightTab = 'comunidad') {
+export type ConexionesSubTab = 'esquema' | 'grafo' | 'evolucion';
+const VALID_CONEXIONES_SUB: readonly ConexionesSubTab[] = ['esquema', 'grafo', 'evolucion'] as const;
+function isConexionesSubTab(v: string): v is ConexionesSubTab {
+  return (VALID_CONEXIONES_SUB as readonly string[]).includes(v);
+}
+
+/** Default: EXPANDIDO. Tab Conexiones por defecto cuando hay doc activo. */
+export function useRightPanel(defaultTab: RightTab = 'conexiones') {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [tab, setTabState] = useState<RightTab>(defaultTab);
 
   useEffect(() => {
     setCollapsed(read(KEYS.rightPanel, false) as boolean);
     const t = read(KEYS.rightTab, defaultTab) as string;
-    if (isRightTab(t)) setTabState(t);
+    const normalized = normalizeRightTab(t);
+    if (normalized) {
+      setTabState(normalized);
+      // Si vino del legacy, sobrescribir storage para no migrar de nuevo
+      if (t !== normalized) write(KEYS.rightTab, normalized);
+    }
 
     const onChange = (e: Event) => {
       const detail = (e as CustomEvent<{ key: string; value: boolean | string }>).detail;
@@ -214,7 +234,8 @@ export function useRightPanel(defaultTab: RightTab = 'comunidad') {
         setCollapsed(detail.value as boolean);
       } else if (detail?.key === KEYS.rightTab) {
         const v = detail.value as string;
-        if (isRightTab(v)) setTabState(v);
+        const n = normalizeRightTab(v);
+        if (n) setTabState(n);
       }
     };
     const onStorage = (e: StorageEvent) => {
@@ -222,8 +243,8 @@ export function useRightPanel(defaultTab: RightTab = 'comunidad') {
         setCollapsed(e.newValue === 'true');
       }
       if (e.key === KEYS.rightTab) {
-        const v = e.newValue;
-        if (v && isRightTab(v)) setTabState(v);
+        const n = normalizeRightTab(e.newValue);
+        if (n) setTabState(n);
       }
     };
     window.addEventListener(EVENT, onChange);
@@ -246,6 +267,40 @@ export function useRightPanel(defaultTab: RightTab = 'comunidad') {
     write(KEYS.rightTab, t);
   };
   return { collapsed, toggle, tab, setTab } as const;
+}
+
+/** Sub-tab del tab Conexiones (esquema | grafo | evolucion). v4.5b D2. */
+export function useConexionesSubTab(defaultSub: ConexionesSubTab = 'esquema') {
+  const [sub, setSubState] = useState<ConexionesSubTab>(defaultSub);
+
+  useEffect(() => {
+    const v = read(KEYS.conexionesSubTab, defaultSub) as string;
+    if (isConexionesSubTab(v)) setSubState(v);
+
+    const onChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ key: string; value: string }>).detail;
+      if (detail?.key === KEYS.conexionesSubTab && isConexionesSubTab(detail.value)) {
+        setSubState(detail.value);
+      }
+    };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === KEYS.conexionesSubTab && e.newValue && isConexionesSubTab(e.newValue)) {
+        setSubState(e.newValue);
+      }
+    };
+    window.addEventListener(EVENT, onChange);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener(EVENT, onChange);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, [defaultSub]);
+
+  const setSub = (s: ConexionesSubTab) => {
+    setSubState(s);
+    write(KEYS.conexionesSubTab, s);
+  };
+  return [sub, setSub] as const;
 }
 
 /** Hook para rol activo + nombre del usuario. Sincronizado entre componentes. */

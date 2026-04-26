@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Sparkles, Send, ChevronLeft, ChevronRight, Target, Lightbulb, Link2, Users } from 'lucide-react';
+import { Sparkles, Send, ChevronLeft, Target, Lightbulb, Link2, Users, Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -11,7 +11,7 @@ import { useRightPanel, useActiveProfile, useRightWidth } from '@/lib/ui-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { getActiveDocFromPath } from '@/lib/active-doc';
-import { OutlinePanel } from '@/components/biblioteca/outline-panel';
+import { ConexionesTab } from '@/components/biblioteca/conexiones-tab';
 import { BacklinksPanel } from '@/components/biblioteca/backlinks-panel';
 import { ComunidadPanel } from '@/components/biblioteca/comunidad-panel';
 import { canonicPaper, community, note } from '#site/content';
@@ -84,16 +84,15 @@ export function RightPanel() {
     window.removeEventListener('pointerup', onPointerUp);
   }, [onPointerMove, onPointerUp]);
 
-  // v4.3 — Si activeDoc desaparece y estamos en una tab que requiere doc activo
-  // (backlinks o comunidad), fallback a chat.
+  // v4.5b D2 — Si activeDoc desaparece y estamos en una tab que requiere doc activo
+  // (refs o comunidad), fallback a asistente. Conexiones soporta no-doc (Evolución).
   useEffect(() => {
-    if (!activeDoc && (tab === 'backlinks' || tab === 'comunidad')) {
-      setTab('chat');
+    if (!activeDoc && (tab === 'refs' || tab === 'comunidad')) {
+      setTab('asistente');
     }
   }, [activeDoc, tab, setTab]);
 
-  // v4.3 — counts para badges de tabs (Outline ya no es tab del right-panel,
-  // outlineCount eliminado; backlinkCount aún usado por tab "Refs")
+  // counts para badges de tabs (refs solamente · backlinks)
   const [backlinkCount, setBacklinkCount] = useState<number>(0);
   useEffect(() => {
     if (!activeDoc) { setBacklinkCount(0); return; }
@@ -218,12 +217,17 @@ export function RightPanel() {
           )}
         </div>
 
-        <div className="grid grid-cols-3 border-b border-sidebar-border">
-          {/* v4.3 — Outline movido a sidebar izquierda permanente. Preguntas → inline.
-              Tabs activos: Refs · Comunidad (agrega presaberes/preguntas/aportes) · Chat */}
+        <div className="grid grid-cols-4 border-b border-sidebar-border">
+          {/* v4.5b D2 — 4 tabs: Conexiones (esquema/grafo/evolución) · Refs · Comunidad · Asistente */}
           <TabButton
-            active={tab === 'backlinks'}
-            onClick={() => setTab('backlinks')}
+            active={tab === 'conexiones'}
+            onClick={() => setTab('conexiones')}
+            Icon={Compass}
+            label="Conexiones"
+          />
+          <TabButton
+            active={tab === 'refs'}
+            onClick={() => setTab('refs')}
             Icon={Link2}
             label="Refs"
             disabled={!activeDoc}
@@ -237,17 +241,18 @@ export function RightPanel() {
             disabled={!activeDoc}
           />
           <TabButton
-            active={tab === 'chat'}
-            onClick={() => setTab('chat')}
+            active={tab === 'asistente'}
+            onClick={() => setTab('asistente')}
             Icon={Sparkles}
-            label="Chat"
+            label="Asistente"
           />
         </div>
 
         <div className="flex-1 overflow-hidden">
-          {tab === 'backlinks' && <BacklinksPanel doc={activeDoc} />}
+          {tab === 'conexiones' && <ConexionesTab doc={activeDoc} />}
+          {tab === 'refs' && <BacklinksPanel doc={activeDoc} />}
           {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
-          {tab === 'chat' && (
+          {tab === 'asistente' && (
             <div className="h-full overflow-hidden p-3">
               <ChatPane copSlug={copSlug} pathname={pathname} />
             </div>

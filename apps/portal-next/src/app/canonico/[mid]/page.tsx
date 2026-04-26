@@ -9,7 +9,7 @@ import { DocTabsBar } from '@/components/biblioteca/doc-tabs-bar';
 import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
 import { ComprehensionInline } from '@/components/biblioteca/comprehension-inline';
 import { PresaberesCallout } from '@/components/biblioteca/presaberes-callout';
-import { AportesPanel } from '@/components/biblioteca/aportes-panel';
+import { DeliberacionPanel } from '@/components/biblioteca/deliberacion-panel';
 import { ComparativeSplit, CompareButton } from '@/components/biblioteca/comparative-split';
 import { PrintButton } from '@/components/print-button';
 import { SplitWorkArea } from '@/components/biblioteca/split-work-area';
@@ -140,8 +140,8 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
           {/* v4.3c — Preguntas de comprensión transcluidas (cristalizan misión, top-down) */}
           <ComprehensionInline paperId={mid} />
 
-          {/* v4.3e — Aportes de la comunidad (bottom-up, localStorage MVP) */}
-          <AportesPanel paperId={mid} />
+          {/* v4.5b D8 — Deliberación de la comunidad (bottom-up, localStorage MVP) */}
+          <DeliberacionPanel paperId={mid} />
 
           {/* Backlinks */}
           {backlinks.length > 0 && (
