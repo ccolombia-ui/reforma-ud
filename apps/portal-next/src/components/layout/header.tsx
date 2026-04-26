@@ -116,7 +116,7 @@ export function Header() {
         </TooltipContent>
       </Tooltip>
 
-      {/* Logo + Profile area (LEFT) */}
+      {/* Brand (LEFT) — solo identidad institucional · v4.5 D4 */}
       <Link href="/" className="hidden shrink-0 items-center gap-2 font-bold tracking-tight sm:flex">
         <img
           src="/logo-udfjc.svg"
@@ -127,7 +127,6 @@ export function Header() {
         />
         <span className="text-base text-primary">reforma·ud</span>
       </Link>
-      <ProfileMenu />
 
       {/* Breadcrumb central */}
       <nav aria-label="Breadcrumb" className="hidden min-w-0 flex-1 items-center gap-1 text-sm md:flex">
@@ -181,6 +180,8 @@ export function Header() {
           </TooltipTrigger>
           <TooltipContent side="bottom">Tema (claro / oscuro)</TooltipContent>
         </Tooltip>
+        {/* Profile menu (RIGHT) · v4.5 D4 — identidad personal en cluster derecho */}
+        <ProfileMenu />
         <Tooltip>
           <TooltipTrigger asChild>
             <Button

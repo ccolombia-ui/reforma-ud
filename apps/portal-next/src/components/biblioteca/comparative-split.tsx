@@ -55,8 +55,17 @@ function ComparativeSplitInner({ children }: Readonly<{ children: React.ReactNod
   }
 
   return (
+    // v4.5 D1 — Group aislado dentro de <main>; sidebars laterales viven en
+    // un layout flex superior y NO se ven afectados por el resize interno.
+    // autoSaveId persiste el split entre navegaciones (paneles laterales tienen
+    // su propio mecanismo en useLeftWidth/useRightWidth).
     <div className="h-[calc(100vh-3.5rem)] no-print">
-      <Group orientation="horizontal" id="comparative-workspace" className="flex h-full">
+      <Group
+        orientation="horizontal"
+        id="comparative-workspace"
+        autoSave="reforma-ud:compare-v4.5"
+        className="flex h-full"
+      >
         {/* Pane A — contenido actual */}
         <Panel id="pane-a" defaultSize={50} minSize={25} className="overflow-y-auto">
           <div className="px-4 md:px-6 py-2 sticky top-0 bg-background/95 backdrop-blur z-10 border-b">

@@ -9,7 +9,6 @@ import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
 import { getActiveDocFromPath } from '@/lib/active-doc';
 import { cn } from '@/lib/utils';
-import { SidebarMissionsWidget } from '@/components/layout/sidebar-missions-widget';
 import { useGraphContext } from '@/lib/graph-context';
 import { Graph3DFilters } from '@/components/graph/graph-3d';
 
@@ -466,8 +465,8 @@ export function Sidebar() {
 
   return (
     <SidebarResizableNav width={width} setWidth={setWidth}>
-      {/* Misiones activas — pertenencia + resultados al tope */}
-      <SidebarMissionsWidget />
+      {/* v4.5 D3 · sidebar = navegación pura. Misiones y stats por-doc removidos:
+          contexto vive en su lugar (header/right-panel/página /mision). */}
 
       {/* Filtros contextuales del grafo (solo en /canonico/grafo) */}
       {isOnGraph && graph && (

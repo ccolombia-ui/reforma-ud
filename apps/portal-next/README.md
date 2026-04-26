@@ -77,9 +77,8 @@ src/
 │   │   └── quick-tabs.tsx
 │   ├── layout/
 │   │   ├── header.tsx                # Tooltips + cmdk shortcut + ThemeToggle + Sheet mobile
-│   │   ├── sidebar.tsx               # Resizable + SidebarMissionsWidget + filtros grafo contextuales
-│   │   ├── sidebar-missions-widget.tsx
-│   │   ├── right-panel.tsx           # 4 tabs (Outline/Refs/Preg/Chat) + ChatPane
+│   │   ├── sidebar.tsx               # Resizable · navegación pura (v4.5 D3) + filtros grafo contextuales
+│   │   ├── right-panel.tsx           # 3 tabs (Refs/Comunidad/Chat) + ChatPane
 │   │   ├── command-palette.tsx       # cmdk con Recientes + grupos
 │   │   ├── changelog-drawer.tsx      # Detecta deploy nuevo via version.json
 │   │   ├── cca-earned-modal.tsx      # Celebración al completar misión
