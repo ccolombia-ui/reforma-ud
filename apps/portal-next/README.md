@@ -204,9 +204,34 @@ vercel alias set <new-deployment-url> reforma-ud.vercel.app
 
 `reforma-ud.vercel.app` es alias del proyecto Vercel **`reforma-ud-v3`** (confusión histórica: existen también `reforma-ud-portal` con Astro viejo y `reforma-ud` también con Astro). Solo `reforma-ud-v3` tiene este código.
 
+### Pipeline local-first (SOTA · lecciones de v4.0 deploy)
+
+```
+Layer 1 · Hot reload (<1s)        pnpm dev               90% errores
+Layer 2 · Sanity (~10s)           velite + tsc --noEmit  Schema/tipos
+Layer 3 · Build local (1-2min)    pnpm build             Bundle/SSG
+Layer 4 · Vercel preview          git push (auto)        Prod-only edges
+Layer 5 · Promote (<10s)          vercel promote <id>    Atomic swap
+```
+
+**Regla**: nunca saltar a Layer 5 sin pasar 1-3. La capa 5 NO debe re-buildear.
+
 ### Conocidos issues de deploy
-- **`ERR_INVALID_THIS` en pnpm install**: bug intermitente del proxy npm en Vercel. Reintentar tras unos minutos. `engines: { node: "22.x" }` mitiga el bug Node 24 + pnpm.
-- **Lockfile drift**: `pnpm add` desde `apps/portal-next/` puede crear un `pnpm-lock.yaml` local. Eliminarlo y hacer `pnpm install` desde la raíz para que el lockfile root quede sincronizado (workspace pnpm).
+- **`ERR_INVALID_THIS` en pnpm install (Vercel CI)**: bug Node 24 + pnpm 10 contra el mirror npm de Vercel. **Fix definitivo en v4.0**: `vercel.json` usa `npm install --legacy-peer-deps` en vez de `pnpm install`. npm no tiene este bug. Trade-off: TS strict requiere `as never` cast en arrays de plugins por mismatch de `unified` en flat tree.
+- **TS error con `unified` Plugin types** tras switch a npm: cast los arrays de plugins a `as never` (`velite.config.ts` línea ~155 y ~191). Solo afecta build-time TS check; runtime idéntico.
+- **Turbopack local Windows**: bug de resolución `next/package.json` con symlinks pnpm POSIX. Workarounds (en orden de robustez):
+  1. WSL2 (Linux nativo, idéntico a Vercel)
+  2. Docker `node:22 sh -c "pnpm install && pnpm build"`
+  3. `.npmrc` con `node-linker=hoisted` (aplana, evita symlinks)
+- **Lockfile drift**: `pnpm add` desde `apps/portal-next/` puede crear un `pnpm-lock.yaml` local en vez de actualizar el root. Eliminarlo y `pnpm install` desde la raíz.
+- **Vercel CLI prebuild bug** (`Unable to find lambda for route: /canonico/grafo`): no usar `vercel build --prebuilt` con Next 16. Dejar que Vercel haga el build server-side.
+
+### Rollback path
+```bash
+git checkout v3.4-stable   # Punto verde confirmado pre-Op-A migration
+vercel deploy --prod       # Re-deploy del estado v3.4
+vercel alias set <id> reforma-ud.vercel.app
+```
 
 ## Convenciones de código
 
