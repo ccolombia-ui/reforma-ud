@@ -160,13 +160,16 @@ export default defineConfig({
       // Soporta: [[link]], [[link|alias]], [[link#heading]], ![[image.png|200x300]],
       //          ![[video.mp4]], ![[audio.mp3]], ![[doc.pdf]]
       // newClassName='wikilink-broken' preserva G07 (broken-link visible CSS)
-      [wikiLinkPlugin, {
+      // Cast a `never` por mismatch de tipos `unified` entre node_modules (npm flat
+       // en CI vs pnpm isolated en dev). El plugin funciona en runtime; el cast solo
+       // evita el error TS al compilar Next con npm install (vercel.json).
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      [wikiLinkPlugin as never, {
         format: 'shortestPossible',
         files: contentFiles,
         permalinks,
         className: 'wikilink',
         newClassName: 'wikilink-broken',
-        // urlResolver recibe { filePath, heading?, isEmbed }. Devuelve URL final.
         urlResolver: ({ filePath, heading }: { filePath: string; heading?: string; isEmbed: boolean }) => {
           // Quitar extensión .md/.mdx
           const noExt = filePath.replace(/\.(mdx?|md)$/i, '');
