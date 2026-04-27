@@ -130,17 +130,30 @@ function ReformaCuanticaSection({
 
   return (
     <li>
-      <button
-        type="button"
-        onClick={handleToggle}
-        className="group flex w-full items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent"
-        aria-expanded={effectiveOpen}
-      >
-        <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !effectiveOpen && '-rotate-90')} />
-        <Atom className="h-3.5 w-3.5 text-primary/80" />
-        <span className="flex-1 text-left font-medium">Inv. Buenas prácticas</span>
-        <span className="text-[9px] text-muted-foreground">{filtered.length}</span>
-      </button>
+      {/* v5.0v · Header doble: chevron toggle (no navega) + Link a /canonico (dashboard).
+          Patrón Linear/Notion: chevron expande/colapsa la lista, el resto del row navega. */}
+      <div className="group flex w-full items-center gap-1 rounded pr-1 hover:bg-sidebar-accent">
+        <button
+          type="button"
+          onClick={handleToggle}
+          aria-expanded={effectiveOpen}
+          aria-label={effectiveOpen ? 'Colapsar' : 'Expandir'}
+          className="flex items-center justify-center pl-2 py-1"
+        >
+          <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !effectiveOpen && '-rotate-90')} />
+        </button>
+        <Link
+          href="/canonico"
+          className={cn(
+            'flex flex-1 items-center gap-1 px-1 py-1 text-xs',
+            pathname === '/canonico' && 'font-semibold text-sidebar-primary',
+          )}
+        >
+          <Atom className="h-3.5 w-3.5 text-primary/80" />
+          <span className="flex-1 text-left font-medium">Inv. Buenas prácticas</span>
+          <span className="text-[9px] text-muted-foreground">{filtered.length}</span>
+        </Link>
+      </div>
       {effectiveOpen && (
         <ul className="ml-3 space-y-0.5 border-l border-sidebar-border pl-2 mt-0.5">
           {filtered.map((p) => (
@@ -552,27 +565,24 @@ export function Sidebar() {
                 <Library className="h-3.5 w-3.5" />
                 <span className="flex-1">Biblioteca</span>
               </Link>
-              {/* Reforma Cuántica vive DENTRO de la biblioteca, anidado visualmente */}
-              <ul className="ml-3 mt-0.5 border-l border-sidebar-border pl-2">
+              {/* v5.0v · Inv. Buenas prácticas + Grafo semántico + Glosario
+                  anidados como hijos directos de Biblioteca (mismo nivel jerárquico). */}
+              <ul className="ml-3 mt-0.5 border-l border-sidebar-border pl-2 space-y-0.5">
                 <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
+                <li>
+                  <Link
+                    href="/canonico/grafo"
+                    className={cn(
+                      'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
+                      pathname === '/canonico/grafo' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+                    )}
+                  >
+                    <Network className="h-3.5 w-3.5 text-primary/80" /> Grafo semántico
+                  </Link>
+                </li>
+                <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
               </ul>
             </li>
-            <li>
-              <Link
-                href="/canonico/grafo"
-                className={cn(
-                  'flex items-center gap-1.5 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
-                  pathname === '/canonico/grafo' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
-                )}
-              >
-                <Network className="h-3.5 w-3.5" /> Grafo semántico
-              </Link>
-            </li>
-            {/* v5.0i · Glosario expandible (paridad con Reforma Cuántica).
-                Conceptos agrupados por categoría (concepto-{normativo,
-                academico, meta-instrumental, sintesis, nuevo, internacional}).
-                Vive en la biblioteca como otra área de conocimiento. */}
-            <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
           </ul>
         </SectionToggle>
 

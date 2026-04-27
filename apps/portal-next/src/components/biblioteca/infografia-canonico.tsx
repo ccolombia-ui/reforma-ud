@@ -24,7 +24,7 @@ import { Network, ExternalLink, ArrowRight, SplitSquareHorizontal } from 'lucide
 import Link from 'next/link';
 import { useCallback } from 'react';
 import { usePanesState } from '@/lib/panes-state';
-import { useRightPanel, useConexionesSubTab } from '@/lib/ui-state';
+import { useRightPanel, useConexionesSubTab, useFocusedPane } from '@/lib/ui-state';
 
 // v5.0s · pregunta narrativa por paper (storytelling M01→M12).
 // Source mental-model: M03=Estándares (business), M08=Framework (modeling),
@@ -74,12 +74,21 @@ export function InfografiaCanonico() {
   const panesState = usePanesState();
   const { setTab } = useRightPanel();
   const [, setSubTab] = useConexionesSubTab();
+  const [, setFocused] = useFocusedPane();
 
   // v5.0q · CTA grafo activa el right panel · sub-tab Grafo (en lugar de navegar)
   const openGrafoInRightPanel = useCallback(() => {
     setTab('conexiones');
     setSubTab('grafo');
   }, [setTab, setSubTab]);
+
+  // v5.0v · "Ventana derecha" abre el M## en pane B + transfiere foco a B.
+  // Sin setFocused el right panel sigue mostrando el contexto de pane A
+  // (Kanban infografía) en lugar del M## recién abierto.
+  const openInRightPane = useCallback((paperId: string) => {
+    panesState.openInNextPane(paperId);
+    setFocused('b');
+  }, [panesState, setFocused]);
 
   // v5.0s · 5 columnas derivadas de crispPhase (source aligned).
   // Data Understanding + Data Preparation se fusionan en una sola columna.
@@ -279,7 +288,7 @@ export function InfografiaCanonico() {
                   paper={p}
                   question={PAPER_QUESTIONS[p.id] ?? p.description.slice(0, 50)}
                   color={phase.color}
-                  onSplitRight={() => panesState.openInNextPane(p.id)}
+                  onSplitRight={() => openInRightPane(p.id)}
                 />
               ))}
             </div>
