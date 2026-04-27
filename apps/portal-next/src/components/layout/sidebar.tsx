@@ -149,9 +149,9 @@ function ReformaCuanticaSection({
             pathname === '/canonico' && 'font-semibold text-sidebar-primary',
           )}
         >
-          <Atom className="h-3.5 w-3.5 text-primary/80" />
-          <span className="flex-1 text-left font-medium">Inv. Buenas prácticas</span>
-          <span className="text-[9px] text-muted-foreground">{filtered.length}</span>
+          <Atom className="h-3.5 w-3.5 text-primary/80 shrink-0" />
+          <span className="flex-1 text-left font-medium leading-tight">Reforma Vinculante UDFJC: Análisis, Buenas Prácticas y Prospectiva Transformativa</span>
+          <span className="text-[9px] text-muted-foreground shrink-0">{filtered.length}</span>
         </Link>
       </div>
       {effectiveOpen && (
@@ -565,10 +565,9 @@ export function Sidebar() {
                 <Library className="h-3.5 w-3.5" />
                 <span className="flex-1">Biblioteca</span>
               </Link>
-              {/* v5.0v · Inv. Buenas prácticas + Grafo semántico + Glosario
-                  anidados como hijos directos de Biblioteca (mismo nivel jerárquico). */}
+              {/* v5.0w · Orden: Grafo semántico > Glosario > Reforma Vinculante UDFJC.
+                  Anidados como hijos directos de Biblioteca (mismo nivel jerárquico). */}
               <ul className="ml-3 mt-0.5 border-l border-sidebar-border pl-2 space-y-0.5">
-                <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
                 <li>
                   <Link
                     href="/canonico/grafo"
@@ -581,6 +580,7 @@ export function Sidebar() {
                   </Link>
                 </li>
                 <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
+                <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
               </ul>
             </li>
           </ul>

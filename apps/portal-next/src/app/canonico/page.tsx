@@ -2,8 +2,8 @@ import { InfografiaCanonico } from '@/components/biblioteca/infografia-canonico'
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Inv. Buenas Prácticas — Biblioteca reforma·ud',
-  description: '12 investigaciones que sustentan la Reforma Vinculante UDFJC.',
+  title: 'Reforma Vinculante UDFJC — Análisis, Buenas Prácticas y Prospectiva Transformativa',
+  description: '12 investigaciones que sustentan la Reforma Vinculante UDFJC: análisis del mandato + benchmarking de IES líderes + prospectiva por escenarios.',
 };
 
 /**

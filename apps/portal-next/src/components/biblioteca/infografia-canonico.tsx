@@ -115,7 +115,8 @@ export function InfografiaCanonico() {
       {/* HEADER */}
       <div className="hdr">
         <div>
-          <h1>Inv. Buenas Prácticas · Reforma UDFJC</h1>
+          <h1>Reforma Vinculante UDFJC</h1>
+          <div className="hdr-tagline">Análisis · Buenas Prácticas · Prospectiva Transformativa</div>
           <div className="sub">
             12_investigaciones · 5_fases_CRISP-DM · sustrato_teórico · ACU-004-25 vinculante
           </div>
@@ -425,6 +426,7 @@ const INFOGRAFIA_CSS = `
 .infografia-root .hdr { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: end; margin-bottom: 0.5rem; padding-bottom: 0.6rem; border-bottom: 3px solid var(--pur); }
 .infografia-root .hdr .sub { font-size: 7.5pt; color: var(--pur); font-weight: 700; font-family: 'Courier New', monospace; margin-top: 0.2rem; letter-spacing: 0.01em; }
 .infografia-root .hdr-meta { text-align: right; font-size: 7pt; color: var(--muted-card); line-height: 1.7; font-family: 'Courier New', monospace; }
+.infografia-root .hdr-tagline { font-size: 9pt; color: var(--muted-card); margin-top: 0.15rem; font-style: italic; letter-spacing: 0.02em; }
 
 .infografia-root .stats-hero { display: grid; grid-template-columns: repeat(6,1fr); background: linear-gradient(135deg, var(--pur-d) 0%, var(--navy) 100%); border-radius: 9px; overflow: hidden; margin: 0.6rem 0 0.5rem; }
 .infografia-root .sh { padding: 0.6rem 0.5rem; text-align: center; border-right: 1px solid rgba(255,255,255,0.08); }
