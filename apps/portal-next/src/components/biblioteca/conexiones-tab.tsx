@@ -2,7 +2,7 @@
 
 import { ListTree, Network, GitCommit } from 'lucide-react';
 import { useConexionesSubTab } from '@/lib/ui-state';
-import { OutlinePanel } from '@/components/biblioteca/outline-panel';
+import { EsquemaTab } from '@/components/biblioteca/esquema-tab';
 import { PaperLocalGraph } from '@/components/graph/paper-local-graph';
 import { EvolutionTab } from '@/components/biblioteca/evolution-tab';
 import type { ActiveDoc } from '@/lib/active-doc';
@@ -46,7 +46,7 @@ export function ConexionesTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
       </div>
 
       <div className="flex-1 overflow-hidden">
-        {sub === 'esquema' && <OutlinePanel doc={doc} />}
+        {sub === 'esquema' && <EsquemaTab doc={doc} />}
         {sub === 'grafo' && doc?.kind === 'paper' && (
           <PaperLocalGraph paperId={doc.id} hops={1} />
         )}
