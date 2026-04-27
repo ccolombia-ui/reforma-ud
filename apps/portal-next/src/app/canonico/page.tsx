@@ -3,9 +3,8 @@ import { ArrowRight, BookMarked, Network } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { canonicPaper, dashboard } from '#site/content';
-import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
-import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
+import { canonicPaper } from '#site/content';
+import { InfografiaCanonico } from '@/components/biblioteca/infografia-canonico';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -46,42 +45,19 @@ export default function CanonicoIndex() {
     return acc;
   }, {});
 
-  // v5.0n · Dashboard ad-hoc en content/canonico/_dash-canonico.md
-  const dash = dashboard.find((d) => d.id === 'canonico');
-
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
-      <div className="mb-8">
-        <p className="text-xs uppercase tracking-wide text-muted-foreground">
-          Biblioteca reforma·ud
-        </p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-tight md:text-4xl">
-          Inv. Buenas Prácticas
-        </h1>
-        <p className="mt-3 max-w-2xl text-muted-foreground">
-          Corpus de las <strong>12 investigaciones (M01–M12)</strong> que sustentan teóricamente la
-          Reforma Vinculante UDFJC, organizadas por fase CRISP-DM. Sustrato conceptual compartido
-          que las comunidades de práctica citan y aplican.
-        </p>
-        <div className="mt-5 flex gap-2">
-          <Button asChild variant="outline" size="sm" className="gap-1.5">
-            <Link href="/canonico/grafo">
-              <Network className="h-4 w-4" />
-              Grafo semántico
-            </Link>
-          </Button>
-        </div>
-      </div>
+    <div className="mx-auto w-full max-w-6xl px-4 py-6 md:px-8">
+      {/* v5.0p · Infografía one-pager (réplica visual del HTML ref TTE/Acopio) */}
+      <InfografiaCanonico />
 
-      {/* v5.0n+o · Dashboard ad-hoc del corpus (overview narrativo + Mermaid) */}
-      {dash && (
-        <>
-          <section className="mb-12 rounded-lg border bg-muted/20 px-6 py-5 prose-paper">
-            <MDXWithHoverPreview code={dash.body} collapsible={false} />
-          </section>
-          <MermaidRenderer deps={['dash-canonico']} />
-        </>
-      )}
+      <div className="mt-12 mb-8">
+        <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
+          Catálogo completo · 12 investigaciones por fase
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Cards detalladas con badge M##, descripción, ruta Clark y status. Click para abrir el paper.
+        </p>
+      </div>
 
       {Object.entries(PHASE_LABEL).map(([phase, label]) => {
         const list = byPhase[phase] ?? [];

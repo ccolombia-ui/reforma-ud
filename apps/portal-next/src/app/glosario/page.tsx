@@ -2,9 +2,8 @@ import Link from 'next/link';
 import { BookOpen, Hash } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { concepto, dashboard } from '#site/content';
-import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
-import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
+import { concepto } from '#site/content';
+import { InfografiaGlosario } from '@/components/biblioteca/infografia-glosario';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -37,36 +36,24 @@ export default function GlosarioPage() {
   }
   const letters = Object.keys(byLetter).sort();
 
-  // v5.0n · Dashboard sourced from content/glosario/_dash-glosario-universal.md
-  const dash = dashboard.find((d) => d.id === 'glosario-universal');
-
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
-      <header className="mb-8">
+    <div className="mx-auto w-full max-w-6xl px-4 py-6 md:px-8">
+      {/* v5.0p · Infografía one-pager (concepto sombrilla ACU-004-25 + 6 categorías) */}
+      <InfografiaGlosario />
+
+      <div className="mt-12 mb-6">
         <div className="mb-2 flex items-center gap-2">
           <BookOpen className="h-5 w-5 text-primary" />
-          <Badge variant="outline" className="font-mono text-[10px]">M00</Badge>
+          <Badge variant="outline" className="font-mono text-[10px]">Índice A-Z</Badge>
           <Badge variant="secondary" className="text-[10px]">{conceptos.length} conceptos</Badge>
         </div>
-        <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-          Glosario
-        </h1>
-        <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
-          Corpus conceptual canónico de la reforma vinculante UDFJC. Cada concepto es un átomo modelado
-          con <strong>SKOS</strong> + <strong>ISO 1087</strong> + <strong>schema.org</strong>, con
-          relaciones tipadas que forman el grafo semántico de la reforma.
+        <h2 className="text-2xl font-semibold leading-tight tracking-tight">
+          Índice alfabético completo
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Los 74 conceptos en orden A-Z. Click en cualquiera para abrir el átomo con SKOS + ISO + body markdown.
         </p>
-      </header>
-
-      {/* v5.0n+o · Dashboard sourced from dash-glosario-universal.md (vault) */}
-      {dash && (
-        <>
-          <section className="mb-10 rounded-lg border bg-muted/20 px-6 py-5 prose-paper">
-            <MDXWithHoverPreview code={dash.body} collapsible={false} />
-          </section>
-          <MermaidRenderer deps={['dash-glosario']} />
-        </>
-      )}
+      </div>
 
       {/* Anchor nav A-Z */}
       <nav className="sticky top-16 z-10 mb-6 flex flex-wrap gap-1 rounded-lg border bg-background/95 px-2 py-2 backdrop-blur">
