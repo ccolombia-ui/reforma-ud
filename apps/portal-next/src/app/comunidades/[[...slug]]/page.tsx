@@ -16,6 +16,10 @@ import { getComprehension } from '@/lib/comprehension';
 import { community, note, canonicPaper } from '#site/content';
 import type { Metadata } from 'next';
 
+// v5.0k · Force dynamic — el HTML compilado de papers transcluidos en
+// comunidades hereda los mismos issues no-estrictos del SSG.
+export const dynamic = 'force-dynamic';
+
 const TYPE_ICONS: Record<string, React.ReactNode> = {
   gobierno: <Landmark className="h-4 w-4" />,
   csu: <Building2 className="h-4 w-4" />,

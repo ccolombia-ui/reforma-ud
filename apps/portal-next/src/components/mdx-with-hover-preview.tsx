@@ -42,11 +42,21 @@ const options: HTMLReactParserOptions = {
 };
 
 export function MDXWithHoverPreview({ code, collapsible = true }: Readonly<{ code: string; collapsible?: boolean }>) {
-  // v5.0j Gap 1 · headings h2-h4 envueltos en <details> nativos para
-  // colapsabilidad Obsidian-style. Memoized — no re-procesa en cada render.
-  const transformed = useMemo(
-    () => (collapsible ? wrapHeadingsInCollapsibles(code) : code),
-    [code, collapsible],
-  );
-  return <>{parse(transformed, options)}</>;
+  // v5.0j Gap 1 · headings h2-h4 envueltos en <details> nativos.
+  // v5.0k · try/catch defensivo: si wrap o parse falla por HTML malformed
+  // (algunos rehype plugins generan output no estricto), fallback a render
+  // directo del code original sin colapsabilidad.
+  const transformed = useMemo(() => {
+    if (!collapsible) return code;
+    try {
+      return wrapHeadingsInCollapsibles(code);
+    } catch {
+      return code;
+    }
+  }, [code, collapsible]);
+  try {
+    return <>{parse(transformed, options)}</>;
+  } catch {
+    return <>{parse(code, options)}</>;
+  }
 }

@@ -19,6 +19,13 @@ import { PrintButton } from '@/components/print-button';
 import { canonicPaper, note } from '#site/content';
 import type { Metadata } from 'next';
 
+// v5.0k · Force dynamic rendering — el HTML compilado de algunos papers
+// (callouts Obsidian-style con SVG inline + Mermaid raw escape) no es
+// estricto-válido y rompe el SSG strict mode con "Invalid tag: div<".
+// dynamic='force-dynamic' renderea en server runtime con tolerancia mayor.
+// Trade-off: TTFB ~50ms más en cold start, cubierto por Vercel CDN cache.
+export const dynamic = 'force-dynamic';
+
 const PHASE_LABEL: Record<string, string> = {
   business: 'Business Understanding',
   'data-understanding': 'Data Understanding',

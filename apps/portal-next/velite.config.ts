@@ -141,6 +141,28 @@ function transformApaCites(html: string): string {
 }
 
 /**
+ * v5.0k · Sanitiza patrones HTML malformados que generan algunos rehype
+ * plugins (callouts con SVG inline + Mermaid raw escape). Sin esto el SSG
+ * de Next falla con "Invalid tag: div<" porque html-react-parser entra en
+ * modo strict cuando hay nesting profundo (e.g. <details> dentro de
+ * <details> via wrapHeadingsInCollapsibles).
+ *
+ * Patrones conocidos:
+ *   </div</div>           → </div></div>     (callout SVG mal cerrado)
+ *   </pre>/pre>           → </pre>           (Mermaid pre con escape extra)
+ *   < seguido de espacio  → &lt; (solo en contextos texto-only sin tag)
+ *
+ * Idempotente y no-destructivo: solo reemplaza patterns inválidos.
+ */
+function sanitizeHtmlPatterns(html: string): string {
+  return html
+    .replace(/<\/(div|p|span|li|td|tr|ul|ol)<\/(div|p|span|li|td|tr|ul|ol)>/g, '</$1></$2>')
+    .replace(/<\/pre>\s*\/pre>/g, '</pre>')
+    .replace(/<<\/g/g, '&lt;</')                                // texto literal `<<` antes de cierre
+    .replace(/(\s)<<(\s)/g, '$1&lt;&lt;$2');                    // `<<` standalone
+}
+
+/**
  * Recolecta todos los `.md`/`.mdx` bajo content/ para alimentar
  * `@flowershow/remark-wiki-link` (necesario en format: 'shortestPossible'
  * para resolver `[[m04]]` → `canonico/m04.mdx`).
@@ -221,10 +243,9 @@ const canonicPaper = defineCollection({
     })
     .transform((data) => ({
       ...data,
-      // v4.5c D5 — post-procesa `[@key]` en el HTML compilado a `<a class="apa-cite">…</a>`.
-      // El componente cliente <ApaCite> intercepta esos anchors via mdx-with-hover-preview
-      // y muestra hover popover con metadata bibliográfica.
-      body: transformApaCites(data.body),
+      // v5.0k · Pipeline: sanitize → APA cites. Sanitize PRIMERO arregla
+      // `</div</div>` y otros patrones malformados que rompen el SSG de Next.
+      body: transformApaCites(sanitizeHtmlPatterns(data.body)),
       href: `/canonico/${data.id}`,
     })),
 });
@@ -292,15 +313,12 @@ const concepto = defineCollection({
       slug: s.path(),
     })
     .transform((data) => {
-      // Slug del archivo: glosario/con-jtbd-christensen → con-jtbd-christensen
       const id = data.slug.replace(/^glosario\//, '');
       return {
         ...data,
         id,
         href: `/glosario/${id}`,
-        // v5.0j · post-procesa [@key] APA en el body de cada concepto también
-        // (los conceptos pueden citar fuentes en su sección "Fuente primaria").
-        body: transformApaCites(data.body),
+        body: transformApaCites(sanitizeHtmlPatterns(data.body)),
       };
     }),
 });
