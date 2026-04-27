@@ -20,46 +20,46 @@ flowchart LR
     subgraph BU ["🟢 Business Understanding"]
         M01[M01<br/>Mandato normativo]
         M02[M02<br/>Ciclo Virtuoso]
-        M03[M03<br/>BSC-S + RBM-GAC]
+        M03[M03<br/>OECD UDL ABET CDIO]
     end
-    subgraph DU ["🔵 Data Understanding"]
+    subgraph DU ["🔵 Data Understanding + Preparation"]
         M04[M04<br/>JTBD Comunidad]
         M05[M05<br/>BMK-001 21 IES]
         M06[M06<br/>BMK-002 CCA]
-    end
-    subgraph DP ["🟣 Data Prep"]
         M07[M07<br/>21 BPAs]
-    end
-    subgraph MO ["🟠 Modeling"]
-        M08[M08<br/>OECD UDL ABET CDIO]
         M09[M09<br/>NICSP Presupuesto]
-    end
-    subgraph EV ["🟡 Evaluation"]
         M10[M10<br/>TDABC]
         M11[M11<br/>MEN Datasets]
     end
-    subgraph DE ["⚫ Deployment"]
-        M12[M12<br/>Hoja de ruta]
+    subgraph MO ["🟠 Modeling"]
+        M08[M08<br/>BSC-s × RBM-GAC × CRISP-DM]
     end
-    BU --> DU --> DP --> MO --> EV --> DE
-    M03 -.cita.-> M02
+    subgraph EV ["🔴 Evaluation"]
+        M12[M12<br/>5 escenarios · deliberación]
+    end
+    subgraph DE ["⚫ Deployment · pendiente acuerdos"]
+        EMPTY[ ]
+    end
+    BU --> DU --> MO --> EV --> DE
+    M03 -.alinea.-> M02
     M07 -.activa.-> M02
-    M08 -.alinea.-> M06
+    M08 -.modela.-> M06
     M10 -.cuesta.-> M07
     M12 -.integra.-> M01
     M12 -.integra.-> M11
     style M01 fill:#059669,stroke:#0f172a,color:#fff
-    style M02 fill:#7c3aed,stroke:#0f172a,color:#fff
+    style M02 fill:#059669,stroke:#0f172a,color:#fff
     style M03 fill:#059669,stroke:#0f172a,color:#fff
     style M04 fill:#0284c7,stroke:#0f172a,color:#fff
-    style M05 fill:#7c3aed,stroke:#0f172a,color:#fff
-    style M06 fill:#d97706,stroke:#0f172a,color:#fff
-    style M07 fill:#059669,stroke:#0f172a,color:#fff
-    style M08 fill:#d97706,stroke:#0f172a,color:#fff
-    style M09 fill:#059669,stroke:#0f172a,color:#fff
-    style M10 fill:#059669,stroke:#0f172a,color:#fff
+    style M05 fill:#0284c7,stroke:#0f172a,color:#fff
+    style M06 fill:#0284c7,stroke:#0f172a,color:#fff
+    style M07 fill:#0284c7,stroke:#0f172a,color:#fff
+    style M09 fill:#0284c7,stroke:#0f172a,color:#fff
+    style M10 fill:#0284c7,stroke:#0f172a,color:#fff
     style M11 fill:#0284c7,stroke:#0f172a,color:#fff
-    style M12 fill:#059669,stroke:#0f172a,color:#fff
+    style M08 fill:#d97706,stroke:#0f172a,color:#fff
+    style M12 fill:#ea580c,stroke:#0f172a,color:#fff
+    style EMPTY fill:#1e293b,stroke:#475569,color:#94a3b8,stroke-dasharray: 5 5
 ```
 
 ## Mapa de actores · qué leer según tu rol
@@ -71,9 +71,9 @@ Cada paper resuelve una pregunta clave de un actor específico. **Empieza por la
 | 🎓 **Estudiante** | ¿Cómo recupero soberanía cognitiva? | M02 · M04 · M06 | [[glo-soberania-cognitiva]] · [[glo-jtbd-christensen]] |
 | 🎨 **Docente Diseñador** | ¿Cómo diseño bajo modelo CCA? | M06 · M08 · M07 | [[glo-cca]] · [[glo-credito-academico]] |
 | 🔬 **Docente Investigador** | ¿Cómo activo el ciclo Pasteur? | M02 · M07 · M05 | [[glo-pasteur-quadrant]] · [[glo-cinco-vias-clark]] |
-| 🏛️ **Director** | ¿Cómo aterriza la gobernanza nueva? | M01 · M03 · M09 | [[glo-acu-004-25]] · [[glo-bsc-s]] |
+| 🏛️ **Director** | ¿Cómo aterriza la gobernanza nueva? | M01 · M08 · M09 | [[glo-acu-004-25]] · [[glo-bsc-s]] |
 | 📊 **Veedor / Auditor** | ¿Cómo se cuestea y auditea? | M10 · M11 · M09 | [[glo-rbm-gac]] · [[glo-veeduria-universitaria]] |
-| 🚀 **Diseñador política pública** | ¿Cómo se despliega en 8 años? | M12 · M01 · M08 | [[glo-piiom]] · [[glo-conpes-4069]] |
+| 🚀 **Diseñador política pública** | ¿Cómo se despliega en 8 años? | M12 · M01 · M03 | [[glo-piiom]] · [[glo-conpes-4069]] |
 
 ## Cómo navegar este corpus
 

@@ -26,10 +26,10 @@ import { useCallback } from 'react';
 import { usePanesState } from '@/lib/panes-state';
 import { useRightPanel, useConexionesSubTab } from '@/lib/ui-state';
 
-// v5.0r · pregunta narrativa por paper (storytelling M01→M12)
-// Nota: m03 ↔ m08 quedan swapeados respecto al título físico del .mdx para
-// alinear la mental-model del usuario (M03=Estándares, M08=Framework).
-// El badge M## queda como el único locator visible (sin título) por instrucción.
+// v5.0s · pregunta narrativa por paper (storytelling M01→M12).
+// Source mental-model: M03=Estándares (business), M08=Framework (modeling),
+// M09-M11=Data Prep, M12=Evaluation (5 escenarios + deliberación), Deployment=∅.
+// El badge M## queda como único locator visible (sin título) por instrucción.
 const PAPER_QUESTIONS: Record<string, string> = {
   m01: '¿Qué se nos pide hacer y por qué? El mandato.',
   m02: '¿Cómo otras universidades saltaron de N1 a N4?',
@@ -45,29 +45,28 @@ const PAPER_QUESTIONS: Record<string, string> = {
   m12: '¿Cuáles son los 5 escenarios para deliberación comunitaria?',
 };
 
-// v5.0r · layout narrativo curado del Kanban (overridea frontmatter crispPhase).
-// Decisión: una sola fuente de verdad para la disposición CRISP-DM
-// (en lugar de tocar 12 .mdx). Reversible si se sincroniza después.
+// v5.0s · 5 columnas (Data Understanding + Preparation se fusionan visualmente).
+// Override eliminado: ahora derivamos de crispPhase del source (.mdx alineados).
 type KanbanSlot = Readonly<{
   key: string;
   label: string;
   emoji: string;
   color: string;
-  paperIds: readonly string[];
+  phases: readonly string[]; // crispPhase values mapeadas a esta columna
   emptyHint?: string;
 }>;
 
-const KANBAN_LAYOUT: readonly KanbanSlot[] = [
+const KANBAN_COLUMNS: readonly KanbanSlot[] = [
   { key: 'business', label: 'Business Understanding', emoji: '🎯', color: '#059669',
-    paperIds: ['m01', 'm02', 'm03'] },
+    phases: ['business'] },
   { key: 'data', label: 'Data Understanding + Preparation', emoji: '🔍', color: '#0284c7',
-    paperIds: ['m04', 'm05', 'm06', 'm07', 'm09', 'm10', 'm11'] },
+    phases: ['data-understanding', 'data-prep'] },
   { key: 'modeling', label: 'Modeling', emoji: '🏗️', color: '#d97706',
-    paperIds: ['m08'] },
+    phases: ['modeling'] },
   { key: 'evaluation', label: 'Evaluation', emoji: '📊', color: '#ea580c',
-    paperIds: ['m12'] },
+    phases: ['evaluation'] },
   { key: 'deployment', label: 'Deployment', emoji: '🚀', color: '#0f172a',
-    paperIds: [], emptyHint: 'Pendiente · aún sin acuerdos comunitarios' },
+    phases: ['deployment'], emptyHint: 'Pendiente · aún sin acuerdos comunitarios' },
 ];
 
 export function InfografiaCanonico() {
@@ -82,22 +81,22 @@ export function InfografiaCanonico() {
     setSubTab('grafo');
   }, [setTab, setSubTab]);
 
-  // v5.0r · 5 columnas (Data merged) según KANBAN_LAYOUT curado.
-  // Override del frontmatter crispPhase para coherencia narrativa M01→M12.
-  const byId = new Map(papers.map((p) => [p.id, p]));
-  const phases = KANBAN_LAYOUT.map((slot) => ({
+  // v5.0s · 5 columnas derivadas de crispPhase (source aligned).
+  // Data Understanding + Data Preparation se fusionan en una sola columna.
+  const phases = KANBAN_COLUMNS.map((slot) => ({
     ...slot,
-    papers: slot.paperIds.map((id) => byId.get(id)).filter((p): p is NonNullable<typeof p> => Boolean(p)),
+    papers: papers.filter((p) => slot.phases.includes(p.crispPhase)),
   }));
 
-  // Tabla actores
+  // Tabla actores · papers prioritarios + concepto-puente al glosario
+  // v5.0s · alineado con M03=Estándares (OECD/CONPES), M08=Framework (BSC-s/RBM-GAC)
   const actores = [
     { rol: '🎓 Estudiante / Egresado', q: '¿Cómo recupero soberanía cognitiva?', papers: ['m02', 'm04', 'm06'], puente: 'Soberanía cognitiva · JTBD' },
-    { rol: '🎨 Docente Diseñador', q: '¿Cómo diseño bajo modelo CCA?', papers: ['m06', 'm08', 'm07'], puente: 'CCA · Crédito académico' },
+    { rol: '🎨 Docente Diseñador', q: '¿Cómo diseño bajo modelo CCA?', papers: ['m06', 'm03', 'm07'], puente: 'CCA · UDL · CDIO' },
     { rol: '🔬 Docente Investigador', q: '¿Cómo activo el ciclo Pasteur?', papers: ['m02', 'm07', 'm05'], puente: 'Pasteur · 5 vías Clark' },
-    { rol: '🏛️ Director / Decanatura', q: '¿Cómo aterriza la gobernanza?', papers: ['m01', 'm03', 'm09'], puente: 'ACU-004-25 · BSC-S' },
-    { rol: '📊 Veedor / Auditor', q: '¿Cómo se cuestea y auditea?', papers: ['m10', 'm11', 'm09'], puente: 'RBM-GAC · Veeduría' },
-    { rol: '🚀 Diseñador política', q: '¿Cómo se despliega en 8 años?', papers: ['m12', 'm01', 'm08'], puente: 'PIIOM · CONPES 4069' },
+    { rol: '🏛️ Director / Decanatura', q: '¿Cómo aterriza la gobernanza?', papers: ['m01', 'm08', 'm09'], puente: 'ACU-004-25 · BSC-s · RBM-GAC' },
+    { rol: '📊 Veedor / Auditor', q: '¿Cómo se cuestea y auditea?', papers: ['m10', 'm11', 'm09'], puente: 'TDABC · NICSP · Veeduría' },
+    { rol: '🚀 Diseñador política', q: '¿Cómo se despliega en 8 años?', papers: ['m12', 'm01', 'm03'], puente: 'PIIOM · CONPES 4069 · OECD' },
   ];
 
   return (
