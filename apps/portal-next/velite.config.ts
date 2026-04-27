@@ -258,6 +258,50 @@ const reference = defineCollection({
     })),
 });
 
+// v5.0h · Concepto = átomo del Glosario Universal (cap-MI12 base conceptual).
+// Cada archivo content/glosario/con-*.md sigue el spec concepto-universal v5.2:
+// frontmatter SKOS + ISO 1087 + Pasteur quadrant + DDD facets + schema.org JSON-LD.
+// Schema MÍNIMO obligatorio: kd_id, kd_title, skos_prefLabel, skos_definition.
+// Todo lo demás opcional (la collection no falla si un átomo no tiene DDD facet).
+const concepto = defineCollection({
+  name: 'Concepto',
+  pattern: 'glosario/con-*.md',
+  schema: s
+    .object({
+      kd_id: s.string(),
+      kd_title: s.string(),
+      kd_type: s.string().default('glosario-universal'),
+      kd_status: s.string().optional(),
+      kd_version: s.string().optional(),
+      skos_prefLabel: s.string(),
+      skos_altLabel: s.array(s.string()).default([]),
+      skos_definition: s.string(),
+      skos_scopeNote: s.string().optional(),
+      skos_example: s.string().optional(),
+      skos_notation: s.string().optional(),
+      iso_subject_field: s.string().optional(),
+      iso_genus: s.string().optional(),
+      iso_differentia: s.string().optional(),
+      iso_term_status: s.string().optional(),
+      pasteur_quadrant: s.string().optional(),
+      cited_in: s.array(s.string()).default([]),
+      cited_count: s.number().default(0),
+      tags: s.array(s.string()).default([]),
+      body: s.markdown(),
+      toc: s.toc(),
+      slug: s.path(),
+    })
+    .transform((data) => {
+      // Slug del archivo: glosario/con-jtbd-christensen → con-jtbd-christensen
+      const id = data.slug.replace(/^glosario\//, '');
+      return {
+        ...data,
+        id,
+        href: `/glosario/${id}`,
+      };
+    }),
+});
+
 // Communities = organizational units (Gobierno + VRs + Facultades + Escuelas + ...)
 const community = defineCollection({
   name: 'Community',
@@ -334,6 +378,7 @@ export default defineConfig({
     community,
     note,
     reference,
+    concepto,
   },
   markdown: {
     gfm: true,
@@ -353,15 +398,22 @@ export default defineConfig({
         urlResolver: ({ filePath, heading }: { filePath: string; heading?: string; isEmbed: boolean }) => {
           // Quitar extensión .md/.mdx
           const noExt = filePath.replace(/\.(mdx?|md)$/i, '');
-          // Si es paper canónico m##: /canonico/m##
-          const mMatch = noExt.match(/(?:^|\/)(m\d{2})$/i);
           let url: string;
+          // Paper canónico m##: /canonico/m##
+          const mMatch = noExt.match(/(?:^|\/)(m\d{2})$/i);
+          // v5.0h · Concepto del Glosario Universal: con-* o glo-* → /glosario/<slug>
+          const conMatch = noExt.match(/(?:^|\/)(con-[a-z0-9-]+)$/i);
+          const gloMatch = noExt.match(/(?:^|\/)(glo-[a-z0-9-]+)$/i);
           if (mMatch) {
             url = `/canonico/${mMatch[1].toLowerCase()}`;
+          } else if (conMatch) {
+            url = `/glosario/${conMatch[1].toLowerCase()}`;
+          } else if (gloMatch) {
+            // Compat retro: [[glo-*]] (legacy en M01-M12) también va al glosario
+            url = `/glosario/${gloMatch[1].toLowerCase()}`;
           } else if (noExt.startsWith('comunidades/')) {
             url = `/${noExt}`;
           } else {
-            // Fallback: ruta directa
             url = `/${noExt.replace(/^\//, '')}`;
           }
           return heading ? `${url}#${heading.replace(/^#/, '')}` : url;

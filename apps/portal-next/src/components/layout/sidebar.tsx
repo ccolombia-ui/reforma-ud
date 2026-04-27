@@ -366,6 +366,20 @@ export function Sidebar() {
                 <Network className="h-3.5 w-3.5" /> Grafo global
               </Link>
             </li>
+            {/* v5.0h · Glosario Universal — base conceptual independiente
+                de las investigaciones M01-M12. Vive en la biblioteca. */}
+            <li>
+              <Link
+                href="/glosario"
+                className={cn(
+                  'flex items-center gap-1.5 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
+                  pathname.startsWith('/glosario') && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+                )}
+              >
+                <BookMarked className="h-3.5 w-3.5" /> Glosario universal
+                <span className="ml-auto font-mono text-[9px] text-muted-foreground/70">M00</span>
+              </Link>
+            </li>
           </ul>
         </SectionToggle>
 

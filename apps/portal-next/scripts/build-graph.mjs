@@ -31,6 +31,14 @@ if (!fs.existsSync(GRAPHS_DIR)) fs.mkdirSync(GRAPHS_DIR, { recursive: true });
 const canonicPaper = JSON.parse(fs.readFileSync(path.join(VELITE_OUT, 'canonicPaper.json'), 'utf-8'));
 const community = JSON.parse(fs.readFileSync(path.join(VELITE_OUT, 'community.json'), 'utf-8'));
 const note = JSON.parse(fs.readFileSync(path.join(VELITE_OUT, 'note.json'), 'utf-8'));
+// v5.0h · Conceptos del Glosario Universal cargados desde Velite collection
+const concepto = (() => {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(VELITE_OUT, 'concepto.json'), 'utf-8'));
+  } catch {
+    return [];
+  }
+})();
 
 // vis-network color palette aligned to B.3 tokens
 const COLORS = {
@@ -50,6 +58,7 @@ const COLORS = {
   },
   note: { bg: '#f1f5f9', border: '#94a3b8', font: '#0f172a' },
   bridge: { bg: '#fef3c7', border: '#d97706', font: '#451a03' }, // canonical paper as bridge
+  concepto: { bg: '#1e3a8a', border: '#1e40af', font: '#ffffff' }, // glosario universal — azul oscuro
 };
 
 const RUTA_COLORS = {
@@ -74,6 +83,22 @@ function extractWikilinkTargets(body) {
     if (/^m\d{2}$/.test(t)) out.add(t);
   }
   WIKILINK_RE.lastIndex = 0;
+  return Array.from(out);
+}
+
+// v5.0h · extrae targets de conceptos del Glosario Universal.
+// El body de Velite ya viene como HTML (s.markdown() compila MD a HTML),
+// así que los [[con-*]] ya fueron transformados por wiki-link plugin
+// a `<a class="wikilink" href="/glosario/con-*">`. Parseamos el href.
+const GLOSARIO_HREF_RE = /href="\/glosario\/(con|glo)-([a-z0-9-]+?)(?:#[^"]*)?"/gi;
+function extractConceptoTargets(body) {
+  if (!body) return [];
+  const out = new Set();
+  let m;
+  while ((m = GLOSARIO_HREF_RE.exec(body)) !== null) {
+    out.add(`con-${m[2].toLowerCase()}`);
+  }
+  GLOSARIO_HREF_RE.lastIndex = 0;
   return Array.from(out);
 }
 
@@ -107,6 +132,31 @@ function buildGlobalGraph() {
       font: { color: '#ffffff', size: 14, face: 'Inter' },
       url: p.href,
     });
+    // v5.0h · papers que citan conceptos via wikilinks [[con-*]] o [[glo-*]]
+    for (const conId of extractConceptoTargets(p.body)) {
+      addEdge(p.id, conId, 'invoca');
+    }
+  }
+
+  // v5.0h · Conceptos del Glosario Universal — base conceptual M00
+  for (const c of concepto) {
+    nodes.push({
+      id: c.id,
+      label: c.skos_prefLabel?.slice(0, 24) ?? c.kd_title?.slice(0, 24) ?? c.id,
+      title: `${c.skos_prefLabel ?? c.kd_title}\n[concepto]\n\n${(c.skos_definition ?? '').slice(0, 200)}`,
+      group: 'concepto',
+      shape: 'diamond',
+      size: 14,
+      color: { background: COLORS.concepto.bg, border: COLORS.concepto.border },
+      font: { color: COLORS.concepto.font, size: 11, face: 'Inter' },
+      url: c.href,
+    });
+    // Si el frontmatter tiene cited_in con [[sec-MI12-NN]], no creamos arista
+    // (sec-MI12 son secciones del libro, no del portal). Las aristas concepto→
+    // concepto se derivan del propio body (extractConceptoTargets).
+    for (const conId of extractConceptoTargets(c.body)) {
+      if (conId !== c.id) addEdge(c.id, conId, 'relacionado');
+    }
   }
 
   // Comunidades
@@ -157,6 +207,8 @@ function buildGlobalGraph() {
     for (const cite of n.cites ?? []) addEdge(n.slug, cite, 'cita');
     // wikilinks extraidos
     for (const wl of extractWikilinkTargets(n.body)) addEdge(n.slug, wl, 'wikilink');
+    // v5.0h · notas que invocan conceptos del glosario
+    for (const conId of extractConceptoTargets(n.body)) addEdge(n.slug, conId, 'invoca');
   }
 
   return { nodes, edges, meta: { generatedAt: new Date().toISOString(), counts: { nodes: nodes.length, edges: edges.length } } };

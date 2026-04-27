@@ -1,0 +1,97 @@
+---
+kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:cidc
+kd_title: "CIDC — Centro de Investigaciones y Desarrollo Científico UDFJC"
+kd_type: glosario-universal
+kd_parent: urn:aleia:udfjc:reforma:cap-mi12
+kd_status: APPROVED
+kd_version: v1.0.0
+kd_created: 2026-04-26
+kd_responsible: urn:aleia:hu:ccolombia
+kd_transcluible_en: [sec-MI12-01, sec-MI12-12]
+
+tupla_tipo: DEFINITION
+tupla_concepto: "CIDC UDFJC"
+
+skos_prefLabel: "CIDC — Centro de Investigaciones y Desarrollo Científico"
+skos_altLabel: ["Centro de Investigaciones UDFJC", "CIDC"]
+skos_hiddenLabel: ["cidc", "centro-investigaciones-udfjc"]
+skos_definition: "Dependencia institucional UDFJC actual responsable de gestionar la actividad investigativa: Banco de Proyectos UDFJC, convocatorias internas, soporte a grupos COL en Minciencias, articulación con el SNCTI. Bajo el ACU-004-25 reformado, sus funciones se redistribuyen progresivamente entre la Vicerrectoría de Investigación-Creación e Innovación (coordinación de Institutos) y los Institutos mismos (operación investigativa). Durante el Período de Transición coexiste con la nueva estructura. Es el actor institucional que debe verificar la matriz de trazabilidad PIIOM (DT-MI12-01-02) — qué proyectos vigentes UDFJC están alineados con las 5 misiones nacionales."
+skos_scopeNote: "El CIDC es estructura previa al ACU-004-25. Su transformación durante 2025-2029 hacia la nueva arquitectura (VRICI + Institutos + CABAs investigativas) es parte del Plan de Implementación. Hasta esa transformación, sigue siendo el punto de contacto operativo para la actividad investigativa UDFJC."
+skos_example: "El CIDC gestiona el Banco de Proyectos UDFJC, las convocatorias internas anuales, la actualización de CvLAC docentes y GrupLAC institucional, y la articulación con convocatorias MinCiencias."
+skos_notation: "CIDC"
+
+iso_designation_type: term
+iso_definition_type: extensional
+iso_genus: "Dependencia institucional universitaria de gestión investigativa"
+iso_differentia: "Estructura UDFJC pre-ACU-004-25 en transición hacia nueva arquitectura VRICI + Institutos"
+iso_subject_field: "Estructura administrativa UDFJC / Gestión investigativa universitaria"
+iso_term_status: preferred
+iso_standardized_by: "UDFJC — estructura administrativa pre-ACU-004-25"
+
+align_schema_type: ResearchOrganization
+concept_subtype: DEFINITION
+pasteur_quadrant: EDISON
+pasteur_axis_use: 1.0
+pasteur_axis_knowledge: 0.2
+
+concepto_capabilities: [NORMATIVE]
+
+concepto_facet_normative:
+  norm_legal_ref: "Acuerdos previos UDFJC sobre estructura administrativa"
+  norm_article: "Múltiples Acuerdos previos"
+  norm_jurisdiction: "UDFJC"
+  norm_effective_date: ""
+  norm_legal_force: BINDING
+  norm_compliance_scope: "Estructura institucional UDFJC durante transición"
+
+applicable_domain: "UDFJC durante Período de Transición 2025-2029"
+assumptions: ["El CIDC continúa operando hasta consolidación de Institutos VRICI"]
+breaks_at: ["Cuando los Institutos asuman plenamente las funciones investigativas (2027-2029)"]
+extends_to: "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+
+recorded_at: "2026-04-26"
+valid_from: ""
+lifecycle_state: ACTIVE_TRANSITORIO
+concepto_anchor_chain_status: LINEAR
+
+"@type": ResearchOrganization
+
+tupla__relations:
+  - rel_id: rel-cidc-related-vrici
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Funciones CIDC se redistribuyen progresivamente a VRICI + Institutos durante transición"
+
+cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
+cited_count: 1
+
+tags: [glosario-universal, concepto-institucional, cidc, gestion-investigativa, m01-corpus, audit-v1]
+cssclasses: [keter-iso, concepto-universal, concepto-normativo, layer-disenador]
+---
+
+# CIDC — Centro de Investigaciones y Desarrollo Científico UDFJC
+
+## Definición operativa
+
+Dependencia institucional UDFJC actual responsable de gestionar la **actividad investigativa**: Banco de Proyectos, convocatorias internas, soporte a grupos COL Minciencias, articulación SNCTI. Bajo ACU-004-25 reformado, sus funciones se redistribuyen progresivamente a [[con-vicerrectoria-investigacion-creacion-innovacion|VRICI]] + Institutos.
+
+## Funciones actuales (transición)
+
+| Función | Detalle |
+|---|---|
+| Banco de Proyectos | Repositorio investigativo institucional |
+| Convocatorias internas | Anuales, articuladas con PND |
+| GrupLAC + CvLAC | Actualización institucional |
+| SNCTI | Articulación con convocatorias MinCiencias |
+
+## Lenguaje ubicuo asociado
+
+CIDC · Banco de Proyectos UDFJC · GrupLAC · CvLAC · Investigación institucional.
+
+## Notas de aplicación
+
+- **Estado transitorio**: ACTIVE durante 2025-2029; sus funciones migrarán a VRICI + Institutos.
+- **Conexión M01 DT-01-02**: el CIDC + VRICI son responsables de la matriz de trazabilidad PIIOM (qué proyectos vigentes están alineados con 5 misiones).
