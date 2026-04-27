@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { ListTree, BookOpen, Image as ImageIcon, Scale } from 'lucide-react';
 import { canonicPaper } from '#site/content';
 import { OutlinePanel } from '@/components/biblioteca/outline-panel';
@@ -67,6 +66,24 @@ function RefBlock({
     violet: 'border-violet-500/40 bg-violet-500/5 text-violet-700 dark:text-violet-300',
     rose: 'border-rose-500/40 bg-rose-500/5 text-rose-700 dark:text-rose-300',
   }[tone];
+
+  // v4.5e — Click scrollea a la primera ocurrencia del wikilink en el body.
+  // Si no se encuentra, deja el botón visual pero sin acción (avoid broken `#ref-{id}`).
+  const scrollToFirst = useCallback((id: string) => {
+    if (typeof document === 'undefined') return;
+    // Buscar primer <a class="wikilink"> cuyo href contenga el id (ej. /comunidades/.../glo-jtbd)
+    const escaped = id.replaceAll('"', '\\"');
+    const el =
+      document.querySelector<HTMLElement>(`a.wikilink[href*="${escaped}"]`) ??
+      document.querySelector<HTMLElement>(`a[href*="${escaped}"]`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Pulse highlight ~1.5s para descubribilidad
+      el.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'rounded');
+      setTimeout(() => el.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'rounded'), 1500);
+    }
+  }, []);
+
   return (
     <details className="group" open={ids.length <= 6}>
       <summary className="list-none cursor-pointer flex items-center gap-1.5 px-1 py-0.5 text-[10px] uppercase tracking-wide text-muted-foreground/80 hover:text-foreground rounded">
@@ -77,17 +94,19 @@ function RefBlock({
       <ul className="mt-1 space-y-0.5">
         {ids.map((id) => (
           <li key={id}>
-            <Link
-              href={`#ref-${id}`}
+            <button
+              type="button"
+              onClick={() => scrollToFirst(id)}
+              title={`Ir a la primera mención: ${id}`}
               className={cn(
-                'flex items-center gap-1 rounded-md border-l-2 px-2 py-0.5 text-[10px] hover:opacity-80 transition-opacity',
+                'w-full text-left flex items-center gap-1 rounded-md border-l-2 px-2 py-0.5 text-[10px] hover:opacity-80 transition-opacity',
                 toneClass,
               )}
             >
               <span className="truncate font-medium">
                 {id.replace(/^(glo|fig|acu|estatuto|res|conpes|ley|decreto)-/, '').replaceAll('-', ' ')}
               </span>
-            </Link>
+            </button>
           </li>
         ))}
       </ul>
