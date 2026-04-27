@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { Suspense, useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Command } from 'cmdk';
-import { Search, Hash, BookMarked, FileText, Network, Library, Sparkles, Sun, Moon, Code2, Home, GraduationCap, Clock } from 'lucide-react';
+import { Search, Hash, BookMarked, FileText, Network, Library, Sparkles, Sun, Moon, Code2, Home, GraduationCap, Clock, Pin, Layers } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { canonicPaper, community, note } from '#site/content';
+import { useDocTabs } from '@/lib/doc-tabs';
 
 const HISTORY_KEY = 'reforma-ud:cmdk-history';
 const HISTORY_MAX = 5;
@@ -120,6 +121,11 @@ export function CommandPalette() {
           Sin resultados.
         </Command.Empty>
 
+        {/* v5.0a — Pestañas abiertas (lista actual del workspace) */}
+        <Suspense fallback={null}>
+          <OpenTabsGroup onSelect={() => setOpen(false)} />
+        </Suspense>
+
         {/* G17 — Recientes (últimos 5 docs visitados) */}
         {!query && history.length > 0 && (
           <Command.Group heading="Recientes" className="text-xs">
@@ -233,5 +239,41 @@ export function CommandPalette() {
         </span>
       </div>
     </Command.Dialog>
+  );
+}
+
+/**
+ * v5.0a · Group "Pestañas abiertas" en cmd-K.
+ * Aislado en un client component bajo Suspense porque useDocTabs usa useSearchParams.
+ */
+function OpenTabsGroup({ onSelect }: Readonly<{ onSelect: () => void }>) {
+  const router = useRouter();
+  const { tabs, activeTabId } = useDocTabs();
+  if (tabs.length <= 1) return null;
+  return (
+    <Command.Group heading="Pestañas abiertas" className="text-xs">
+      {tabs.map((tab) => (
+        <Command.Item
+          key={`tab-${tab.id}`}
+          value={`pestaña ${tab.title} ${tab.id}`}
+          onSelect={() => {
+            router.push(tab.href);
+            onSelect();
+          }}
+          className="cmdk-item"
+        >
+          <Layers className={`h-4 w-4 ${tab.id === activeTabId ? 'text-primary' : 'text-muted-foreground'}`} />
+          <div className="min-w-0 flex-1 flex items-center gap-1">
+            {tab.pinned && <Pin className="h-3 w-3 text-primary shrink-0" />}
+            <span className="truncate">{tab.title}</span>
+            {tab.kind === 'paper' && tab.number !== undefined && (
+              <span className="ml-auto font-mono text-[10px] text-muted-foreground">
+                M{String(tab.number).padStart(2, '0')}
+              </span>
+            )}
+          </div>
+        </Command.Item>
+      ))}
+    </Command.Group>
   );
 }
