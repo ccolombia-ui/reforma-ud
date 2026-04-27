@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useMemo } from 'react';
-import { ListTree, BookOpen, Image as ImageIcon, Scale } from 'lucide-react';
+import { ListTree, BookOpen, Image as ImageIcon, Scale, ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
 import { canonicPaper } from '#site/content';
 import { OutlinePanel } from '@/components/biblioteca/outline-panel';
 import type { ActiveDoc } from '@/lib/active-doc';
@@ -28,8 +28,40 @@ export function EsquemaTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
   const figuras = custom.figuras ?? [];
   const normas = custom.normas ?? [];
 
+  // v5.0j Gap 1 · Botones collapse-all / expand-all para los <details>
+  // colapsables del body del documento. Trabajan sobre el DOM via querySelectorAll.
+  const toggleAllSections = useCallback((open: boolean) => {
+    if (typeof document === 'undefined') return;
+    const all = document.querySelectorAll<HTMLDetailsElement>('details.md-collapsible');
+    all.forEach((el) => { el.open = open; });
+  }, []);
+
   return (
     <div className="flex h-full flex-col">
+      {/* v5.0j · barra de acciones rápidas sobre el doc */}
+      {doc && (
+        <div className="flex items-center gap-1 border-b border-sidebar-border px-2 py-1.5">
+          <button
+            type="button"
+            onClick={() => toggleAllSections(false)}
+            title="Colapsar todas las secciones del documento"
+            className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] text-muted-foreground hover:bg-accent/40 hover:text-foreground"
+          >
+            <ChevronsDownUp className="h-3 w-3" />
+            Colapsar
+          </button>
+          <button
+            type="button"
+            onClick={() => toggleAllSections(true)}
+            title="Expandir todas las secciones del documento"
+            className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] text-muted-foreground hover:bg-accent/40 hover:text-foreground"
+          >
+            <ChevronsUpDown className="h-3 w-3" />
+            Expandir
+          </button>
+        </div>
+      )}
+
       {/* TOC ocupa la mayor parte (es lo que se usa más a menudo) */}
       <div className="flex-1 min-h-0 overflow-hidden">
         <OutlinePanel doc={doc} />

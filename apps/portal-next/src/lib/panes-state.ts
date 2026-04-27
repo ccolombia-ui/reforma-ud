@@ -19,7 +19,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { canonicPaper, note, community } from '#site/content';
+import { canonicPaper, note, community, concepto } from '#site/content';
 
 const STORAGE_KEY = 'reforma-ud:panes';
 const LEGACY_PANE_B = 'reforma-ud:pane-b';
@@ -31,13 +31,17 @@ export type PaneState = {
   id: PaneId;
   tabs: string[];
   activeTabId: string | null;
+  /** v5.0j Gap 2 · stack de tabIds visitados en este pane (Obsidian back/forward).
+   *  history[historyIdx] === activeTabId siempre. */
+  history?: string[];
+  historyIdx?: number;
 };
 
 export type SecondaryTab = {
   id: string;
   href: string;
   title: string;
-  kind: 'paper' | 'note' | 'community' | 'unknown';
+  kind: 'paper' | 'note' | 'community' | 'concepto' | 'unknown';
   number?: number;
 };
 
@@ -93,6 +97,19 @@ function resolveTab(id: string): SecondaryTab {
       return { id: paper.id, href: paper.href, title: paper.title, kind: 'paper', number: paper.number };
     }
   }
+  // v5.0j Gap 4 · conceptos del glosario son nodos válidos del grafo y
+  // pueden abrirse en pane derecho como cualquier otro doc.
+  if (/^(con|glo)-/i.test(id)) {
+    const c = concepto.find((x) => x.id === id.toLowerCase());
+    if (c) {
+      return {
+        id: c.id,
+        href: c.href,
+        title: c.skos_prefLabel ?? c.kd_title,
+        kind: 'concepto',
+      };
+    }
+  }
   const decoded = decodeURIComponent(id);
   const noteDoc = note.find((n) => n.slug === decoded);
   if (noteDoc) {
@@ -134,22 +151,32 @@ export function usePanesState() {
     writeState(next);
   }, []);
 
+  // v5.0j Gap 2 · push al stack history del pane (Obsidian back/forward).
+  // Si idx < length-1, trunca la rama futura (comportamiento browser).
+  function pushHistoryFn(cur: PaneState, tabId: string): PaneState {
+    const hist = cur.history ?? [];
+    const idx = cur.historyIdx ?? hist.length - 1;
+    if (hist[idx] === tabId) return { ...cur, activeTabId: tabId };
+    const truncated = hist.slice(0, idx + 1);
+    const newHist = [...truncated, tabId];
+    return { ...cur, activeTabId: tabId, history: newHist, historyIdx: newHist.length - 1 };
+  }
+
   /** Abre un tab en un pane específico. Si el pane no existe, lo crea. */
   const openTabInPane = useCallback((paneId: PaneId, tabId: string) => {
     setPanes((prev) => {
       const idx = prev.findIndex((p) => p.id === paneId);
       let next: PaneState[];
       if (idx < 0) {
-        next = [...prev, { id: paneId, tabs: [tabId], activeTabId: tabId }];
+        next = [...prev, { id: paneId, tabs: [tabId], activeTabId: tabId, history: [tabId], historyIdx: 0 }];
       } else {
         const cur = prev[idx];
         const exists = cur.tabs.includes(tabId);
         next = [...prev];
-        next[idx] = {
+        next[idx] = pushHistoryFn({
           ...cur,
           tabs: exists ? cur.tabs : [...cur.tabs, tabId],
-          activeTabId: tabId,
-        };
+        }, tabId);
       }
       writeState(next);
       return next;
@@ -204,11 +231,61 @@ export function usePanesState() {
       const idx = prev.findIndex((p) => p.id === paneId);
       if (idx < 0 || !prev[idx].tabs.includes(tabId)) return prev;
       const next = [...prev];
-      next[idx] = { ...next[idx], activeTabId: tabId };
+      next[idx] = pushHistoryFn(next[idx], tabId);
       writeState(next);
       return next;
     });
   }, []);
+
+  // v5.0j Gap 2 · Back/Forward por pane (Obsidian-style).
+  // Pane A es URL-driven (router.back()); estos manejan los panes B+.
+  // El back/forward NO afecta el `tabs` array — solo cambia activeTabId.
+  const goBack = useCallback((paneId: PaneId) => {
+    setPanes((prev) => {
+      const idx = prev.findIndex((p) => p.id === paneId);
+      if (idx < 0) return prev;
+      const cur = prev[idx];
+      const hist = cur.history ?? [];
+      const hIdx = cur.historyIdx ?? hist.length - 1;
+      if (hIdx <= 0) return prev;
+      const newIdx = hIdx - 1;
+      const next = [...prev];
+      next[idx] = { ...cur, historyIdx: newIdx, activeTabId: hist[newIdx] };
+      writeState(next);
+      return next;
+    });
+  }, []);
+
+  const goForward = useCallback((paneId: PaneId) => {
+    setPanes((prev) => {
+      const idx = prev.findIndex((p) => p.id === paneId);
+      if (idx < 0) return prev;
+      const cur = prev[idx];
+      const hist = cur.history ?? [];
+      const hIdx = cur.historyIdx ?? hist.length - 1;
+      if (hIdx >= hist.length - 1) return prev;
+      const newIdx = hIdx + 1;
+      const next = [...prev];
+      next[idx] = { ...cur, historyIdx: newIdx, activeTabId: hist[newIdx] };
+      writeState(next);
+      return next;
+    });
+  }, []);
+
+  const canGoBack = useCallback((paneId: PaneId): boolean => {
+    const p = panes.find((x) => x.id === paneId);
+    if (!p) return false;
+    const hIdx = p.historyIdx ?? (p.history?.length ?? 1) - 1;
+    return hIdx > 0;
+  }, [panes]);
+
+  const canGoForward = useCallback((paneId: PaneId): boolean => {
+    const p = panes.find((x) => x.id === paneId);
+    if (!p) return false;
+    const hIdx = p.historyIdx ?? (p.history?.length ?? 1) - 1;
+    const len = p.history?.length ?? 0;
+    return hIdx < len - 1;
+  }, [panes]);
 
   const closeTab = useCallback((paneId: PaneId, tabId: string) => {
     setPanes((prev) => {
@@ -321,6 +398,11 @@ export function usePanesState() {
     closePane,
     reorderTabs,
     moveTab,
+    // v5.0j Gap 2 · navegación back/forward por pane
+    goBack,
+    goForward,
+    canGoBack,
+    canGoForward,
   } as const;
 }
 

@@ -185,6 +185,10 @@ function WorkspaceShellInner({ children }: Readonly<{ children: React.ReactNode 
           closePane={panesState.closePane}
           reorderTabs={panesState.reorderTabs}
           splitToNewPane={panesState.splitToNewPane}
+          goBack={panesState.goBack}
+          goForward={panesState.goForward}
+          canGoBack={panesState.canGoBack}
+          canGoForward={panesState.canGoForward}
           focused={focused}
           setFocused={setFocused}
         >
@@ -198,7 +202,8 @@ function WorkspaceShellInner({ children }: Readonly<{ children: React.ReactNode 
 }
 
 function MultiPaneLayout({
-  children, panes, activateTab, closeTab, closePane, reorderTabs, splitToNewPane, focused, setFocused,
+  children, panes, activateTab, closeTab, closePane, reorderTabs, splitToNewPane,
+  goBack, goForward, canGoBack, canGoForward, focused, setFocused,
 }: Readonly<{
   children: React.ReactNode;
   panes: ReturnType<typeof usePanesState>['panes'];
@@ -207,6 +212,10 @@ function MultiPaneLayout({
   closePane: ReturnType<typeof usePanesState>['closePane'];
   reorderTabs: ReturnType<typeof usePanesState>['reorderTabs'];
   splitToNewPane: ReturnType<typeof usePanesState>['splitToNewPane'];
+  goBack: ReturnType<typeof usePanesState>['goBack'];
+  goForward: ReturnType<typeof usePanesState>['goForward'];
+  canGoBack: ReturnType<typeof usePanesState>['canGoBack'];
+  canGoForward: ReturnType<typeof usePanesState>['canGoForward'];
   focused: string;
   setFocused: (p: 'a' | 'b') => void;
 }>) {
@@ -254,6 +263,10 @@ function MultiPaneLayout({
             closePane={() => closePane(pane.id)}
             reorderTabs={(from, to) => reorderTabs(pane.id, from, to)}
             splitToNewPane={(tabId) => splitToNewPane(tabId)}
+            onBack={() => goBack(pane.id)}
+            onForward={() => goForward(pane.id)}
+            canBack={canGoBack(pane.id)}
+            canForward={canGoForward(pane.id)}
           />
         ))}
       </Group>
@@ -264,6 +277,7 @@ function MultiPaneLayout({
 function PaneSegment({
   paneId, tabs, activeTab, activeTabId, defaultSize, focused, onFocus,
   activateTab, closeTab, closePane, reorderTabs, splitToNewPane,
+  onBack, onForward, canBack, canForward,
 }: Readonly<{
   paneId: PaneId;
   tabs: ReturnType<typeof usePanesState>['panes'][number]['tabsResolved'];
@@ -277,6 +291,10 @@ function PaneSegment({
   closePane: () => void;
   reorderTabs: (fromIdx: number, toIdx: number) => void;
   splitToNewPane: (tabId: string) => void;
+  onBack: () => void;
+  onForward: () => void;
+  canBack: boolean;
+  canForward: boolean;
 }>) {
   return (
     <>
@@ -306,6 +324,10 @@ function PaneSegment({
             reorderTabs={reorderTabs}
             onClosePane={closePane}
             onSplitToNewPane={splitToNewPane}
+            onBack={onBack}
+            onForward={onForward}
+            canBack={canBack}
+            canForward={canForward}
           />
         </PaneFocusable>
       </Panel>

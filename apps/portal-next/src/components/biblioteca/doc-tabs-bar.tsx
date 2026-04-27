@@ -1,7 +1,8 @@
 'use client';
 
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { X, Pin, PinOff, BookMarked, FileText, Building2, ChevronLeft, ChevronRight, ChevronDown, SplitSquareHorizontal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { X, Pin, PinOff, BookMarked, FileText, Building2, ChevronLeft, ChevronRight, ChevronDown, SplitSquareHorizontal, ArrowLeft, ArrowRight } from 'lucide-react';
 import { usePanesState } from '@/lib/panes-state';
 import {
   SortableContext,
@@ -44,10 +45,17 @@ export function DocTabsBar() {
 
 function DocTabsBarInner() {
   const mounted = useMounted();
+  const router = useRouter();
   const {
     tabs, activeTabId,
     activateTab, closeTab, closeOthers, closeToRight, togglePin,
   } = useDocTabs();
+
+  // v5.0j Gap 2 · Back/Forward del browser. Pane A es URL-driven, así que
+  // usamos history nativo. Atajos Alt+← / Alt+→ ya son default del browser
+  // pero los botones explícitos dan descubribilidad Obsidian-style.
+  const goBack = useCallback(() => router.back(), [router]);
+  const goForward = useCallback(() => router.forward(), [router]);
 
   // Atajos Ctrl+Tab / Ctrl+Shift+Tab / Ctrl+W (preservados de v3.4)
   useEffect(() => {
@@ -112,12 +120,33 @@ function DocTabsBarInner() {
 
   const tabIds = useMemo(() => tabs.map((t) => t.id), [tabs]);
 
+  // v5.0j Gap 2 · Strip se muestra siempre que haya tabs (los botones
+  // Back/Forward son útiles incluso con 1 tab abierta).
   if (!mounted || tabs.length === 0) return null;
-  if (tabs.length === 1 && !tabs[0].pinned) return null;
 
   return (
     <div className="no-print sticky top-14 z-20 -mx-4 md:-mx-8 mb-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/75">
       <div className="mx-auto flex w-full max-w-7xl items-center gap-1 px-4 md:px-8 py-1.5">
+        {/* v5.0j Gap 2 · Botones Back/Forward (pane A · navegación browser) */}
+        <button
+          type="button"
+          onClick={goBack}
+          aria-label="Atrás"
+          title="Doc anterior · Alt+←"
+          className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={goForward}
+          aria-label="Adelante"
+          title="Doc siguiente · Alt+→"
+          className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground mr-1 border-r pr-1"
+        >
+          <ArrowRight className="h-3.5 w-3.5" />
+        </button>
+
         {/* Chevron izquierda · solo si overflow */}
         {overflowState.hasLeft && (
           <button

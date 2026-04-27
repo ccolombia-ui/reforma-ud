@@ -3,7 +3,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import { useSortable, SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { X, BookMarked, FileText, Building2, SplitSquareHorizontal } from 'lucide-react';
+import { X, BookMarked, FileText, Building2, SplitSquareHorizontal, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { canonicPaper } from '#site/content';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
@@ -30,6 +30,10 @@ export function PaneShell({
   reorderTabs,
   onClosePane,
   onSplitToNewPane,
+  onBack,
+  onForward,
+  canBack = false,
+  canForward = false,
 }: Readonly<{
   paneId: PaneId;
   tabs: SecondaryTab[];
@@ -40,6 +44,10 @@ export function PaneShell({
   reorderTabs: (fromIdx: number, toIdx: number) => void;
   onClosePane: () => void;
   onSplitToNewPane?: (tabId: string) => void;
+  onBack?: () => void;
+  onForward?: () => void;
+  canBack?: boolean;
+  canForward?: boolean;
 }>) {
   const dropId = `pane-${paneId}-drop`;
   const { isOver, setNodeRef: setDropRef } = useDroppable({ id: dropId });
@@ -61,6 +69,33 @@ export function PaneShell({
           <Badge variant="secondary" className="font-mono text-[9px] shrink-0 mr-1">
             {paneLetter}
           </Badge>
+          {/* v5.0j Gap 2 · Back/Forward por pane (Obsidian-style) */}
+          <button
+            type="button"
+            onClick={onBack}
+            disabled={!canBack}
+            aria-label={`Atrás en pane ${paneLetter}`}
+            title="Doc anterior"
+            className={cn(
+              'shrink-0 inline-flex h-6 w-6 items-center justify-center rounded text-muted-foreground',
+              canBack ? 'hover:bg-accent hover:text-foreground' : 'opacity-30 cursor-not-allowed',
+            )}
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={onForward}
+            disabled={!canForward}
+            aria-label={`Adelante en pane ${paneLetter}`}
+            title="Doc siguiente"
+            className={cn(
+              'shrink-0 inline-flex h-6 w-6 items-center justify-center rounded text-muted-foreground mr-1',
+              canForward ? 'hover:bg-accent hover:text-foreground' : 'opacity-30 cursor-not-allowed',
+            )}
+          >
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
           <SortableContext items={tabIds} strategy={horizontalListSortingStrategy}>
             <div className="flex items-center gap-0.5 flex-1 min-w-0">
               {tabs.map((tab) => (

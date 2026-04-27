@@ -298,6 +298,9 @@ const concepto = defineCollection({
         ...data,
         id,
         href: `/glosario/${id}`,
+        // v5.0j · post-procesa [@key] APA en el body de cada concepto también
+        // (los conceptos pueden citar fuentes en su sección "Fuente primaria").
+        body: transformApaCites(data.body),
       };
     }),
 });

@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Network } from 'vis-network';
 import { DataSet } from 'vis-data';
-import { Loader2, ExternalLink, RefreshCw } from 'lucide-react';
+import { Loader2, ExternalLink, RefreshCw, SplitSquareHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { usePanesState } from '@/lib/panes-state';
 
 type GraphNode = {
   id: string;
@@ -41,6 +42,14 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<GraphNode | null>(null);
+  const panesState = usePanesState();
+
+  // v5.0j Gap 4 · click en nodo NO reemplaza el doc actual; abre en pane
+  // derecho (pane B). Si el nodo es el doc activo, no-op (ya está abierto).
+  const openInRightPane = useCallback((nodeId: string) => {
+    if (nodeId === paperId) return; // ya estamos viendo este doc
+    panesState.openInNextPane(nodeId);
+  }, [panesState, paperId]);
 
   // Fetch global graph una sola vez
   useEffect(() => {
@@ -141,10 +150,11 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
       }
     });
 
+    // v5.0j Gap 4 · doubleClick abre el nodo en pane derecho (preserva el
+    // doc actual en pane A). Antes hacía window.location.href que reemplazaba.
     network.on('doubleClick', (params: { nodes: string[] }) => {
       if (params.nodes.length > 0) {
-        const node = subgraph.nodes.find((n) => n.id === params.nodes[0]);
-        if (node?.url) window.location.href = node.url;
+        openInRightPane(params.nodes[0]);
       }
     });
 
@@ -153,7 +163,7 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
       network.destroy();
       networkRef.current = null;
     };
-  }, [subgraph]);
+  }, [subgraph, openInRightPane]);
 
   return (
     <div className="flex h-full flex-col">
@@ -202,11 +212,24 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
             </p>
           )}
           {selected.url && (
-            <Button asChild size="sm" variant="outline" className="gap-1.5 h-7 text-xs">
-              <Link href={selected.url}>
-                Abrir <ExternalLink className="h-3 w-3" />
-              </Link>
-            </Button>
+            <div className="flex gap-1.5">
+              <Button
+                size="sm"
+                variant="outline"
+                className="gap-1.5 h-7 text-xs flex-1"
+                onClick={() => openInRightPane(selected.id)}
+                disabled={selected.id === paperId}
+                title="Abrir en pane derecho (preserva el doc actual)"
+              >
+                <SplitSquareHorizontal className="h-3 w-3" />
+                A la derecha
+              </Button>
+              <Button asChild size="sm" variant="ghost" className="gap-1.5 h-7 text-xs flex-1">
+                <Link href={selected.url}>
+                  Reemplazar <ExternalLink className="h-3 w-3" />
+                </Link>
+              </Button>
+            </div>
           )}
         </div>
       )}

@@ -57,7 +57,11 @@ export function OutlinePanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
       <div className="border-b border-sidebar-border px-3 py-2">
         <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-muted-foreground">
           <FileText className="h-3 w-3" />
-          {doc.kind === 'paper' && doc.number !== undefined ? `M${String(doc.number).padStart(2, '0')}` : 'Nota'}
+          {doc.kind === 'paper' && doc.number !== undefined
+            ? `M${String(doc.number).padStart(2, '0')}`
+            : doc.kind === 'concepto'
+              ? 'Concepto'
+              : 'Nota'}
         </div>
         <p className="mt-0.5 text-xs font-semibold leading-tight line-clamp-2">{doc.title}</p>
       </div>

@@ -1,8 +1,10 @@
 'use client';
 
 import parse, { domToReact, Element, type DOMNode, type HTMLReactParserOptions } from 'html-react-parser';
+import { useMemo } from 'react';
 import { WikiLinkPreview } from '@/components/biblioteca/wikilink-preview';
 import { ApaCite } from '@/components/biblioteca/apa-cite';
+import { wrapHeadingsInCollapsibles } from '@/lib/collapsible-headings';
 
 /**
  * MDXWithHoverPreview — drop-in para MDXContent que activa hover-preview en:
@@ -39,6 +41,12 @@ const options: HTMLReactParserOptions = {
   },
 };
 
-export function MDXWithHoverPreview({ code }: Readonly<{ code: string }>) {
-  return <>{parse(code, options)}</>;
+export function MDXWithHoverPreview({ code, collapsible = true }: Readonly<{ code: string; collapsible?: boolean }>) {
+  // v5.0j Gap 1 · headings h2-h4 envueltos en <details> nativos para
+  // colapsabilidad Obsidian-style. Memoized — no re-procesa en cada render.
+  const transformed = useMemo(
+    () => (collapsible ? wrapHeadingsInCollapsibles(code) : code),
+    [code, collapsible],
+  );
+  return <>{parse(transformed, options)}</>;
 }

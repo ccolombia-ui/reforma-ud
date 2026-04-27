@@ -1,19 +1,19 @@
 'use client';
 
-import { canonicPaper, note } from '#site/content';
+import { canonicPaper, note, concepto } from '#site/content';
 
 export type ActiveDoc = {
   id: string;
   href: string;
   title: string;
-  kind: 'paper' | 'note';
+  kind: 'paper' | 'note' | 'concepto';
   number?: number;
   toc?: Array<{ title: string; url: string; items?: Array<{ title: string; url: string }> }>;
 };
 
 /**
  * Resuelve el doc activo desde el pathname.
- * Soporta /canonico/m## y /comunidades/.../slug
+ * Soporta /canonico/m##, /comunidades/.../slug, /glosario/<conId>.
  */
 export function getActiveDocFromPath(pathname: string | null | undefined): ActiveDoc | null {
   if (!pathname) return null;
@@ -34,6 +34,22 @@ export function getActiveDocFromPath(pathname: string | null | undefined): Activ
           toc: paper.toc,
         };
       }
+    }
+  }
+
+  // /glosario/<conId> · v5.0j Gap 3 — el Esquema del right panel ahora
+  // resuelve TOC de conceptos también, no solo de papers/notas.
+  if (clean.startsWith('/glosario/')) {
+    const id = clean.replace('/glosario/', '');
+    const c = concepto.find((x) => x.id === id);
+    if (c) {
+      return {
+        id: c.id,
+        href: c.href,
+        title: c.skos_prefLabel ?? c.kd_title,
+        kind: 'concepto',
+        toc: c.toc,
+      };
     }
   }
 
