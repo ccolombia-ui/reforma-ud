@@ -410,39 +410,73 @@ function SidebarResizableNav({
   setWidth: (n: number) => void;
   children: React.ReactNode;
 }>) {
-  const startRef = useRef<{ x: number; w: number } | null>(null);
+  const startRef = useRef<{ x: number; w: number; el: HTMLButtonElement; pointerId: number } | null>(null);
   const [dragging, setDragging] = useState(false);
 
-  const onPointerMove = useCallback((e: PointerEvent) => {
-    if (!startRef.current) return;
+  /* v5.0e fix · drag stuck que rompía el toggle del sidebar.
+   * Causa raíz: window-level listeners no se disparaban si el pointer
+   * salía del viewport antes del soltar (p. ej. arrastrar más allá del
+   * borde del browser). Resultado: dragging=true permanente, cursor
+   * col-resize globalmente, y CUALQUIER mousemove subsiguiente movía el
+   * sidebar — bloqueando interacciones (sub-items, toggles, scroll).
+   *
+   * Fix SOTA: setPointerCapture sobre el handle. El browser GARANTIZA
+   * que pointermove/up se entregan al mismo elemento aunque el cursor
+   * salga del viewport. Listeners viven en el elemento (no en window),
+   * cleanup automático al unmount. */
+
+  const cleanup = useCallback(() => {
+    if (startRef.current) {
+      try {
+        startRef.current.el.releasePointerCapture(startRef.current.pointerId);
+      } catch { /* element ya removido */ }
+    }
+    startRef.current = null;
+    setDragging(false);
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  }, []);
+
+  const onPointerDown = useCallback((e: React.PointerEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const el = e.currentTarget;
+    startRef.current = { x: e.clientX, w: width, el, pointerId: e.pointerId };
+    setDragging(true);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    try {
+      el.setPointerCapture(e.pointerId);
+    } catch { /* navegador antiguo, fallback graceful */ }
+  }, [width]);
+
+  const onPointerMove = useCallback((e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!startRef.current || startRef.current.pointerId !== e.pointerId) return;
     const dx = e.clientX - startRef.current.x;
     setWidth(startRef.current.w + dx);
   }, [setWidth]);
 
-  const onPointerUp = useCallback(() => {
-    startRef.current = null;
-    setDragging(false);
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-    document.body.style.cursor = '';
-    document.body.style.userSelect = '';
-  }, [onPointerMove]);
+  const onPointerUp = useCallback((e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!startRef.current || startRef.current.pointerId !== e.pointerId) return;
+    cleanup();
+  }, [cleanup]);
 
-  const onPointerDown = useCallback((e: React.PointerEvent) => {
-    e.preventDefault();
-    startRef.current = { x: e.clientX, w: width };
-    setDragging(true);
-    document.body.style.cursor = 'col-resize';
-    document.body.style.userSelect = 'none';
-    window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerup', onPointerUp);
-  }, [width, onPointerMove, onPointerUp]);
+  // Recovery: ESC durante drag o blur del window → cleanup forzado
+  useEffect(() => {
+    if (!dragging) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') cleanup();
+    }
+    function onBlur() { cleanup(); }
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('blur', onBlur);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('blur', onBlur);
+    };
+  }, [dragging, cleanup]);
 
   // Cleanup en desmontaje
-  useEffect(() => () => {
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-  }, [onPointerMove, onPointerUp]);
+  useEffect(() => () => { cleanup(); }, [cleanup]);
 
   return (
     <aside
@@ -459,11 +493,14 @@ function SidebarResizableNav({
         {children}
       </div>
 
-      {/* Drag handle visible · v4.4 mejorado */}
+      {/* Drag handle visible · v5.0e — pointer capture (no más drag stuck) */}
       <button
         type="button"
         aria-label="Ajustar ancho del sidebar (doble-clic: reset)"
         onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
         onDoubleClick={() => setWidth(288)}
         title="Arrastrar para ajustar · Doble-clic: reset a 288px"
         className={cn(

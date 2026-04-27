@@ -482,27 +482,29 @@ textarea:focus-visible,
 }
 
 /* Aplicar global a sidebars + main para uniformidad */
-nav[data-sidebar] [class*="overflow-y-auto"],
-aside[data-right-panel] [class*="overflow-y-auto"],
+/* v5.0e fix · selectores genéricos [data-sidebar] (nav o aside) — antes
+   apuntaba sólo a nav, pero sidebar.tsx usa <aside data-sidebar> desde v4.4 */
+[data-sidebar] [class*="overflow-y-auto"],
+[data-right-panel] [class*="overflow-y-auto"],
 main {
   scrollbar-width: thin;
   scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
 }
-nav[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar,
-aside[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar {
+[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar,
+[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar {
   width: 4px;
 }
-nav[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar-track,
-aside[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar-track {
+[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar-track,
+[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar-track {
   background: transparent;
 }
-nav[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar-thumb,
-aside[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar-thumb {
+[data-sidebar] [class*="overflow-y-auto"]::-webkit-scrollbar-thumb,
+[data-right-panel] [class*="overflow-y-auto"]::-webkit-scrollbar-thumb {
   background: hsl(var(--muted-foreground) / 0.15);
   border-radius: 9999px;
 }
-nav[data-sidebar] [class*="overflow-y-auto"]:hover::-webkit-scrollbar-thumb,
-aside[data-right-panel] [class*="overflow-y-auto"]:hover::-webkit-scrollbar-thumb {
+[data-sidebar] [class*="overflow-y-auto"]:hover::-webkit-scrollbar-thumb,
+[data-right-panel] [class*="overflow-y-auto"]:hover::-webkit-scrollbar-thumb {
   background: hsl(var(--muted-foreground) / 0.35);
 }
 

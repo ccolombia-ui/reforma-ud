@@ -12,7 +12,10 @@ import { PresaberesCallout } from '@/components/biblioteca/presaberes-callout';
 import { DeliberacionPanel } from '@/components/biblioteca/deliberacion-panel';
 import { ComparativeSplit, CompareButton } from '@/components/workspace/workspace-shell';
 import { PrintButton } from '@/components/print-button';
-import { SplitWorkArea } from '@/components/biblioteca/split-work-area';
+// v5.0e · SplitWorkArea removed — el grafo local del paper ahora vive
+// exclusivamente en `Conexiones › Grafo` del right panel. Render duplicado
+// en el centro era herencia v4.0/v4.4 que ya no aporta valor con el shell
+// rebalanceado de v4.5.
 import { canonicPaper, note } from '#site/content';
 import type { Metadata } from 'next';
 
@@ -58,7 +61,6 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
 
   return (
     <ComparativeSplit>
-    <SplitWorkArea paperId={mid}>
       <article className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
       {/* Tabs estilo Obsidian (sólo si hay >1 tab) */}
       <DocTabsBar />
@@ -172,7 +174,6 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
         </main>
       </div>
     </article>
-    </SplitWorkArea>
     </ComparativeSplit>
   );
 }

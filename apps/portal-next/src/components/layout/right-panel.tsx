@@ -60,39 +60,58 @@ export function RightPanel() {
     return getActiveDocFromPath(pathname);
   }, [focusedPane, paneB.activeTab, pathname]);
 
-  // v4.4 — Drag-resize del right panel (handle en borde IZQUIERDO)
-  const dragStart = useRef<{ x: number; w: number } | null>(null);
+  // v5.0e — Drag-resize del right panel (handle en borde IZQUIERDO).
+  // Mismo fix que sidebar: setPointerCapture en lugar de window listeners
+  // para evitar drag-stuck cuando el pointer sale del viewport antes de
+  // soltar. Listeners viven en el button (cleanup automático).
+  const dragStart = useRef<{ x: number; w: number; el: HTMLButtonElement; pointerId: number } | null>(null);
   const [dragging, setDragging] = useState(false);
 
-  const onPointerMove = useCallback((e: PointerEvent) => {
-    if (!dragStart.current) return;
+  const cleanupRightDrag = useCallback(() => {
+    if (dragStart.current) {
+      try { dragStart.current.el.releasePointerCapture(dragStart.current.pointerId); }
+      catch { /* element ya removido */ }
+    }
+    dragStart.current = null;
+    setDragging(false);
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  }, []);
+
+  const onPointerDown = useCallback((e: React.PointerEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const el = e.currentTarget;
+    dragStart.current = { x: e.clientX, w: width, el, pointerId: e.pointerId };
+    setDragging(true);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    try { el.setPointerCapture(e.pointerId); } catch { /* navegador antiguo */ }
+  }, [width]);
+
+  const onPointerMove = useCallback((e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!dragStart.current || dragStart.current.pointerId !== e.pointerId) return;
     const dx = dragStart.current.x - e.clientX; // invertido: arrastrar a la izq = más ancho
     setWidth(dragStart.current.w + dx);
   }, [setWidth]);
 
-  const onPointerUp = useCallback(() => {
-    dragStart.current = null;
-    setDragging(false);
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-    document.body.style.cursor = '';
-    document.body.style.userSelect = '';
-  }, [onPointerMove]);
+  const onPointerUp = useCallback((e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!dragStart.current || dragStart.current.pointerId !== e.pointerId) return;
+    cleanupRightDrag();
+  }, [cleanupRightDrag]);
 
-  const onPointerDown = useCallback((e: React.PointerEvent) => {
-    e.preventDefault();
-    dragStart.current = { x: e.clientX, w: width };
-    setDragging(true);
-    document.body.style.cursor = 'col-resize';
-    document.body.style.userSelect = 'none';
-    window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerup', onPointerUp);
-  }, [width, onPointerMove, onPointerUp]);
+  useEffect(() => {
+    if (!dragging) return;
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') cleanupRightDrag(); }
+    function onBlur() { cleanupRightDrag(); }
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('blur', onBlur);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('blur', onBlur);
+    };
+  }, [dragging, cleanupRightDrag]);
 
-  useEffect(() => () => {
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-  }, [onPointerMove, onPointerUp]);
+  useEffect(() => () => { cleanupRightDrag(); }, [cleanupRightDrag]);
 
   // v4.5b D2 — Si activeDoc desaparece y estamos en una tab que requiere doc activo
   // (refs o comunidad), fallback a asistente. Conexiones soporta no-doc (Evolución).
@@ -190,12 +209,15 @@ export function RightPanel() {
         dragging && 'select-none',
       )}
     >
-      {/* Drag handle borde izquierdo · v4.4 mejorado · grip dots visibles */}
+      {/* Drag handle borde izquierdo · v5.0e — pointer capture (no más drag stuck) */}
       <button
         type="button"
         aria-label="Ajustar ancho del panel asistente (doble-clic: reset)"
         title="Arrastrar para ajustar · Doble-clic: reset a 320px"
         onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
         onDoubleClick={() => setWidth(320)}
         className={cn(
           'group absolute top-0 left-0 h-full w-1.5 cursor-col-resize z-30 transition-colors',
@@ -217,56 +239,78 @@ export function RightPanel() {
         </span>
       )}
       <div className="sticky top-14 flex h-[calc(100vh-3.5rem)] flex-col">
-        <div className="flex items-center gap-2 border-b border-sidebar-border px-4 py-3">
-          <Sparkles className="h-4 w-4 text-primary" />
-          <span className="font-semibold">Asistente</span>
-          {pending.length > 0 && (
-            <Badge variant="secondary" className="ml-auto text-[10px]">
-              {pending.length}
-            </Badge>
-          )}
-        </div>
+        {/* v5.0e · Vertical icon rail (SOTA Linear/Notion/Obsidian) + content area.
+            Antes era 4 tabs horizontales arriba que truncaban labels en panel ~320px.
+            Ahora 4 iconos verticales a la izquierda con label en row activa,
+            pin del modo activo via bg-accent + border-l-2 primary.
+            La sección activa muestra header con label + body completo. */}
+        <div className="flex flex-1 min-h-0 flex-row">
+          <nav
+            aria-label="Modos del panel"
+            className="flex w-11 shrink-0 flex-col items-center gap-0.5 border-r border-sidebar-border py-2"
+          >
+            <RailIcon
+              active={tab === 'conexiones'}
+              onClick={() => setTab('conexiones')}
+              Icon={Compass}
+              label="Conexiones"
+            />
+            <RailIcon
+              active={tab === 'refs'}
+              onClick={() => setTab('refs')}
+              Icon={Link2}
+              label="Refs"
+              disabled={!activeDoc}
+              badge={backlinkCount > 0 ? backlinkCount : undefined}
+            />
+            <RailIcon
+              active={tab === 'comunidad'}
+              onClick={() => setTab('comunidad')}
+              Icon={Users}
+              label="Comunidad"
+              disabled={!activeDoc}
+            />
+            <RailIcon
+              active={tab === 'asistente'}
+              onClick={() => setTab('asistente')}
+              Icon={Sparkles}
+              label="Asistente"
+            />
+            {pending.length > 0 && (
+              <span
+                className="mt-auto mb-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[9px] font-mono px-1.5 py-0.5"
+                title={`${pending.length} misiones pendientes`}
+              >
+                {pending.length}
+              </span>
+            )}
+          </nav>
 
-        <div className="grid grid-cols-4 border-b border-sidebar-border">
-          {/* v4.5b D2 — 4 tabs: Conexiones (esquema/grafo/evolución) · Refs · Comunidad · Asistente */}
-          <TabButton
-            active={tab === 'conexiones'}
-            onClick={() => setTab('conexiones')}
-            Icon={Compass}
-            label="Conexiones"
-          />
-          <TabButton
-            active={tab === 'refs'}
-            onClick={() => setTab('refs')}
-            Icon={Link2}
-            label="Refs"
-            disabled={!activeDoc}
-            badge={backlinkCount > 0 ? backlinkCount : undefined}
-          />
-          <TabButton
-            active={tab === 'comunidad'}
-            onClick={() => setTab('comunidad')}
-            Icon={Users}
-            label="Comunidad"
-            disabled={!activeDoc}
-          />
-          <TabButton
-            active={tab === 'asistente'}
-            onClick={() => setTab('asistente')}
-            Icon={Sparkles}
-            label="Asistente"
-          />
-        </div>
-
-        <div className="flex-1 overflow-hidden">
-          {tab === 'conexiones' && <ConexionesTab doc={activeDoc} />}
-          {tab === 'refs' && <RefsPanel doc={activeDoc} />}
-          {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
-          {tab === 'asistente' && (
-            <div className="h-full overflow-hidden p-3">
-              <ChatPane copSlug={copSlug} pathname={pathname} />
+          <div className="flex-1 min-w-0 flex flex-col">
+            <div className="flex items-center gap-2 border-b border-sidebar-border px-3 py-2.5">
+              {tab === 'conexiones' && <Compass className="h-4 w-4 text-primary" />}
+              {tab === 'refs' && <Link2 className="h-4 w-4 text-primary" />}
+              {tab === 'comunidad' && <Users className="h-4 w-4 text-primary" />}
+              {tab === 'asistente' && <Sparkles className="h-4 w-4 text-primary" />}
+              <span className="font-semibold text-sm">
+                {tab === 'conexiones' && 'Conexiones'}
+                {tab === 'refs' && 'Referencias'}
+                {tab === 'comunidad' && 'Comunidad'}
+                {tab === 'asistente' && 'Asistente'}
+              </span>
             </div>
-          )}
+
+            <div className="flex-1 overflow-hidden">
+              {tab === 'conexiones' && <ConexionesTab doc={activeDoc} />}
+              {tab === 'refs' && <RefsPanel doc={activeDoc} />}
+              {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
+              {tab === 'asistente' && (
+                <div className="h-full overflow-hidden p-3">
+                  <ChatPane copSlug={copSlug} pathname={pathname} />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         <div className="border-t border-sidebar-border px-3 py-2 text-[10px] text-muted-foreground">
@@ -283,9 +327,11 @@ export function RightPanel() {
 }
 
 /* ============================================================
- * TabButton — botón unificado de las 4 tabs del panel
+ * RailIcon · v5.0e — botón cuadrado en el icon rail vertical del right panel.
+ * SOTA pattern: pin visual del modo activo via bg-accent + border-l-2 primary.
+ * Tooltip muestra label completo (no truncado como en panel angosto).
  * ============================================================ */
-function TabButton({
+function RailIcon({
   active,
   onClick,
   Icon,
@@ -302,25 +348,34 @@ function TabButton({
 }>) {
   return (
     <button
+      type="button"
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
       className={cn(
-        'relative flex flex-col items-center justify-center gap-0.5 border-b-2 px-2 py-2 text-[10px] font-medium transition-colors',
+        'group relative inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors',
         active && !disabled
-          ? 'border-primary text-primary'
+          ? 'bg-accent text-primary shadow-sm border-l-2 border-primary'
           : disabled
-            ? 'border-transparent text-muted-foreground/40 cursor-not-allowed'
-            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-accent/40',
+            ? 'text-muted-foreground/40 cursor-not-allowed'
+            : 'text-muted-foreground hover:text-foreground hover:bg-accent/40',
       )}
+      aria-label={label}
+      aria-pressed={active}
       title={disabled ? `${label} (requiere documento activo)` : label}
     >
-      <Icon className="h-3.5 w-3.5" />
-      <span>{label}</span>
+      <Icon className="h-4 w-4" />
       {badge !== undefined && (
-        <Badge variant="secondary" className="absolute top-1 right-1 h-3.5 min-w-3.5 px-1 text-[8px]">
+        <Badge
+          variant="secondary"
+          className="absolute -top-0.5 -right-0.5 h-3.5 min-w-3.5 px-1 text-[8px]"
+        >
           {badge}
         </Badge>
       )}
+      {/* Tooltip flotante a la derecha del icon, tipo VS Code activity bar */}
+      <span className="pointer-events-none absolute left-full ml-2 z-50 whitespace-nowrap rounded-md border bg-popover px-2 py-1 text-[10px] text-popover-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+        {label}
+      </span>
     </button>
   );
 }
