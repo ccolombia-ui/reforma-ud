@@ -147,41 +147,23 @@ export function InfografiaCanonico() {
           DIAGNÓSTICO <span className="arrow">→</span> EVIDENCIA GLOBAL <span className="arrow">→</span> PROSPECTIVA OPERATIVA
         </div>
         <div className="tesis-sub">
-          M01-M03 dan <strong style={{ color: '#fcd34d' }}>mandato + ciclo + estándares globales</strong> (qué resolver y cómo medir).
-          M04-M07 + M09-M11 traen <strong style={{ color: '#fcd34d' }}>la evidencia y datos de IES líderes</strong> (JTBD, 21 IES, CCA, BPAs, NICSP, TDABC, datasets MEN).
-          M08 ensambla el <strong style={{ color: '#fcd34d' }}>framework de monitoreo BSC-S + RBM-GAC</strong>.
-          M12 plantea <strong style={{ color: '#fcd34d' }}>5 escenarios prospectivos para deliberación comunitaria</strong>.
-          Deployment queda abierto · pendiente de acuerdos.
+          <strong style={{ color: '#fcd34d' }}>M01</strong> encontró un mandato vinculante (CONPES 4069 + PIIOM + ACU-004-25) que obliga transformación misional, no solo ajustes cosméticos.
+          <strong style={{ color: '#fcd34d' }}> M02</strong> identificó <strong style={{ color: '#fcd34d' }}>niveles de madurez por misiones</strong> (N1 frágil → N4 transformativa) y un ciclo virtuoso ΩMT que mueve la institución de un nivel al siguiente.
+          <strong style={{ color: '#fcd34d' }}> M03</strong> mapeó el sistema global de estándares (OECD 2030 + UDL 3.0 + ABET + CDIO + ISO 21001) que opera como parámetro técnico de calidad.
+          <strong style={{ color: '#fcd34d' }}> M04</strong> reveló los jobs-to-be-done reales de cada actor UDFJC (estudiantes, docentes, directores) con outcome statements ODI.
+          <strong style={{ color: '#fcd34d' }}> M05</strong> documentó <strong style={{ color: '#fcd34d' }}>la tendencia global del campus como living-lab</strong> para emprendimientos transformativos (21 IES líderes: Aalto, Twente, MIT, Stanford, IIT-Madras…).
+          <strong style={{ color: '#fcd34d' }}> M06</strong> modeló el Crédito Académico CCA articulando carga estudiantil con carga docente bajo TDABC.
+          <strong style={{ color: '#fcd34d' }}> M07</strong> destiló <strong style={{ color: '#fcd34d' }}>21 buenas prácticas activadoras</strong> (BPAs) que disparan el ciclo en cualquier Escuela.
+          <strong style={{ color: '#fcd34d' }}> M08</strong> ensambló el framework BSC-s × RBM-GAC × CRISP-DM con 86 preguntas-indicador y cadena causal P4→P1.
+          <strong style={{ color: '#fcd34d' }}> M09-M11</strong> aterrizó la operación en NICSP (presupuesto público), TDABC (costeo por actividad) y datasets MEN (SNIES + OLE + SPADIES).
+          <strong style={{ color: '#fcd34d' }}> M12</strong> sintetizó <strong style={{ color: '#fcd34d' }}>5 escenarios prospectivos S0-S5</strong> para deliberación comunitaria — desde AS-IS (IUCA≈8) hasta ΩMT pleno (IUCA≈100, ROI año 8-9).
+          Deployment queda abierto · pendiente de acuerdos comunitarios.
         </div>
       </div>
 
-      {/* SECTION: 5 FASES CRISP-DM (Data Understanding + Preparation merged) */}
-      <h2>Las 5 Fases CRISP-DM · 12 Papers Encadenados</h2>
-      <div className="si">// Data Understanding + Preparation se fusionan (mismo dataset MEN/SNIES + mismo flujo ETL); Deployment queda pendiente · sin acuerdos comunitarios aún</div>
-      <div className="stack">
-        {phases.map((phase) => (
-          <div key={phase.key} className="stk" style={{ borderLeft: `3px solid ${phase.color}` }}>
-            <div className="stk-icon">{phase.emoji}</div>
-            <div className="stk-name">{phase.label}</div>
-            <div className="stk-tech">
-              {phase.papers.length === 0
-                ? '— sin papers —'
-                : phase.papers.map((p) => `M${String(p.number).padStart(2, '0')}`).join(' · ')}
-            </div>
-            <div className="stk-bpa">
-              {phase.papers.length === 0 && phase.emptyHint ? (
-                <span className="stk-empty">{phase.emptyHint}</span>
-              ) : (
-                phase.papers.map((p) => (
-                  <Link key={p.id} href={p.href} className="stk-link" title={p.title}>
-                    M{String(p.number).padStart(2, '0')} · {PAPER_QUESTIONS[p.id] ?? p.title.slice(0, 36)}
-                  </Link>
-                ))
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* v5.0t · sección "Las 5 Fases CRISP-DM" eliminada: el Kanban
+          de abajo cumple la misma función con UX más rica (cards con
+          M## badge + pregunta + botones Ir directo / Ventana derecha). */}
 
       {/* 2-COL CHART BOXES */}
       <h2>Mapa de Actores · qué leer según tu rol</h2>
@@ -423,19 +405,8 @@ const INFOGRAFIA_CSS = `
 .infografia-root table.tbl tr:last-child td { border-bottom: none; }
 .infografia-root table.tbl tr:nth-child(even) { background: var(--bg-soft); }
 
-.infografia-root .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55rem; margin: 0.4rem 0; }
-@media (max-width: 900px) { .infografia-root .stack { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .infografia-root .stack { grid-template-columns: 1fr; } }
-.infografia-root .stk { border-radius: 7px; padding: 0.6rem 0.7rem; border: 1px solid var(--border-card); background: var(--bg-card); }
-.infografia-root .stk-icon { font-size: 16pt; line-height: 1; }
-.infografia-root .stk-name { font-size: 9pt; font-weight: 700; color: var(--text-card); margin: 0.3rem 0 0.15rem; }
-.infografia-root .stk-tech { font-size: 7pt; color: var(--muted-card); font-family: 'Courier New', monospace; margin-bottom: 0.3rem; }
-.infografia-root .stk-bpa { font-size: 7.5pt; color: var(--pur-d); display: flex; flex-direction: column; gap: 0.15rem; }
-.dark .infografia-root .stk-bpa { color: var(--pur-l); }
-.infografia-root .stk-link { color: inherit; text-decoration: none; line-height: 1.35; }
-.infografia-root .stk-link:hover { text-decoration: underline; }
-/* v5.0r · color del border-left ahora viene inline desde phase.color */
-.infografia-root .stk-empty { font-style: italic; color: var(--muted-card); font-size: 7pt; }
+/* v5.0t · CSS de .stack/.stk-* eliminado: la sección 5 fases CRISP-DM se removió
+   (redundante con el Kanban). El Kanban es la única vista de los M##. */
 
 .infografia-root .paper-pill { display: inline-block; font-family: 'Courier New', monospace; font-size: 7pt; font-weight: 700; padding: 0.1rem 0.35rem; border: 1px solid var(--pur); color: var(--pur-d); border-radius: 4px; margin: 0 0.15rem 0.15rem 0; text-decoration: none; }
 .infografia-root .paper-pill:hover { background: var(--pur); color: white; }

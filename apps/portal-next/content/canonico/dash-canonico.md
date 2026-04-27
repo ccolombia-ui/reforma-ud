@@ -27,12 +27,12 @@ flowchart LR
         M05[M05<br/>BMK-001 21 IES]
         M06[M06<br/>BMK-002 CCA]
         M07[M07<br/>21 BPAs]
-        M09[M09<br/>NICSP Presupuesto]
-        M10[M10<br/>TDABC]
-        M11[M11<br/>MEN Datasets]
     end
     subgraph MO ["🟠 Modeling"]
         M08[M08<br/>BSC-s × RBM-GAC × CRISP-DM]
+        M09[M09<br/>NICSP Presupuesto]
+        M10[M10<br/>TDABC]
+        M11[M11<br/>MEN Datasets]
     end
     subgraph EV ["🔴 Evaluation"]
         M12[M12<br/>5 escenarios · deliberación]
@@ -54,10 +54,10 @@ flowchart LR
     style M05 fill:#0284c7,stroke:#0f172a,color:#fff
     style M06 fill:#0284c7,stroke:#0f172a,color:#fff
     style M07 fill:#0284c7,stroke:#0f172a,color:#fff
-    style M09 fill:#0284c7,stroke:#0f172a,color:#fff
-    style M10 fill:#0284c7,stroke:#0f172a,color:#fff
-    style M11 fill:#0284c7,stroke:#0f172a,color:#fff
     style M08 fill:#d97706,stroke:#0f172a,color:#fff
+    style M09 fill:#d97706,stroke:#0f172a,color:#fff
+    style M10 fill:#d97706,stroke:#0f172a,color:#fff
+    style M11 fill:#d97706,stroke:#0f172a,color:#fff
     style M12 fill:#ea580c,stroke:#0f172a,color:#fff
     style EMPTY fill:#1e293b,stroke:#475569,color:#94a3b8,stroke-dasharray: 5 5
 ```
