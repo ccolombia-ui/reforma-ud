@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import wikiLinkPlugin from '@flowershow/remark-wiki-link';
+import remarkRejoinWikilinksInTables from './src/lib/remark-rejoin-wikilinks-in-tables';
 import rehypeCallouts from 'rehype-callouts';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
@@ -408,6 +409,9 @@ export default defineConfig({
     // los plugins funcionan idéntico; solo apaga el TS check en build.
     remarkPlugins: ([
       remarkGfm,
+      // v5.0m · DESPUÉS de gfm (que parsea tablas), ANTES de wikiLinkPlugin:
+      // arregla wikilinks `[[X|Y]]` partidos por el `|` separador de columnas.
+      remarkRejoinWikilinksInTables,
       remarkMath,           // $...$ y $$...$$
       // @flowershow/remark-wiki-link 3.4 — SOTA Obsidian wikilinks + embeds
       [wikiLinkPlugin, {
