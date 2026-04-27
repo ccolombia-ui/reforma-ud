@@ -154,7 +154,7 @@ export function CommandPalette() {
             <Library className="h-4 w-4 text-muted-foreground" /> Canónico MI-12
           </Command.Item>
           <Command.Item value="grafo global" onSelect={() => go('/canonico/grafo')} className="cmdk-item">
-            <Network className="h-4 w-4 text-muted-foreground" /> Grafo global del corpus
+            <Network className="h-4 w-4 text-muted-foreground" /> Grafo semántico del corpus
           </Command.Item>
           <Command.Item value="comunidades hub" onSelect={() => go('/comunidades')} className="cmdk-item">
             <GraduationCap className="h-4 w-4 text-muted-foreground" /> Hub de Comunidades

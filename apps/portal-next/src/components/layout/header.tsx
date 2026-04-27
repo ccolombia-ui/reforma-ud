@@ -44,7 +44,7 @@ function MobileSidebarContent() {
     <nav className="p-4 space-y-2 text-sm">
       <Link href="/" className="block rounded px-2 py-1.5 hover:bg-accent">Inicio</Link>
       <Link href="/canonico" className="block rounded px-2 py-1.5 hover:bg-accent">Biblioteca</Link>
-      <Link href="/canonico/grafo" className="block rounded px-2 py-1.5 hover:bg-accent">Grafo global</Link>
+      <Link href="/canonico/grafo" className="block rounded px-2 py-1.5 hover:bg-accent">Grafo semántico</Link>
       <Link href="/mision" className="block rounded px-2 py-1.5 hover:bg-accent">Mi misión</Link>
       <div className="pt-2 mt-2 border-t">
         <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Comunidades</p>

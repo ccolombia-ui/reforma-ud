@@ -138,7 +138,7 @@ function ReformaCuanticaSection({
       >
         <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !effectiveOpen && '-rotate-90')} />
         <Atom className="h-3.5 w-3.5 text-primary/80" />
-        <span className="flex-1 text-left font-medium">Reforma Cuántica</span>
+        <span className="flex-1 text-left font-medium">Inv. Buenas prácticas</span>
         <span className="text-[9px] text-muted-foreground">{filtered.length}</span>
       </button>
       {effectiveOpen && (
@@ -483,7 +483,7 @@ export function Sidebar() {
       >
         <NavIcon href="/" label="Inicio" Icon={Home} isActive={pathname === '/'} />
         <NavIcon href="/canonico" label="Canónico · Biblioteca" Icon={Library} isActive={pathname.startsWith('/canonico') && pathname !== '/canonico/grafo'} />
-        <NavIcon href="/canonico/grafo" label="Grafo global del corpus" Icon={Network} isActive={pathname === '/canonico/grafo'} />
+        <NavIcon href="/canonico/grafo" label="Grafo semántico del corpus" Icon={Network} isActive={pathname === '/canonico/grafo'} />
         <div className="my-1 h-px w-8 bg-sidebar-border" />
         <NavIcon href="/comunidades" label="Comunidades · Hub" Icon={GraduationCap} isActive={pathname === '/comunidades'} />
         <NavIcon href="/comunidades/gobierno" label="Gobierno" Icon={Landmark} isActive={pathname.startsWith('/comunidades/gobierno')} />
@@ -539,7 +539,7 @@ export function Sidebar() {
 
       {/* Navegación principal */}
       <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-1.5 py-2 text-sm">
-        <SectionToggle id="canonico" emoji="📚" title="Canónico MI-12">
+        <SectionToggle id="canonico" emoji="📚" title="Biblioteca reforma·ud">
           <ul className="space-y-0.5">
             <li>
               <Link
@@ -565,7 +565,7 @@ export function Sidebar() {
                   pathname === '/canonico/grafo' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
                 )}
               >
-                <Network className="h-3.5 w-3.5" /> Grafo global
+                <Network className="h-3.5 w-3.5" /> Grafo semántico
               </Link>
             </li>
             {/* v5.0i · Glosario expandible (paridad con Reforma Cuántica).

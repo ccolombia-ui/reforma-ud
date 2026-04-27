@@ -59,10 +59,11 @@ export function ComunidadPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
 
   const pendingTasks: PendingTask[] = MOCK_PENDING.filter((_t) => doc.kind === 'paper');
 
-  const requestCoauthorUrl = `https://github.com/${REPO}/issues/new?` + new URLSearchParams({
-    template: 'request-coauthor.md',
-    title: `Co-autoría: ${doc.id.toUpperCase()}`,
-    body: `Solicito co-autoría sobre **${doc.title}** (${doc.id}).\n\nMotivación:\n\n_(describe tu interés / aporte propuesto)_\n\n— Solicitud generada desde reforma-ud.vercel.app`,
+  // v5.0n · Solicitud por correo electrónico (NO GitHub).
+  // Destinatario: ccmaderas@udistrital.edu.co (revisor editorial).
+  const requestCoauthorUrl = `mailto:ccmaderas@udistrital.edu.co?` + new URLSearchParams({
+    subject: `Solicitud de co-autoría: ${doc.id.toUpperCase()} · ${doc.title}`,
+    body: `Estimado(a) revisor(a),\n\nSolicito co-autoría sobre el documento "${doc.title}" (${doc.id}) del corpus reforma·ud.\n\nMotivación:\n\n[Describe aquí tu interés y aporte propuesto al documento]\n\nNombre completo:\nRol institucional UDFJC:\nUnidad/Programa:\n\nGracias.\n\n— Solicitud generada desde reforma-ud.vercel.app${doc.href}`,
   }).toString();
 
   return (
@@ -164,11 +165,13 @@ export function ComunidadPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
             </div>
           </div>
           <Button asChild size="sm" className="w-full gap-1.5 h-7 text-[11px]">
-            <a href={requestCoauthorUrl} target="_blank" rel="noopener noreferrer">
-              <UserPlus className="h-3 w-3" /> Abrir solicitud en GitHub
-              <ExternalLink className="h-2.5 w-2.5 opacity-70" />
+            <a href={requestCoauthorUrl}>
+              <UserPlus className="h-3 w-3" /> Enviar solicitud por correo
             </a>
           </Button>
+          <p className="mt-1.5 text-center text-[9px] text-muted-foreground">
+            ccmaderas@udistrital.edu.co
+          </p>
         </section>
       </div>
 

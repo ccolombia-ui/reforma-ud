@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { BookOpen, Hash } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { concepto } from '#site/content';
+import { concepto, dashboard } from '#site/content';
+import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -35,6 +36,9 @@ export default function GlosarioPage() {
   }
   const letters = Object.keys(byLetter).sort();
 
+  // v5.0n · Dashboard sourced from content/glosario/_dash-glosario-universal.md
+  const dash = dashboard.find((d) => d.id === 'glosario-universal');
+
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
       <header className="mb-8">
@@ -44,7 +48,7 @@ export default function GlosarioPage() {
           <Badge variant="secondary" className="text-[10px]">{conceptos.length} conceptos</Badge>
         </div>
         <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-          Glosario Universal
+          Glosario
         </h1>
         <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
           Corpus conceptual canónico de la reforma vinculante UDFJC. Cada concepto es un átomo modelado
@@ -52,6 +56,13 @@ export default function GlosarioPage() {
           relaciones tipadas que forman el grafo semántico de la reforma.
         </p>
       </header>
+
+      {/* v5.0n · Dashboard sourced from _dash-glosario-universal.md (vault) */}
+      {dash && (
+        <section className="mb-10 rounded-lg border bg-muted/20 px-6 py-5 prose-paper">
+          <MDXWithHoverPreview code={dash.body} collapsible={false} />
+        </section>
+      )}
 
       {/* Anchor nav A-Z */}
       <nav className="sticky top-16 z-10 mb-6 flex flex-wrap gap-1 rounded-lg border bg-background/95 px-2 py-2 backdrop-blur">

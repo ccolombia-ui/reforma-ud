@@ -24,13 +24,13 @@ export default function GrafoGlobalPage() {
           Canónico
         </Link>
         <span>/</span>
-        <span className="text-foreground">Grafo global</span>
+        <span className="text-foreground">Grafo semántico</span>
       </div>
 
       {/* Hero compacto */}
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div className="min-w-0">
-          <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">Grafo global del corpus</h1>
+          <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">Grafo semántico del corpus</h1>
           <p className="mt-1 max-w-3xl text-xs text-muted-foreground">
             Red de conocimiento: 12 papers M01-M12 + comunidades + notas.
             Filtros y categorías en el sidebar izquierdo.

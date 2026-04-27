@@ -11,6 +11,8 @@ import { ComprehensionInline } from '@/components/biblioteca/comprehension-inlin
 import { PresaberesCallout } from '@/components/biblioteca/presaberes-callout';
 import { DeliberacionPanel } from '@/components/biblioteca/deliberacion-panel';
 import { ComparativeSplit, CompareButton } from '@/components/workspace/workspace-shell';
+import { InfographicQuickstart, InfographicBadge } from '@/components/biblioteca/infographic-quickstart';
+import { getActiveDocFromPath } from '@/lib/active-doc';
 import { PrintButton } from '@/components/print-button';
 // v5.0e · SplitWorkArea removed — el grafo local del paper ahora vive
 // exclusivamente en `Conexiones › Grafo` del right panel. Render duplicado
@@ -66,9 +68,11 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
   // Backlinks: notas que citen este paper
   const backlinks = note.filter((n) => n.cites?.includes(mid));
 
-  return (
-    <ComparativeSplit>
-      <article className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
+  // v5.0n · Layout infografia-quickstart vs standard.
+  // El frontmatter `kd_doc_layout` lo activa el autor por paper.
+  const isInfographic = paper.kd_doc_layout === 'infografia-quickstart';
+  const article = (
+    <article className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
       {/* Tabs estilo Obsidian (sólo si hay >1 tab) */}
       <DocTabsBar />
       {/* Top nav */}
@@ -91,6 +95,7 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
               <span className={`tdd-${paper.status}`}>
                 {paper.status === 'red' ? '🔴 RED' : paper.status === 'yellow' ? '🟡 PR' : '🟢 LIVE'}
               </span>
+              {isInfographic && <InfographicBadge />}
             </div>
             <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
               {paper.title}
@@ -181,6 +186,18 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
         </main>
       </div>
     </article>
+  );
+
+  // Si es infografía-quickstart, layout 3-zone (TOC izq + body + grafo der).
+  // Si no, layout standard con ComparativeSplit (workspace shell N-pane).
+  const activeDoc = getActiveDocFromPath(`/canonico/${mid}`);
+  return isInfographic ? (
+    <InfographicQuickstart doc={activeDoc} paperId={mid}>
+      {article}
+    </InfographicQuickstart>
+  ) : (
+    <ComparativeSplit>
+      {article}
     </ComparativeSplit>
   );
 }

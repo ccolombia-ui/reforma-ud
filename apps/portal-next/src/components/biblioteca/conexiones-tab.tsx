@@ -61,8 +61,8 @@ export function ConexionesTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
         sectionKey="grafo"
         defaultOpen={false}
         Icon={Network}
-        label="Grafo"
-        subtitle={doc?.kind === 'paper' ? 'Vecindario semántico 1-hop' : 'Solo en papers'}
+        label="Grafo semántico"
+        subtitle={doc?.kind === 'paper' ? 'Vecindario 1-hop' : 'Solo en papers'}
         disabled={!doc || doc.kind !== 'paper'}
       >
         {doc?.kind === 'paper' ? (

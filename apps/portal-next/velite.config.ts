@@ -210,6 +210,10 @@ const canonicPaper = defineCollection({
       rutaClark: s.array(s.enum(['R1', 'R2', 'R3', 'R4', 'R5'])).default([]),
       status: s.enum(['red', 'yellow', 'green']).default('red'),
       tags: s.array(s.string()).default([]),
+      // v5.0n · Layout opcional. 'infografia-quickstart' activa una vista
+      // 3-zone (TOC izq + body + grafo local der) optimizada para principiantes
+      // que quieren un overview visual antes de entrar a profundidad.
+      kd_doc_layout: s.enum(['standard', 'infografia-quickstart']).default('standard'),
       sources: s
         .array(
           s.object({
@@ -278,6 +282,32 @@ const reference = defineCollection({
       ...data,
       href: `/biblio/${data.bibtex_key}`,
     })),
+});
+
+// v5.0n · Dashboard = archivo _dash-*.md con vista agregada de una collection
+// (glosario universal, biblioteca, etc.). Pattern: prefijo _dash-* para que
+// no colisione con átomos de la misma carpeta.
+const dashboard = defineCollection({
+  name: 'Dashboard',
+  pattern: ['glosario/dash-*.md', 'canonico/dash-*.md'],
+  schema: s
+    .object({
+      kd_id: s.string().optional(),
+      kd_title: s.string().optional(),
+      kd_type: s.string().default('dashboard'),
+      target_collection: s.string().optional(),
+      tags: s.array(s.string()).default([]),
+      body: s.markdown(),
+      slug: s.path(),
+    })
+    .transform((data) => {
+      const id = data.slug.replace(/^[a-z]+\//, '').replace(/^dash-/, '');
+      return {
+        ...data,
+        id,
+        body: transformApaCites(sanitizeHtmlPatterns(data.body)),
+      };
+    }),
 });
 
 // v5.0h · Concepto = átomo del Glosario Universal (cap-MI12 base conceptual).
@@ -401,6 +431,7 @@ export default defineConfig({
     note,
     reference,
     concepto,
+    dashboard,
   },
   markdown: {
     gfm: true,
