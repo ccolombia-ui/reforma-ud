@@ -26,21 +26,49 @@ import { useCallback } from 'react';
 import { usePanesState } from '@/lib/panes-state';
 import { useRightPanel, useConexionesSubTab } from '@/lib/ui-state';
 
-// v5.0q · pregunta narrativa por paper (storytelling M01→M12)
+// v5.0r · pregunta narrativa por paper (storytelling M01→M12)
+// Nota: m03 ↔ m08 quedan swapeados respecto al título físico del .mdx para
+// alinear la mental-model del usuario (M03=Estándares, M08=Framework).
+// El badge M## queda como el único locator visible (sin título) por instrucción.
 const PAPER_QUESTIONS: Record<string, string> = {
   m01: '¿Qué se nos pide hacer y por qué? El mandato.',
   m02: '¿Cómo otras universidades saltaron de N1 a N4?',
-  m03: '¿Con qué framework medimos el progreso?',
+  m03: '¿Con qué estándares globales nos alineamos?',
   m04: '¿Qué necesita realmente cada actor UDFJC?',
   m05: '¿Qué hacen las 21 IES líderes mundiales?',
   m06: '¿Cómo modelamos el crédito académico CCA?',
   m07: '¿Qué prácticas concretas activan el ciclo?',
-  m08: '¿Con qué estándares globales nos alineamos?',
+  m08: '¿Con qué framework medimos el progreso?',
   m09: '¿Cómo presupuestamos bajo NICSP pública?',
   m10: '¿Cuánto cuesta cada actividad académica?',
   m11: '¿Qué dice la realidad de los datos MEN?',
-  m12: '¿Cuál es la prospectiva por escenarios 8 años?',
+  m12: '¿Cuáles son los 5 escenarios para deliberación comunitaria?',
 };
+
+// v5.0r · layout narrativo curado del Kanban (overridea frontmatter crispPhase).
+// Decisión: una sola fuente de verdad para la disposición CRISP-DM
+// (en lugar de tocar 12 .mdx). Reversible si se sincroniza después.
+type KanbanSlot = Readonly<{
+  key: string;
+  label: string;
+  emoji: string;
+  color: string;
+  paperIds: readonly string[];
+  emptyHint?: string;
+}>;
+
+const KANBAN_LAYOUT: readonly KanbanSlot[] = [
+  { key: 'business', label: 'Business Understanding', emoji: '🎯', color: '#059669',
+    paperIds: ['m01', 'm02', 'm03'] },
+  { key: 'data', label: 'Data Understanding + Preparation', emoji: '🔍', color: '#0284c7',
+    paperIds: ['m04', 'm05', 'm06', 'm07', 'm09', 'm10', 'm11'] },
+  { key: 'modeling', label: 'Modeling', emoji: '🏗️', color: '#d97706',
+    paperIds: ['m08'] },
+  { key: 'evaluation', label: 'Evaluation', emoji: '📊', color: '#ea580c',
+    paperIds: ['m12'] },
+  { key: 'deployment', label: 'Deployment', emoji: '🚀', color: '#0f172a',
+    paperIds: [], emptyHint: 'Pendiente · aún sin acuerdos comunitarios' },
+];
 
 export function InfografiaCanonico() {
   const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
@@ -54,15 +82,13 @@ export function InfografiaCanonico() {
     setSubTab('grafo');
   }, [setTab, setSubTab]);
 
-  // 6 fases CRISP-DM con sus papers
-  const phases = [
-    { key: 'business', label: 'Business Understanding', emoji: '🎯', color: '#059669', papers: papers.filter((p) => p.crispPhase === 'business') },
-    { key: 'data-understanding', label: 'Data Understanding', emoji: '🔍', color: '#0284c7', papers: papers.filter((p) => p.crispPhase === 'data-understanding') },
-    { key: 'data-prep', label: 'Data Preparation', emoji: '🧪', color: '#7c3aed', papers: papers.filter((p) => p.crispPhase === 'data-prep') },
-    { key: 'modeling', label: 'Modeling', emoji: '🏗️', color: '#d97706', papers: papers.filter((p) => p.crispPhase === 'modeling') },
-    { key: 'evaluation', label: 'Evaluation', emoji: '📊', color: '#ea580c', papers: papers.filter((p) => p.crispPhase === 'evaluation') },
-    { key: 'deployment', label: 'Deployment', emoji: '🚀', color: '#0f172a', papers: papers.filter((p) => p.crispPhase === 'deployment') },
-  ];
+  // v5.0r · 5 columnas (Data merged) según KANBAN_LAYOUT curado.
+  // Override del frontmatter crispPhase para coherencia narrativa M01→M12.
+  const byId = new Map(papers.map((p) => [p.id, p]));
+  const phases = KANBAN_LAYOUT.map((slot) => ({
+    ...slot,
+    papers: slot.paperIds.map((id) => byId.get(id)).filter((p): p is NonNullable<typeof p> => Boolean(p)),
+  }));
 
   // Tabla actores
   const actores = [
@@ -83,7 +109,7 @@ export function InfografiaCanonico() {
         <div>
           <h1>Inv. Buenas Prácticas · Reforma UDFJC</h1>
           <div className="sub">
-            12_investigaciones · 6_fases_CRISP-DM · sustrato_teórico · ACU-004-25 vinculante
+            12_investigaciones · 5_fases_CRISP-DM · sustrato_teórico · ACU-004-25 vinculante
           </div>
         </div>
         <div className="hdr-meta">
@@ -98,7 +124,7 @@ export function InfografiaCanonico() {
       {/* STATS HERO */}
       <div className="stats-hero">
         <div className="sh"><span className="sh-n">12</span><span className="sh-l">papers M01-M12</span></div>
-        <div className="sh"><span className="sh-n">6</span><span className="sh-l">fases CRISP-DM</span></div>
+        <div className="sh"><span className="sh-n">5</span><span className="sh-l">fases CRISP-DM</span></div>
         <div className="sh"><span className="sh-n">74</span><span className="sh-l">conceptos glosario</span></div>
         <div className="sh"><span className="sh-n">125</span><span className="sh-l">aristas grafo</span></div>
         <div className="sh"><span className="sh-n">35</span><span className="sh-l">refs APA</span></div>
@@ -122,30 +148,37 @@ export function InfografiaCanonico() {
           DIAGNÓSTICO <span className="arrow">→</span> EVIDENCIA GLOBAL <span className="arrow">→</span> PROSPECTIVA OPERATIVA
         </div>
         <div className="tesis-sub">
-          M01-M03 nos dicen <strong style={{ color: '#fcd34d' }}>qué problema resolver y cómo medir</strong>.
-          M04-M08 traen <strong style={{ color: '#fcd34d' }}>la evidencia de IES líderes</strong> y los estándares globales.
-          M09-M12 entregan <strong style={{ color: '#fcd34d' }}>presupuesto, costeo, datos y la hoja de ruta 8 años</strong>.
+          M01-M03 dan <strong style={{ color: '#fcd34d' }}>mandato + ciclo + estándares globales</strong> (qué resolver y cómo medir).
+          M04-M07 + M09-M11 traen <strong style={{ color: '#fcd34d' }}>la evidencia y datos de IES líderes</strong> (JTBD, 21 IES, CCA, BPAs, NICSP, TDABC, datasets MEN).
+          M08 ensambla el <strong style={{ color: '#fcd34d' }}>framework de monitoreo BSC-S + RBM-GAC</strong>.
+          M12 plantea <strong style={{ color: '#fcd34d' }}>5 escenarios prospectivos para deliberación comunitaria</strong>.
+          Deployment queda abierto · pendiente de acuerdos.
         </div>
       </div>
 
-      {/* SECTION: 6 FASES CRISP-DM */}
-      <h2>Las 6 Fases CRISP-DM · 12 Papers Encadenados</h2>
-      <div className="si">// metodología canónica de data science adaptada al diseño institucional · cada fase resuelve una pregunta clave</div>
+      {/* SECTION: 5 FASES CRISP-DM (Data Understanding + Preparation merged) */}
+      <h2>Las 5 Fases CRISP-DM · 12 Papers Encadenados</h2>
+      <div className="si">// Data Understanding + Preparation se fusionan (mismo dataset MEN/SNIES + mismo flujo ETL); Deployment queda pendiente · sin acuerdos comunitarios aún</div>
       <div className="stack">
-        {phases.map((phase, idx) => (
-          <div key={phase.key} className={`stk s${idx + 1}`}>
+        {phases.map((phase) => (
+          <div key={phase.key} className="stk" style={{ borderLeft: `3px solid ${phase.color}` }}>
             <div className="stk-icon">{phase.emoji}</div>
             <div className="stk-name">{phase.label}</div>
             <div className="stk-tech">
-              {phase.papers.map((p) => `M${String(p.number).padStart(2, '0')}`).join(' · ')}
+              {phase.papers.length === 0
+                ? '— sin papers —'
+                : phase.papers.map((p) => `M${String(p.number).padStart(2, '0')}`).join(' · ')}
             </div>
             <div className="stk-bpa">
-              {phase.papers.map((p) => (
-                <Link key={p.id} href={p.href} className="stk-link" title={p.title}>
-                  {p.title.slice(0, 36)}
-                  {p.title.length > 36 ? '…' : ''}
-                </Link>
-              ))}
+              {phase.papers.length === 0 && phase.emptyHint ? (
+                <span className="stk-empty">{phase.emptyHint}</span>
+              ) : (
+                phase.papers.map((p) => (
+                  <Link key={p.id} href={p.href} className="stk-link" title={p.title}>
+                    M{String(p.number).padStart(2, '0')} · {PAPER_QUESTIONS[p.id] ?? p.title.slice(0, 36)}
+                  </Link>
+                ))
+              )}
             </div>
           </div>
         ))}
@@ -198,11 +231,11 @@ export function InfografiaCanonico() {
         </div>
       </div>
 
-      {/* KANBAN · 6 columnas (fases CRISP-DM) · cada card = paper con 2 botones */}
+      {/* KANBAN · 5 columnas (Data merged) · cada card = M## + pregunta + 2 botones */}
       <h2>Las 12 Investigaciones · Kanban Narrativo</h2>
       <div className="si">
-        // cada columna es una fase CRISP-DM · cada card responde una pregunta · hover muestra botones
-        <strong style={{ color: 'var(--pur)', marginLeft: '0.5rem' }}>Ir directo</strong> (reemplaza tab actual) ·
+        // cada card es <strong>M## + pregunta</strong> · hover muestra
+        <strong style={{ color: 'var(--pur)', marginLeft: '0.4rem' }}>Ir directo</strong> (reemplaza tab actual) ·
         <strong style={{ color: 'var(--pur)', marginLeft: '0.4rem' }}>Ventana derecha</strong> (split pane B preserva contexto)
       </div>
       <div className="kanban">
@@ -214,6 +247,9 @@ export function InfografiaCanonico() {
               <span className="kanban-col-count">· {phase.papers.length}</span>
             </div>
             <div className="kanban-cards">
+              {phase.papers.length === 0 && phase.emptyHint && (
+                <div className="kanban-empty">{phase.emptyHint}</div>
+              )}
               {phase.papers.map((p) => (
                 <KanbanCard
                   key={p.id}
@@ -276,14 +312,13 @@ function KanbanCard({
   color: string;
   onSplitRight: () => void;
 }>) {
+  // v5.0r · card minimal: solo M## + pregunta. El título físico se omite porque
+  // el badge M## + la pregunta narrativa son suficientes (instrucción explícita).
   return (
     <div className="kanban-card" style={{ borderLeftColor: color }}>
       <div className="kanban-card-hdr">
         <span className="kanban-card-id" style={{ color }}>
           M{String(paper.number).padStart(2, '0')}
-        </span>
-        <span className="kanban-card-title" title={paper.title}>
-          {paper.title.slice(0, 40)}{paper.title.length > 40 ? '…' : ''}
         </span>
       </div>
       <div className="kanban-card-q" title={question}>
@@ -400,13 +435,8 @@ const INFOGRAFIA_CSS = `
 .dark .infografia-root .stk-bpa { color: var(--pur-l); }
 .infografia-root .stk-link { color: inherit; text-decoration: none; line-height: 1.35; }
 .infografia-root .stk-link:hover { text-decoration: underline; }
-.infografia-root .stk.s1 { border-left: 3px solid #059669; }
-.infografia-root .stk.s2 { border-left: 3px solid #0284c7; }
-.infografia-root .stk.s3 { border-left: 3px solid #7c3aed; }
-.infografia-root .stk.s4 { border-left: 3px solid #d97706; }
-.infografia-root .stk.s5 { border-left: 3px solid #ea580c; }
-.infografia-root .stk.s6 { border-left: 3px solid #0f172a; }
-.dark .infografia-root .stk.s6 { border-left-color: #94a3b8; }
+/* v5.0r · color del border-left ahora viene inline desde phase.color */
+.infografia-root .stk-empty { font-style: italic; color: var(--muted-card); font-size: 7pt; }
 
 .infografia-root .paper-pill { display: inline-block; font-family: 'Courier New', monospace; font-size: 7pt; font-weight: 700; padding: 0.1rem 0.35rem; border: 1px solid var(--pur); color: var(--pur-d); border-radius: 4px; margin: 0 0.15rem 0.15rem 0; text-decoration: none; }
 .infografia-root .paper-pill:hover { background: var(--pur); color: white; }
@@ -442,16 +472,27 @@ const INFOGRAFIA_CSS = `
 .dark .infografia-root .cta-btn-secondary { color: var(--pur-l); }
 .dark .infografia-root .cta-btn-secondary:hover { background: rgba(124,58,237,0.15); }
 
-/* KANBAN · v5.0q · 6 columnas (fases CRISP-DM) · cards (papers) */
+/* KANBAN · v5.0r · 5 columnas (Data Understanding + Preparation merged) · cards minimales */
 .infografia-root .kanban {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.5rem;
   margin: 0.4rem 0;
+  align-items: start;
 }
 @media (max-width: 1100px) { .infografia-root .kanban { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .infografia-root .kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 480px) { .infografia-root .kanban { grid-template-columns: 1fr; } }
+.infografia-root .kanban-empty {
+  padding: 0.6rem 0.5rem;
+  font-size: 7pt;
+  color: var(--muted-card);
+  font-style: italic;
+  text-align: center;
+  border: 1px dashed var(--border-card);
+  border-radius: 5px;
+  background: var(--bg-soft);
+}
 .infografia-root .kanban-col {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
@@ -510,14 +551,6 @@ const INFOGRAFIA_CSS = `
   font-weight: 800;
   font-size: 8.5pt;
   flex-shrink: 0;
-}
-.infografia-root .kanban-card-title {
-  font-weight: 700;
-  color: var(--text-card);
-  font-size: 7.5pt;
-  line-height: 1.3;
-  flex: 1;
-  min-width: 0;
 }
 .infografia-root .kanban-card-q {
   font-size: 7pt;
