@@ -12,7 +12,6 @@ import { PresaberesCallout } from '@/components/biblioteca/presaberes-callout';
 import { DeliberacionPanel } from '@/components/biblioteca/deliberacion-panel';
 import { ComparativeSplit, CompareButton } from '@/components/workspace/workspace-shell';
 import { InfographicQuickstart, InfographicBadge } from '@/components/biblioteca/infographic-quickstart';
-import { getActiveDocFromPath } from '@/lib/active-doc';
 import { PrintButton } from '@/components/print-button';
 // v5.0e · SplitWorkArea removed — el grafo local del paper ahora vive
 // exclusivamente en `Conexiones › Grafo` del right panel. Render duplicado
@@ -190,9 +189,10 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
 
   // Si es infografía-quickstart, layout 3-zone (TOC izq + body + grafo der).
   // Si no, layout standard con ComparativeSplit (workspace shell N-pane).
-  const activeDoc = getActiveDocFromPath(`/canonico/${mid}`);
+  // v5.0o · activeDoc lo resuelve InfographicQuickstart internamente
+  // (es 'use client'); evita llamar getActiveDocFromPath desde server.
   return isInfographic ? (
-    <InfographicQuickstart doc={activeDoc} paperId={mid}>
+    <InfographicQuickstart paperId={mid}>
       {article}
     </InfographicQuickstart>
   ) : (

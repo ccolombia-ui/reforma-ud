@@ -1,11 +1,13 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+import { useMemo } from 'react';
 import { ListTree, Network, BookOpen } from 'lucide-react';
 import { Group, Panel, Separator } from 'react-resizable-panels';
 import { GripVertical } from 'lucide-react';
 import { OutlinePanel } from '@/components/biblioteca/outline-panel';
 import { PaperLocalGraph } from '@/components/graph/paper-local-graph';
-import type { ActiveDoc } from '@/lib/active-doc';
+import { getActiveDocFromPath } from '@/lib/active-doc';
 
 /**
  * InfographicQuickstart · v5.0n — vista 3-zone para documentos marcados con
@@ -25,14 +27,15 @@ import type { ActiveDoc } from '@/lib/active-doc';
  * (los aside laterales se ocultan y el body ocupa 100%).
  */
 export function InfographicQuickstart({
-  doc,
   paperId,
   children,
 }: Readonly<{
-  doc: ActiveDoc | null;
   paperId: string;
   children: React.ReactNode;
 }>) {
+  // Resolución client-side del activeDoc (con su toc) desde el pathname
+  const pathname = usePathname();
+  const doc = useMemo(() => getActiveDocFromPath(pathname), [pathname]);
   return (
     <div className="h-[calc(100vh-3.5rem)] no-print">
       <Group

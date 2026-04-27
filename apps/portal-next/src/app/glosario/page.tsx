@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { concepto, dashboard } from '#site/content';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
+import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -57,11 +58,14 @@ export default function GlosarioPage() {
         </p>
       </header>
 
-      {/* v5.0n · Dashboard sourced from _dash-glosario-universal.md (vault) */}
+      {/* v5.0n+o · Dashboard sourced from dash-glosario-universal.md (vault) */}
       {dash && (
-        <section className="mb-10 rounded-lg border bg-muted/20 px-6 py-5 prose-paper">
-          <MDXWithHoverPreview code={dash.body} collapsible={false} />
-        </section>
+        <>
+          <section className="mb-10 rounded-lg border bg-muted/20 px-6 py-5 prose-paper">
+            <MDXWithHoverPreview code={dash.body} collapsible={false} />
+          </section>
+          <MermaidRenderer deps={['dash-glosario']} />
+        </>
       )}
 
       {/* Anchor nav A-Z */}

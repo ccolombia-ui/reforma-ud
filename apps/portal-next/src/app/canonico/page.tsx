@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { canonicPaper, dashboard } from '#site/content';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
+import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -72,11 +73,14 @@ export default function CanonicoIndex() {
         </div>
       </div>
 
-      {/* v5.0n · Dashboard ad-hoc del corpus (overview narrativo) */}
+      {/* v5.0n+o · Dashboard ad-hoc del corpus (overview narrativo + Mermaid) */}
       {dash && (
-        <section className="mb-12 rounded-lg border bg-muted/20 px-6 py-5 prose-paper">
-          <MDXWithHoverPreview code={dash.body} collapsible={false} />
-        </section>
+        <>
+          <section className="mb-12 rounded-lg border bg-muted/20 px-6 py-5 prose-paper">
+            <MDXWithHoverPreview code={dash.body} collapsible={false} />
+          </section>
+          <MermaidRenderer deps={['dash-canonico']} />
+        </>
       )}
 
       {Object.entries(PHASE_LABEL).map(([phase, label]) => {

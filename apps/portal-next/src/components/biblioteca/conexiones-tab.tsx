@@ -62,18 +62,21 @@ export function ConexionesTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
         defaultOpen={false}
         Icon={Network}
         label="Grafo semántico"
-        subtitle={doc?.kind === 'paper' ? 'Vecindario 1-hop' : 'Solo en papers'}
-        disabled={!doc || doc.kind !== 'paper'}
+        subtitle={doc ? `Vecindario 1-hop · ${doc.kind}` : 'Sin documento activo'}
+        disabled={!doc}
       >
-        {doc?.kind === 'paper' ? (
+        {doc ? (
           <div className="h-[50vh] min-h-[280px]">
+            {/* v5.0o · Grafo local activo para todos los kinds (paper, concepto, note).
+                Antes solo activaba para 'paper'; los conceptos del glosario
+                quedaban sin grafo aunque tienen relaciones tipadas en el corpus. */}
             <PaperLocalGraph paperId={doc.id} hops={1} />
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-2 text-center text-xs text-muted-foreground p-4">
             <Network className="h-6 w-6 opacity-40" />
-            <p className="font-medium text-foreground">Grafo local solo en papers</p>
-            <p className="text-[10px]">Abre un paper canónico (M01-M12) para ver su vecindario.</p>
+            <p className="font-medium text-foreground">Sin documento activo</p>
+            <p className="text-[10px]">Abre un doc para ver su vecindario semántico.</p>
           </div>
         )}
       </AccordionSection>
