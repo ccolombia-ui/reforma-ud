@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ListTree, Network, GitCommit, ChevronDown } from 'lucide-react';
 import { EsquemaTab } from '@/components/biblioteca/esquema-tab';
 import { PaperLocalGraph } from '@/components/graph/paper-local-graph';
+import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
 import { EvolutionTab } from '@/components/biblioteca/evolution-tab';
 import type { ActiveDoc } from '@/lib/active-doc';
 import { cn } from '@/lib/utils';
@@ -62,21 +63,19 @@ export function ConexionesTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
         defaultOpen={false}
         Icon={Network}
         label="Grafo semántico"
-        subtitle={doc ? `Vecindario 1-hop · ${doc.kind}` : 'Sin documento activo'}
-        disabled={!doc}
+        subtitle={doc ? `Vecindario 1-hop · ${doc.kind}` : 'Grafo global del corpus'}
       >
         {doc ? (
           <div className="h-[50vh] min-h-[280px]">
-            {/* v5.0o · Grafo local activo para todos los kinds (paper, concepto, note).
-                Antes solo activaba para 'paper'; los conceptos del glosario
-                quedaban sin grafo aunque tienen relaciones tipadas en el corpus. */}
+            {/* v5.0o · Grafo local 1-hop · activo para paper, concepto, note. */}
             <PaperLocalGraph paperId={doc.id} hops={1} />
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center gap-2 text-center text-xs text-muted-foreground p-4">
-            <Network className="h-6 w-6 opacity-40" />
-            <p className="font-medium text-foreground">Sin documento activo</p>
-            <p className="text-[10px]">Abre un doc para ver su vecindario semántico.</p>
+          <div className="h-[55vh] min-h-[320px]">
+            {/* v5.0q · Sin doc activo → muestra grafo GLOBAL del corpus
+                (107 nodos · 125 aristas). Antes quedaba inerte con
+                "Sin documento activo"; ahora útil desde /canonico, /glosario, home. */}
+            <VisNetworkGraph src="/static/graph-global.json" />
           </div>
         )}
       </AccordionSection>

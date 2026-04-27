@@ -20,11 +20,39 @@
  */
 
 import { canonicPaper } from '#site/content';
-import { Network, ExternalLink } from 'lucide-react';
+import { Network, ExternalLink, ArrowRight, SplitSquareHorizontal } from 'lucide-react';
 import Link from 'next/link';
+import { useCallback } from 'react';
+import { usePanesState } from '@/lib/panes-state';
+import { useRightPanel, useConexionesSubTab } from '@/lib/ui-state';
+
+// v5.0q · pregunta narrativa por paper (storytelling M01→M12)
+const PAPER_QUESTIONS: Record<string, string> = {
+  m01: '¿Qué se nos pide hacer y por qué? El mandato.',
+  m02: '¿Cómo otras universidades saltaron de N1 a N4?',
+  m03: '¿Con qué framework medimos el progreso?',
+  m04: '¿Qué necesita realmente cada actor UDFJC?',
+  m05: '¿Qué hacen las 21 IES líderes mundiales?',
+  m06: '¿Cómo modelamos el crédito académico CCA?',
+  m07: '¿Qué prácticas concretas activan el ciclo?',
+  m08: '¿Con qué estándares globales nos alineamos?',
+  m09: '¿Cómo presupuestamos bajo NICSP pública?',
+  m10: '¿Cuánto cuesta cada actividad académica?',
+  m11: '¿Qué dice la realidad de los datos MEN?',
+  m12: '¿Cuál es la prospectiva por escenarios 8 años?',
+};
 
 export function InfografiaCanonico() {
   const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
+  const panesState = usePanesState();
+  const { setTab } = useRightPanel();
+  const [, setSubTab] = useConexionesSubTab();
+
+  // v5.0q · CTA grafo activa el right panel · sub-tab Grafo (en lugar de navegar)
+  const openGrafoInRightPanel = useCallback(() => {
+    setTab('conexiones');
+    setSubTab('grafo');
+  }, [setTab, setSubTab]);
 
   // 6 fases CRISP-DM con sus papers
   const phases = [
@@ -77,24 +105,26 @@ export function InfografiaCanonico() {
         <div className="sh"><span className="sh-n">5</span><span className="sh-l">rutas Clark R1-R5</span></div>
       </div>
 
-      {/* TAGLINE */}
+      {/* TAGLINE · narrativa storytelling */}
       <div className="tagline">
-        Corpus de <strong>investigaciones canónicas</strong> que sustentan la <strong>Reforma Vinculante UDFJC</strong>:
-        del <strong>mandato normativo</strong> (ACU-004-25 + CONPES 4069 + PIIOM)
-        al <strong>deployment integrador</strong> (CRISP-DM 8 años),
-        pasando por <strong>JTBD de la comunidad</strong>, <strong>benchmark 21 IES</strong>,
-        <strong> modelo CCA</strong>, <strong>estándares OECD/UDL/ABET/CDIO</strong>,
-        <strong> presupuesto NICSP</strong>, <strong>costeo TDABC</strong> y <strong>datasets MEN</strong>.
+        La <strong>Reforma UDFJC</strong> es un <strong>salto cuántico</strong> de la universidad <em>actual</em> (N1 frágil)
+        hacia la <strong>universidad que opera buenas prácticas globales</strong> (N4 transformativa).
+        Para que el salto sea <strong>posible y verificable</strong>, hace falta responder
+        <strong> 12 preguntas</strong> en cadena. Cada paper M## resuelve UNA pregunta.
+        En conjunto producen el <strong>diagnóstico + framework + dataset</strong> para
+        construir <strong>prospectiva por escenarios</strong> (M12) y operar la reforma con
+        <strong> rigor metodológico CRISP-DM</strong>.
       </div>
 
-      {/* TESIS CARD */}
+      {/* TESIS CARD · narrativa de 3 actos */}
       <div className="tesis">
         <div className="tesis-eq">
-          MANDATO NORMATIVO <span className="arrow">→</span> BUENAS PRÁCTICAS GLOBALES <span className="arrow">→</span> DEPLOYMENT INTEGRADOR
+          DIAGNÓSTICO <span className="arrow">→</span> EVIDENCIA GLOBAL <span className="arrow">→</span> PROSPECTIVA OPERATIVA
         </div>
         <div className="tesis-sub">
-          La reforma se sustenta NO en opiniones, sino en evidencia empírica de 21 IES líderes mundiales (Aalto, Twente, Stanford, MIT)
-          + estándares ISO/OECD/UNESCO + ciclo virtuoso Clark-Etzkowitz-Geels
+          M01-M03 nos dicen <strong style={{ color: '#fcd34d' }}>qué problema resolver y cómo medir</strong>.
+          M04-M08 traen <strong style={{ color: '#fcd34d' }}>la evidencia de IES líderes</strong> y los estándares globales.
+          M09-M12 entregan <strong style={{ color: '#fcd34d' }}>presupuesto, costeo, datos y la hoja de ruta 8 años</strong>.
         </div>
       </div>
 
@@ -168,38 +198,35 @@ export function InfografiaCanonico() {
         </div>
       </div>
 
-      {/* TABLA — ORDEN DE LECTURA */}
-      <h2>Las 12 Investigaciones · Orden de Lectura Sugerido</h2>
-      <table className="tbl">
-        <thead>
-          <tr>
-            <th style={{ width: '60px' }}>ID</th>
-            <th>Título</th>
-            <th>Pregunta que resuelve</th>
-            <th style={{ width: '120px' }}>Fase</th>
-            <th style={{ width: '90px' }}>Rutas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {papers.map((p) => (
-            <tr key={p.id}>
-              <td>
-                <Link href={p.href} className="mono paper-id">
-                  M{String(p.number).padStart(2, '0')}
-                </Link>
-              </td>
-              <td><strong>{p.title}</strong></td>
-              <td className="muted">{p.description}</td>
-              <td>
-                <span className="phase-pill" style={{ color: phases.find((ph) => ph.key === p.crispPhase)?.color }}>
-                  {phases.find((ph) => ph.key === p.crispPhase)?.label.split(' ')[0] ?? p.crispPhase}
-                </span>
-              </td>
-              <td className="mono">{p.rutaClark.join(' ')}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* KANBAN · 6 columnas (fases CRISP-DM) · cada card = paper con 2 botones */}
+      <h2>Las 12 Investigaciones · Kanban Narrativo</h2>
+      <div className="si">
+        // cada columna es una fase CRISP-DM · cada card responde una pregunta · hover muestra botones
+        <strong style={{ color: 'var(--pur)', marginLeft: '0.5rem' }}>Ir directo</strong> (reemplaza tab actual) ·
+        <strong style={{ color: 'var(--pur)', marginLeft: '0.4rem' }}>Ventana derecha</strong> (split pane B preserva contexto)
+      </div>
+      <div className="kanban">
+        {phases.map((phase) => (
+          <div key={phase.key} className="kanban-col" style={{ borderTopColor: phase.color }}>
+            <div className="kanban-col-hdr" style={{ background: phase.color }}>
+              <span className="kanban-col-emoji">{phase.emoji}</span>
+              <span className="kanban-col-label">{phase.label}</span>
+              <span className="kanban-col-count">· {phase.papers.length}</span>
+            </div>
+            <div className="kanban-cards">
+              {phase.papers.map((p) => (
+                <KanbanCard
+                  key={p.id}
+                  paper={p}
+                  question={PAPER_QUESTIONS[p.id] ?? p.description.slice(0, 50)}
+                  color={phase.color}
+                  onSplitRight={() => panesState.openInNextPane(p.id)}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* CMT GRID */}
       <h2>Métricas del Corpus · Grafo Semántico</h2>
@@ -216,12 +243,15 @@ export function InfografiaCanonico() {
         <div className="kpi"><strong>Cobertura BPA:</strong> Aalto · Twente · MIT · Stanford</div>
       </div>
 
-      {/* CTA */}
+      {/* CTA · v5.0q activa right panel sub-tab Grafo (no navega afuera) */}
       <div className="cta">
-        <Link href="/canonico/grafo" className="cta-btn">
+        <button type="button" onClick={openGrafoInRightPanel} className="cta-btn">
           <Network style={{ width: 16, height: 16 }} />
-          Explorar grafo semántico interactivo
-          <ExternalLink style={{ width: 12, height: 12, opacity: 0.7 }} />
+          Activar Grafo semántico en panel derecho
+        </button>
+        <Link href="/canonico/grafo" className="cta-btn cta-btn-secondary" title="Vista full-screen del grafo (otra pestaña conceptual)">
+          <ExternalLink style={{ width: 12, height: 12 }} />
+          Vista completa
         </Link>
       </div>
 
@@ -229,6 +259,45 @@ export function InfografiaCanonico() {
       <div className="ft">
         <div>reforma·ud · Acuerdo CSU 04/2025 · Universidad Distrital Francisco José de Caldas</div>
         <div className="ft-r">CC BY-SA 4.0 · 2026</div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * KanbanCard · v5.0q — card de paper en el Kanban con dos botones.
+ * Hover revela "Ir directo" (Link normal) y "Ventana derecha" (split pane B).
+ */
+function KanbanCard({
+  paper, question, color, onSplitRight,
+}: Readonly<{
+  paper: { id: string; title: string; href: string; number: number };
+  question: string;
+  color: string;
+  onSplitRight: () => void;
+}>) {
+  return (
+    <div className="kanban-card" style={{ borderLeftColor: color }}>
+      <div className="kanban-card-hdr">
+        <span className="kanban-card-id" style={{ color }}>
+          M{String(paper.number).padStart(2, '0')}
+        </span>
+        <span className="kanban-card-title" title={paper.title}>
+          {paper.title.slice(0, 40)}{paper.title.length > 40 ? '…' : ''}
+        </span>
+      </div>
+      <div className="kanban-card-q" title={question}>
+        <strong>?</strong> {question}
+      </div>
+      <div className="kanban-card-actions">
+        <Link href={paper.href} className="kanban-btn kanban-btn-primary">
+          <ArrowRight style={{ width: 11, height: 11 }} />
+          Ir directo
+        </Link>
+        <button type="button" onClick={onSplitRight} className="kanban-btn kanban-btn-secondary" title="Abrir en ventana derecha (pane B)">
+          <SplitSquareHorizontal style={{ width: 11, height: 11 }} />
+          Ventana derecha
+        </button>
       </div>
     </div>
   );
@@ -365,9 +434,150 @@ const INFOGRAFIA_CSS = `
 .infografia-root .kpi strong { color: var(--pur-d); }
 .dark .infografia-root .kpi strong { color: var(--pur-l); }
 
-.infografia-root .cta { margin: 0.75rem 0 0.4rem; text-align: center; }
-.infografia-root .cta-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--pur); color: #fff; padding: 0.55rem 1.1rem; border-radius: 7px; font-size: 9pt; font-weight: 700; text-decoration: none; }
+.infografia-root .cta { margin: 0.75rem 0 0.4rem; text-align: center; display: flex; gap: 0.5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+.infografia-root .cta-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--pur); color: #fff; padding: 0.55rem 1.1rem; border-radius: 7px; font-size: 9pt; font-weight: 700; text-decoration: none; border: none; cursor: pointer; font-family: inherit; }
 .infografia-root .cta-btn:hover { background: var(--pur-d); }
+.infografia-root .cta-btn-secondary { background: transparent; color: var(--pur-d); border: 1px solid var(--pur); }
+.infografia-root .cta-btn-secondary:hover { background: var(--pur-bg); }
+.dark .infografia-root .cta-btn-secondary { color: var(--pur-l); }
+.dark .infografia-root .cta-btn-secondary:hover { background: rgba(124,58,237,0.15); }
+
+/* KANBAN · v5.0q · 6 columnas (fases CRISP-DM) · cards (papers) */
+.infografia-root .kanban {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0.4rem 0;
+}
+@media (max-width: 1100px) { .infografia-root .kanban { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .infografia-root .kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .infografia-root .kanban { grid-template-columns: 1fr; } }
+.infografia-root .kanban-col {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-top: 3px solid var(--pur);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.infografia-root .kanban-col-hdr {
+  padding: 0.45rem 0.55rem;
+  color: white;
+  font-weight: 700;
+  font-size: 7.5pt;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+.infografia-root .kanban-col-emoji { font-size: 11pt; line-height: 1; }
+.infografia-root .kanban-col-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.infografia-root .kanban-col-count { font-family: 'Courier New', monospace; opacity: 0.85; font-size: 7pt; }
+.infografia-root .kanban-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.45rem;
+  background: var(--bg-soft);
+  flex: 1;
+  min-height: 60px;
+}
+.infografia-root .kanban-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-left: 3px solid var(--pur);
+  border-radius: 5px;
+  padding: 0.45rem 0.55rem;
+  font-size: 7.5pt;
+  position: relative;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.infografia-root .kanban-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+.dark .infografia-root .kanban-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.infografia-root .kanban-card-hdr {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin-bottom: 0.3rem;
+}
+.infografia-root .kanban-card-id {
+  font-family: 'Courier New', monospace;
+  font-weight: 800;
+  font-size: 8.5pt;
+  flex-shrink: 0;
+}
+.infografia-root .kanban-card-title {
+  font-weight: 700;
+  color: var(--text-card);
+  font-size: 7.5pt;
+  line-height: 1.3;
+  flex: 1;
+  min-width: 0;
+}
+.infografia-root .kanban-card-q {
+  font-size: 7pt;
+  color: var(--muted-card);
+  line-height: 1.45;
+  margin-bottom: 0.4rem;
+  font-style: italic;
+}
+.infografia-root .kanban-card-q strong {
+  color: var(--pur-d);
+  font-style: normal;
+  font-size: 8pt;
+  margin-right: 0.15rem;
+}
+.dark .infografia-root .kanban-card-q strong { color: var(--pur-l); }
+.infografia-root .kanban-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.18s, max-height 0.18s;
+  overflow: hidden;
+}
+.infografia-root .kanban-card:hover .kanban-card-actions,
+.infografia-root .kanban-card:focus-within .kanban-card-actions {
+  opacity: 1;
+  max-height: 40px;
+}
+.infografia-root .kanban-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.25rem 0.35rem;
+  border-radius: 4px;
+  font-size: 6.8pt;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.infografia-root .kanban-btn-primary {
+  background: var(--pur);
+  color: white;
+}
+.infografia-root .kanban-btn-primary:hover { background: var(--pur-d); }
+.infografia-root .kanban-btn-secondary {
+  background: transparent;
+  color: var(--pur-d);
+  border: 1px solid var(--pur);
+}
+.infografia-root .kanban-btn-secondary:hover { background: var(--pur-bg); }
+.dark .infografia-root .kanban-btn-secondary { color: var(--pur-l); }
+.dark .infografia-root .kanban-btn-secondary:hover { background: rgba(124,58,237,0.15); }
+
 
 .infografia-root .ft { margin-top: 0.8rem; padding-top: 0.5rem; border-top: 1.5px solid var(--border-card); display: grid; grid-template-columns: 1fr auto; font-size: 7pt; color: var(--muted-card); }
 .infografia-root .ft-r { text-align: right; font-family: 'Courier New', monospace; }
