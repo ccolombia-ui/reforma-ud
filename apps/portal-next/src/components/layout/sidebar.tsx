@@ -4,12 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles, Atom, X } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { canonicPaper } from '#site/content';
+import { canonicPaper, concepto } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
 import { cn } from '@/lib/utils';
-import { useGraphContext } from '@/lib/graph-context';
-import { Graph3DFilters } from '@/components/graph/graph-3d';
 
 const TYPE_ICONS: Record<string, React.ReactNode> = {
   gobierno: <Landmark className="h-3.5 w-3.5" />,
@@ -157,6 +155,218 @@ function ReformaCuanticaSection({
   );
 }
 
+/* ============================================================
+ * v5.0i · GlosarioSection — folder Glosario con 6 categorías + 74 conceptos
+ * Paridad con ReformaCuanticaSection. Cada concepto es link al detalle.
+ * ============================================================ */
+
+type ConceptoLite = {
+  id: string;
+  href: string;
+  skos_prefLabel: string;
+  kd_title: string;
+  tags: string[];
+};
+
+type ConceptoCategoria = {
+  key: string;             // tag canónico (ej. 'concepto-normativo')
+  label: string;           // visual label (ej. 'Normativos')
+  emoji: string;
+};
+
+// 6 categorías canónicas (orden de display) basadas en `tags` del frontmatter
+const CONCEPTO_CATEGORIAS: readonly ConceptoCategoria[] = [
+  { key: 'concepto-normativo',         label: 'Normativos',           emoji: '📜' },
+  { key: 'concepto-academico',         label: 'Académicos',           emoji: '🎓' },
+  { key: 'concepto-meta-instrumental', label: 'Meta-instrumentales',  emoji: '🛠️' },
+  { key: 'concepto-sintesis',          label: 'Síntesis',             emoji: '✨' },
+  { key: 'concepto-nuevo',             label: 'Refundacionales',      emoji: '🌱' },
+  { key: 'concepto-internacional',     label: 'Internacionales',      emoji: '🌐' },
+] as const;
+
+function classifyConcepto(c: ConceptoLite): string {
+  for (const cat of CONCEPTO_CATEGORIAS) {
+    if (c.tags.includes(cat.key)) return cat.key;
+  }
+  return 'otros';
+}
+
+function GlosarioSection({
+  conceptos, pathname, filter,
+}: Readonly<{
+  conceptos: ConceptoLite[];
+  pathname: string;
+  filter: string;
+}>) {
+  const storageKey = 'reforma-ud:sidebar-glosario';
+  const isOnGlosario = pathname.startsWith('/glosario');
+  const [open, setOpen] = useState<boolean>(isOnGlosario);
+
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem(storageKey);
+      if (v === 'true') setOpen(true);
+      else if (v === 'false' && !isOnGlosario) setOpen(false);
+    } catch {}
+  }, [isOnGlosario]);
+
+  function handleToggle() {
+    setOpen((v) => {
+      const next = !v;
+      try { localStorage.setItem(storageKey, String(next)); } catch {}
+      return next;
+    });
+  }
+
+  // Filter por query de búsqueda
+  const q = filter.trim().toLowerCase();
+  const filtered = useMemo(() => {
+    if (!q) return conceptos;
+    return conceptos.filter((c) => {
+      const label = (c.skos_prefLabel ?? c.kd_title).toLowerCase();
+      return label.includes(q) || c.id.toLowerCase().includes(q);
+    });
+  }, [conceptos, q]);
+
+  // Agrupar por categoría
+  const byCat = useMemo(() => {
+    const map: Record<string, ConceptoLite[]> = {};
+    for (const c of filtered) {
+      const cat = classifyConcepto(c);
+      if (!map[cat]) map[cat] = [];
+      map[cat].push(c);
+    }
+    return map;
+  }, [filtered]);
+
+  const effectiveOpen = open || q.length > 0;
+
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={handleToggle}
+        className="group flex w-full items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent"
+        aria-expanded={effectiveOpen}
+      >
+        <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !effectiveOpen && '-rotate-90')} />
+        <BookMarked className="h-3.5 w-3.5 text-primary/80" />
+        <span className="flex-1 text-left font-medium">Glosario</span>
+        <span className="text-[9px] text-muted-foreground">{filtered.length}</span>
+      </button>
+      {effectiveOpen && (
+        <ul className="ml-3 space-y-0.5 border-l border-sidebar-border pl-2 mt-0.5">
+          {/* Link al index general del glosario */}
+          <li>
+            <Link
+              href="/glosario"
+              className={cn(
+                'flex items-center gap-1.5 rounded px-2 py-1 text-[10px] hover:bg-sidebar-accent',
+                pathname === '/glosario' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+              )}
+            >
+              <span className="opacity-60">📖</span>
+              <span className="flex-1 italic">Ver índice A-Z completo</span>
+              <span className="font-mono text-[8px] text-muted-foreground">M00</span>
+            </Link>
+          </li>
+          {CONCEPTO_CATEGORIAS.map((cat) => {
+            const items = byCat[cat.key];
+            if (!items || items.length === 0) return null;
+            return (
+              <CategoriaFolder
+                key={cat.key}
+                cat={cat}
+                items={items}
+                pathname={pathname}
+                expandWhenFiltering={q.length > 0}
+              />
+            );
+          })}
+          {byCat['otros']?.length > 0 && (
+            <CategoriaFolder
+              cat={{ key: 'otros', label: 'Otros', emoji: '📎' }}
+              items={byCat['otros']}
+              pathname={pathname}
+              expandWhenFiltering={q.length > 0}
+            />
+          )}
+          {filtered.length === 0 && (
+            <li className="px-2 py-1 text-[10px] text-muted-foreground italic">
+              Sin coincidencias
+            </li>
+          )}
+        </ul>
+      )}
+    </li>
+  );
+}
+
+function CategoriaFolder({
+  cat, items, pathname, expandWhenFiltering,
+}: Readonly<{
+  cat: ConceptoCategoria;
+  items: ConceptoLite[];
+  pathname: string;
+  expandWhenFiltering: boolean;
+}>) {
+  const storageKey = `reforma-ud:sidebar-glosario-cat-${cat.key}`;
+  const [open, setOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem(storageKey);
+      if (v === 'true') setOpen(true);
+    } catch {}
+  }, [storageKey]);
+
+  const effectiveOpen = open || expandWhenFiltering;
+
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={() => {
+          setOpen((v) => {
+            const next = !v;
+            try { localStorage.setItem(storageKey, String(next)); } catch {}
+            return next;
+          });
+        }}
+        className="group flex w-full items-center gap-1 rounded px-2 py-1 text-[10px] hover:bg-sidebar-accent"
+        aria-expanded={effectiveOpen}
+      >
+        <ChevronDown className={cn('h-2.5 w-2.5 transition-transform text-muted-foreground', !effectiveOpen && '-rotate-90')} />
+        <span className="opacity-80">{cat.emoji}</span>
+        <span className="flex-1 text-left font-medium uppercase tracking-wide text-[9px] text-muted-foreground/80">{cat.label}</span>
+        <span className="text-[9px] text-muted-foreground">{items.length}</span>
+      </button>
+      {effectiveOpen && (
+        <ul className="ml-2 mt-0.5 space-y-0 border-l border-sidebar-border/50 pl-2">
+          {items.map((c) => {
+            const label = c.skos_prefLabel ?? c.kd_title;
+            const isActive = pathname === c.href;
+            return (
+              <li key={c.id}>
+                <Link
+                  href={c.href}
+                  title={label}
+                  className={cn(
+                    'flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] hover:bg-sidebar-accent',
+                    isActive && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+                  )}
+                >
+                  <span className="truncate">{label.replace(/^([A-Z]{2,}|\d+)\s+—\s+/, '')}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </li>
+  );
+}
+
 /** Una entrada de paper en el sidebar (v4.5b D2: TOC migró a Conexiones › Esquema). */
 function PaperItem({ paper, pathname }: Readonly<{ paper: Paper; pathname: string; filter: string }>) {
   const isActive = pathname === paper.href || pathname === `${paper.href}/`;
@@ -242,8 +452,9 @@ export function Sidebar() {
   const [width, setWidth] = useLeftWidth();
   const tree = buildCommunityTree();
   const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
-  const graph = useGraphContext();
-  const isOnGraph = pathname === '/canonico/grafo' || pathname.startsWith('/canonico/grafo/');
+  const conceptos = useMemo(() => [...concepto].sort(
+    (a, b) => (a.skos_prefLabel ?? a.kd_title).localeCompare(b.skos_prefLabel ?? b.kd_title, 'es'),
+  ), []);
   const [filter, setFilter] = useState('');
 
   // collapsed: barra estrecha con icons clave + opciones
@@ -297,19 +508,10 @@ export function Sidebar() {
   return (
     <SidebarResizableNav width={width} setWidth={setWidth}>
       {/* v4.5 D3 · sidebar = navegación pura. Misiones y stats por-doc removidos:
-          contexto vive en su lugar (header/right-panel/página /mision). */}
-
-      {/* Filtros contextuales del grafo (solo en /canonico/grafo) */}
-      {isOnGraph && graph && (
-        <section className="border-b border-sidebar-border max-h-[60%] overflow-hidden flex flex-col">
-          <div className="px-2 py-1 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground/80 bg-sidebar-accent/30">
-            Filtros · Grafo global
-          </div>
-          <div className="flex-1 min-h-0 overflow-y-auto">
-            <Graph3DFilters controller={graph} />
-          </div>
-        </section>
-      )}
+          contexto vive en su lugar (header/right-panel/página /mision).
+          v5.0i · filtros del grafo movidos al page de /canonico/grafo (overlay
+          flotante interno) — el sidebar global no debe tener controles
+          específicos de páginas. */}
 
       {/* Search box inline (filtra navegación) */}
       <div className="px-2 pt-2 pb-1">
@@ -366,20 +568,11 @@ export function Sidebar() {
                 <Network className="h-3.5 w-3.5" /> Grafo global
               </Link>
             </li>
-            {/* v5.0h · Glosario Universal — base conceptual independiente
-                de las investigaciones M01-M12. Vive en la biblioteca. */}
-            <li>
-              <Link
-                href="/glosario"
-                className={cn(
-                  'flex items-center gap-1.5 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
-                  pathname.startsWith('/glosario') && 'bg-sidebar-accent font-semibold text-sidebar-primary',
-                )}
-              >
-                <BookMarked className="h-3.5 w-3.5" /> Glosario universal
-                <span className="ml-auto font-mono text-[9px] text-muted-foreground/70">M00</span>
-              </Link>
-            </li>
+            {/* v5.0i · Glosario expandible (paridad con Reforma Cuántica).
+                Conceptos agrupados por categoría (concepto-{normativo,
+                academico, meta-instrumental, sintesis, nuevo, internacional}).
+                Vive en la biblioteca como otra área de conocimiento. */}
+            <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
           </ul>
         </SectionToggle>
 

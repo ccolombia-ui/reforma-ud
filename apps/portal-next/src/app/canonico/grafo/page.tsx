@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Group, Panel, Separator } from 'react-resizable-panels';
-import { ChevronLeft, Box, Square, GripVertical, Maximize2, Minimize2, RefreshCw, Tag } from 'lucide-react';
+import { ChevronLeft, Box, Square, GripVertical, Maximize2, Minimize2, RefreshCw, Tag, Filter } from 'lucide-react';
 import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
-import { Graph3DCanvas, Graph3DDetail } from '@/components/graph/graph-3d';
+import { Graph3DCanvas, Graph3DDetail, Graph3DFilters } from '@/components/graph/graph-3d';
 import { useGraphContext } from '@/lib/graph-context';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -79,9 +79,9 @@ export default function GrafoGlobalPage() {
 function Graph3DWorkspace() {
   const controller = useGraphContext();
   const [fullscreen, setFullscreen] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
 
   if (!controller) {
-    // Fallback (no debería pasar — el Provider activa cuando estamos en /canonico/grafo)
     return (
       <div className="h-[calc(100vh-14rem)] min-h-[560px] rounded-lg border bg-muted/20 flex items-center justify-center text-sm text-muted-foreground">
         Inicializando contexto del grafo...
@@ -96,12 +96,41 @@ function Graph3DWorkspace() {
       'rounded-lg border bg-background overflow-hidden',
       fullscreen ? 'fixed inset-3 z-50 shadow-2xl' : 'h-[calc(100vh-12rem)] min-h-[560px]',
     )}>
-      <Group orientation="horizontal" id="graph-3d-workspace" className="flex h-full">
+      {/* v5.0i · Group con 3 paneles potenciales:
+          [filters?] | canvas | [detail?]
+          Filters y detail son opcionales, ambos con Separator drag-resizable. */}
+      <Group orientation="horizontal" id="graph-3d-workspace" autoSave="reforma-ud:graph-3d-workspace" className="flex h-full">
+        {/* LEFT — Filtros (overlay aside, oculto por default) */}
+        {showFilters && (
+          <>
+            <Panel id="filters" defaultSize={20} minSize={15} maxSize={35} className="overflow-hidden">
+              <Graph3DFilters controller={controller} onClose={() => setShowFilters(false)} />
+            </Panel>
+            <Separator className="group relative w-1.5 bg-border hover:bg-primary/40 data-[dragging=true]:bg-primary transition-colors cursor-col-resize">
+              <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 flex items-center pointer-events-none">
+                <GripVertical className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            </Separator>
+          </>
+        )}
+
         {/* CENTER — Canvas */}
-        <Panel id="canvas" defaultSize={detailVisible ? 75 : 100} minSize={30} className="overflow-hidden relative">
+        <Panel id="canvas" defaultSize={detailVisible && showFilters ? 50 : detailVisible || showFilters ? 70 : 100} minSize={30} className="overflow-hidden relative">
           <Graph3DCanvas controller={controller} />
           {/* Floating controls top-right del canvas */}
           <div className="absolute top-2 right-2 flex gap-1.5">
+            {!showFilters && (
+              <Button
+                variant="secondary"
+                size="icon"
+                className="h-8 w-8 shadow-md"
+                onClick={() => setShowFilters(true)}
+                aria-label="Mostrar filtros"
+                title="Mostrar filtros (categorías + búsqueda)"
+              >
+                <Filter className="h-4 w-4" />
+              </Button>
+            )}
             <Button
               variant={controller.showLabels ? 'default' : 'secondary'}
               size="icon"
@@ -138,13 +167,19 @@ function Graph3DWorkspace() {
           </div>
         </Panel>
 
-        {/* RIGHT — Detalle del nodo seleccionado */}
+        {/* RIGHT — Detalle del nodo seleccionado · v5.0i Separator engrosado */}
         {detailVisible && (
           <>
-            <Separator className="group relative w-1 bg-border hover:bg-primary/40 data-[dragging=true]:bg-primary transition-colors cursor-col-resize">
+            <Separator className="group relative w-1.5 bg-border hover:bg-primary/40 data-[dragging=true]:bg-primary transition-colors cursor-col-resize">
               <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 flex items-center pointer-events-none">
                 <GripVertical className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
+              {/* Grip dots visible al hover (paridad sidebar v4.4) */}
+              <span className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-0.5 opacity-0 group-hover:opacity-60 transition-opacity">
+                <span className="h-0.5 w-0.5 rounded-full bg-current"></span>
+                <span className="h-0.5 w-0.5 rounded-full bg-current"></span>
+                <span className="h-0.5 w-0.5 rounded-full bg-current"></span>
+              </span>
             </Separator>
             <Panel id="detail" defaultSize={25} minSize={18} maxSize={40} className="overflow-hidden">
               <Graph3DDetail controller={controller} />
