@@ -256,17 +256,30 @@ function GlosarioSection({
 
   return (
     <li>
-      <button
-        type="button"
-        onClick={handleToggle}
-        className="group flex w-full items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent"
-        aria-expanded={effectiveOpen}
-      >
-        <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !effectiveOpen && '-rotate-90')} />
-        <BookMarked className="h-3.5 w-3.5 text-primary/80" />
-        <span className="flex-1 text-left font-medium">Glosario</span>
-        <span className="text-[9px] text-muted-foreground">{filtered.length}</span>
-      </button>
+      {/* v5.0y · Header doble: chevron toggle + Link a /glosario (dashboard).
+          Patrón Linear/Notion (mismo que ReformaCuanticaSection). */}
+      <div className="group flex w-full items-center gap-1 rounded pr-1 hover:bg-sidebar-accent">
+        <button
+          type="button"
+          onClick={handleToggle}
+          aria-expanded={effectiveOpen}
+          aria-label={effectiveOpen ? 'Colapsar' : 'Expandir'}
+          className="flex items-center justify-center pl-2 py-1"
+        >
+          <ChevronDown className={cn('h-3 w-3 transition-transform text-muted-foreground', !effectiveOpen && '-rotate-90')} />
+        </button>
+        <Link
+          href="/glosario"
+          className={cn(
+            'flex flex-1 items-center gap-1 px-1 py-1 text-xs',
+            pathname === '/glosario' && 'font-semibold text-sidebar-primary',
+          )}
+        >
+          <BookMarked className="h-3.5 w-3.5 text-primary/80 shrink-0" />
+          <span className="flex-1 text-left font-medium">Glosario</span>
+          <span className="text-[9px] text-muted-foreground shrink-0">{filtered.length}</span>
+        </Link>
+      </div>
       {effectiveOpen && (
         <ul className="ml-3 space-y-0.5 border-l border-sidebar-border pl-2 mt-0.5">
           {/* Link al index general del glosario */}
