@@ -1,20 +1,11 @@
 'use client';
 
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { X, Pin, PinOff, BookMarked, FileText, Building2, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
-import {
-  DndContext,
-  PointerSensor,
-  KeyboardSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-} from '@dnd-kit/core';
+import { X, Pin, PinOff, BookMarked, FileText, Building2, ChevronLeft, ChevronRight, ChevronDown, SplitSquareHorizontal } from 'lucide-react';
+import { useSecondaryPaneTabs } from '@/lib/secondary-pane-tabs';
 import {
   SortableContext,
   horizontalListSortingStrategy,
-  sortableKeyboardCoordinates,
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -55,13 +46,8 @@ function DocTabsBarInner() {
   const mounted = useMounted();
   const {
     tabs, activeTabId,
-    activateTab, closeTab, closeOthers, closeToRight, togglePin, reorderTabs,
+    activateTab, closeTab, closeOthers, closeToRight, togglePin,
   } = useDocTabs();
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
-  );
 
   // Atajos Ctrl+Tab / Ctrl+Shift+Tab / Ctrl+W (preservados de v3.4)
   useEffect(() => {
@@ -124,15 +110,6 @@ function DocTabsBarInner() {
     el.scrollBy({ left: dir === 'left' ? -200 : 200, behavior: 'smooth' });
   }, []);
 
-  const onDragEnd = useCallback((event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-    const fromIdx = tabs.findIndex((t) => t.id === active.id);
-    const toIdx = tabs.findIndex((t) => t.id === over.id);
-    if (fromIdx < 0 || toIdx < 0) return;
-    reorderTabs(fromIdx, toIdx);
-  }, [tabs, reorderTabs]);
-
   const tabIds = useMemo(() => tabs.map((t) => t.id), [tabs]);
 
   if (!mounted || tabs.length === 0) return null;
@@ -153,27 +130,29 @@ function DocTabsBarInner() {
           </button>
         )}
 
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-          <SortableContext items={tabIds} strategy={horizontalListSortingStrategy}>
-            <div
-              ref={stripRef}
-              className="flex flex-1 min-w-0 items-center gap-0.5 overflow-x-auto no-chrome-scroll"
-            >
-              {tabs.map((tab) => (
-                <SortableTabPill
-                  key={tab.id}
-                  tab={tab}
-                  active={tab.id === activeTabId}
-                  onActivate={() => activateTab(tab.id)}
-                  onClose={() => closeTab(tab.id)}
-                  onCloseOthers={() => closeOthers(tab.id)}
-                  onCloseToRight={() => closeToRight(tab.id)}
-                  onTogglePin={() => togglePin(tab.id)}
-                />
-              ))}
-            </div>
-          </SortableContext>
-        </DndContext>
+        {/* SortableContext sin DndContext propio · v5.0b — el DndContext lo
+            provee WorkspaceShell para soportar drag cross-pane. En single-pane
+            (sin WorkspaceShell activo) el sortable usa el DndContext del shell
+            que siempre está montado. */}
+        <SortableContext items={tabIds} strategy={horizontalListSortingStrategy}>
+          <div
+            ref={stripRef}
+            className="flex flex-1 min-w-0 items-center gap-0.5 overflow-x-auto no-chrome-scroll"
+          >
+            {tabs.map((tab) => (
+              <SortableTabPill
+                key={tab.id}
+                tab={tab}
+                active={tab.id === activeTabId}
+                onActivate={() => activateTab(tab.id)}
+                onClose={() => closeTab(tab.id)}
+                onCloseOthers={() => closeOthers(tab.id)}
+                onCloseToRight={() => closeToRight(tab.id)}
+                onTogglePin={() => togglePin(tab.id)}
+              />
+            ))}
+          </div>
+        </SortableContext>
 
         {/* Chevron derecha · solo si overflow */}
         {overflowState.hasRight && (
@@ -246,9 +225,12 @@ function SortableTabPill({
   onCloseToRight: () => void;
   onTogglePin: () => void;
 }>) {
+  // v5.0b · data.pane='a' permite a WorkspaceShell.onDragEnd discriminar el origen
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: tab.id,
+    data: { pane: 'a' },
   });
+  const paneB = useSecondaryPaneTabs();
   const Icon = tabIcon(tab.kind);
 
   const style = {
@@ -321,6 +303,10 @@ function SortableTabPill({
       </ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuItem onClick={onActivate}>Activar</ContextMenuItem>
+        <ContextMenuItem onClick={() => paneB.openTab(tab.id)}>
+          <SplitSquareHorizontal className="mr-2 h-3.5 w-3.5" />
+          Abrir a la derecha
+        </ContextMenuItem>
         <ContextMenuSeparator />
         <ContextMenuItem onClick={onClose} disabled={tab.pinned}>
           Cerrar

@@ -10,7 +10,7 @@ import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
 import { ComprehensionInline } from '@/components/biblioteca/comprehension-inline';
 import { PresaberesCallout } from '@/components/biblioteca/presaberes-callout';
 import { DeliberacionPanel } from '@/components/biblioteca/deliberacion-panel';
-import { ComparativeSplit, CompareButton } from '@/components/biblioteca/comparative-split';
+import { ComparativeSplit, CompareButton } from '@/components/workspace/workspace-shell';
 import { PrintButton } from '@/components/print-button';
 import { SplitWorkArea } from '@/components/biblioteca/split-work-area';
 import { canonicPaper, note } from '#site/content';
