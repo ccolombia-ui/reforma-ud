@@ -7,7 +7,8 @@ import { Sparkles, Send, ChevronLeft, Target, Lightbulb, Link2, Users, Compass }
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { useRightPanel, useActiveProfile, useRightWidth } from '@/lib/ui-state';
+import { useRightPanel, useActiveProfile, useRightWidth, useFocusedPane } from '@/lib/ui-state';
+import { useSecondaryPaneTabs } from '@/lib/secondary-pane-tabs';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { getActiveDocFromPath } from '@/lib/active-doc';
@@ -47,8 +48,17 @@ export function RightPanel() {
   const { collapsed, tab, setTab } = useRightPanel();
   const [width, setWidth] = useRightWidth();
   const pathname = usePathname();
+  const [focusedPane] = useFocusedPane();
+  const paneB = useSecondaryPaneTabs();
   const copSlug = inferCopFromPath(pathname);
-  const activeDoc = useMemo(() => getActiveDocFromPath(pathname), [pathname]);
+  // v5.0c · RightPanel sigue al pane focado: si focused=b y pane B tiene activeTab,
+  // resolvemos el doc desde ese href; si no, fallback al pathname (pane A).
+  const activeDoc = useMemo(() => {
+    if (focusedPane === 'b' && paneB.activeTab) {
+      return getActiveDocFromPath(paneB.activeTab.href);
+    }
+    return getActiveDocFromPath(pathname);
+  }, [focusedPane, paneB.activeTab, pathname]);
 
   // v4.4 — Drag-resize del right panel (handle en borde IZQUIERDO)
   const dragStart = useRef<{ x: number; w: number } | null>(null);

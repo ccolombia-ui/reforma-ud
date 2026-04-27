@@ -11,6 +11,7 @@ const KEYS = {
   conexionesSubTab: 'reforma-ud:conexiones-subtab',
   activeRole: 'reforma-ud:active-role',
   userName: 'reforma-ud:user-name',
+  focusedPane: 'reforma-ud:focused-pane',
 } as const;
 
 export const LEFT_SIDEBAR_MIN = 200;
@@ -267,6 +268,50 @@ export function useRightPanel(defaultTab: RightTab = 'conexiones') {
     write(KEYS.rightTab, t);
   };
   return { collapsed, toggle, tab, setTab } as const;
+}
+
+/* ============================================================
+ * v5.0c · Focused pane (A | B) — qué pane recibe foco para shortcuts y RightPanel
+ * ============================================================ */
+
+export type FocusedPane = 'a' | 'b';
+
+const VALID_PANE: readonly FocusedPane[] = ['a', 'b'] as const;
+function isFocusedPane(v: string): v is FocusedPane {
+  return (VALID_PANE as readonly string[]).includes(v);
+}
+
+export function useFocusedPane(defaultPane: FocusedPane = 'a') {
+  const [pane, setPaneState] = useState<FocusedPane>(defaultPane);
+
+  useEffect(() => {
+    const v = read(KEYS.focusedPane, defaultPane) as string;
+    if (isFocusedPane(v)) setPaneState(v);
+
+    const onChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ key: string; value: string }>).detail;
+      if (detail?.key === KEYS.focusedPane && isFocusedPane(detail.value)) {
+        setPaneState(detail.value);
+      }
+    };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === KEYS.focusedPane && e.newValue && isFocusedPane(e.newValue)) {
+        setPaneState(e.newValue);
+      }
+    };
+    window.addEventListener(EVENT, onChange);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener(EVENT, onChange);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, [defaultPane]);
+
+  const setPane = (p: FocusedPane) => {
+    setPaneState(p);
+    write(KEYS.focusedPane, p);
+  };
+  return [pane, setPane] as const;
 }
 
 /** Sub-tab del tab Conexiones (esquema | grafo | evolucion). v4.5b D2. */

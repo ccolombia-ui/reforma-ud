@@ -18,7 +18,9 @@ import { GripVertical, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSecondaryPaneTabs, hydrateFromCompareParam } from '@/lib/secondary-pane-tabs';
 import { useDocTabs } from '@/lib/doc-tabs';
+import { useFocusedPane, type FocusedPane } from '@/lib/ui-state';
 import { PaneShell } from '@/components/workspace/pane-shell';
+import { cn } from '@/lib/utils';
 
 const COMPARE_PARAM = 'compare';
 
@@ -68,22 +70,92 @@ function WorkspaceShellInner({ children, paperId }: Readonly<{ children: React.R
 
   const paneB = useSecondaryPaneTabs();
   const docTabs = useDocTabs();
+  const [focused, setFocused] = useFocusedPane();
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
 
+  // v5.0c · Atajos teclado workspace
+  // Ctrl+\\        → toggle split (abrir B con segunda tab disponible / cerrar B)
+  // Ctrl+Shift+\\  → swap A↔B (intercambia el doc activo entre panes)
+  // Ctrl+1         → focus pane A
+  // Ctrl+2         → focus pane B (si está abierto)
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      const isMod = e.ctrlKey || e.metaKey;
+      if (!isMod) return;
+
+      if (e.key === '\\' && !e.shiftKey) {
+        e.preventDefault();
+        if (paneB.isOpen) {
+          paneB.closePane();
+          setFocused('a');
+        } else {
+          // Abrir el segundo tab disponible en B; si solo hay 1 tab, no-op
+          const candidate = docTabs.tabs.find((t) => t.id !== docTabs.activeTabId);
+          if (candidate) {
+            paneB.openTab(candidate.id);
+            setFocused('b');
+          }
+        }
+      } else if (e.key === '\\' && e.shiftKey) {
+        e.preventDefault();
+        if (!paneB.isOpen || !paneB.activeTabId || !docTabs.activeTabId) return;
+        const aId = docTabs.activeTabId;
+        const bId = paneB.activeTabId;
+        // Swap: B recibe A active, A activa lo que estaba en B (si ya está en A) o lo abre
+        paneB.closeTab(bId);
+        paneB.openTab(aId);
+        docTabs.closeTab(aId);
+        const inA = docTabs.tabs.find((t) => t.id === bId);
+        if (inA) docTabs.activateTab(bId);
+        else {
+          const fromBOriginal = paneB.tabs.find((t) => t.id === bId);
+          if (fromBOriginal) docTabs.openInNewTab(fromBOriginal.href);
+        }
+      } else if (e.key === '1') {
+        e.preventDefault();
+        setFocused('a');
+      } else if (e.key === '2' && paneB.isOpen) {
+        e.preventDefault();
+        setFocused('b');
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [docTabs, paneB, setFocused]);
+
+  // Helpers extraídos para reducir complejidad cognitiva del onDragEnd
+  const moveAtoB = useCallback((activeId: string) => {
+    paneB.openTab(activeId);
+    docTabs.closeTab(activeId);
+  }, [paneB, docTabs]);
+
+  const moveBtoA = useCallback((activeId: string) => {
+    const fromB = paneB.tabs.find((t) => t.id === activeId);
+    paneB.closeTab(activeId);
+    if (fromB) docTabs.openInNewTab(fromB.href);
+  }, [paneB, docTabs]);
+
+  const reorderInPane = useCallback((pane: 'a' | 'b', activeId: string, overId: string) => {
+    const tabs = pane === 'a' ? docTabs.tabs : paneB.tabs;
+    const reorder = pane === 'a' ? docTabs.reorderTabs : paneB.reorderTabs;
+    const fromIdx = tabs.findIndex((t) => t.id === activeId);
+    const toIdx = tabs.findIndex((t) => t.id === overId);
+    if (fromIdx >= 0 && toIdx >= 0) reorder(fromIdx, toIdx);
+  }, [docTabs, paneB]);
+
   /**
-   * v5.0b · onDragEnd unificado. Maneja 3 casos:
-   *   1. Reorder dentro del mismo pane (active.data.pane === over.data.pane)
-   *   2. Cross-pane via droppable de zona ("pane-a-drop" / "pane-b-drop")
-   *   3. Cross-pane via drop sobre tab del pane destino (active.data.pane !== over.data.pane)
+   * v5.0b · onDragEnd unificado. Casos: reorder mismo pane · cross-pane via
+   * drop-zone vacía · cross-pane via tab del pane destino.
    */
   const onDragEnd = useCallback((event: DragEndEvent) => {
     const { active, over } = event;
     if (!over) return;
-
     const activeId = String(active.id);
     const overId = String(over.id);
     if (activeId === overId) return;
@@ -91,65 +163,48 @@ function WorkspaceShellInner({ children, paperId }: Readonly<{ children: React.R
     const fromPane = active.data.current?.pane as 'a' | 'b' | undefined;
     const toPane = over.data.current?.pane as 'a' | 'b' | undefined;
 
-    // Caso 2 · drop en zona droppable de pane (cross-pane via empty area)
-    if (overId === 'pane-b-drop' && fromPane === 'a') {
-      paneB.openTab(activeId);
-      docTabs.closeTab(activeId);
-      return;
-    }
-    if (overId === 'pane-a-drop' && fromPane === 'b') {
-      const fromB = paneB.tabs.find((t) => t.id === activeId);
-      paneB.closeTab(activeId);
-      if (fromB) docTabs.openInNewTab(fromB.href);
-      return;
-    }
+    // Drop en zona droppable cross-pane
+    if (overId === 'pane-b-drop' && fromPane === 'a') return moveAtoB(activeId);
+    if (overId === 'pane-a-drop' && fromPane === 'b') return moveBtoA(activeId);
 
-    // Caso 1 · reorder dentro del mismo pane
+    // Reorder mismo pane
     if (fromPane && fromPane === toPane) {
-      if (fromPane === 'a') {
-        const fromIdx = docTabs.tabs.findIndex((t) => t.id === activeId);
-        const toIdx = docTabs.tabs.findIndex((t) => t.id === overId);
-        if (fromIdx >= 0 && toIdx >= 0) docTabs.reorderTabs(fromIdx, toIdx);
-      } else {
-        const fromIdx = paneB.tabs.findIndex((t) => t.id === activeId);
-        const toIdx = paneB.tabs.findIndex((t) => t.id === overId);
-        if (fromIdx >= 0 && toIdx >= 0) paneB.reorderTabs(fromIdx, toIdx);
-      }
+      reorderInPane(fromPane, activeId, overId);
       return;
     }
 
-    // Caso 3 · cross-pane via drop sobre otra tab
-    if (fromPane === 'a' && toPane === 'b') {
-      paneB.openTab(activeId);
-      docTabs.closeTab(activeId);
-      return;
-    }
-    if (fromPane === 'b' && toPane === 'a') {
-      const fromB = paneB.tabs.find((t) => t.id === activeId);
-      paneB.closeTab(activeId);
-      if (fromB) docTabs.openInNewTab(fromB.href);
-    }
-  }, [paneB, docTabs]);
+    // Cross-pane via tab del destino
+    if (fromPane === 'a' && toPane === 'b') return moveAtoB(activeId);
+    if (fromPane === 'b' && toPane === 'a') return moveBtoA(activeId);
+  }, [moveAtoB, moveBtoA, reorderInPane]);
 
   // v5.0b · DndContext SIEMPRE montado para que sortable funcione tanto en
   // single-pane como multi-pane sin context-switching.
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-      {!paneB.isOpen ? (
+      {paneB.isOpen ? (
+        <MultiPaneLayout
+          paneB={paneB}
+          focused={focused}
+          setFocused={setFocused}
+        >
+          {children}
+        </MultiPaneLayout>
+      ) : (
         // Single-pane: render children directo, sin overhead visual
         <>{children}</>
-      ) : (
-        <MultiPaneLayout paneB={paneB}>{children}</MultiPaneLayout>
       )}
     </DndContext>
   );
 }
 
 function MultiPaneLayout({
-  children, paneB,
+  children, paneB, focused, setFocused,
 }: Readonly<{
   children: React.ReactNode;
   paneB: ReturnType<typeof useSecondaryPaneTabs>;
+  focused: FocusedPane;
+  setFocused: (p: FocusedPane) => void;
 }>) {
   return (
     <div className="h-[calc(100vh-3.5rem)] no-print">
@@ -159,10 +214,21 @@ function MultiPaneLayout({
         autoSave="reforma-ud:workspace-v5.0"
         className="flex h-full"
       >
-        <Panel id="pane-a" defaultSize={50} minSize={25} className="overflow-y-auto" data-pane="a">
-          <PaneADroppable>
-            <div className="px-4 md:px-6 py-2">{children}</div>
-          </PaneADroppable>
+        <Panel
+          id="pane-a"
+          defaultSize={50}
+          minSize={25}
+          className={cn(
+            'overflow-y-auto transition-shadow',
+            focused === 'a' && 'ring-2 ring-primary/30 ring-inset',
+          )}
+          data-pane="a"
+        >
+          <PaneFocusable onFocus={() => setFocused('a')} label="Pane izquierdo">
+            <PaneADroppable>
+              <div className="px-4 md:px-6 py-2">{children}</div>
+            </PaneADroppable>
+          </PaneFocusable>
         </Panel>
 
         <Separator className="group relative w-1.5 bg-border hover:bg-primary/40 data-[dragging=true]:bg-primary transition-colors cursor-col-resize">
@@ -171,19 +237,56 @@ function MultiPaneLayout({
           </div>
         </Separator>
 
-        <Panel id="pane-b" defaultSize={50} minSize={25} className="overflow-y-auto" data-pane="b">
-          <PaneShell
-            paneId="b"
-            tabs={paneB.tabs}
-            activeTab={paneB.activeTab}
-            activeTabId={paneB.activeTabId}
-            activateTab={paneB.activateTab}
-            closeTab={paneB.closeTab}
-            reorderTabs={paneB.reorderTabs}
-            onClosePane={paneB.closePane}
-          />
+        <Panel
+          id="pane-b"
+          defaultSize={50}
+          minSize={25}
+          className={cn(
+            'overflow-y-auto transition-shadow',
+            focused === 'b' && 'ring-2 ring-primary/30 ring-inset',
+          )}
+          data-pane="b"
+        >
+          <PaneFocusable onFocus={() => setFocused('b')} label="Pane derecho">
+            <PaneShell
+              paneId="b"
+              tabs={paneB.tabs}
+              activeTab={paneB.activeTab}
+              activeTabId={paneB.activeTabId}
+              activateTab={paneB.activateTab}
+              closeTab={paneB.closeTab}
+              reorderTabs={paneB.reorderTabs}
+              onClosePane={paneB.closePane}
+            />
+          </PaneFocusable>
         </Panel>
       </Group>
+    </div>
+  );
+}
+
+/** v5.0c · Wrapper que captura focus al click en cualquier parte del pane.
+ * Implementación con role="region" + onMouseDown — `<button>` no puede
+ * contener children interactivos (article, links, forms). */
+function PaneFocusable({
+  children, onFocus, label,
+}: Readonly<{
+  children: React.ReactNode;
+  onFocus: () => void;
+  label: string;
+}>) {
+  return (
+    <div
+      role="region"
+      aria-label={label}
+      onMouseDown={onFocus}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') onFocus();
+      }}
+      tabIndex={-1}
+      className="h-full"
+    >
+      {children}
     </div>
   );
 }
