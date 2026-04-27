@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Sparkles, Send, ChevronLeft, Target, Lightbulb, Link2, Users, Compass } from 'lucide-react';
+import { Sparkles, Send, ChevronLeft, Target, Lightbulb, Link2, Users, ListTree, Network, GitCommit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -12,7 +12,10 @@ import { usePanesState } from '@/lib/panes-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { getActiveDocFromPath } from '@/lib/active-doc';
-import { ConexionesTab } from '@/components/biblioteca/conexiones-tab';
+import { EsquemaTab } from '@/components/biblioteca/esquema-tab';
+import { PaperLocalGraph } from '@/components/graph/paper-local-graph';
+import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
+import { EvolutionTab } from '@/components/biblioteca/evolution-tab';
 import { RefsPanel } from '@/components/biblioteca/refs-panel';
 import { ComunidadPanel } from '@/components/biblioteca/comunidad-panel';
 import { canonicPaper, community, note } from '#site/content';
@@ -117,10 +120,11 @@ export function RightPanel() {
 
   useEffect(() => () => { cleanupRightDrag(); }, [cleanupRightDrag]);
 
-  // v4.5b D2 — Si activeDoc desaparece y estamos en una tab que requiere doc activo
-  // (refs o comunidad), fallback a asistente. Conexiones soporta no-doc (Evolución).
+  // v5.0aa — Si activeDoc desaparece y estamos en tab que requiere doc activo
+  // (refs, comunidad, evolucion), fallback a asistente. Esquema y Grafo
+  // soportan no-doc (esquema vacío + grafo global).
   useEffect(() => {
-    if (!activeDoc && (tab === 'refs' || tab === 'comunidad')) {
+    if (!activeDoc && (tab === 'refs' || tab === 'comunidad' || tab === 'evolucion')) {
       setTab('asistente');
     }
   }, [activeDoc, tab, setTab]);
@@ -249,12 +253,16 @@ export function RightPanel() {
         <div className="flex flex-1 min-h-0 flex-row">
           <div className="flex-1 min-w-0 flex flex-col">
             <div className="flex items-center gap-2 border-b border-sidebar-border px-3 py-2.5">
-              {tab === 'conexiones' && <Compass className="h-4 w-4 text-primary" />}
+              {tab === 'esquema' && <ListTree className="h-4 w-4 text-primary" />}
+              {tab === 'grafo' && <Network className="h-4 w-4 text-primary" />}
+              {tab === 'evolucion' && <GitCommit className="h-4 w-4 text-primary" />}
               {tab === 'refs' && <Link2 className="h-4 w-4 text-primary" />}
               {tab === 'comunidad' && <Users className="h-4 w-4 text-primary" />}
               {tab === 'asistente' && <Sparkles className="h-4 w-4 text-primary" />}
               <span className="font-semibold text-sm">
-                {tab === 'conexiones' && 'Conexiones'}
+                {tab === 'esquema' && 'Esquema'}
+                {tab === 'grafo' && 'Grafo semántico'}
+                {tab === 'evolucion' && 'Evolución'}
                 {tab === 'refs' && 'Referencias'}
                 {tab === 'comunidad' && 'Comunidad'}
                 {tab === 'asistente' && 'Asistente'}
@@ -262,7 +270,26 @@ export function RightPanel() {
             </div>
 
             <div className="flex-1 overflow-hidden">
-              {tab === 'conexiones' && <ConexionesTab doc={activeDoc} />}
+              {tab === 'esquema' && (
+                <div className="h-full overflow-y-auto">
+                  <EsquemaTab doc={activeDoc} />
+                </div>
+              )}
+              {tab === 'grafo' && (
+                <div className="h-full">
+                  {activeDoc ? (
+                    <PaperLocalGraph paperId={activeDoc.id} hops={1} />
+                  ) : (
+                    /* Sin doc activo → grafo GLOBAL del corpus (107 nodos, 125 aristas). */
+                    <VisNetworkGraph src="/static/graph-global.json" />
+                  )}
+                </div>
+              )}
+              {tab === 'evolucion' && (
+                <div className="h-full overflow-y-auto">
+                  <EvolutionTab doc={activeDoc} />
+                </div>
+              )}
               {tab === 'refs' && <RefsPanel doc={activeDoc} />}
               {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
               {tab === 'asistente' && (
@@ -277,11 +304,25 @@ export function RightPanel() {
             aria-label="Modos del panel"
             className="flex w-11 shrink-0 flex-col items-center gap-0.5 border-l border-sidebar-border py-2"
           >
+            {/* v5.0aa · 6 tabs planas (sin agrupador "Conexiones"). */}
             <RailIcon
-              active={tab === 'conexiones'}
-              onClick={() => setTab('conexiones')}
-              Icon={Compass}
-              label="Conexiones"
+              active={tab === 'esquema'}
+              onClick={() => setTab('esquema')}
+              Icon={ListTree}
+              label="Esquema"
+            />
+            <RailIcon
+              active={tab === 'grafo'}
+              onClick={() => setTab('grafo')}
+              Icon={Network}
+              label="Grafo"
+            />
+            <RailIcon
+              active={tab === 'evolucion'}
+              onClick={() => setTab('evolucion')}
+              Icon={GitCommit}
+              label="Evolución"
+              disabled={!activeDoc}
             />
             <RailIcon
               active={tab === 'refs'}

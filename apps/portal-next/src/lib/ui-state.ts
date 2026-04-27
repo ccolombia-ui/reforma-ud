@@ -194,10 +194,13 @@ export function useRightWidth() {
   return [width, setRightWidth] as const;
 }
 
-// v4.5b D2 — 4 tabs. `conexiones` agrupa sub-tabs esquema/grafo/evolucion.
-// Migración: legacy 'chat' → 'asistente', 'backlinks' → 'refs'.
-export type RightTab = 'conexiones' | 'refs' | 'comunidad' | 'asistente';
-const VALID_RIGHT_TABS: readonly RightTab[] = ['conexiones', 'refs', 'comunidad', 'asistente'] as const;
+// v5.0aa — Tabs PLANAS (sin agrupador "Conexiones"). Antes había 4 tabs
+// con conexiones como wrapper de esquema/grafo/evolucion (accordion). Para
+// MVP el usuario prefiere todo flat: 6 tabs directas en el icon rail.
+// Migración: legacy 'chat' → 'asistente', 'backlinks' → 'refs',
+// 'conexiones' → 'esquema' (default razonable del antiguo accordion).
+export type RightTab = 'esquema' | 'grafo' | 'evolucion' | 'refs' | 'comunidad' | 'asistente';
+const VALID_RIGHT_TABS: readonly RightTab[] = ['esquema', 'grafo', 'evolucion', 'refs', 'comunidad', 'asistente'] as const;
 function isRightTab(v: string): v is RightTab {
   return (VALID_RIGHT_TABS as readonly string[]).includes(v);
 }
@@ -205,17 +208,20 @@ function normalizeRightTab(v: string | null): RightTab | null {
   if (!v) return null;
   if (v === 'chat') return 'asistente';
   if (v === 'backlinks') return 'refs';
+  if (v === 'conexiones') return 'esquema';  // wrapper colapsado → su sub-tab default
   return isRightTab(v) ? v : null;
 }
 
+// Legacy export retenido para compat con setSubTab del Kanban CTA.
+// Ahora redirige al RightTab plano correspondiente (esquema/grafo/evolucion).
 export type ConexionesSubTab = 'esquema' | 'grafo' | 'evolucion';
 const VALID_CONEXIONES_SUB: readonly ConexionesSubTab[] = ['esquema', 'grafo', 'evolucion'] as const;
 function isConexionesSubTab(v: string): v is ConexionesSubTab {
   return (VALID_CONEXIONES_SUB as readonly string[]).includes(v);
 }
 
-/** Default: EXPANDIDO. Tab Conexiones por defecto cuando hay doc activo. */
-export function useRightPanel(defaultTab: RightTab = 'conexiones') {
+/** Default: EXPANDIDO. Tab Esquema por defecto cuando hay doc activo. */
+export function useRightPanel(defaultTab: RightTab = 'esquema') {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [tab, setTabState] = useState<RightTab>(defaultTab);
 
