@@ -12,39 +12,129 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeRaw from 'rehype-raw';
 import rehypeMermaid from 'rehype-mermaid';
 
-// v4.5c D5 — Carga la bibliografía para resolver `[@key]` a `(Autor, año)`
-// durante el build de Velite. Es un read-once al iniciar el proceso.
-type RefEntry = { author: string; year: number; title?: string; url?: string | null; journal?: string; publisher?: string };
+// v5.0f Gap A · SSOT bibliográfico = átomos .md en content/biblio/<key>.md
+// per AUDIT-arquitectura-citas-bibliografia.md v3.0. Antes era references.json
+// (revertido). Velite recoge cada átomo como Reference collection y el transform
+// de [@key] resuelve leyendo el frontmatter de los .md.
+type RefEntry = {
+  bibtex_key: string;
+  authors: string[];
+  year: number;
+  title?: string;
+  url?: string;
+  journal?: string;
+  publisher?: string;
+  doi?: string;
+  biblio_type?: string;
+};
+
 let REFERENCES: Record<string, RefEntry> = {};
-try {
-  const raw = readFileSync(join(process.cwd(), 'src', 'lib', 'references.json'), 'utf8');
-  REFERENCES = JSON.parse(raw) as Record<string, RefEntry>;
-  delete (REFERENCES as Record<string, unknown>)._meta;
-} catch (e) {
-  console.warn('[velite] references.json no encontrado — citas APA no resolverán', e);
+
+function parseFrontmatter(raw: string): Record<string, unknown> | null {
+  if (!raw.startsWith('---\n')) return null;
+  const end = raw.indexOf('\n---\n', 4);
+  if (end === -1) return null;
+  const yaml = raw.slice(4, end);
+  // Mini-parser dedicado (evita dep de yaml en velite.config). Soporta el
+  // subset que genera migrate-references-to-atoms.mjs:
+  //   key: value
+  //   key: "quoted value"
+  //   key:
+  //     - "list item"
+  //     - "list item"
+  const out: Record<string, unknown> = {};
+  let currentList: { key: string; items: string[] } | null = null;
+  for (const line of yaml.split('\n')) {
+    if (!line.trim()) continue;
+    const listMatch = line.match(/^\s+-\s+(.+)$/);
+    if (listMatch && currentList) {
+      let v = listMatch[1].trim();
+      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+        v = v.slice(1, -1);
+      }
+      currentList.items.push(v);
+      continue;
+    }
+    const kvMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*:\s*(.*)$/);
+    if (!kvMatch) continue;
+    if (currentList) {
+      out[currentList.key] = currentList.items;
+      currentList = null;
+    }
+    const [, k, vRaw] = kvMatch;
+    if (vRaw === '' || vRaw === undefined) {
+      currentList = { key: k, items: [] };
+      continue;
+    }
+    let v: unknown = vRaw.trim();
+    if (typeof v === 'string') {
+      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+        v = v.slice(1, -1);
+      } else if (/^-?\d+$/.test(v)) {
+        v = Number(v);
+      }
+    }
+    out[k] = v;
+  }
+  if (currentList) out[currentList.key] = currentList.items;
+  return out;
 }
 
-function shortAuthor(author: string): string {
-  // "Apellido, Nombre" → "Apellido"; "X et al." → "X et al."; "Autor1 & Autor2" → "Autor1 & Autor2"
-  if (author.includes(' et al.')) return author;
-  const firstComma = author.indexOf(',');
-  if (firstComma > 0) return author.slice(0, firstComma);
-  return author;
+function loadReferences(): void {
+  const dir = join(process.cwd(), 'content', 'biblio');
+  REFERENCES = {};
+  try {
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith('.md')) continue;
+      const raw = readFileSync(join(dir, f), 'utf8');
+      const fm = parseFrontmatter(raw);
+      if (!fm || !fm.bibtex_key) continue;
+      REFERENCES[fm.bibtex_key as string] = {
+        bibtex_key: fm.bibtex_key as string,
+        authors: (fm.authors as string[]) ?? [],
+        year: (fm.year as number) ?? 0,
+        title: fm.title as string | undefined,
+        url: fm.url as string | undefined,
+        journal: fm.journal as string | undefined,
+        publisher: fm.publisher as string | undefined,
+        doi: fm.doi as string | undefined,
+        biblio_type: fm.biblio_type as string | undefined,
+      };
+    }
+    console.log(`[velite] ${Object.keys(REFERENCES).length} átomos bibliográficos cargados desde content/biblio/`);
+  } catch (e) {
+    console.warn('[velite] content/biblio/ no encontrado — citas APA no resolverán', e);
+  }
+}
+loadReferences();
+
+function shortAuthor(authors: string[]): string {
+  if (authors.length === 0) return 'Anonymous';
+  const first = authors[0];
+  // "Beer, S." → "Beer"; "ABET" → "ABET"; "X et al." → "X et al."
+  if (first.includes(' et al.')) return first;
+  const firstComma = first.indexOf(',');
+  const lastName = firstComma > 0 ? first.slice(0, firstComma) : first;
+  if (authors.length === 1) return lastName;
+  if (authors.length === 2) {
+    const second = authors[1];
+    const secondLast = second.includes(',') ? second.slice(0, second.indexOf(',')) : second;
+    return `${lastName} & ${secondLast}`;
+  }
+  return `${lastName} et al.`;
 }
 
 function transformApaCites(html: string): string {
-  // Reemplaza [@key], [@key, p. X], [-@key] → <a class="apa-cite" data-cite-key="key">(Autor, Año)</a>
-  // Pandoc syntax soportada (mínima): `[@key]`, `[-@key]` (suprimir autor), `[@key1; @key2]` (múltiples).
   return html.replace(
     /\[(-?)@([a-zA-Z][a-zA-Z0-9_-]+)(?:\s*,?\s*p\.?\s*[\d-]+)?\]/g,
-    (full, suppress, key) => {
+    (_full, suppress, key) => {
       const ref = REFERENCES[key];
       if (!ref) {
         return `<a class="apa-cite apa-cite-broken" data-cite-key="${key}" title="Cita no resuelta">[@${key}]</a>`;
       }
       const text = suppress
         ? `(${ref.year})`
-        : `(${shortAuthor(ref.author)}, ${ref.year})`;
+        : `(${shortAuthor(ref.authors)}, ${ref.year})`;
       return `<a class="apa-cite" data-cite-key="${key}">${text}</a>`;
     },
   );
@@ -139,6 +229,35 @@ const canonicPaper = defineCollection({
     })),
 });
 
+// v5.0f Gap A · Reference = átomo bibliográfico con frontmatter + body markdown.
+// SSOT del corpus per AUDIT-arquitectura-citas-bibliografia.md v3.0.
+// Velite los recoge de content/biblio/<bibtex_key>.md y los expone como
+// `reference` collection. <ApaCite> client component lee de aquí en runtime.
+const reference = defineCollection({
+  name: 'Reference',
+  pattern: 'biblio/*.md',
+  schema: s
+    .object({
+      bibtex_key: s.string(),
+      biblio_type: s.string().default('misc'),
+      authors: s.array(s.string()).default([]),
+      year: s.number(),
+      title: s.string().optional(),
+      journal: s.string().optional(),
+      publisher: s.string().optional(),
+      url: s.string().optional(),
+      doi: s.string().optional(),
+      tupla_tipo: s.string().default('BIBLIO_REF'),
+      tags: s.array(s.string()).default([]),
+      body: s.markdown(),
+      slug: s.path(),
+    })
+    .transform((data) => ({
+      ...data,
+      href: `/biblio/${data.bibtex_key}`,
+    })),
+});
+
 // Communities = organizational units (Gobierno + VRs + Facultades + Escuelas + ...)
 const community = defineCollection({
   name: 'Community',
@@ -214,6 +333,7 @@ export default defineConfig({
     canonicPaper,
     community,
     note,
+    reference,
   },
   markdown: {
     gfm: true,

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useRightPanel, useActiveProfile, useRightWidth, useFocusedPane } from '@/lib/ui-state';
-import { useSecondaryPaneTabs } from '@/lib/secondary-pane-tabs';
+import { usePanesState } from '@/lib/panes-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { getActiveDocFromPath } from '@/lib/active-doc';
@@ -49,16 +49,20 @@ export function RightPanel() {
   const [width, setWidth] = useRightWidth();
   const pathname = usePathname();
   const [focusedPane] = useFocusedPane();
-  const paneB = useSecondaryPaneTabs();
+  const panesState = usePanesState();
   const copSlug = inferCopFromPath(pathname);
-  // v5.0c · RightPanel sigue al pane focado: si focused=b y pane B tiene activeTab,
-  // resolvemos el doc desde ese href; si no, fallback al pathname (pane A).
+  // v5.0c+v5.1 · RightPanel sigue al pane focado: si focused != 'a' y ese pane
+  // existe con activeTab, resolvemos el doc desde su href; si no, fallback al
+  // pathname (pane A).
   const activeDoc = useMemo(() => {
-    if (focusedPane === 'b' && paneB.activeTab) {
-      return getActiveDocFromPath(paneB.activeTab.href);
+    if (focusedPane !== 'a') {
+      const focusedPaneState = panesState.panes.find((p) => p.id === focusedPane);
+      if (focusedPaneState?.activeTab) {
+        return getActiveDocFromPath(focusedPaneState.activeTab.href);
+      }
     }
     return getActiveDocFromPath(pathname);
-  }, [focusedPane, paneB.activeTab, pathname]);
+  }, [focusedPane, panesState.panes, pathname]);
 
   // v5.0e — Drag-resize del right panel (handle en borde IZQUIERDO).
   // Mismo fix que sidebar: setPointerCapture en lugar de window listeners

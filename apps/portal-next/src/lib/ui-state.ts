@@ -274,11 +274,12 @@ export function useRightPanel(defaultTab: RightTab = 'conexiones') {
  * v5.0c · Focused pane (A | B) — qué pane recibe foco para shortcuts y RightPanel
  * ============================================================ */
 
-export type FocusedPane = 'a' | 'b';
+// v5.1 · Generalizado a string para soportar N panes (a, b, c, d, ...).
+// El componente WorkspaceShell valida que el id corresponda a un pane existente.
+export type FocusedPane = string;
 
-const VALID_PANE: readonly FocusedPane[] = ['a', 'b'] as const;
 function isFocusedPane(v: string): v is FocusedPane {
-  return (VALID_PANE as readonly string[]).includes(v);
+  return /^[a-z]$|^pane-\d+$/.test(v);
 }
 
 export function useFocusedPane(defaultPane: FocusedPane = 'a') {

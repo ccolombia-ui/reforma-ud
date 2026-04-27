@@ -2,7 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { X, Pin, PinOff, BookMarked, FileText, Building2, ChevronLeft, ChevronRight, ChevronDown, SplitSquareHorizontal } from 'lucide-react';
-import { useSecondaryPaneTabs } from '@/lib/secondary-pane-tabs';
+import { usePanesState } from '@/lib/panes-state';
 import {
   SortableContext,
   horizontalListSortingStrategy,
@@ -230,7 +230,7 @@ function SortableTabPill({
     id: tab.id,
     data: { pane: 'a' },
   });
-  const paneB = useSecondaryPaneTabs();
+  const panesState = usePanesState();
   const Icon = tabIcon(tab.kind);
 
   const style = {
@@ -303,9 +303,13 @@ function SortableTabPill({
       </ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuItem onClick={onActivate}>Activar</ContextMenuItem>
-        <ContextMenuItem onClick={() => paneB.openTab(tab.id)}>
+        <ContextMenuItem onClick={() => panesState.openInNextPane(tab.id)}>
           <SplitSquareHorizontal className="mr-2 h-3.5 w-3.5" />
           Abrir a la derecha
+        </ContextMenuItem>
+        <ContextMenuItem onClick={() => panesState.splitToNewPane(tab.id)}>
+          <SplitSquareHorizontal className="mr-2 h-3.5 w-3.5 rotate-180" />
+          Abrir en nuevo pane (split)
         </ContextMenuItem>
         <ContextMenuSeparator />
         <ContextMenuItem onClick={onClose} disabled={tab.pinned}>

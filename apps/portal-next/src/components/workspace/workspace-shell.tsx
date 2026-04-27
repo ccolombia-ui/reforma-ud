@@ -16,59 +16,51 @@ import {
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { GripVertical, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useSecondaryPaneTabs, hydrateFromCompareParam } from '@/lib/secondary-pane-tabs';
+import { usePanesState, hydrateFromCompareParam, type PaneId } from '@/lib/panes-state';
 import { useDocTabs } from '@/lib/doc-tabs';
-import { useFocusedPane, type FocusedPane } from '@/lib/ui-state';
+import { useFocusedPane } from '@/lib/ui-state';
 import { PaneShell } from '@/components/workspace/pane-shell';
 import { cn } from '@/lib/utils';
 
 const COMPARE_PARAM = 'compare';
 
 /**
- * WorkspaceShell · v5.0b — wrapper de la zona center con soporte para 2 panes
- * lado-a-lado. Reemplaza a ComparativeSplit preservando compat con `?compare=`.
+ * WorkspaceShell · v5.1 — N panes secundarios + el pane primario A.
  *
- * Modelo:
- *   • Pane A (izq) = "primary" · controlado por Next router (pathname + ?tabs=)
- *   • Pane B (der) = "secondary" · localStorage (useSecondaryPaneTabs)
+ * Layout: [A | B | C | D | ...] horizontal, cada pane con tab strip
+ * independiente. Drag inter-pane via @dnd-kit (data.pane discrimina).
  *
- * Si pane B está vacío (sin tabs en localStorage y sin ?compare=), el shell
- * degrada a single-pane y renderiza children directo. Cero overhead frente
- * a v4.5 para usuarios que no usan multi-pane.
+ * Pane A = URL-driven (Next router, useDocTabs).
+ * Panes B+ = client state (localStorage, usePanesState).
  *
- * Drag-drop:
- *   • Drag tab desde Pane A → drop en Pane B drop-zone → mueve la tab a B
- *   • Drag tab desde Pane B → drop en Pane A drop-zone → mueve la tab a A
- *
- * El sub-Group horizontal aísla el resize del split del shell exterior
- * (sidebars laterales no se ven afectados, paridad con v4.5a).
+ * Single-pane fallback: si no hay panes secundarios, render directo
+ * de children sin overhead visual.
  */
-export function WorkspaceShell({ children, paperId }: Readonly<{ children: React.ReactNode; paperId?: string }>) {
+export function WorkspaceShell({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <Suspense fallback={<>{children}</>}>
-      <WorkspaceShellInner paperId={paperId}>{children}</WorkspaceShellInner>
+      <WorkspaceShellInner>{children}</WorkspaceShellInner>
     </Suspense>
   );
 }
 
-function WorkspaceShellInner({ children, paperId }: Readonly<{ children: React.ReactNode; paperId?: string }>) {
+function WorkspaceShellInner({ children }: Readonly<{ children: React.ReactNode }>) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const compareId = searchParams.get(COMPARE_PARAM);
 
-  // Hidratación del legacy ?compare= → pane B en localStorage (idempotente)
+  // Hidratación legacy ?compare=
   useEffect(() => {
     if (!compareId) return;
     hydrateFromCompareParam(compareId);
-    // Limpiar el param del URL para que no se hidrate de nuevo en cada render
     const params = new URLSearchParams(searchParams.toString());
     params.delete(COMPARE_PARAM);
     const newSearch = params.toString();
     router.replace(`${pathname}${newSearch ? '?' + newSearch : ''}`, { scroll: false });
   }, [compareId, searchParams, router, pathname]);
 
-  const paneB = useSecondaryPaneTabs();
+  const panesState = usePanesState();
   const docTabs = useDocTabs();
   const [focused, setFocused] = useFocusedPane();
 
@@ -77,11 +69,71 @@ function WorkspaceShellInner({ children, paperId }: Readonly<{ children: React.R
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
 
-  // v5.0c · Atajos teclado workspace
-  // Ctrl+\\        → toggle split (abrir B con segunda tab disponible / cerrar B)
-  // Ctrl+Shift+\\  → swap A↔B (intercambia el doc activo entre panes)
-  // Ctrl+1         → focus pane A
-  // Ctrl+2         → focus pane B (si está abierto)
+  // Helpers para drag end
+  const moveAtoPane = useCallback((toPaneId: PaneId, tabId: string) => {
+    panesState.openTabInPane(toPaneId, tabId);
+    docTabs.closeTab(tabId);
+  }, [panesState, docTabs]);
+
+  const movePaneToA = useCallback((fromPaneId: PaneId, tabId: string) => {
+    const fromPane = panesState.panes.find((p) => p.id === fromPaneId);
+    const tab = fromPane?.tabsResolved.find((t) => t.id === tabId);
+    panesState.closeTab(fromPaneId, tabId);
+    if (tab) docTabs.openInNewTab(tab.href);
+  }, [panesState, docTabs]);
+
+  const onDragEnd = useCallback((event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over) return;
+    const activeId = String(active.id);
+    const overId = String(over.id);
+    if (activeId === overId) return;
+
+    const fromPane = active.data.current?.pane as PaneId | undefined;
+    const toPane = over.data.current?.pane as PaneId | undefined;
+
+    // Drop en zona droppable de pane (sin tab destino concreto)
+    const dropZoneMatch = overId.match(/^pane-([a-z]+)-drop$/);
+    const targetPaneId = dropZoneMatch ? (dropZoneMatch[1] as PaneId) : null;
+
+    if (targetPaneId) {
+      if (fromPane === targetPaneId) return; // mismo pane no mueve
+      if (fromPane === 'a' && targetPaneId !== 'a') {
+        return moveAtoPane(targetPaneId, activeId);
+      }
+      if (fromPane && fromPane !== 'a' && targetPaneId === 'a') {
+        return movePaneToA(fromPane, activeId);
+      }
+      if (fromPane && fromPane !== 'a' && targetPaneId !== 'a') {
+        return panesState.moveTab(activeId, fromPane, targetPaneId);
+      }
+    }
+
+    // Reorder mismo pane (drop sobre otra tab del mismo pane)
+    if (fromPane && fromPane === toPane) {
+      if (fromPane === 'a') {
+        const fromIdx = docTabs.tabs.findIndex((t) => t.id === activeId);
+        const toIdx = docTabs.tabs.findIndex((t) => t.id === overId);
+        if (fromIdx >= 0 && toIdx >= 0) docTabs.reorderTabs(fromIdx, toIdx);
+      } else {
+        const pane = panesState.panes.find((p) => p.id === fromPane);
+        if (!pane) return;
+        const fromIdx = pane.tabs.indexOf(activeId);
+        const toIdx = pane.tabs.indexOf(overId);
+        if (fromIdx >= 0 && toIdx >= 0) panesState.reorderTabs(fromPane, fromIdx, toIdx);
+      }
+      return;
+    }
+
+    // Cross-pane via drop sobre tab destino
+    if (fromPane === 'a' && toPane && toPane !== 'a') return moveAtoPane(toPane, activeId);
+    if (fromPane && fromPane !== 'a' && toPane === 'a') return movePaneToA(fromPane, activeId);
+    if (fromPane && toPane && fromPane !== 'a' && toPane !== 'a') {
+      return panesState.moveTab(activeId, fromPane, toPane);
+    }
+  }, [docTabs, panesState, moveAtoPane, movePaneToA]);
+
+  // Atajos teclado workspace
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const t = e.target as HTMLElement | null;
@@ -91,107 +143,54 @@ function WorkspaceShellInner({ children, paperId }: Readonly<{ children: React.R
 
       if (e.key === '\\' && !e.shiftKey) {
         e.preventDefault();
-        if (paneB.isOpen) {
-          paneB.closePane();
-          setFocused('a');
+        if (panesState.isOpen) {
+          // Cerrar el último pane secundario
+          const last = panesState.panes[panesState.panes.length - 1];
+          panesState.closePane(last.id);
+          if (focused !== 'a') setFocused('a');
         } else {
-          // Abrir el segundo tab disponible en B; si solo hay 1 tab, no-op
           const candidate = docTabs.tabs.find((t) => t.id !== docTabs.activeTabId);
           if (candidate) {
-            paneB.openTab(candidate.id);
+            panesState.openTabInPane('b', candidate.id);
             setFocused('b');
           }
         }
       } else if (e.key === '\\' && e.shiftKey) {
+        // Crear nuevo pane (split right) con el tab activo de A
         e.preventDefault();
-        if (!paneB.isOpen || !paneB.activeTabId || !docTabs.activeTabId) return;
-        const aId = docTabs.activeTabId;
-        const bId = paneB.activeTabId;
-        // Swap: B recibe A active, A activa lo que estaba en B (si ya está en A) o lo abre
-        paneB.closeTab(bId);
-        paneB.openTab(aId);
-        docTabs.closeTab(aId);
-        const inA = docTabs.tabs.find((t) => t.id === bId);
-        if (inA) docTabs.activateTab(bId);
-        else {
-          const fromBOriginal = paneB.tabs.find((t) => t.id === bId);
-          if (fromBOriginal) docTabs.openInNewTab(fromBOriginal.href);
+        if (docTabs.activeTabId) panesState.splitToNewPane(docTabs.activeTabId);
+      } else if (/^[1-9]$/.test(e.key)) {
+        // Ctrl+1 = pane A, Ctrl+2 = pane B, ..., Ctrl+9 = pane I
+        const index = Number(e.key) - 1;
+        if (index === 0) {
+          e.preventDefault();
+          setFocused('a');
+        } else if (index - 1 < panesState.panes.length) {
+          e.preventDefault();
+          setFocused(panesState.panes[index - 1].id as 'a' | 'b');
         }
-      } else if (e.key === '1') {
-        e.preventDefault();
-        setFocused('a');
-      } else if (e.key === '2' && paneB.isOpen) {
-        e.preventDefault();
-        setFocused('b');
       }
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [docTabs, paneB, setFocused]);
+  }, [docTabs, panesState, focused, setFocused]);
 
-  // Helpers extraídos para reducir complejidad cognitiva del onDragEnd
-  const moveAtoB = useCallback((activeId: string) => {
-    paneB.openTab(activeId);
-    docTabs.closeTab(activeId);
-  }, [paneB, docTabs]);
-
-  const moveBtoA = useCallback((activeId: string) => {
-    const fromB = paneB.tabs.find((t) => t.id === activeId);
-    paneB.closeTab(activeId);
-    if (fromB) docTabs.openInNewTab(fromB.href);
-  }, [paneB, docTabs]);
-
-  const reorderInPane = useCallback((pane: 'a' | 'b', activeId: string, overId: string) => {
-    const tabs = pane === 'a' ? docTabs.tabs : paneB.tabs;
-    const reorder = pane === 'a' ? docTabs.reorderTabs : paneB.reorderTabs;
-    const fromIdx = tabs.findIndex((t) => t.id === activeId);
-    const toIdx = tabs.findIndex((t) => t.id === overId);
-    if (fromIdx >= 0 && toIdx >= 0) reorder(fromIdx, toIdx);
-  }, [docTabs, paneB]);
-
-  /**
-   * v5.0b · onDragEnd unificado. Casos: reorder mismo pane · cross-pane via
-   * drop-zone vacía · cross-pane via tab del pane destino.
-   */
-  const onDragEnd = useCallback((event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over) return;
-    const activeId = String(active.id);
-    const overId = String(over.id);
-    if (activeId === overId) return;
-
-    const fromPane = active.data.current?.pane as 'a' | 'b' | undefined;
-    const toPane = over.data.current?.pane as 'a' | 'b' | undefined;
-
-    // Drop en zona droppable cross-pane
-    if (overId === 'pane-b-drop' && fromPane === 'a') return moveAtoB(activeId);
-    if (overId === 'pane-a-drop' && fromPane === 'b') return moveBtoA(activeId);
-
-    // Reorder mismo pane
-    if (fromPane && fromPane === toPane) {
-      reorderInPane(fromPane, activeId, overId);
-      return;
-    }
-
-    // Cross-pane via tab del destino
-    if (fromPane === 'a' && toPane === 'b') return moveAtoB(activeId);
-    if (fromPane === 'b' && toPane === 'a') return moveBtoA(activeId);
-  }, [moveAtoB, moveBtoA, reorderInPane]);
-
-  // v5.0b · DndContext SIEMPRE montado para que sortable funcione tanto en
-  // single-pane como multi-pane sin context-switching.
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-      {paneB.isOpen ? (
+      {panesState.isOpen ? (
         <MultiPaneLayout
-          paneB={paneB}
+          panes={panesState.panes}
+          activateTab={panesState.activateTab}
+          closeTab={panesState.closeTab}
+          closePane={panesState.closePane}
+          reorderTabs={panesState.reorderTabs}
+          splitToNewPane={panesState.splitToNewPane}
           focused={focused}
           setFocused={setFocused}
         >
           {children}
         </MultiPaneLayout>
       ) : (
-        // Single-pane: render children directo, sin overhead visual
         <>{children}</>
       )}
     </DndContext>
@@ -199,75 +198,121 @@ function WorkspaceShellInner({ children, paperId }: Readonly<{ children: React.R
 }
 
 function MultiPaneLayout({
-  children, paneB, focused, setFocused,
+  children, panes, activateTab, closeTab, closePane, reorderTabs, splitToNewPane, focused, setFocused,
 }: Readonly<{
   children: React.ReactNode;
-  paneB: ReturnType<typeof useSecondaryPaneTabs>;
-  focused: FocusedPane;
-  setFocused: (p: FocusedPane) => void;
+  panes: ReturnType<typeof usePanesState>['panes'];
+  activateTab: ReturnType<typeof usePanesState>['activateTab'];
+  closeTab: ReturnType<typeof usePanesState>['closeTab'];
+  closePane: ReturnType<typeof usePanesState>['closePane'];
+  reorderTabs: ReturnType<typeof usePanesState>['reorderTabs'];
+  splitToNewPane: ReturnType<typeof usePanesState>['splitToNewPane'];
+  focused: string;
+  setFocused: (p: 'a' | 'b') => void;
 }>) {
+  // Distribución equitativa de tamaño entre A + N panes
+  const total = panes.length + 1;
+  const eachSize = Math.max(15, Math.floor(100 / total));
+
   return (
     <div className="h-[calc(100vh-3.5rem)] no-print">
       <Group
         orientation="horizontal"
         id="workspace-shell"
-        autoSave="reforma-ud:workspace-v5.0"
+        autoSave="reforma-ud:workspace-v5.1"
         className="flex h-full"
       >
         <Panel
           id="pane-a"
-          defaultSize={50}
-          minSize={25}
+          defaultSize={eachSize}
+          minSize={20}
           className={cn(
             'overflow-y-auto transition-shadow',
             focused === 'a' && 'ring-2 ring-primary/30 ring-inset',
           )}
           data-pane="a"
         >
-          <PaneFocusable onFocus={() => setFocused('a')} label="Pane izquierdo">
+          <PaneFocusable onFocus={() => setFocused('a')} label="Pane A · principal">
             <PaneADroppable>
               <div className="px-4 md:px-6 py-2">{children}</div>
             </PaneADroppable>
           </PaneFocusable>
         </Panel>
 
-        <Separator className="group relative w-1.5 bg-border hover:bg-primary/40 data-[dragging=true]:bg-primary transition-colors cursor-col-resize">
-          <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 flex items-center pointer-events-none">
-            <GripVertical className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
-        </Separator>
-
-        <Panel
-          id="pane-b"
-          defaultSize={50}
-          minSize={25}
-          className={cn(
-            'overflow-y-auto transition-shadow',
-            focused === 'b' && 'ring-2 ring-primary/30 ring-inset',
-          )}
-          data-pane="b"
-        >
-          <PaneFocusable onFocus={() => setFocused('b')} label="Pane derecho">
-            <PaneShell
-              paneId="b"
-              tabs={paneB.tabs}
-              activeTab={paneB.activeTab}
-              activeTabId={paneB.activeTabId}
-              activateTab={paneB.activateTab}
-              closeTab={paneB.closeTab}
-              reorderTabs={paneB.reorderTabs}
-              onClosePane={paneB.closePane}
-            />
-          </PaneFocusable>
-        </Panel>
+        {panes.map((pane) => (
+          <PaneSegment
+            key={pane.id}
+            paneId={pane.id}
+            tabs={pane.tabsResolved}
+            activeTab={pane.activeTab}
+            activeTabId={pane.activeTabId}
+            defaultSize={eachSize}
+            focused={focused === pane.id}
+            onFocus={() => setFocused(pane.id as 'b')}
+            activateTab={(id) => activateTab(pane.id, id)}
+            closeTab={(id) => closeTab(pane.id, id)}
+            closePane={() => closePane(pane.id)}
+            reorderTabs={(from, to) => reorderTabs(pane.id, from, to)}
+            splitToNewPane={(tabId) => splitToNewPane(tabId)}
+          />
+        ))}
       </Group>
     </div>
   );
 }
 
-/** v5.0c · Wrapper que captura focus al click en cualquier parte del pane.
- * Implementación con role="region" + onMouseDown — `<button>` no puede
- * contener children interactivos (article, links, forms). */
+function PaneSegment({
+  paneId, tabs, activeTab, activeTabId, defaultSize, focused, onFocus,
+  activateTab, closeTab, closePane, reorderTabs, splitToNewPane,
+}: Readonly<{
+  paneId: PaneId;
+  tabs: ReturnType<typeof usePanesState>['panes'][number]['tabsResolved'];
+  activeTab: ReturnType<typeof usePanesState>['panes'][number]['activeTab'];
+  activeTabId: string | null;
+  defaultSize: number;
+  focused: boolean;
+  onFocus: () => void;
+  activateTab: (id: string) => void;
+  closeTab: (id: string) => void;
+  closePane: () => void;
+  reorderTabs: (fromIdx: number, toIdx: number) => void;
+  splitToNewPane: (tabId: string) => void;
+}>) {
+  return (
+    <>
+      <Separator className="group relative w-1.5 bg-border hover:bg-primary/40 data-[dragging=true]:bg-primary transition-colors cursor-col-resize">
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 flex items-center pointer-events-none">
+          <GripVertical className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
+      </Separator>
+      <Panel
+        id={`pane-${paneId}`}
+        defaultSize={defaultSize}
+        minSize={15}
+        className={cn(
+          'overflow-y-auto transition-shadow',
+          focused && 'ring-2 ring-primary/30 ring-inset',
+        )}
+        data-pane={paneId}
+      >
+        <PaneFocusable onFocus={onFocus} label={`Pane ${paneId.toUpperCase()}`}>
+          <PaneShell
+            paneId={paneId}
+            tabs={tabs}
+            activeTab={activeTab}
+            activeTabId={activeTabId}
+            activateTab={activateTab}
+            closeTab={closeTab}
+            reorderTabs={reorderTabs}
+            onClosePane={closePane}
+            onSplitToNewPane={splitToNewPane}
+          />
+        </PaneFocusable>
+      </Panel>
+    </>
+  );
+}
+
 function PaneFocusable({
   children, onFocus, label,
 }: Readonly<{
@@ -291,7 +336,6 @@ function PaneFocusable({
   );
 }
 
-/** Droppable wrapper para pane A (recibe tabs movidas desde B). */
 function PaneADroppable({ children }: Readonly<{ children: React.ReactNode }>) {
   const { setNodeRef, isOver } = useDroppable({ id: 'pane-a-drop' });
   return (
@@ -305,20 +349,16 @@ function PaneADroppable({ children }: Readonly<{ children: React.ReactNode }>) {
 }
 
 /* ============================================================
- * Compat: <ComparativeSplit> ahora alias del WorkspaceShell.
- * Las páginas existentes (canonico/[mid]/page.tsx) siguen importándolo.
+ * Compat: <ComparativeSplit> alias del WorkspaceShell.
+ * `[mid]/page.tsx` lo importa desde aquí.
  * ============================================================ */
-export function ComparativeSplit({ children, paperId }: Readonly<{ children: React.ReactNode; paperId?: string }>) {
-  return <WorkspaceShell paperId={paperId}>{children}</WorkspaceShell>;
+export function ComparativeSplit({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <WorkspaceShell>{children}</WorkspaceShell>;
 }
 
 /**
- * CompareButton · v5.0b — abre un paper en pane B (split right).
- * Sustituto del CompareButton v4.4: en lugar de un dropdown con ?compare=,
- * cualquier paper se puede abrir en pane B desde el sidebar / cmd-K /
- * tab context menu "Abrir a la derecha".
- *
- * Mantiene la API del v4.4 para no romper el `[mid]/page.tsx`.
+ * CompareButton · v5.1 — abre paper en nuevo pane (split right).
+ * Si ya hay panes abiertos, añade al último; si no, crea pane B con la 2da tab.
  */
 export function CompareButton({ currentPaperId }: Readonly<{ currentPaperId: string }>) {
   return (
@@ -329,34 +369,28 @@ export function CompareButton({ currentPaperId }: Readonly<{ currentPaperId: str
 }
 
 function CompareButtonInner({ currentPaperId }: Readonly<{ currentPaperId: string }>) {
-  const paneB = useSecondaryPaneTabs();
+  const panesState = usePanesState();
   const { tabs } = useDocTabs();
   const candidates = useMemo(
     () => tabs.filter((t) => t.id !== currentPaperId),
     [tabs, currentPaperId],
   );
 
-  if (candidates.length === 0 && !paneB.isOpen) {
-    return null;
-  }
-
-  if (paneB.isOpen) {
+  if (panesState.isOpen) {
     return (
       <Button
         variant="default"
         size="sm"
         className="gap-1.5 no-print"
-        onClick={paneB.closePane}
-        title="Cerrar pane derecho"
+        onClick={() => panesState.panes.forEach((p) => panesState.closePane(p.id))}
+        title="Cerrar todos los panes"
       >
         <X className="h-3.5 w-3.5" />
-        Cerrar split
+        Cerrar split ({panesState.panes.length})
       </Button>
     );
   }
 
-  // Si solo hay 1 tab abierta (la actual), no hay candidato auto. El usuario
-  // debe abrir la 2da con sidebar/cmd-K/click contextual. Render hint:
   if (candidates.length === 0) {
     return (
       <span className="text-[10px] text-muted-foreground italic no-print">
@@ -365,13 +399,12 @@ function CompareButtonInner({ currentPaperId }: Readonly<{ currentPaperId: strin
     );
   }
 
-  // Auto-quick: abrir la 2da tab abierta en pane B
   return (
     <Button
       variant="outline"
       size="sm"
       className="gap-1.5 no-print"
-      onClick={() => paneB.openTab(candidates[0].id)}
+      onClick={() => panesState.openInNextPane(candidates[0].id)}
       title={`Abrir ${candidates[0].title} a la derecha`}
     >
       Comparar con {candidates[0].kind === 'paper' ? `M${String(candidates[0].number ?? 0).padStart(2, '0')}` : candidates[0].title.slice(0, 16)}
