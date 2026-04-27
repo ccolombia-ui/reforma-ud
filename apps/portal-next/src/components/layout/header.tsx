@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Code2, PanelLeft, PanelRight, ChevronRight, Search, Menu } from 'lucide-react';
+import { PanelLeft, PanelRight, ChevronRight, Search, Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { ProfileMenu } from '@/components/layout/profile-menu';
 import { useLeftCollapsed, useRightPanel } from '@/lib/ui-state';
+import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
 
 const SEGMENT_LABELS: Record<string, string> = {
@@ -98,7 +99,7 @@ export function Header() {
         </SheetContent>
       </Sheet>
 
-      {/* Desktop: toggle del sidebar fijo */}
+      {/* Desktop: toggle del sidebar fijo · v5.0g indicador on/off */}
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
@@ -106,7 +107,11 @@ export function Header() {
             size="icon"
             onClick={toggleLeft}
             aria-label={leftCollapsed ? 'Expandir sidebar' : 'Contraer sidebar'}
-            className="hidden md:inline-flex shrink-0"
+            aria-pressed={!leftCollapsed}
+            className={cn(
+              'hidden md:inline-flex shrink-0',
+              !leftCollapsed && 'bg-accent text-primary',
+            )}
           >
             <PanelLeft className="h-4 w-4" />
           </Button>
@@ -164,16 +169,8 @@ export function Header() {
           </TooltipTrigger>
           <TooltipContent side="bottom">Paleta de comandos · {cmdKey}+K</TooltipContent>
         </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" asChild aria-label="Repositorio en GitHub">
-              <a href="https://github.com/ccolombia-ui/reforma-ud" target="_blank" rel="noopener noreferrer">
-                <Code2 className="h-4 w-4" />
-              </a>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">Código fuente en GitHub</TooltipContent>
-        </Tooltip>
+        {/* v5.0g · Botón Code2/GitHub removido del header (usuario lo
+            consideró ruido). El repo sigue accesible via cmd-K → "github". */}
         <Tooltip>
           <TooltipTrigger asChild>
             <span className="inline-flex"><ThemeToggle /></span>
@@ -189,7 +186,11 @@ export function Header() {
               size="icon"
               onClick={toggleRight}
               aria-label={rightCollapsed ? 'Mostrar asistente' : 'Ocultar asistente'}
-              className="shrink-0"
+              aria-pressed={!rightCollapsed}
+              className={cn(
+                'shrink-0',
+                !rightCollapsed && 'bg-accent text-primary',
+              )}
             >
               <PanelRight className="h-4 w-4" />
             </Button>

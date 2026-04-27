@@ -179,9 +179,11 @@ export function ComunidadPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
   );
 }
 
+// v5.0g · solo el autor humano. Los assistants AI no aparecen como
+// co-autores (su contribución es atribuida en commits via Co-Authored-By
+// pero la "co-autoría" del documento es responsabilidad humana editorial).
 const MOCK_CO_AUTHORS: CoAuthor[] = [
-  { autor: 'ccolombia-ui', pct: 70, avatar: '👤' },
-  { autor: 'claude-opus', pct: 30, avatar: '🤖' },
+  { autor: 'ccolombia-ui', pct: 100, avatar: '👤' },
 ];
 
 const MOCK_PENDING: PendingTask[] = [

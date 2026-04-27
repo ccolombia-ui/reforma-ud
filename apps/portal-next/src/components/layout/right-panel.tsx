@@ -243,15 +243,39 @@ export function RightPanel() {
         </span>
       )}
       <div className="sticky top-14 flex h-[calc(100vh-3.5rem)] flex-col">
-        {/* v5.0e · Vertical icon rail (SOTA Linear/Notion/Obsidian) + content area.
-            Antes era 4 tabs horizontales arriba que truncaban labels en panel ~320px.
-            Ahora 4 iconos verticales a la izquierda con label en row activa,
-            pin del modo activo via bg-accent + border-l-2 primary.
-            La sección activa muestra header con label + body completo. */}
+        {/* v5.0g · Vertical icon rail al BORDE DERECHO del panel — simetría
+            con el sidebar izquierdo (sus iconos viven a la izq cuando
+            colapsado). Content area a la izquierda, rail a la derecha. */}
         <div className="flex flex-1 min-h-0 flex-row">
+          <div className="flex-1 min-w-0 flex flex-col">
+            <div className="flex items-center gap-2 border-b border-sidebar-border px-3 py-2.5">
+              {tab === 'conexiones' && <Compass className="h-4 w-4 text-primary" />}
+              {tab === 'refs' && <Link2 className="h-4 w-4 text-primary" />}
+              {tab === 'comunidad' && <Users className="h-4 w-4 text-primary" />}
+              {tab === 'asistente' && <Sparkles className="h-4 w-4 text-primary" />}
+              <span className="font-semibold text-sm">
+                {tab === 'conexiones' && 'Conexiones'}
+                {tab === 'refs' && 'Referencias'}
+                {tab === 'comunidad' && 'Comunidad'}
+                {tab === 'asistente' && 'Asistente'}
+              </span>
+            </div>
+
+            <div className="flex-1 overflow-hidden">
+              {tab === 'conexiones' && <ConexionesTab doc={activeDoc} />}
+              {tab === 'refs' && <RefsPanel doc={activeDoc} />}
+              {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
+              {tab === 'asistente' && (
+                <div className="h-full overflow-hidden p-3">
+                  <ChatPane copSlug={copSlug} pathname={pathname} />
+                </div>
+              )}
+            </div>
+          </div>
+
           <nav
             aria-label="Modos del panel"
-            className="flex w-11 shrink-0 flex-col items-center gap-0.5 border-r border-sidebar-border py-2"
+            className="flex w-11 shrink-0 flex-col items-center gap-0.5 border-l border-sidebar-border py-2"
           >
             <RailIcon
               active={tab === 'conexiones'}
@@ -289,32 +313,6 @@ export function RightPanel() {
               </span>
             )}
           </nav>
-
-          <div className="flex-1 min-w-0 flex flex-col">
-            <div className="flex items-center gap-2 border-b border-sidebar-border px-3 py-2.5">
-              {tab === 'conexiones' && <Compass className="h-4 w-4 text-primary" />}
-              {tab === 'refs' && <Link2 className="h-4 w-4 text-primary" />}
-              {tab === 'comunidad' && <Users className="h-4 w-4 text-primary" />}
-              {tab === 'asistente' && <Sparkles className="h-4 w-4 text-primary" />}
-              <span className="font-semibold text-sm">
-                {tab === 'conexiones' && 'Conexiones'}
-                {tab === 'refs' && 'Referencias'}
-                {tab === 'comunidad' && 'Comunidad'}
-                {tab === 'asistente' && 'Asistente'}
-              </span>
-            </div>
-
-            <div className="flex-1 overflow-hidden">
-              {tab === 'conexiones' && <ConexionesTab doc={activeDoc} />}
-              {tab === 'refs' && <RefsPanel doc={activeDoc} />}
-              {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
-              {tab === 'asistente' && (
-                <div className="h-full overflow-hidden p-3">
-                  <ChatPane copSlug={copSlug} pathname={pathname} />
-                </div>
-              )}
-            </div>
-          </div>
         </div>
 
         <div className="border-t border-sidebar-border px-3 py-2 text-[10px] text-muted-foreground">
@@ -357,8 +355,10 @@ function RailIcon({
       disabled={disabled}
       className={cn(
         'group relative inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors',
+        // v5.0g · rail al borde derecho del panel → border indicator a la
+        // derecha (border-r-2) para apuntar al modo activo
         active && !disabled
-          ? 'bg-accent text-primary shadow-sm border-l-2 border-primary'
+          ? 'bg-accent text-primary shadow-sm border-r-2 border-primary'
           : disabled
             ? 'text-muted-foreground/40 cursor-not-allowed'
             : 'text-muted-foreground hover:text-foreground hover:bg-accent/40',
@@ -371,13 +371,13 @@ function RailIcon({
       {badge !== undefined && (
         <Badge
           variant="secondary"
-          className="absolute -top-0.5 -right-0.5 h-3.5 min-w-3.5 px-1 text-[8px]"
+          className="absolute -top-0.5 -left-0.5 h-3.5 min-w-3.5 px-1 text-[8px]"
         >
           {badge}
         </Badge>
       )}
-      {/* Tooltip flotante a la derecha del icon, tipo VS Code activity bar */}
-      <span className="pointer-events-none absolute left-full ml-2 z-50 whitespace-nowrap rounded-md border bg-popover px-2 py-1 text-[10px] text-popover-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+      {/* Tooltip flotante a la izquierda del icon (rail está al borde derecho) */}
+      <span className="pointer-events-none absolute right-full mr-2 z-50 whitespace-nowrap rounded-md border bg-popover px-2 py-1 text-[10px] text-popover-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100">
         {label}
       </span>
     </button>

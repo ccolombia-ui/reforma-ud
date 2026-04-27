@@ -6,27 +6,40 @@ import { Badge } from '@/components/ui/badge';
 import type { ActiveDoc } from '@/lib/active-doc';
 
 /**
- * EvolutionTab — versiones git del documento activo.
+ * EvolutionTab — versiones git del DOCUMENTO ACTIVO (no del proyecto/app).
  *
- * v4.5b MVP: lista de commits MOCK con CTA a GitHub. v4.5c reemplaza el mock
- * por server action `getCommitsForPath(path)` con Octokit + unstable_cache
- * (revalidate 3600s) y GITHUB_TOKEN en env de Vercel.
+ * v5.0g · Mock contextual al doc: en lugar de mostrar commits genéricos del
+ * monorepo, los mock commits hablan del CONTENIDO del .mdx (secciones
+ * añadidas, citas APA actualizadas, glosario completado). Cuando se conecte
+ * Octokit en v6.0, el filtro será `git log --follow {pathForDoc(doc)}` para
+ * mostrar solo cambios sobre ese archivo.
  *
  * Decisión D2.4 del audit AUDIT-v4.5-obsidian-paridad-final.md:
- * MVP solo lista (sha · autor · mensaje · fecha relativa); diff inline en v5.0.
+ * MVP solo lista (sha · autor · mensaje · fecha relativa); diff inline en v6.0.
  */
 
-const MOCK_COMMITS: Array<{
+type MockCommit = {
   sha: string;
   author: string;
   authorAvatar: string;
   message: string;
   daysAgo: number;
-}> = [
-  { sha: '02a5606', author: 'ccolombia-ui', authorAvatar: '👤', message: 'feat(v4.4): split-comparativo central + sidebar sticky + drag handles visibles', daysAgo: 2 },
-  { sha: '4a44bdb', author: 'ccolombia-ui', authorAvatar: '👤', message: 'feat(v4.3): comunidad participativa + transclusiones inline', daysAgo: 4 },
-  { sha: 'd4a163f', author: 'claude-opus', authorAvatar: '🤖', message: 'feat(v4.5a): shell rebalance · D1 + D3 + D4 del audit paridad-final', daysAgo: 0 },
-];
+};
+
+// v5.0g · Mock genérico de evolución del CONTENIDO. Cuando Octokit conecte,
+// se reemplaza por commits reales filtrados por path del .mdx activo.
+function mockCommitsForDoc(docTitle: string): MockCommit[] {
+  // Hash determinístico simple para que el mismo doc tenga los mismos shas
+  let h = 0;
+  for (const c of docTitle) h = ((h << 5) - h + c.charCodeAt(0)) | 0;
+  const sha = (i: number) => Math.abs((h ^ (i * 0x9e3779b1)) >>> 0).toString(16).slice(0, 7);
+  return [
+    { sha: sha(1), author: 'ccolombia-ui', authorAvatar: '👤', message: `Versión inicial publicada · ${docTitle}`, daysAgo: 14 },
+    { sha: sha(2), author: 'ccolombia-ui', authorAvatar: '👤', message: 'Glosario auto-derivado de wikilinks ([[glo-*]])', daysAgo: 7 },
+    { sha: sha(3), author: 'ccolombia-ui', authorAvatar: '👤', message: 'Citas APA migradas a átomos content/biblio/<key>.md', daysAgo: 3 },
+    { sha: sha(4), author: 'ccolombia-ui', authorAvatar: '👤', message: 'Pre-saberes refinados + frontmatter relations completado', daysAgo: 1 },
+  ];
+}
 
 function pathForDoc(doc: ActiveDoc): string {
   if (doc.kind === 'paper') return `apps/portal-next/content/canonico/${doc.id}.mdx`;
@@ -53,13 +66,14 @@ export function EvolutionTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
   }
 
   const path = pathForDoc(doc);
+  const commits = mockCommitsForDoc(doc.title);
 
   return (
     <div className="flex h-full flex-col">
       <div className="border-b border-sidebar-border px-3 py-2">
         <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-muted-foreground">
           <GitCommit className="h-3 w-3" />
-          Evolución
+          Evolución del documento
           <Badge variant="outline" className="ml-auto text-[9px] gap-0.5">
             <Lock className="h-2 w-2" /> mock
           </Badge>
@@ -70,7 +84,7 @@ export function EvolutionTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
       </div>
 
       <ul className="flex-1 overflow-y-auto p-2 text-xs space-y-1">
-        {MOCK_COMMITS.map((c) => (
+        {commits.map((c) => (
           <li key={c.sha}>
             <a
               href={repoCommitUrl(c.sha)}
@@ -104,7 +118,7 @@ export function EvolutionTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
           <ExternalLink className="h-3 w-3" />
         </Link>
         <p className="mt-1.5 text-center text-[9px] text-muted-foreground italic">
-          v4.5c · commits reales vía Octokit + cache 1h
+          v6.0 · commits reales del .mdx vía Octokit + cache 1h
         </p>
       </div>
     </div>
