@@ -15,9 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # v5.0d fix · pnpm version la lee del packageManager del package.json
       - uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - uses: actions/setup-node@v4
         with:
@@ -28,14 +27,14 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm lint || true   # no bloquear en fase inicial
+        run: pnpm --filter portal-next lint || true   # no bloquear en fase inicial
 
-      - name: Build portal
-        run: pnpm --filter portal build
+      - name: Build portal-next
+        run: pnpm --filter portal-next build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: portal-dist
-          path: apps/portal/dist/
+          name: portal-next-dist
+          path: apps/portal-next/.next/
           retention-days: 7
