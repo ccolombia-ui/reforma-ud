@@ -416,6 +416,34 @@ const note = defineCollection({
     }),
 });
 
+// v5.0z · News collection. Cada noticia es un atomo .md con tags + relations
+// que activan distribucion contextual a comunidades y conceptos del corpus.
+const news = defineCollection({
+  name: 'News',
+  pattern: 'feed/*.md',
+  schema: s
+    .object({
+      id: s.string(),
+      title: s.string(),
+      source: s.enum(['instagram', 'twitter', 'youtube', 'tiktok', 'linkedin', 'facebook', 'web', 'medio-prensa', 'otro']),
+      url: s.string().url(),
+      captured_at: s.string(),
+      author: s.string().optional(),
+      excerpt: s.string(),
+      tags: s.array(s.string()).default([]),
+      // Relaciones para distribucion contextual
+      comunidades: s.array(s.string()).default([]),  // slugs sin prefijo /comunidades (ej "gobierno", "formacion")
+      cites: s.array(s.string()).default([]),         // m01..m12
+      conceptos: s.array(s.string()).default([]),     // con-* / glo-*
+      body: s.markdown().optional(),
+      slug: s.path(),
+    })
+    .transform((data) => ({
+      ...data,
+      href: data.url,  // las noticias siempre apuntan a la fuente externa
+    })),
+});
+
 export default defineConfig({
   root: 'content',
   output: {
@@ -432,6 +460,7 @@ export default defineConfig({
     reference,
     concepto,
     dashboard,
+    news,
   },
   markdown: {
     gfm: true,
