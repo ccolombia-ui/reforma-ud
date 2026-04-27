@@ -553,52 +553,30 @@ export function Sidebar() {
       {/* Navegación principal */}
       <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-1.5 py-2 text-sm">
         <SectionToggle id="canonico" emoji="📚" title="Biblioteca reforma·ud">
+          {/* v5.0x · Items directos bajo el SectionToggle root (sin sub-header
+              "Biblioteca" intermedio). Orden: Grafo > Glosario > Reforma Vinculante. */}
           <ul className="space-y-0.5">
             <li>
               <Link
-                href="/canonico"
+                href="/canonico/grafo"
                 className={cn(
-                  'flex items-center gap-1.5 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
-                  pathname === '/canonico' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+                  'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
+                  pathname === '/canonico/grafo' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
                 )}
               >
-                <Library className="h-3.5 w-3.5" />
-                <span className="flex-1">Biblioteca</span>
+                <Network className="h-3.5 w-3.5 text-primary/80" /> Grafo semántico
               </Link>
-              {/* v5.0w · Orden: Grafo semántico > Glosario > Reforma Vinculante UDFJC.
-                  Anidados como hijos directos de Biblioteca (mismo nivel jerárquico). */}
-              <ul className="ml-3 mt-0.5 border-l border-sidebar-border pl-2 space-y-0.5">
-                <li>
-                  <Link
-                    href="/canonico/grafo"
-                    className={cn(
-                      'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
-                      pathname === '/canonico/grafo' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
-                    )}
-                  >
-                    <Network className="h-3.5 w-3.5 text-primary/80" /> Grafo semántico
-                  </Link>
-                </li>
-                <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
-                <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
-              </ul>
             </li>
+            <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
+            <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
           </ul>
         </SectionToggle>
 
         <SectionToggle id="comunidades" emoji="🏛️" title="Comunidades">
+          {/* v5.0x · Items directos bajo el SectionToggle root (sin sub-header
+              "Hub" intermedio). Las 4 unidades organizativas (Gobierno,
+              VR Formación, VR Investigación, VR Extensión) van directas. */}
           <ul className="space-y-0.5">
-            <li>
-              <Link
-                href="/comunidades"
-                className={cn(
-                  'flex items-center gap-1.5 rounded px-2 py-1 text-xs font-medium hover:bg-sidebar-accent',
-                  pathname === '/comunidades' && 'bg-sidebar-accent text-sidebar-primary',
-                )}
-              >
-                <Folder className="h-3.5 w-3.5 opacity-60" /> Hub
-              </Link>
-            </li>
             {tree.map((root) => (
               <TreeItem key={root.slug} node={root} currentPath={pathname} />
             ))}
