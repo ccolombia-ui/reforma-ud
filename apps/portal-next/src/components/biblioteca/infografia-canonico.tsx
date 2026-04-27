@@ -141,24 +141,66 @@ export function InfografiaCanonico() {
         <strong> rigor metodológico CRISP-DM</strong>.
       </div>
 
-      {/* TESIS CARD · narrativa de 3 actos */}
+      {/* TESIS CARD · 3 actos + narrativa de hallazgos por paper */}
       <div className="tesis">
         <div className="tesis-eq">
           DIAGNÓSTICO <span className="arrow">→</span> EVIDENCIA GLOBAL <span className="arrow">→</span> PROSPECTIVA OPERATIVA
         </div>
-        <div className="tesis-sub">
-          <strong style={{ color: '#fcd34d' }}>M01</strong> encontró un mandato vinculante (CONPES 4069 + PIIOM + ACU-004-25) que obliga transformación misional, no solo ajustes cosméticos.
-          <strong style={{ color: '#fcd34d' }}> M02</strong> identificó <strong style={{ color: '#fcd34d' }}>niveles de madurez por misiones</strong> (N1 frágil → N4 transformativa) y un ciclo virtuoso ΩMT que mueve la institución de un nivel al siguiente.
-          <strong style={{ color: '#fcd34d' }}> M03</strong> mapeó el sistema global de estándares (OECD 2030 + UDL 3.0 + ABET + CDIO + ISO 21001) que opera como parámetro técnico de calidad.
-          <strong style={{ color: '#fcd34d' }}> M04</strong> reveló los jobs-to-be-done reales de cada actor UDFJC (estudiantes, docentes, directores) con outcome statements ODI.
-          <strong style={{ color: '#fcd34d' }}> M05</strong> documentó <strong style={{ color: '#fcd34d' }}>la tendencia global del campus como living-lab</strong> para emprendimientos transformativos (21 IES líderes: Aalto, Twente, MIT, Stanford, IIT-Madras…).
-          <strong style={{ color: '#fcd34d' }}> M06</strong> modeló el Crédito Académico CCA articulando carga estudiantil con carga docente bajo TDABC.
-          <strong style={{ color: '#fcd34d' }}> M07</strong> destiló <strong style={{ color: '#fcd34d' }}>21 buenas prácticas activadoras</strong> (BPAs) que disparan el ciclo en cualquier Escuela.
-          <strong style={{ color: '#fcd34d' }}> M08</strong> ensambló el framework BSC-s × RBM-GAC × CRISP-DM con 86 preguntas-indicador y cadena causal P4→P1.
-          <strong style={{ color: '#fcd34d' }}> M09-M11</strong> aterrizó la operación en NICSP (presupuesto público), TDABC (costeo por actividad) y datasets MEN (SNIES + OLE + SPADIES).
-          <strong style={{ color: '#fcd34d' }}> M12</strong> sintetizó <strong style={{ color: '#fcd34d' }}>5 escenarios prospectivos S0-S5</strong> para deliberación comunitaria — desde AS-IS (IUCA≈8) hasta ΩMT pleno (IUCA≈100, ROI año 8-9).
-          Deployment queda abierto · pendiente de acuerdos comunitarios.
-        </div>
+      </div>
+
+      {/* HALLAZGOS · v5.0u · 12 párrafos independientes (uno por paper),
+          verificados contra el body de cada .mdx. Pensados para principiantes. */}
+      <h2>Qué encontró cada investigación</h2>
+      <div className="si">// 12 hallazgos consolidados M01→M12 · cada uno aporta una pieza específica al diagnóstico, la evidencia o la prospectiva</div>
+      <div className="hallazgos">
+        <p className="hallazgo h-bu">
+          <span className="h-id">M01</span>
+          encontró un <strong>mandato vinculante triple</strong>: CONPES 4069/2021 (política nacional), PIIOM (Plan Integral Institucional Misional Operativo) y Acuerdo CSU 04/2025 obligan reorganización estatutaria — no ajustes cosméticos.
+        </p>
+        <p className="hallazgo h-bu">
+          <span className="h-id">M02</span>
+          identificó el <strong>ciclo virtuoso ΩMT</strong> como meta-telos de la universidad emprendedora-transformativa: 6 retroalimentaciones R1-R6 entre 3 vicerrectorías (Académica, Investigaciones, Extensión); el salto Sub-N1 → N4 se logra mediante CABAs (Comunidades Académicas de Base) activando las 5 vías de Clark. Casos referentes: Aalto, Twente, Stanford d.school, MIT, ECIU.
+        </p>
+        <p className="hallazgo h-bu">
+          <span className="h-id">M03</span>
+          mapeó <strong>12 estándares internacionales en 4 capas</strong> — aspiracional (OECD Learning Compass + UDL 3.0), epistemológica (Cuadrante Pasteur + MIT UROP), disciplinar (ABET + CDIO + EUR-ACE + TUNING-AL + ARCU-SUR) y gestión (ISO 21001:2018) — con heatmap de aplicabilidad 9 Escuelas UDFJC × 8 estándares y gaps críticos.
+        </p>
+        <p className="hallazgo h-du">
+          <span className="h-id">M04</span>
+          reveló los <strong>Jobs-to-be-Done de los 6 roles que pueblan las unidades organizativas claves de la reforma — la Escuela y la CABA</strong>. Estos roles (🎓 Estudiante Soberano · 🎨 Docente Diseñador · 🎤 Facilitador · 🔬 Pasteur · 🤝 Coop · 🏛️ Director) y la forma en que se organizan determinan el éxito o fracaso de la reforma. Arquetipos de madurez V1-V5 mapeados a 5 valores culturales: Soberanía, Emprendimiento, Participación, Ética, Austeridad.
+        </p>
+        <p className="hallazgo h-du">
+          <span className="h-id">M05</span>
+          documentó con BMK-001 (21 IES × 12 dimensiones × 9 métricas) que <strong>UDFJC opera en estado Sub-N1</strong>: programas-isla pre-departamentales, 0 living labs activados, 5/6 retroalimentaciones rotas, culture_lag = 2 contra los referentes globales (MIT, Stanford, Aalto, Twente, ÉTS, ITESM, KAIST, SNU, UNAM, UNAL, UDEA, UNAD). El benchmark se organiza en 4 funciones misionales (Formación · Investigación · Extensión · Integración Living-Labs) × 5 categorías de impacto.
+        </p>
+        <p className="hallazgo h-du">
+          <span className="h-id">M06</span>
+          modeló el <strong>CCA (Competencia-Conocimiento-Atómica)</strong> como unidad mínima INDIVISIBLE de creditización que certifica simultáneamente 3 dimensiones: V1 Comprensiva (Escuela) + V2 Experimental (Instituto) + V3 Transformativa (Centro). Resultado de BMK-002 (11 IES + 751 docs normativos). Reinterpreta el Decreto MEN 1330/2019 sin cambio normativo nacional.
+        </p>
+        <p className="hallazgo h-du">
+          <span className="h-id">M07</span>
+          especificó <strong>21 BPAs activadoras</strong> transferibles desde BMK-001: F01-F05 (Formación), I01-I05 (Investigación), E01-E04 (Extensión), INT01-INT07 (Living-Labs / Integración). Cada BPA documentada con árbol RBM-GAC y matriz de activación R1-R6. Piloto: CABA Escuela de Física UDFJC.
+        </p>
+        <p className="hallazgo h-mo">
+          <span className="h-id">M08</span>
+          ensambló el framework <strong>BSC-s × RBM-GAC × CRISP-DM</strong> con cadena causal P4 (Capacidades) → P3 (Organización) → P2 (Cultura) → P1 (Impacto Misional) y 86 preguntas-indicador. Calibrado con 6 escenarios prospectivos S0-S5 (S0 AS-IS Sub-N1 IUCA≈8 → S5 ΩMT pleno IUCA≈100, ROI año 8-9).
+        </p>
+        <p className="hallazgo h-mo">
+          <span className="h-id">M09</span>
+          aterrizó el presupuesto bajo <strong>NICSP</strong> (Resolución 533/2015 CGN) con clasificación CCP por rubro CAPEX/OPEX para IES públicas — la pieza fiscal-presupuestal que hace ejecutable el framework de M08.
+        </p>
+        <p className="hallazgo h-mo">
+          <span className="h-id">M10</span>
+          aplicó <strong>TDABC (Time-Driven Activity-Based Costing)</strong> calculando el Capacity Cost Rate por actividad académica — costeo trazable de cada hora docente, cada actividad de investigación y cada hora de extensión.
+        </p>
+        <p className="hallazgo h-mo">
+          <span className="h-id">M11</span>
+          armó la línea base con <strong>datasets MEN</strong>: SNIES (estadísticas de educación superior) + OLE (empleabilidad de egresados) + SPADIES (deserción y permanencia) — evidencia objetiva del desfase contra los referentes globales.
+        </p>
+        <p className="hallazgo h-ev">
+          <span className="h-id">M12</span>
+          sintetizó las 5 fases CRISP-DM en <strong>5 escenarios prospectivos S0-S5 + roadmap 2026-2034</strong>, sometidos a deliberación abierta de la comunidad universitaria. El Deployment NO está pre-decidido: depende de los acuerdos que la comunidad construya sobre estos escenarios.
+        </p>
       </div>
 
       {/* v5.0t · sección "Las 5 Fases CRISP-DM" eliminada: el Kanban
@@ -441,6 +483,44 @@ const INFOGRAFIA_CSS = `
 .infografia-root .cta-btn-secondary:hover { background: var(--pur-bg); }
 .dark .infografia-root .cta-btn-secondary { color: var(--pur-l); }
 .dark .infografia-root .cta-btn-secondary:hover { background: rgba(124,58,237,0.15); }
+
+/* HALLAZGOS · v5.0u · narrativa de 12 párrafos independientes (uno por paper)
+   con badge M## coloreada por fase CRISP-DM. Pensado para principiantes. */
+.infografia-root .hallazgos { display: flex; flex-direction: column; gap: 0.55rem; margin: 0.4rem 0 0.6rem; }
+.infografia-root .hallazgo {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-left: 4px solid var(--pur);
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem;
+  font-size: 8.5pt;
+  line-height: 1.55;
+  color: var(--text-card);
+  margin: 0;
+}
+.infografia-root .hallazgo strong { color: var(--pur-d); font-weight: 700; }
+.dark .infografia-root .hallazgo strong { color: var(--pur-l); }
+.infografia-root .h-id {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-size: 8pt;
+  font-weight: 700;
+  color: white;
+  background: var(--pur);
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+  margin-right: 0.45rem;
+  letter-spacing: 0.02em;
+}
+/* Color de la pildora M## por fase CRISP-DM (alineado con KANBAN_COLUMNS) */
+.infografia-root .hallazgo.h-bu { border-left-color: #059669; }
+.infografia-root .hallazgo.h-bu .h-id { background: #059669; }
+.infografia-root .hallazgo.h-du { border-left-color: #0284c7; }
+.infografia-root .hallazgo.h-du .h-id { background: #0284c7; }
+.infografia-root .hallazgo.h-mo { border-left-color: #d97706; }
+.infografia-root .hallazgo.h-mo .h-id { background: #d97706; }
+.infografia-root .hallazgo.h-ev { border-left-color: #ea580c; }
+.infografia-root .hallazgo.h-ev .h-id { background: #ea580c; }
 
 /* KANBAN · v5.0r · 5 columnas (Data Understanding + Preparation merged) · cards minimales */
 .infografia-root .kanban {
