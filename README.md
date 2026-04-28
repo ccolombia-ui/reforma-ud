@@ -171,7 +171,13 @@ Para ejecutar el sync **directamente desde Obsidian** como botón, ver [`docs/gu
 
 Total ~3300 líneas de contenido académico real importado del capítulo de libro UDFJC vía `scripts/import-book-sections.mjs`.
 
-## Audits y documentación técnica
+## Documentación técnica
+
+- [`docs/GUIA-TECNICA-PORTAL.md`](docs/GUIA-TECNICA-PORTAL.md) — **Guía completa**: portal activation + sync + news bot + gold-html-static (leer primero)
+- [`docs/guide-obsidian-sync-buttons.md`](docs/guide-obsidian-sync-buttons.md) — Botones Shell Commands en Obsidian para `pnpm sync:vault`
+- [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) — Guía de contribución
+
+## Audits
 
 Todos en [docs/audit/](docs/audit/):
 

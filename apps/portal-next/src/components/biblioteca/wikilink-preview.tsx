@@ -5,7 +5,7 @@ import { Suspense, createContext, useContext, useEffect, useMemo, useState } fro
 import { ExternalLink, BookMarked, FileText, AlertTriangle } from 'lucide-react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
-import { canonicPaper, community, note } from '#site/content';
+import { canonicPaper, community, concepto, note } from '#site/content';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { useDocTabs } from '@/lib/doc-tabs';
 import { usePanesState } from '@/lib/panes-state';
@@ -18,6 +18,7 @@ const HoverDepthCtx = createContext<number>(0);
 type ResolvedDoc =
   | { kind: 'paper'; id: string; title: string; description: string; href: string; body: string; number: number }
   | { kind: 'note';  slug: string; title: string; description?: string; href: string; body: string }
+  | { kind: 'concepto'; slug: string; title: string; definition?: string; href: string; body: string }
   | { kind: 'community'; slug: string; name: string; description: string; href: string }
   | { kind: 'broken'; href: string };
 
@@ -41,6 +42,21 @@ function resolveHref(href: string): ResolvedDoc {
         href: paper.href,
         body: paper.body,
         number: paper.number,
+      };
+    }
+  }
+
+  if (cleanHref.startsWith('/glosario/')) {
+    const slug = cleanHref.replace('/glosario/', '').replace(/\/$/, '');
+    const doc = concepto.find((c) => c.slug === slug);
+    if (doc) {
+      return {
+        kind: 'concepto',
+        slug: doc.slug,
+        title: doc.kd_title ?? doc.skos_prefLabel ?? doc.slug,
+        definition: doc.skos_definition,
+        href: `/glosario/${doc.slug}/`,
+        body: doc.body,
       };
     }
   }
@@ -135,11 +151,10 @@ function WikiLinkPreviewInner({
     }
     if (splitMode) {
       // En modo split: abre en el último pane secundario usado (pane B/C).
-      // Solo papers (m##) y notes (slug) tienen tabId resolvible. Community
-      // y broken caen al fallback replaceActive.
       let tabId: string | null = null;
       if (resolved.kind === 'paper') tabId = resolved.id;
       else if (resolved.kind === 'note') tabId = resolved.slug;
+      else if (resolved.kind === 'concepto') tabId = resolved.slug;
       if (tabId) {
         panesState.openInLastUsedPane(tabId);
         return;
@@ -261,6 +276,39 @@ function PreviewBody({ resolved }: Readonly<{ resolved: ResolvedDoc }>) {
             className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline"
           >
             Abrir paper completo <ExternalLink className="h-2.5 w-2.5" />
+          </Link>
+        </div>
+      </article>
+    );
+  }
+
+  if (resolved.kind === 'concepto') {
+    return (
+      <article className="p-4 space-y-2.5">
+        <header className="space-y-1">
+          <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-muted-foreground">
+            <BookMarked className="h-3 w-3" />
+            <Badge variant="secondary" className="font-mono text-[9px]">Glosario</Badge>
+          </div>
+          <h3 className="text-sm font-semibold leading-tight">{resolved.title}</h3>
+          {resolved.definition && (
+            <p className="text-xs text-muted-foreground line-clamp-3">{resolved.definition}</p>
+          )}
+        </header>
+        {resolved.body && (
+          <div className="border-t pt-2">
+            <div className="prose-paper prose-sm prose-hover-preview text-[11px] leading-relaxed line-clamp-[8] [&_h2]:text-xs [&_h2]:mt-2 [&_h3]:text-xs [&_p]:my-1 [&_pre]:hidden [&_table]:hidden [&_img]:hidden [&_.callout]:hidden">
+              <MDXWithHoverPreview code={resolved.body} />
+            </div>
+          </div>
+        )}
+        <div className="flex items-center justify-between pt-1 border-t">
+          <span className="text-[10px] text-muted-foreground italic font-mono">{resolved.slug}</span>
+          <Link
+            href={resolved.href}
+            className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline"
+          >
+            Ver concepto completo <ExternalLink className="h-2.5 w-2.5" />
           </Link>
         </div>
       </article>
