@@ -18,6 +18,7 @@ import { MisionesColectivas } from '@/components/comunidad/misiones-colectivas';
 import { RolesGrid } from '@/components/comunidad/roles-grid';
 import { GlosarioComunidad } from '@/components/comunidad/glosario-comunidad';
 import { Discusiones } from '@/components/comunidad/discusiones';
+import { ComunidadTabs } from '@/components/comunidad/comunidad-tabs';
 import { getComprehension } from '@/lib/comprehension';
 import { community, note, canonicPaper } from '#site/content';
 import type { Metadata } from 'next';
@@ -324,40 +325,56 @@ export default async function CommunityPage({
         </>
       )}
 
-      {/* Dashboard BSC-S/RBM con KPIs P1-P4 + tabs Lista/RBM/Kanban/Grafo */}
-      <DashboardCop copSlug={c.slug} />
+      {/* v7.3 — Tabs internas con scroll-spy + anchor URLs */}
+      <ComunidadTabs
+        available={[
+          'inicio',
+          ...(misionesColectivas.length > 0 ? ['misiones-colectivas' as const] : []),
+          ...(glosarioTags.length > 0 ? ['glosario' as const] : []),
+          'noticias',
+          'discusiones',
+        ]}
+      />
+
+      {/* Sección Inicio: dashboard + servicios */}
+      <section id="inicio" className="scroll-mt-32">
+        <DashboardCop copSlug={c.slug} />
+        <Separator className="my-10" />
+        <ServiceTiles copSlug={c.slug} />
+      </section>
 
       <Separator className="my-10" />
 
-      {/* Servicios — incluye noticias, glosario, biblioteca, grafo, discusiones */}
-      <ServiceTiles copSlug={c.slug} />
-
-      <Separator className="my-10" />
-
-      {/* v7.0 — Misiones colectivas con progress */}
+      {/* v7.0 — Misiones colectivas con progress (id en el componente) */}
       {misionesColectivas.length > 0 && (
         <>
-          <MisionesColectivas
-            misiones={misionesColectivas as Parameters<typeof MisionesColectivas>[0]['misiones']}
-            copSlug={c.slug}
-          />
+          <div className="scroll-mt-32">
+            <MisionesColectivas
+              misiones={misionesColectivas as Parameters<typeof MisionesColectivas>[0]['misiones']}
+              copSlug={c.slug}
+            />
+          </div>
           <Separator className="my-10" />
         </>
       )}
 
-      {/* v7.0 — Glosario contextual de la comunidad */}
+      {/* v7.0 — Glosario contextual (id en el componente) */}
       {glosarioTags.length > 0 && (
         <>
-          <GlosarioComunidad tags={glosarioTags} />
+          <div className="scroll-mt-32">
+            <GlosarioComunidad tags={glosarioTags} />
+          </div>
           <Separator className="my-10" />
         </>
       )}
 
-      {/* Noticias relacionadas (feed centralizado + distribución tag-based) */}
-      <NoticiasRelacionadas
-        communitySlug={c.slug}
-        communityCites={c.cites ?? []}
-      />
+      {/* Noticias relacionadas — wrap con id para scroll-spy */}
+      <section id="noticias" className="scroll-mt-32">
+        <NoticiasRelacionadas
+          communitySlug={c.slug}
+          communityCites={c.cites ?? []}
+        />
+      </section>
 
       <Separator className="my-10" />
 

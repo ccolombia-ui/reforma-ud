@@ -46,7 +46,7 @@ export function Discusiones({
   }, []);
 
   return (
-    <section id="discusiones" className="mt-12 pt-8 border-t">
+    <section id="discusiones" className="mt-12 pt-8 border-t scroll-mt-32">
       <header className="mb-6 flex items-center justify-between gap-4">
         <h2 className="flex items-center gap-2 text-lg font-semibold tracking-tight">
           <MessageSquare className="h-4 w-4 text-primary" />
