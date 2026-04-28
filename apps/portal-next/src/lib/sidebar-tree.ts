@@ -81,7 +81,9 @@ export function buildCommunityTree(): TreeNode[] {
   for (const node of all) {
     const parts = node.slug.split('/');
     if (parts.length === 1) {
-      // root level (gobierno, formacion, investigacion, extension)
+      // wrapper synthetic 'comunidades' (creado como intermediate por los
+      // hijos 'comunidades/gobierno' etc.) NO debe aparecer en la UI.
+      // Sus hijos se promueven a roots reales.
       roots.push(node);
     } else {
       const parentSlug = parts.slice(0, -1).join('/');
@@ -89,6 +91,14 @@ export function buildCommunityTree(): TreeNode[] {
       if (parent) parent.children.push(node);
       else roots.push(node);
     }
+  }
+
+  // v5.0ab · Promover hijos del wrapper 'comunidades' a roots top-level
+  // (eliminar el doble-header "COMUNIDADES" que aparecía en el sidebar).
+  const wrapperIdx = roots.findIndex((r) => r.slug === 'comunidades');
+  if (wrapperIdx >= 0) {
+    const wrapper = roots[wrapperIdx];
+    roots.splice(wrapperIdx, 1, ...wrapper.children);
   }
 
   // 3) Sort children: tipos reales antes que sinteticos, y por orden semantico
@@ -103,11 +113,13 @@ export function buildCommunityTree(): TreeNode[] {
   };
   roots.forEach(sortChildren);
 
-  // 4) Sort roots: gobierno, formacion, investigacion, extension
+  // 4) Sort roots: gobierno, formacion, investigacion, extension.
+  // Comparación por `segment` (último componente del slug), no por slug
+  // completo, porque ahora roots tienen slugs `comunidades/<X>`.
   const ROOT_ORDER = ['gobierno', 'formacion', 'investigacion', 'extension'];
   roots.sort((a, b) => {
-    const ai = ROOT_ORDER.indexOf(a.slug);
-    const bi = ROOT_ORDER.indexOf(b.slug);
+    const ai = ROOT_ORDER.indexOf(a.segment);
+    const bi = ROOT_ORDER.indexOf(b.segment);
     return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
   });
 
