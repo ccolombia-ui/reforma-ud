@@ -2,6 +2,7 @@ import { news } from '#site/content';
 import { ExternalLink, Newspaper, Calendar } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { NewsThumbnail } from '@/components/biblioteca/news-thumbnail';
 
 const SOURCE_LABEL: Record<string, string> = {
   instagram: 'Instagram',
@@ -84,7 +85,16 @@ export function NoticiasRelacionadas({
             rel="noopener noreferrer"
             className="group block"
           >
-            <Card className="h-full p-3 transition-colors hover:border-primary/50 hover:bg-accent/30">
+            <Card className="h-full overflow-hidden p-0 transition-colors hover:border-primary/50 hover:bg-accent/30">
+              {/* v7.7 · thumbnail og:image (frontmatter override > /api/og-preview > fallback icon) */}
+              <NewsThumbnail
+                url={n.url}
+                source={n.source}
+                stored={(n as unknown as { image?: string }).image}
+                alt={n.title}
+                className="h-32 w-full"
+              />
+              <div className="p-3">
               <div className="mb-2 flex items-center gap-2">
                 <span className="font-mono text-base leading-none" aria-hidden>
                   {SOURCE_ICON[n.source] ?? '🔗'}
@@ -115,6 +125,7 @@ export function NoticiasRelacionadas({
                   </Badge>
                 ))}
                 <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground/60 group-hover:text-primary" />
+              </div>
               </div>
             </Card>
           </a>

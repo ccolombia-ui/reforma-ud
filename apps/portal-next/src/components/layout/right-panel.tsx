@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Sparkles, Send, ChevronLeft, Target, Lightbulb, Link2, Users, ListTree, Network, GitCommit } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -684,9 +686,29 @@ function ChatPane({ copSlug, pathname }: { copSlug: string | null; pathname: str
                 </span>
               )}
             </div>
-            <div className="whitespace-pre-wrap text-xs leading-relaxed">
+            <div className="text-xs leading-relaxed">
               {m.content ? (
-                m.content
+                m.role === 'user' ? (
+                  // user input es texto plano (no markdown)
+                  <div className="whitespace-pre-wrap">{m.content}</div>
+                ) : (
+                  // v7.7 · render markdown del asistente (gfm: tablas, listas, code, links)
+                  <div className="prose prose-xs dark:prose-invert max-w-none
+                    prose-headings:mt-2 prose-headings:mb-1 prose-headings:font-semibold
+                    prose-h1:text-sm prose-h2:text-xs prose-h3:text-xs
+                    prose-p:my-1.5 prose-p:leading-relaxed
+                    prose-ul:my-1.5 prose-ul:pl-4 prose-ol:my-1.5 prose-ol:pl-4
+                    prose-li:my-0.5
+                    prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:bg-muted prose-code:text-[10px] prose-code:before:content-[''] prose-code:after:content-['']
+                    prose-pre:my-2 prose-pre:p-2 prose-pre:text-[10px]
+                    prose-strong:font-semibold prose-em:italic
+                    prose-blockquote:border-l-2 prose-blockquote:pl-2 prose-blockquote:my-2 prose-blockquote:text-muted-foreground
+                    prose-a:text-primary prose-a:underline prose-a:underline-offset-2 hover:prose-a:no-underline">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {m.content}
+                    </ReactMarkdown>
+                  </div>
+                )
               ) : streaming && m.role === 'assistant' ? (
                 <span className="typing-indicator text-muted-foreground">
                   <span /><span /><span />

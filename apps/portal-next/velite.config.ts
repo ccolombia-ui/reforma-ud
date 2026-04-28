@@ -472,6 +472,10 @@ const news = defineCollection({
       author: s.string().optional(),
       excerpt: s.string(),
       tags: s.array(s.string()).default([]),
+      // v7.7 · imagen representativa override (DT-NOTICIAS-IMG-01)
+      // Si está presente, salta el fetch og:image en runtime.
+      // El bot vault debe poblar este campo cuando la fuente tiene og:image.
+      image: s.string().optional(),
       // Relaciones para distribucion contextual
       comunidades: s.array(s.string()).default([]),  // slugs sin prefijo /comunidades (ej "gobierno", "formacion")
       cites: s.array(s.string()).default([]),         // m01..m12

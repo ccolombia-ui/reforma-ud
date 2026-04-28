@@ -3,6 +3,7 @@
 import { news } from '#site/content';
 import { Newspaper, ExternalLink, Calendar, FlaskConical, Building, FileText } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { NewsThumbnail } from '@/components/biblioteca/news-thumbnail';
 
 const SOURCE_ICON: Record<string, string> = {
   instagram: '📷',
@@ -139,8 +140,17 @@ export function NoticiasInforme({ limit = 6 }: Readonly<{ limit?: number }>) {
               href={n.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block rounded-md border bg-background p-3 transition-colors hover:border-primary/50 hover:bg-accent/30"
+              className="group block overflow-hidden rounded-md border bg-background transition-colors hover:border-primary/50 hover:bg-accent/30"
             >
+              {/* v7.7 · thumbnail og:image */}
+              <NewsThumbnail
+                url={n.url}
+                source={n.source}
+                stored={(n as { image?: string }).image}
+                alt={n.title}
+                className="h-32 w-full"
+              />
+              <div className="p-3">
               <div className="mb-2 flex items-center gap-1.5">
                 <Icon className={`h-3.5 w-3.5 ${color}`} />
                 <Badge variant="outline" className="font-mono text-[9px]">
@@ -171,6 +181,7 @@ export function NoticiasInforme({ limit = 6 }: Readonly<{ limit?: number }>) {
                   </Badge>
                 ))}
                 <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground/60 group-hover:text-primary" />
+              </div>
               </div>
             </a>
           );
