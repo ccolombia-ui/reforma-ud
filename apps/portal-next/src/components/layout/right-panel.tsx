@@ -129,6 +129,29 @@ export function RightPanel() {
     }
   }, [activeDoc, tab, setTab]);
 
+  // v6.1 G-SBR-01 · Atajos Alt+1..6 para cambiar de tab. No interfieren con
+  // shortcuts del browser (Alt+digito en navegadores no es estándar) y son
+  // detectables sin Shift/Ctrl. Si no hay doc activo y la tab destino lo
+  // requiere, el useEffect superior re-rutea a asistente.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
+      const map: Record<string, typeof tab> = {
+        '1': 'esquema', '2': 'grafo', '3': 'evolucion',
+        '4': 'refs', '5': 'comunidad', '6': 'asistente',
+      };
+      const next = map[e.key];
+      if (next) {
+        e.preventDefault();
+        setTab(next);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [setTab]);
+
   // counts para badges de tabs (refs solamente · backlinks)
   const [backlinkCount, setBacklinkCount] = useState<number>(0);
   useEffect(() => {
@@ -462,11 +485,27 @@ function ChatPane({ copSlug, pathname }: { copSlug: string | null; pathname: str
     if (missionPaperId) setMissionMode(true);
   }, [missionPaperId]);
 
-  // Reset mensajes cuando cambia el documento de misión para evitar fugas de contexto
+  // v6.4 G-SBR-03 · Chat history persistido por (copSlug + missionPaperId).
+  // Cada combinación contexto tiene su propio thread; al volver al mismo
+  // contexto se restauran los mensajes. Antes el chat se reseteaba por sesión.
+  const chatKey = `reforma-ud:chat-history:${copSlug ?? 'global'}:${missionPaperId ?? 'libre'}`;
   useEffect(() => {
-    setMessages([]);
+    try {
+      const raw = localStorage.getItem(chatKey);
+      if (raw) setMessages(JSON.parse(raw));
+      else setMessages([]);
+    } catch { setMessages([]); }
     setError(null);
-  }, [missionPaperId]);
+  }, [chatKey]);
+  useEffect(() => {
+    if (messages.length === 0) return;
+    try { localStorage.setItem(chatKey, JSON.stringify(messages)); } catch { /* ignore */ }
+  }, [messages, chatKey]);
+
+  const clearHistory = useCallback(() => {
+    setMessages([]);
+    try { localStorage.removeItem(chatKey); } catch { /* ignore */ }
+  }, [chatKey]);
 
   const suggestions = useMemo(() => {
     if (missionMode && missionPaperId) {

@@ -220,6 +220,8 @@ export function useDocTabs() {
       if (pinned.has(tabId)) return; // v5.0a · pinned no se cierra
       const idx = sortedTabIds.indexOf(tabId);
       if (idx < 0) return;
+      // v6.2 G-WS-04 · push al stack de tabs cerradas para Ctrl+Shift+T
+      pushClosedTab(tabId);
       const nextIds = sortedTabIds.filter((id) => id !== tabId);
       if (nextIds.length === 0) {
         router.push('/canonico');
@@ -235,6 +237,19 @@ export function useDocTabs() {
     },
     [sortedTabIds, activeTabId, pathname, router, buildUrl, pinned],
   );
+
+  // v6.2 G-WS-04 · Reabre la última tab cerrada (Ctrl+Shift+T).
+  const reopenLastClosed = useCallback(() => {
+    const lastId = popClosedTab();
+    if (!lastId) return;
+    const tab = resolveTab(lastId);
+    if (sortedTabIds.includes(lastId)) {
+      router.push(buildUrl(tab.href, sortedTabIds));
+      return;
+    }
+    const nextIds = [...sortedTabIds, lastId];
+    router.push(buildUrl(tab.href, nextIds));
+  }, [sortedTabIds, router, buildUrl]);
 
   /** Activa un tab existente. */
   const activateTab = useCallback(
@@ -318,7 +333,41 @@ export function useDocTabs() {
     closeToRight,
     togglePin,
     reorderTabs,
+    reopenLastClosed,
   } as const;
+}
+
+/* ============================================================
+ * v6.2 G-WS-04 · Stack de tabs cerradas (Ctrl+Shift+T para reabrir)
+ * ============================================================ */
+
+const CLOSED_TABS_KEY = 'reforma-ud:closed-tabs-history';
+const CLOSED_TABS_LIMIT = 10;
+
+function pushClosedTab(tabId: string): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    const raw = localStorage.getItem(CLOSED_TABS_KEY);
+    const stack: string[] = raw ? JSON.parse(raw) : [];
+    // Evitar duplicado consecutivo
+    if (stack[stack.length - 1] !== tabId) stack.push(tabId);
+    while (stack.length > CLOSED_TABS_LIMIT) stack.shift();
+    localStorage.setItem(CLOSED_TABS_KEY, JSON.stringify(stack));
+  } catch { /* localStorage full or denied */ }
+}
+
+function popClosedTab(): string | null {
+  if (typeof localStorage === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(CLOSED_TABS_KEY);
+    if (!raw) return null;
+    const stack: string[] = JSON.parse(raw);
+    const last = stack.pop();
+    localStorage.setItem(CLOSED_TABS_KEY, JSON.stringify(stack));
+    return last ?? null;
+  } catch {
+    return null;
+  }
 }
 
 /* ============================================================

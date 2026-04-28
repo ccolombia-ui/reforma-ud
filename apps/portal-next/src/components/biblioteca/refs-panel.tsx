@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { Link2, ChevronRight, BookMarked, FileText, Building2, ArrowUpRight, ArrowDownLeft, Users, BookOpen, Scale, Image as ImageIcon } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link2, ChevronRight, BookMarked, FileText, Building2, ArrowUpRight, ArrowDownLeft, Users, BookOpen, Scale, Image as ImageIcon, Pin, PinOff } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { canonicPaper, note, concepto, community } from '#site/content';
 import type { ActiveDoc } from '@/lib/active-doc';
@@ -46,10 +46,27 @@ type CanonicRelations = {
  * Reemplaza `BacklinksPanel` plano. Cuando un paper no tiene `relations`,
  * solo se muestra la zona de Backlinks.
  */
+// v6.3 G-SBR-04 · Pin de refs · estado global en localStorage por activeDoc.id.
+// Set de IDs pineados; cada item del RefsPanel puede pinearse para verlo
+// destacado al tope (y no perderse en grupos largos).
+const PIN_KEY = 'reforma-ud:pinned-refs';
+
+function readPins(): Record<string, string[]> {
+  if (typeof localStorage === 'undefined') return {};
+  try {
+    const raw = localStorage.getItem(PIN_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+function writePins(map: Record<string, string[]>): void {
+  try { localStorage.setItem(PIN_KEY, JSON.stringify(map)); } catch { /* ignore */ }
+}
+
 export function RefsPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
   const [data, setData] = useState<GraphData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [pins, setPinsState] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetch('/static/graph-global.json')
@@ -66,6 +83,23 @@ export function RefsPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (!doc) { setPinsState(new Set()); return; }
+    const all = readPins();
+    setPinsState(new Set(all[doc.id] ?? []));
+  }, [doc]);
+
+  const togglePin = useCallback((refId: string) => {
+    if (!doc) return;
+    const all = readPins();
+    const current = new Set(all[doc.id] ?? []);
+    if (current.has(refId)) current.delete(refId);
+    else current.add(refId);
+    all[doc.id] = Array.from(current);
+    writePins(all);
+    setPinsState(current);
+  }, [doc]);
 
   if (!doc) return <EmptyState reason="no-doc" />;
   if (loading) return <EmptyState reason="loading" />;
@@ -150,10 +184,10 @@ export function RefsPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
             <SectionHeading Icon={ArrowUpRight} label="Salientes" count={outgoingTotal} />
 
             {(rel.pre?.length ?? 0) > 0 && (
-              <RelationGroup Icon={BookOpen} label="Pre-saberes" ids={rel.pre!} tone="amber" />
+              <RelationGroup Icon={BookOpen} label="Pre-saberes" ids={rel.pre!} tone="amber" pins={pins} onTogglePin={togglePin} />
             )}
             {(rel.pos?.length ?? 0) > 0 && (
-              <RelationGroup Icon={BookOpen} label="Pos-saberes" ids={rel.pos!} tone="emerald" />
+              <RelationGroup Icon={BookOpen} label="Pos-saberes" ids={rel.pos!} tone="emerald" pins={pins} onTogglePin={togglePin} />
             )}
             {(rel.co?.length ?? 0) > 0 && <CoAuthorGroup co={rel.co!} />}
 
@@ -167,6 +201,8 @@ export function RefsPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
                   label={prettyCustomLabel(k)}
                   ids={ids}
                   tone={customTone(k)}
+                  pins={pins}
+                  onTogglePin={togglePin}
                 />
               );
             })}
@@ -211,13 +247,24 @@ function SectionHeading({ Icon, label, count }: Readonly<{ Icon: typeof BookOpen
 }
 
 function RelationGroup({
-  Icon, label, ids, tone,
+  Icon, label, ids, tone, pins, onTogglePin,
 }: Readonly<{
   Icon: typeof BookOpen;
   label: string;
   ids: string[];
   tone: 'amber' | 'emerald' | 'blue' | 'rose' | 'violet' | 'slate';
+  pins?: Set<string>;
+  onTogglePin?: (id: string) => void;
 }>) {
+  // v6.3 G-SBR-04 · pineados primero
+  const sortedIds = useMemo(() => {
+    if (!pins || pins.size === 0) return ids;
+    return [...ids].sort((a, b) => {
+      const ap = pins.has(a) ? 0 : 1;
+      const bp = pins.has(b) ? 0 : 1;
+      return ap - bp;
+    });
+  }, [ids, pins]);
   const toneClass = {
     amber: 'border-amber-500/40 bg-amber-500/5 text-amber-700 dark:text-amber-300',
     emerald: 'border-emerald-500/40 bg-emerald-500/5 text-emerald-700 dark:text-emerald-300',
@@ -233,9 +280,9 @@ function RelationGroup({
         {label} <span className="font-mono">({ids.length})</span>
       </h4>
       <ul className="space-y-0.5">
-        {ids.map((id) => (
+        {sortedIds.map((id) => (
           <li key={id}>
-            <RelationItem id={id} toneClass={toneClass} />
+            <RelationItem id={id} toneClass={toneClass} pinned={pins?.has(id) ?? false} onTogglePin={onTogglePin} />
           </li>
         ))}
       </ul>
@@ -243,11 +290,30 @@ function RelationGroup({
   );
 }
 
-function RelationItem({ id, toneClass }: Readonly<{ id: string; toneClass: string }>) {
+function RelationItem({
+  id, toneClass, pinned, onTogglePin,
+}: Readonly<{
+  id: string;
+  toneClass: string;
+  pinned?: boolean;
+  onTogglePin?: (id: string) => void;
+}>) {
   const resolved = resolveId(id);
   const Inner = (
-    <span className={cn('flex items-center gap-1 rounded-md border-l-2 px-2 py-1 text-[11px]', toneClass)}>
+    <span className={cn('flex items-center gap-1 rounded-md border-l-2 px-2 py-1 text-[11px]', toneClass, pinned && 'ring-1 ring-primary/40')}>
+      {pinned && <Pin className="h-2.5 w-2.5 shrink-0 text-primary fill-primary" />}
       <span className="flex-1 truncate font-medium">{resolved.label}</span>
+      {onTogglePin && (
+        <button
+          type="button"
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); onTogglePin(id); }}
+          className="opacity-60 hover:opacity-100 transition-opacity shrink-0 p-0.5"
+          title={pinned ? 'Despinear' : 'Pinear'}
+          aria-label={pinned ? 'Despinear' : 'Pinear'}
+        >
+          {pinned ? <PinOff className="h-3 w-3" /> : <Pin className="h-3 w-3" />}
+        </button>
+      )}
       {resolved.href && <ChevronRight className="h-3 w-3 shrink-0 opacity-60" />}
     </span>
   );

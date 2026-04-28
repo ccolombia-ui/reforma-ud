@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useMemo } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Group, Panel, Separator } from 'react-resizable-panels';
 import {
@@ -18,7 +18,7 @@ import { GripVertical, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePanesState, hydrateFromCompareParam, type PaneId } from '@/lib/panes-state';
 import { useDocTabs } from '@/lib/doc-tabs';
-import { useFocusedPane } from '@/lib/ui-state';
+import { useFocusedPane, useWorkspaceOrientation } from '@/lib/ui-state';
 import { PaneShell } from '@/components/workspace/pane-shell';
 import { cn } from '@/lib/utils';
 
@@ -63,6 +63,48 @@ function WorkspaceShellInner({ children }: Readonly<{ children: React.ReactNode 
   const panesState = usePanesState();
   const docTabs = useDocTabs();
   const [focused, setFocused] = useFocusedPane();
+
+  // v6.2 G-WS-03 · Scroll restoration por tab en pane A (URL-driven).
+  // Antes: al volver con back/forward, scroll regresa a 0. Ahora preservamos
+  // el scrollTop por pathname y lo restauramos en el switch (sessionStorage,
+  // dura solo la sesión para no bloatar localStorage).
+  const prevPathRef = useRef<string | null>(null);
+  useEffect(() => {
+    const el = document.querySelector('[data-pane="a"]') as HTMLElement | null;
+    if (!el) return;
+    // 1) Si había un path previo, guardarle el scrollTop antes de re-renderizar
+    if (prevPathRef.current && prevPathRef.current !== pathname) {
+      try {
+        sessionStorage.setItem(`reforma-ud:scroll:${prevPathRef.current}`, String(el.scrollTop));
+      } catch { /* fail silently */ }
+    }
+    prevPathRef.current = pathname;
+    // 2) Restaurar scrollTop del path actual (si existe, sino 0)
+    if (pathname) {
+      try {
+        const raw = sessionStorage.getItem(`reforma-ud:scroll:${pathname}`);
+        const y = raw ? Number(raw) : 0;
+        // Usar rAF para esperar a que el contenido se haya pintado
+        requestAnimationFrame(() => {
+          el.scrollTop = Number.isFinite(y) ? y : 0;
+        });
+      } catch { /* fail silently */ }
+    }
+  }, [pathname]);
+
+  // v6.2 G-WS-04 · Ctrl+Shift+T re-abre la última tab cerrada (estilo Chrome).
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      const isCtrl = e.ctrlKey || e.metaKey;
+      if (!isCtrl || !e.shiftKey || e.key.toLowerCase() !== 't') return;
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
+      e.preventDefault();
+      docTabs.reopenLastClosed();
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [docTabs]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -222,14 +264,16 @@ function MultiPaneLayout({
   // Distribución equitativa de tamaño entre A + N panes
   const total = panes.length + 1;
   const eachSize = Math.max(15, Math.floor(100 / total));
+  // v6.2 G-WS-01 · split vertical | horizontal según preferencia.
+  const { orientation } = useWorkspaceOrientation();
 
   return (
     <div className="h-[calc(100vh-3.5rem)] no-print">
       <Group
-        orientation="horizontal"
+        orientation={orientation}
         id="workspace-shell"
-        autoSave="reforma-ud:workspace-v5.1"
-        className="flex h-full"
+        autoSave={`reforma-ud:workspace-v6-${orientation}`}
+        className={cn('h-full', orientation === 'horizontal' ? 'flex' : 'flex flex-col')}
       >
         <Panel
           id="pane-a"

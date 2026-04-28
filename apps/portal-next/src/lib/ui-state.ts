@@ -12,6 +12,8 @@ const KEYS = {
   activeRole: 'reforma-ud:active-role',
   userName: 'reforma-ud:user-name',
   focusedPane: 'reforma-ud:focused-pane',
+  focusMode: 'reforma-ud:focus-mode',  // v6.1 G-WS-02 · ambas barras colapsadas
+  workspaceOrientation: 'reforma-ud:workspace-orientation', // v6.2 G-WS-01 · horizontal | vertical
 } as const;
 
 export const LEFT_SIDEBAR_MIN = 200;
@@ -399,4 +401,72 @@ export function useActiveProfile() {
 
   const meta = ROLES.find((x) => x.id === role) ?? ROLES[3];
   return { role, name, setRole, setName, meta } as const;
+}
+
+/* ============================================================
+ * v6.1 G-WS-02 · Focus mode (oculta ambas barras simultáneamente)
+ * ============================================================ */
+
+export function useFocusMode() {
+  const [active, setActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    setActive(read(KEYS.focusMode, false) as boolean);
+    const onChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ key: string; value: boolean }>).detail;
+      if (detail?.key === KEYS.focusMode) setActive(detail.value);
+    };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === KEYS.focusMode) setActive(e.newValue === 'true');
+    };
+    window.addEventListener(EVENT, onChange);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener(EVENT, onChange);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
+
+  const toggle = () => {
+    setActive((v) => {
+      const next = !v;
+      write(KEYS.focusMode, next);
+      // Sincroniza ambas barras: si activo focus → colapsar ambas.
+      // Si lo desactivo → re-abrir ambas.
+      write(KEYS.leftSidebar, next);
+      write(KEYS.rightPanel, next);
+      return next;
+    });
+  };
+  return [active, toggle] as const;
+}
+
+/* ============================================================
+ * v6.2 G-WS-01 · Orientación del workspace (horizontal | vertical).
+ * Permite split vertical (panes apilados arriba/abajo) en lugar del
+ * default lado-a-lado.
+ * ============================================================ */
+
+export type WorkspaceOrientation = 'horizontal' | 'vertical';
+
+export function useWorkspaceOrientation() {
+  const [orient, setOrientState] = useState<WorkspaceOrientation>('horizontal');
+  useEffect(() => {
+    const v = read(KEYS.workspaceOrientation, 'horizontal') as string;
+    if (v === 'horizontal' || v === 'vertical') setOrientState(v);
+    const onChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ key: string; value: string | boolean }>).detail;
+      if (detail?.key === KEYS.workspaceOrientation && (detail.value === 'horizontal' || detail.value === 'vertical')) {
+        setOrientState(detail.value);
+      }
+    };
+    window.addEventListener(EVENT, onChange);
+    return () => window.removeEventListener(EVENT, onChange);
+  }, []);
+  const setOrient = (o: WorkspaceOrientation) => {
+    setOrientState(o);
+    write(KEYS.workspaceOrientation, o);
+  };
+  const toggle = () => setOrient(orient === 'horizontal' ? 'vertical' : 'horizontal');
+  return { orientation: orient, setOrientation: setOrient, toggle } as const;
 }

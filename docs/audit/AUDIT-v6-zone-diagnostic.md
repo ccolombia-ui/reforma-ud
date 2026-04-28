@@ -1,10 +1,16 @@
 ---
 kd_id: audit/v6-zone-diagnostic
-kd_version: 1.0.0
+kd_version: 1.1.0
 kd_date: 2026-04-27
-kd_status: draft
+kd_status: closed
 kd_supersedes: [audit/v5.0-multi-pane-workspace, audit/usability-gaps-20]
 ---
+
+> **STATUS v1.1.0 · 2026-04-27**: Sprint v6 completado · 13 de 15 gaps cerrados.
+> Pendientes diferidos a v6.5: G-SBL-03 (drag-reorder + new-doc inline · requiere
+> API server-side para git-write) y G-SVC-05 (GitHub API real para Evolución ·
+> requiere auth Octokit + caché). Ambos son features de "operación" y no
+> bloquean uso del MVP.
 
 # AUDIT v6 — Diagnóstico por Zonas + SOTA 2026
 

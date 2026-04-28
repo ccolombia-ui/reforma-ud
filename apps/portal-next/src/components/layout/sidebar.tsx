@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles, Atom, X } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { canonicPaper, concepto } from '#site/content';
+import { canonicPaper, concepto, community } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
 import { cn } from '@/lib/utils';
@@ -43,6 +43,16 @@ function SectionToggle({
       const v = localStorage.getItem(storageKey);
       if (v === 'false') setOpen(false);
     } catch {}
+    // v6.3 G-SBL-04 · escuchar collapse-all/expand-all globales del sidebar
+    function onBulk(e: Event) {
+      const detail = (e as CustomEvent<{ open: boolean }>).detail;
+      if (typeof detail?.open === 'boolean') {
+        setOpen(detail.open);
+        try { localStorage.setItem(storageKey, String(detail.open)); } catch {}
+      }
+    }
+    window.addEventListener('reforma-ud:sidebar-bulk-toggle', onBulk);
+    return () => window.removeEventListener('reforma-ud:sidebar-bulk-toggle', onBulk);
   }, [storageKey]);
 
   function handleToggle() {
@@ -483,6 +493,48 @@ export function Sidebar() {
   ), []);
   const [filter, setFilter] = useState('');
 
+  // v6.3 G-SBL-01 · Recientes (top 5 visitados con title resuelto).
+  const [recents, setRecents] = useState<Array<{ path: string; label: string }>>([]);
+  useEffect(() => {
+    if (!pathname || pathname === '/') return;
+    // Ignorar sub-rutas (biblioteca/grafo/index) — solo trackeamos docs reales
+    const isDocRoute =
+      /^\/canonico\/m\d{2}\/?$/.test(pathname) ||
+      /^\/glosario\/con-/.test(pathname) ||
+      (/^\/comunidades\//.test(pathname) && !/(biblioteca|grafo)\/?$/.test(pathname));
+    if (!isDocRoute) return;
+    // Resolver label
+    let label = pathname;
+    const mMatch = pathname.match(/^\/canonico\/(m\d{2})/i);
+    if (mMatch) {
+      const p = papers.find((x) => x.id === mMatch[1].toLowerCase());
+      if (p) label = `${p.id.toUpperCase()} · ${p.title}`;
+    } else if (pathname.startsWith('/glosario/')) {
+      const cid = pathname.replace('/glosario/', '').replace(/\/$/, '');
+      const c = conceptos.find((x) => x.id === cid);
+      if (c) label = c.skos_prefLabel ?? c.kd_title;
+    } else if (pathname.startsWith('/comunidades/')) {
+      const cleaned = pathname.replace(/^\//, '').replace(/\/$/, '');
+      const cop = community.find((x) => x.slug === cleaned);
+      if (cop) label = cop.shortName ?? cop.name;
+    }
+    try {
+      const raw = localStorage.getItem('reforma-ud:recents');
+      const stack: Array<{ path: string; label: string }> = raw ? JSON.parse(raw) : [];
+      const filtered = stack.filter((x) => x.path !== pathname);
+      const next = [{ path: pathname, label }, ...filtered].slice(0, 5);
+      localStorage.setItem('reforma-ud:recents', JSON.stringify(next));
+      setRecents(next);
+    } catch { /* ignore storage errors */ }
+  }, [pathname, papers, conceptos]);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('reforma-ud:recents');
+      if (raw) setRecents(JSON.parse(raw));
+    } catch { /* ignore */ }
+  }, []);
+
   // collapsed: barra estrecha con icons clave + opciones
   if (collapsed) {
     const NavIcon = ({ href, label, Icon, isActive }: { href: string; label: string; Icon: typeof Home; isActive: boolean }) => (
@@ -565,6 +617,28 @@ export function Sidebar() {
 
       {/* Navegación principal */}
       <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-1.5 py-2 text-sm">
+        {/* v6.3 G-SBL-01 · Recientes (top 5 docs visitados) */}
+        {recents.length > 0 && (
+          <SectionToggle id="recents" emoji="🕒" title="Recientes">
+            <ul className="space-y-0.5">
+              {recents.map((r) => (
+                <li key={r.path}>
+                  <Link
+                    href={r.path}
+                    className={cn(
+                      'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
+                      pathname === r.path && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+                    )}
+                    title={r.label}
+                  >
+                    <span className="truncate">{r.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </SectionToggle>
+        )}
+
         <SectionToggle id="canonico" emoji="📚" title="Biblioteca reforma·ud">
           {/* v5.0x · Items directos bajo el SectionToggle root (sin sub-header
               "Biblioteca" intermedio). Orden: Grafo > Glosario > Reforma Vinculante. */}
@@ -597,9 +671,31 @@ export function Sidebar() {
         </SectionToggle>
       </div>
 
+      {/* v6.3 G-SBL-04 · botones collapse-all / expand-all */}
+      <div className="border-t border-sidebar-border px-2 py-1 flex items-center gap-1">
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new CustomEvent('reforma-ud:sidebar-bulk-toggle', { detail: { open: false } }))}
+          title="Colapsar todas las secciones"
+          className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] text-muted-foreground hover:bg-sidebar-accent hover:text-foreground"
+        >
+          <ChevronDown className="h-3 w-3 -rotate-90" />
+          Colapsar todo
+        </button>
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new CustomEvent('reforma-ud:sidebar-bulk-toggle', { detail: { open: true } }))}
+          title="Expandir todas las secciones"
+          className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] text-muted-foreground hover:bg-sidebar-accent hover:text-foreground"
+        >
+          <ChevronDown className="h-3 w-3" />
+          Expandir
+        </button>
+      </div>
+
       <div className="border-t border-sidebar-border px-3 py-1.5 text-[9px] text-muted-foreground/70 flex items-center justify-between">
         <span className="font-mono">CSU 04/2025</span>
-        <span>v3.2 · CC BY-SA 4.0</span>
+        <span>v6.0 · CC BY-SA 4.0</span>
       </div>
     </SidebarResizableNav>
   );

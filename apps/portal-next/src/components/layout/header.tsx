@@ -2,18 +2,20 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PanelLeft, PanelRight, ChevronRight, Search, Menu } from 'lucide-react';
+import { PanelLeft, PanelRight, ChevronRight, Search, Menu, Plus, Bell, Maximize2, Minimize2, FileText, Pin, Share2, Rows3, Columns3 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { ProfileMenu } from '@/components/layout/profile-menu';
-import { useLeftCollapsed, useRightPanel } from '@/lib/ui-state';
+import { useLeftCollapsed, useRightPanel, useFocusMode, useWorkspaceOrientation } from '@/lib/ui-state';
+import { canonicPaper, concepto } from '#site/content';
 import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
 
 const SEGMENT_LABELS: Record<string, string> = {
-  canonico: 'Canónico',
+  canonico: 'Reforma Vinculante',
   comunidades: 'Comunidades',
   gobierno: 'Gobierno',
   formacion: 'VR Formación',
@@ -28,13 +30,24 @@ const SEGMENT_LABELS: Record<string, string> = {
   direcciones: 'Direcciones',
   biblioteca: 'Biblioteca',
   grafo: 'Grafo',
+  glosario: 'Glosario',
   about: 'Acerca de',
 };
 
+// v6.1 G-HDR-01 · resolve seg → label rico (M## → "M03 Estándares
+// Internacionales", con-* → SKOS prefLabel del concepto).
 function prettify(seg: string): string {
   if (SEGMENT_LABELS[seg]) return SEGMENT_LABELS[seg];
-  if (/^m\d{2}$/i.test(seg)) return seg.toUpperCase();
-  return seg.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  if (/^m\d{2}$/i.test(seg)) {
+    const p = canonicPaper.find((x) => x.id === seg.toLowerCase());
+    if (p) return `${seg.toUpperCase()} · ${p.title}`;
+    return seg.toUpperCase();
+  }
+  if (/^con-/.test(seg)) {
+    const c = concepto.find((x) => x.id === seg);
+    if (c) return c.skos_prefLabel ?? c.kd_title;
+  }
+  return seg.replace(/-/g, ' ').replace(/\b\w/g, (ch) => ch.toUpperCase());
 }
 
 function MobileSidebarContent() {
@@ -61,6 +74,8 @@ export function Header() {
   const pathname = usePathname();
   const [leftCollapsed, toggleLeft] = useLeftCollapsed();
   const { collapsed: rightCollapsed, toggle: toggleRight } = useRightPanel();
+  const [focusMode, toggleFocusMode] = useFocusMode();
+  const { orientation, toggle: toggleOrientation } = useWorkspaceOrientation();
   const [isMac, setIsMac] = useState(false);
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
@@ -68,6 +83,22 @@ export function Header() {
     }
   }, []);
   const cmdKey = isMac ? '⌘' : 'Ctrl';
+
+  // v6.1 G-WS-02 · F11 toggle focus mode (oculta ambas barras).
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'F11') {
+        const target = e.target as HTMLElement | null;
+        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
+        e.preventDefault();
+        toggleFocusMode();
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [toggleFocusMode]);
+
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   const crumbs = useMemo(() => {
     if (!pathname || pathname === '/') return [];
@@ -169,6 +200,88 @@ export function Header() {
           </TooltipTrigger>
           <TooltipContent side="bottom">Paleta de comandos · {cmdKey}+K</TooltipContent>
         </Tooltip>
+        {/* v6.1 G-HDR-02 · Quick actions dropdown */}
+        <DropdownMenu>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" aria-label="Acciones rápidas" className="shrink-0">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Acciones rápidas</TooltipContent>
+          </Tooltip>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel className="text-[10px] uppercase tracking-wide text-muted-foreground">
+              Acciones rápidas
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <a
+                href={`mailto:ccmaderas@udistrital.edu.co?subject=Nueva nota — comunidad UDFJC&body=Comunidad/Programa:%0A%0AT%C3%ADtulo:%0A%0AContenido:%0A`}
+              >
+                <FileText className="mr-2 h-3.5 w-3.5" />
+                Proponer nota nueva
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+                if (typeof navigator !== 'undefined' && navigator.clipboard && shareUrl) {
+                  navigator.clipboard.writeText(shareUrl).catch(() => {});
+                }
+              }}
+            >
+              <Share2 className="mr-2 h-3.5 w-3.5" />
+              Copiar URL para compartir
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/canonico">
+                <Pin className="mr-2 h-3.5 w-3.5" />
+                Ir al dashboard
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onSelect={(e) => { e.preventDefault(); toggleFocusMode(); }}
+              className="text-xs"
+            >
+              {focusMode ? <Minimize2 className="mr-2 h-3.5 w-3.5" /> : <Maximize2 className="mr-2 h-3.5 w-3.5" />}
+              {focusMode ? 'Salir de modo enfocado' : 'Modo enfocado'}
+              <kbd className="ml-auto rounded border bg-muted px-1 py-0.5 text-[9px] font-mono">F11</kbd>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* v6.1 G-HDR-03 · Notif/inbox placeholder (zero-state) */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon" aria-label="Notificaciones" className="relative shrink-0" disabled>
+              <Bell className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Notificaciones · próximamente</TooltipContent>
+        </Tooltip>
+
+        {/* v6.2 G-WS-01 · Toggle orientación del workspace (split horizontal/vertical) */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleOrientation}
+              aria-label={orientation === 'horizontal' ? 'Cambiar a split vertical' : 'Cambiar a split horizontal'}
+              className="hidden sm:inline-flex shrink-0"
+            >
+              {orientation === 'horizontal' ? <Columns3 className="h-4 w-4" /> : <Rows3 className="h-4 w-4" />}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            {orientation === 'horizontal' ? 'Split vertical (panes apilados)' : 'Split horizontal (panes lado a lado)'}
+          </TooltipContent>
+        </Tooltip>
+
         {/* v5.0g · Botón Code2/GitHub removido del header (usuario lo
             consideró ruido). El repo sigue accesible via cmd-K → "github". */}
         <Tooltip>
