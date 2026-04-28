@@ -459,13 +459,35 @@ textarea:focus-visible,
 }
 
 /* ==========================================================================
+   v7.4 G11 — heading-flash · feedback al click-to-copy URL
+   ========================================================================== */
+@keyframes heading-flash-anim {
+  0% { background-color: hsl(var(--primary) / 0.25); }
+  100% { background-color: transparent; }
+}
+.heading-flash {
+  animation: heading-flash-anim 0.8s ease-out;
+  border-radius: 4px;
+}
+h1[id], h2[id], h3[id], h4[id] {
+  cursor: pointer;
+}
+h1[id]:hover::after, h2[id]:hover::after, h3[id]:hover::after, h4[id]:hover::after {
+  content: ' 🔗';
+  font-size: 0.6em;
+  opacity: 0.5;
+  margin-left: 0.4em;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
    G16 (v4.2) — Print stylesheet · papers limpios + selectors estrictos
    ========================================================================== */
 @media print {
   /* Reset agresivo — todo en negro sobre blanco */
   html, body { background: white !important; color: black !important; }
 
-  /* Ocultar UI chrome */
+  /* Ocultar UI chrome (G07 v7.4 · ampliado) */
   nav[data-sidebar],
   aside[data-sidebar],
   aside.right-panel,
@@ -473,7 +495,16 @@ textarea:focus-visible,
   header,
   footer,
   .no-print,
-  [data-no-print] {
+  [data-no-print],
+  /* v7.2 — giscus widget */
+  iframe.giscus-frame,
+  iframe[src*="giscus.app"],
+  section#discusiones,
+  /* v7.3 — tabs sticky de comunidad */
+  nav[aria-label="Secciones de la comunidad"],
+  /* Botones de acción del workspace */
+  button[aria-label*="copia"],
+  button[aria-label*="hover-card"] {
     display: none !important;
     visibility: hidden !important;
   }
@@ -532,6 +563,20 @@ textarea:focus-visible,
   /* Evitar saltos de página en figuras y tablas */
   figure, table, pre, .callout { page-break-inside: avoid; break-inside: avoid; }
   h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+
+  /* v7.4 G07 — page-break-before en secciones mayores de comunidad */
+  section#misiones-colectivas,
+  section#glosario,
+  section#noticias,
+  section#roles {
+    page-break-before: auto;
+    break-before: auto;
+  }
+
+  /* v7.4 G07 — quitar hover/cursor en headings durante print */
+  h1[id], h2[id], h3[id], h4[id] { cursor: auto; }
+  h1[id]:hover::after, h2[id]:hover::after,
+  h3[id]:hover::after, h4[id]:hover::after { content: none; }
 
   /* Callouts visibles en print */
   .callout {

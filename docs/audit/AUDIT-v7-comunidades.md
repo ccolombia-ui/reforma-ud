@@ -253,10 +253,10 @@ Esto permite que cada comunidad tenga "su propio glosario" sin duplicar contenid
 - Scroll-spy con IntersectionObserver
 - Anchor URLs estables: `/comunidades/gobierno#misiones`
 
-### v7.4 — Usability gaps (subset AUDIT-usability-gaps-20)
-- G02 skeleton states durante load
-- G11 deep-link al heading (hash navigation con scroll suave)
-- G07 print improvements
+### v7.4 — Usability gaps (CERRADO 2026-04-28)
+- ✅ **G02 skeleton states**: loading.tsx para `/glosario/[conceptoId]` y `/comunidades/[[...slug]]` (los de canonico ya existían)
+- ✅ **G11 deep-link al heading**: componente `<HeadingScrollSpy>` cliente que (a) hace smooth-scroll al hash al montar con retry hasta 20× para esperar contenido async (mermaid/MDX), (b) intercepta clicks en `a[href^="#"]` para smooth-scroll + `history.replaceState`, (c) click en heading copia URL al clipboard con flash visual `.heading-flash`. Aplicado a paper y concepto.
+- ✅ **G07 print improvements**: `@media print` ampliado para ocultar giscus iframe, tabs sticky de comunidad, botones de hover-card. CSS `cursor: pointer` y `🔗` hover en headings se desactivan durante print. `page-break-before: auto` en secciones mayores `#misiones-colectivas`, `#glosario`, `#noticias`, `#roles`.
 
 ### v7.5 — A11y AAA + Telemetry
 - G09 a11y AAA compliance

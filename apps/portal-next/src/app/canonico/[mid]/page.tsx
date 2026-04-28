@@ -11,6 +11,7 @@ import { ComprehensionInline } from '@/components/biblioteca/comprehension-inlin
 import { PresaberesCallout } from '@/components/biblioteca/presaberes-callout';
 import { DeliberacionPanel } from '@/components/biblioteca/deliberacion-panel';
 import { Discusiones } from '@/components/comunidad/discusiones';
+import { HeadingScrollSpy } from '@/components/heading-scroll-spy';
 import { ComparativeSplit, CompareButton } from '@/components/workspace/workspace-shell';
 import { InfographicQuickstart, InfographicBadge } from '@/components/biblioteca/infographic-quickstart';
 import { PrintButton } from '@/components/print-button';
@@ -159,6 +160,9 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
 
           {/* v7.2 — Discusiones GitHub Discussions (giscus) por paper */}
           <Discusiones term={`paper:${mid}`} />
+
+          {/* v7.4 G11 — deep-link al heading + click-to-copy */}
+          <HeadingScrollSpy />
 
           {/* Backlinks */}
           {backlinks.length > 0 && (
