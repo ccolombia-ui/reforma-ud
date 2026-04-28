@@ -79,19 +79,14 @@ pnpm test:sync-vault     # TDD — 16 tests valida prereqs + integridad post-syn
 | Paso | Script | Origen → Destino |
 |---|---|---|
 | [1] Papers M01-M12 | `import-book-sections.mjs` | vault `01-secciones/sec-MI12-*.md` → `content/canonico/m##.mdx` |
-| [2] Glosario | `sync-glosario.mjs` (corre en `c:/tmp/ghs-src/`) | vault `00-glosoario-universal/T1-T7/con-*.md` → `content/glosario/` |
+| [2] Glosario | `sync-glosario.mjs` | vault `00-glosoario-universal/T1-T7/con-*.md` → `content/glosario/` |
 | [3] Fix YAML | `fix-orphan-indented.mjs` | workaround post-sync: limpia líneas YAML huérfanas en `content/glosario/` |
 
-### Prerrequisitos únicos (setup una sola vez)
+### Prerrequisito único
 
-1. **Google Drive Stream** montado y sincronizado en `H:\`
-2. **Host sync-glosario** — clonar `_gold-html-static` en ruta corta:
-   ```bash
-   mkdir c:/tmp/ghs-src
-   # copiar sync-glosario.mjs + package.json allí
-   cd c:/tmp/ghs-src && npm install
-   ```
-   Ver guía completa: [`docs/guide-obsidian-sync-buttons.md`](docs/guide-obsidian-sync-buttons.md)
+**Google Drive Stream** montado en `H:\` con la carpeta sincronizada. Nada más — `sync-glosario.mjs` vive en `scripts/` y solo usa módulos built-in de Node, sin dependencias externas.
+
+Ver guía de botones Obsidian: [`docs/guide-obsidian-sync-buttons.md`](docs/guide-obsidian-sync-buttons.md)
 
 ### Flags disponibles
 

@@ -56,19 +56,12 @@ El orquestador `scripts/sync-vault.mjs` ejecuta 3 pasos en orden:
 | Paso | Script | Qué hace |
 |---|---|---|
 | [1] `import-book-sections.mjs` | `node scripts/import-book-sections.mjs` | Vault `01-secciones/sec-MI12-*.md` → `content/canonico/m##.mdx`; limpia wikilinks, migra `glo-*→con-*`, resuelve links relativos al vault |
-| [2] `sync-glosario.mjs` | corre en `c:/tmp/ghs-src/` con env `GHS_CHAPTER` + `GHS_PORTAL_DEST` | Vault `00-glosoario-universal/T1-T7/con-*.md` → `content/glosario/`; filtra `kd_status: approved` por defecto |
+| [2] `sync-glosario.mjs` | `node scripts/sync-glosario.mjs` con env `GHS_CHAPTER` + `GHS_PORTAL_DEST` | Vault `00-glosoario-universal/T1-T7/con-*.md` → `content/glosario/`; filtra `kd_status: approved` por defecto |
 | [3] `fix-orphan-indented.mjs` | `node scripts/fix-orphan-indented.mjs` | Post-fix YAML: elimina líneas indentadas sin clave padre válida (workaround del paso [2]); ~42 archivos × ~367 líneas |
 
-#### Prerrequisitos (setup una sola vez)
+#### Prerrequisito único
 
-1. **Google Drive Stream** montado en `H:\` con carpeta del capítulo libro sincronizada
-2. **Host sync-glosario** en ruta corta (evita problemas con espacios en path):
-   ```bash
-   # setup único — ver docs/guide-obsidian-sync-buttons.md para detalle completo
-   mkdir c:/tmp/ghs-src
-   # copiar sync-glosario.mjs + package.json allí, luego:
-   cd c:/tmp/ghs-src && npm install
-   ```
+**Google Drive Stream** montado en `H:\` con la carpeta del capítulo libro sincronizada. Nada más — `sync-glosario.mjs` vive en `scripts/` junto al resto y solo usa módulos built-in de Node.
 
 #### Flujo completo post-sync
 
@@ -96,7 +89,7 @@ No necesitas exportarlas manualmente; `sync-vault.mjs` las inyecta automáticame
 
 | Suite | Tests | Qué valida |
 |---|---|---|
-| Prerequisites | 3 | Vault paths accesibles, `c:/tmp/ghs-src/node_modules` presente |
+| Prerequisites | 3 | Vault paths accesibles, `scripts/sync-glosario.mjs` presente |
 | Papers | 3 | Conteo M01-M12 (≥10), frontmatter `kd_id`+`title`, no wikilinks residuales |
 | Glosario | 4 | Conteo conceptos (≥100), frontmatter `kd_id`+`kd_title`, status approved, no orphan-indented |
 | Idempotency | 3 | Dry-run no modifica archivos (mtime invariante) |

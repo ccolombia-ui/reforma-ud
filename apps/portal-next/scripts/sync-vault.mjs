@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 /**
  * sync-vault.mjs — orquestador único vault → portal.
- * v1.0.0 · 2026-04-28
+ * v1.1.0 · 2026-04-28
  *
  * Ejecuta en orden los 3 pasos del sync vault Obsidian → portal Next.js:
  *   [1] import-book-sections.mjs    · papers M01-M12 (vault 01-secciones/ → content/canonico/)
  *   [2] sync-glosario.mjs           · 159+ conceptos (vault 00-glosoario/T1-T7/ → content/glosario/)
- *                                     CORRE EN c:/tmp/ghs-src/ (deps npm allá por ruta corta)
+ *                                     Corre desde scripts/ — sin deps externas, solo Node built-ins
  *   [3] fix-orphan-indented.mjs     · workaround YAML huérfanos del paso [2]
  *
  * Prerequisites:
  *   - Vault accesible en H:\... (Google Drive Stream)
- *   - c:/tmp/ghs-src/ con node_modules (ver _gold-html-static/_meta/_README.md setup único)
+ *   - No se necesita c:/tmp/ ni nada fuera de este repo
  *
  * Flags:
  *   --dry-run         · no escribe archivos (sólo reporte de paso [2])
@@ -26,14 +26,14 @@
  *   node scripts/sync-vault.mjs --skip-papers
  */
 
-import { execSync, spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORTAL_ROOT = path.resolve(__dirname, '..');                 // apps/portal-next/
-const GHS_SRC = 'c:/tmp/ghs-src';                                  // sync-glosario host con node_modules
+const SCRIPTS_DIR = __dirname;                                      // apps/portal-next/scripts/
 const VAULT_CHAPTER = 'H:\\.shortcut-targets-by-id\\1ondN7t4ewb2w-aN6iNesoT8yJGVqKpR2\\daath-zen\\R002-daath-cortex\\20--udfjc-reforma-vinculante\\3-diseño-capitulo-libro';
 const PORTAL_GLOSARIO = path.join(PORTAL_ROOT, 'content', 'glosario');
 
@@ -79,14 +79,9 @@ function checkPrerequisites() {
       hint: 'Verifica vault structure',
     },
     {
-      label: `Host sync-glosario: ${GHS_SRC}/`,
-      pass: SKIP_GLOSARIO || fs.existsSync(GHS_SRC),
-      hint: 'Setup único: ver _gold-html-static/_meta/_README.md §"Setup único"',
-    },
-    {
-      label: `Deps instaladas: ${GHS_SRC}/node_modules/`,
-      pass: SKIP_GLOSARIO || fs.existsSync(path.join(GHS_SRC, 'node_modules')),
-      hint: `Ejecutar: cd ${GHS_SRC} && npm install`,
+      label: `Script sync-glosario: scripts/sync-glosario.mjs`,
+      pass: fs.existsSync(path.join(SCRIPTS_DIR, 'sync-glosario.mjs')),
+      hint: 'Archivo faltante en el repo — git status',
     },
     {
       label: `Portal dest: ${path.relative(process.cwd(), PORTAL_GLOSARIO)}/`,
@@ -123,7 +118,7 @@ function runStep(label, command, options = {}) {
 }
 
 // ── main ──────────────────────────────────────────────────────────────────
-console.log(`\n  reforma·ud · sync vault → portal · v1.0.0`);
+console.log(`\n  reforma·ud · sync vault → portal · v1.1.0`);
 console.log(`  Modo: ${DRY_RUN ? 'DRY-RUN (no escribe paso [2])' : 'WRITE'} · Filter: ${FILTER}`);
 
 checkPrerequisites();
@@ -136,16 +131,15 @@ if (!SKIP_PAPERS) {
   console.log(`\n  STEP 1/3 · Papers · SKIPPED (--skip-papers)`);
 }
 
-// STEP [2] — sync-glosario.mjs (corre en c:/tmp/ghs-src)
+// STEP [2] — sync-glosario.mjs (corre desde scripts/ — sin deps externas)
 if (!SKIP_GLOSARIO) {
   step(2, `Sync glosario (sync-glosario.mjs · filter=${FILTER}${DRY_RUN ? ' · DRY-RUN' : ''})`);
   const glosArgs = [
-    'sync-glosario.mjs',
+    'scripts/sync-glosario.mjs',
     DRY_RUN ? '--dry-run' : '',
     '--filter', FILTER,
   ].filter(Boolean).join(' ');
   runStep('glosario sync', `node ${glosArgs}`, {
-    cwd: GHS_SRC,
     env: {
       GHS_CHAPTER: VAULT_CHAPTER,
       GHS_PORTAL_DEST: PORTAL_GLOSARIO,

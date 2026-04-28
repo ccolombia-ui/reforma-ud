@@ -17,31 +17,9 @@ Instala el plugin comunidad **"Shell commands"** en Obsidian:
 2. Busca **"Shell commands"** (autor: Tapio Vierros)
 3. Instala y activa
 
-### 2 · Host sync-glosario (`c:/tmp/ghs-src/`)
+### 2 · No se necesita nada fuera del repo
 
-El paso [2] del sync corre `sync-glosario.mjs` desde `c:/tmp/ghs-src/` (ruta corta, sin espacios). Este directorio debe tener sus dependencias instaladas.
-
-**Setup único:**
-
-```bash
-# En terminal — solo la primera vez
-mkdir c:/tmp/ghs-src
-
-# Copiar los archivos del motor sync-glosario desde el vault:
-# Origen: H:\...\3-diseño-capitulo-libro\_gold-html-static\src\
-# Archivos necesarios: sync-glosario.mjs, package.json
-# (copiarlos manualmente o con el script a continuación)
-
-cd c:/tmp/ghs-src
-npm install
-```
-
-> Si `sync-glosario.mjs` aún no está en `c:/tmp/ghs-src/`, ejecuta primero el sync manual una vez:
-> ```bash
-> cd c:/antigravity/aleia-reforma-ud/apps/portal-next
-> node scripts/sync-vault.mjs --skip-papers   # verifica que falla en paso [2]
-> ```
-> Esto confirma la ruta; luego copia los archivos manualmente.
+`sync-glosario.mjs` vive en `apps/portal-next/scripts/` junto al resto de scripts y solo usa módulos built-in de Node (`node:fs`, `node:path`). No requiere `npm install` ni directorio temporal. Todo está en `aleia-reforma-ud`.
 
 ### 3 · Google Drive Stream montado
 
