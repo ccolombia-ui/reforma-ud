@@ -25,6 +25,8 @@ import Link from 'next/link';
 import { useCallback } from 'react';
 import { usePanesState } from '@/lib/panes-state';
 import { useRightPanel, useFocusedPane } from '@/lib/ui-state';
+import { NoticiasInforme } from '@/components/biblioteca/noticias-informe';
+import { PublicarInformeButton } from '@/components/biblioteca/publicar-informe-button';
 
 // v5.0s · pregunta narrativa por paper (storytelling M01→M12).
 // Source mental-model: M03=Estándares (business), M08=Framework (modeling),
@@ -310,7 +312,11 @@ export function InfografiaCanonico() {
         <div className="kpi"><strong>Cobertura BPA:</strong> Aalto · Twente · MIT · Stanford</div>
       </div>
 
-      {/* CTA · v5.0q activa right panel sub-tab Grafo (no navega afuera) */}
+      {/* v7.5 — Noticias e investigaciones recientes (feed + mocks demo) */}
+      <NoticiasInforme limit={6} />
+
+      {/* CTA · v5.0q activa right panel sub-tab Grafo (no navega afuera)
+          v7.5 — añadido botón Publicar informe (PDF + share) */}
       <div className="cta">
         <button type="button" onClick={openGrafoInRightPanel} className="cta-btn">
           <Network style={{ width: 16, height: 16 }} />
@@ -320,6 +326,7 @@ export function InfografiaCanonico() {
           <ExternalLink style={{ width: 12, height: 12 }} />
           Vista completa
         </Link>
+        <PublicarInformeButton />
       </div>
 
       {/* FOOTER */}
