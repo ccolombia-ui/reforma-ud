@@ -68,7 +68,7 @@ export function ConexionesTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
         {doc ? (
           <div className="h-[50vh] min-h-[280px]">
             {/* v5.0o · Grafo local 1-hop · activo para paper, concepto, note. */}
-            <PaperLocalGraph paperId={doc.id} hops={1} />
+            <PaperLocalGraph nodeId={doc.id} hops={1} />
           </div>
         ) : (
           <div className="h-[55vh] min-h-[320px]">

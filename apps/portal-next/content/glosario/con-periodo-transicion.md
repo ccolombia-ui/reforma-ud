@@ -2,20 +2,12 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:periodo-transicion
 kd_title: "Período de Transición UDFJC (Art. 96 ACU-004-25) — máximo 4 años"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_updated: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-00, sec-MI12-01, sec-MI12-12]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Período de Transición UDFJC"
 
 skos_prefLabel: "Período de Transición (UDFJC, ACU-004-25)"
 skos_altLabel: ["Transición UDFJC 2025-2029", "Period of Transition", "Régimen de Transición"]
-skos_hiddenLabel: ["periodo-transicion", "transicion"]
 skos_definition: "Tiempo comprendido entre la fecha de publicación del ACU-004-25 (2025-05-05) y la fecha en la cual se terminen de ejecutar las actividades relacionadas con la organización, la estructuración y la puesta en funcionamiento de los órganos e instancias de dirección y participación, así como las unidades académicas y administrativas que darán soporte a la nueva organización de la Universidad. Período máximo: **cuatro (4) años** (Art. 96 §I), es decir hasta 2029-05-05. Durante el período coexisten estructuras heredadas del Acuerdo 003/1997 (vigencia transitoria, Art. 99) y estructuras nuevas (en construcción)."
 skos_scopeNote: "El Período de Transición NO es una suspensión normativa — es un plazo de implementación gradual. Los principios (Art. 5), la misión (Art. 4), las funciones misionales (Art. 7) y los órganos colegiados ya creados rigen desde 2025-05-06. La transición afecta principalmente la materialización física de Escuelas, Institutos, Centros y la expedición de los 7 estatutos derivados (Art. 98)."
 skos_example: "El cronograma de transición incluye: 45 días Plan de Implementación; 3 meses sensibilización; 6 meses Estatuto Académico (Art. 99); 1 año transición unidades existentes; 2 años conformación órganos electos; 4 años implementación total."
@@ -29,50 +21,33 @@ iso_subject_field: "Régimen de transición / Implementación de reforma estatut
 iso_term_status: preferred
 iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 96 (período general); Arts. 97-109 (cronograma específico)"
 
-align_schema_type: DefinedTerm
-concept_subtype: DEFINITION
 pasteur_quadrant: EDISON
-pasteur_axis_use: 1.0
-pasteur_axis_knowledge: 0.3
 
-concepto_capabilities: [NORMATIVE]
 
-concepto_facet_normative:
-  norm_legal_ref: "[[con-acu-004-25]]"
-  norm_article: "Art. 96 (período general); Art. 97-109 (cronograma específico)"
-  norm_jurisdiction: "Acuerdo Superior UDFJC"
-  norm_effective_date: "2025-05-06"
-  norm_legal_force: BINDING
-  norm_compliance_scope: "Toda implementación física de reforma UDFJC entre 2025-05-05 y 2029-05-05"
 
-applicable_domain: "UDFJC, vigente 2025-05-05 → 2029-05-05"
-assumptions:
-  - "Todos los hitos del cronograma se cumplen en plazos legales"
-  - "Los principios y la misión rigen desde 2025-05-06 sin transitoriedad"
-breaks_at: ["Si los plazos del Art. 98 se incumplen sistemáticamente"]
-extends_to: "[[con-plan-implementacion]] · [[con-vigencia-transitoria-estatutos-previos]]"
 
-recorded_at: "2026-04-26"
-valid_from: "2025-05-06"
-valid_to: "2029-05-05"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
+
+
+rol_seleccionado: docente-director
 
 "@type": DefinedTerm
 
-tupla__relations:
-  - rel_id: rel-pt-defined-by-acu00425
-    rel_nombre: norm_implements
-    rel_direccion: pre
-    rel_target: "[[con-acu-004-25]]"
-    rel_frame: normativo
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 3
 
-tags: [glosario-universal, concepto-normativo, periodo-transicion, art-96, m00-base, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-normativo, layer-disenador]
+tags:
+  - glosario-universal
+  - concepto-normativo
+  - t1-normativo
+  - periodo-transicion
+  - art-96
+  - regimen-transicion
+  - m00-base
+  - audit-v2-2
+  - tpl-v2
 ---
+
 
 # Período de Transición (Art. 96 ACU-004-25)
 

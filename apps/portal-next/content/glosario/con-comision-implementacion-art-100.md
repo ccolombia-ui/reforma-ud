@@ -37,12 +37,12 @@ pasteur_axis_knowledge: 0.3
 concepto_capabilities: [NORMATIVE]
 
 concepto_facet_normative:
-  norm_legal_ref: "[[con-acu-004-25]]"
-  norm_article: "Art. 100 (Comisión de Implementación)"
-  norm_jurisdiction: "Acuerdo Superior UDFJC"
-  norm_effective_date: "2025-05-06"
-  norm_legal_force: BINDING
-  norm_compliance_scope: "Coordinación supervisora de implementación reforma 2025-2029"
+norm_legal_ref: "[[con-acu-004-25]]"
+norm_article: "Art. 100 (Comisión de Implementación)"
+norm_jurisdiction: "Acuerdo Superior UDFJC"
+norm_effective_date: "2025-05-06"
+norm_legal_force: BINDING
+norm_compliance_scope: "Coordinación supervisora de implementación reforma 2025-2029"
 
 applicable_domain: "Período de Transición UDFJC 2025-05-06 a 2029-05-05"
 assumptions: ["La Comisión se conforma en plazo razonable"]

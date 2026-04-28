@@ -2,19 +2,12 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:deber-normativo
 kd_title: "Deber Normativo (vs opción) — la reforma como obligación legal verificable"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-00, sec-MI12-01]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Deber Normativo"
 
 skos_prefLabel: "Deber Normativo (vs opción)"
 skos_altLabel: ["Mandato vinculante", "Obligación legal IES", "Compulsión normativa"]
-skos_hiddenLabel: ["deber-normativo", "deber-vs-opcion"]
 skos_definition: "Categoría conceptual propietaria UDFJC (Madera Sepúlveda, 2026, M01) que distingue entre obligación normativa verificable e interpretación institucional discrecional. El Art. 6 Ley 30/1992 convierte la 'solución de necesidades nacionales' en deber legal — no en aspiración. Cuando una IES tiene deber normativo, su incumplimiento es verificable jurídicamente y susceptible de acciones de cumplimiento. La distinción es operativamente crítica para la reforma UDFJC: la reforma del ACU-004-25 NO es opción discrecional sino DEBER NORMATIVO derivado de cadena multinivel vinculante."
 skos_scopeNote: "El concepto opera como criterio de validación argumentativa: cualquier afirmación sobre la reforma debe poder responder '¿es esto deber normativo o es interpretación discrecional?'. Si es deber, su omisión es violación legal. Si es interpretación, admite debate académico-político pero no incumplimiento."
 skos_example: "Verificación deber normativo: '¿Debe UDFJC alinearse con las 5 misiones PIIOM?'. Cadena: Const Art. 69 → Ley 30 Art. 6 → CONPES 4069 → PIIOM. Respuesta: SÍ, es DEBER NORMATIVO (no opción). Su omisión viola Ley 30 Art. 6."
@@ -28,45 +21,30 @@ iso_subject_field: "Análisis jurídico-institucional / Reforma universitaria / 
 iso_term_status: preferred
 iso_standardized_by: "Madera Sepúlveda (2026) — elaboración propia M01 §0, §2.3, §4.3"
 
-align_schema_type: DefinedTerm
-concept_subtype: DEFINITION
 pasteur_quadrant: EDISON
-pasteur_axis_use: 1.0
-pasteur_axis_knowledge: 0.5
 
-concepto_capabilities: [NEON]
 
-concepto_facet_neon:
-  neon_scenario: S5
-  neon_alignment_strategy: DERIVED_FROM
-  neon_reuse_source: "Síntesis de [[con-cadena-normativa-multinivel]] + tradición jurídica deber/aspiración + ACU-004-25"
-  neon_alignment_confidence: 0.85
 
-applicable_domain: "Análisis crítico de cumplimiento institucional UDFJC + argumentación jurídica reforma"
-assumptions: ["La cadena normativa multinivel produce deberes vinculantes verificables"]
-breaks_at: ["Si la cadena se rompe (ej. reforma Ley 30)"]
-extends_to: "[[con-cadena-normativa-multinivel]]"
 
-recorded_at: "2026-04-26"
-valid_from: "2025-05-06"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
+
+rol_seleccionado: docente-director
 
 "@type": DefinedTerm
 
-tupla__relations:
-  - rel_id: rel-deber-related-cadena
-    rel_nombre: skos_related
-    rel_direccion: pre
-    rel_target: "[[con-cadena-normativa-multinivel]]"
-    rel_frame: skos
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-sintesis, deber-normativo, m01-corpus, propietario-udfjc, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-neon, layer-disenador]
+tags:
+  - glosario-universal
+  - concepto-sintesis
+  - t2-academico-teorico
+  - deber-normativo
+  - m01-corpus
+  - propietario-udfjc
+  - audit-v2-2
 ---
+
 
 # Deber Normativo (vs opción)
 

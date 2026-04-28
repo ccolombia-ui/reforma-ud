@@ -2,17 +2,9 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:caba
 kd_title: "CABA — Comunidad Académica de Base UDFJC (Art. 73 ACU-004-25)"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_updated: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_supersedes: 60-glosario/con-caba (v1.1.0 previo SUPERSEDED — re-construido aquí con rigor v5.2 máximo)
-kd_transcluible_en: [sec-MI12-00, sec-MI12-01, sec-MI12-02, sec-MI12-05, sec-MI12-06, sec-MI12-07, sec-MI12-12]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "CABA — Comunidad Académica de Base"
 
 skos_prefLabel: "CABA — Comunidad Académica de Base"
 skos_altLabel:
@@ -20,7 +12,6 @@ skos_altLabel:
   - "Super-CoP UDFJC"
   - "Comunidad de Práctica transversal"
   - "Nicho transformativo (Geels)"
-skos_hiddenLabel: ["caba", "comunidad-academica-base", "comunidad-academica-basica"]
 skos_definition: "Estructura básica, dinámica y flexible de las Escuelas UDFJC, organizada de acuerdo con el interés cognitivo de los docentes desde su área específica del campo del conocimiento-saber. Todo profesor está adscrito a mínimo una CABA. Es **célula organizativa transversal**: puede atravesar una o varias Escuelas, articulando docentes-investigadores-estudiantes alrededor de un par específico de conocimiento-saber. Activa simultáneamente las seis retroalimentaciones R1-R6 del ciclo virtuoso ΩMT. Opera como **nicho transformativo** (Geels 2002) dentro del régimen Sub-N1 dominante. NO requiere decreto estatutario para existir: puede nacer como CoP informal y madurar a unidad formal con reconocimiento CSU."
 skos_scopeNote: "La CABA es el dispositivo MÁS NOVEDOSO de la nueva estructura organizativa. Articula la pluralidad epistémica del Art. 5g (Soberanía Cognitiva) en la práctica académica cotidiana. Es la materialización del 'salto cuántico Sub-N1 → N4' del corpus MI-12. NO confundir con grupo de investigación (que tiene reconocimiento Minciencias) ni con departamento (que es estructura administrativa)."
 skos_example: "La CABA 'Soberanía Energética Comunitaria' atraviesa la Escuela de Física (electromagnetismo y termodinámica), la Escuela de Ingeniería Eléctrica (sistemas de potencia) y la Escuela de Estudios Comunitarios (saberes territoriales sobre microgrids comunales). Articula docentes de las tres + estudiantes de pregrado y posgrado + investigadores con grupos Minciencias. Activa R1 (semilleros) + R2 (currículo vivo) + R3 (transferencia) + R4 (problemas reales) + R5 (egresados agentes) + R6 (gobernanza CABA)."
@@ -34,149 +25,269 @@ iso_subject_field: "Estructura académica reformada UDFJC / Comunidades de prác
 iso_term_status: preferred
 iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 73"
 
-align_schema_type: Organization
 align_dbpedia: ""
 align_wikidata: ""
 
-concept_subtype: DEFINITION
 pasteur_quadrant: PASTEUR
-pasteur_axis_use: 0.95
-pasteur_axis_knowledge: 0.9
 
-concepto_capabilities: [NORMATIVE, DDD, NEON]
 
-concepto_facet_normative:
-  norm_legal_ref: "[[con-acu-004-25]]"
-  norm_article: "Art. 73 (CABA — estructura básica, dinámica y flexible)"
-  norm_jurisdiction: "Acuerdo Superior UDFJC"
-  norm_effective_date: "2025-05-06"
-  norm_legal_force: BINDING
-  norm_compliance_scope: "Toda Escuela UDFJC; todo docente adscrito a mínimo una CABA"
-  norm_supersedes: "Concepto NUEVO en ACU-004-25; sin precedente exacto en Acuerdo CSU 003/1997 (que tenía 'grupos de investigación' pero no CABAs como células transversales obligatorias)"
 
-concepto_facet_neon:
-  neon_scenario: S5
-  neon_alignment_strategy: DERIVED_FROM
-  neon_reuse_source: "[[wenger1998cop]] Wenger (1998) Communities of Practice + [[geels2002mlp]] Geels (2002) Multi-Level Perspective + ACU-004-25"
-  neon_alignment_confidence: 0.9
-  neon_methodological_notes: "Fusión NeOn S5 de tres marcos: (a) Wenger 1998 — Communities of Practice como aprendizaje situado; (b) Geels 2002 — Multi-Level Perspective con nichos transformativos dentro de regímenes; (c) ACU-004-25 — institucionalización formal de la CABA como estructura mandatada en cada Escuela. La adopción UDFJC es propietaria — captura el aprendizaje de cómo R002 reforma vinculante materializa la CoP académica como dispositivo de cambio sistémico."
+normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+normative_locator: "ACU-004-25 Art. 73"
+normative_text: "La Comunidad Académica de Base es la estructura básica, dinámica y flexible de las escuelas, que se organiza de acuerdo con el interés cognitivo de los docentes, desde su área específica del campo de conocimiento-saber. Todo profesor está adscrito a mínimo una CABA."
+normative_authority_level: ESTATUTARIO
+derogated_by: ""
+derogates:
+    - "Concepto NUEVO en ACU-004-25 (sin precedente exacto en ACU 003/1997 — superseded el modelo departamental)"
+modification_type: ""
+chain_status: LINEAR
+conflicts_with: []
+conflict_evidence: ""
 
-concepto_facet_ddd:
-  ddd_id: "caba"
-  ddd_aggregate_root: "CABA"
-  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
-  ddd_role_in_context: "Aggregate Root del subdominio Comunidades Transversales. Atraviesa múltiples Escuelas. Encapsula identidad colectiva (campo de conocimiento-saber específico), agrupa actores de roles distintos como Entities, mantiene invariantes de activación R1-R6."
-  ddd_invariants:
-    - "Una CABA agrupa al menos 3 actores de roles distintos (estudiante, docente, investigador)"
-    - "Una CABA se organiza alrededor de un par específico conocimiento-saber"
-    - "Todo profesor de planta TC está adscrito a mínimo UNA CABA (Art. 73)"
-    - "Una CABA puede atravesar 1 a N Escuelas (transversal)"
-    - "Una CABA activa simultáneamente las 6 retroalimentaciones R1-R6 con intensidad ≥ 0.7"
-    - "Una CABA puede nacer informal y madurar a unidad formal con reconocimiento CSU"
-  ddd_ubiquitous_terms:
-    - "CABA"
-    - "Comunidad Académica de Base"
-    - "Comunidad de Práctica · CoP"
-    - "Nicho transformativo"
-    - "Salto cuántico Sub-N1 → N4"
-    - "Activación R1-R6 simultánea"
-    - "Adscripción docente mínima"
 
-applicable_domain: "UDFJC desde 2025-05-06; constitución progresiva en cada Escuela"
-assumptions:
-  - "El reconocimiento simétrico de saberes posibilita CABAs interdisciplinares y transdisciplinares"
-  - "Los docentes activos pueden gestionar adscripción a múltiples CABAs según interés cognitivo"
-breaks_at:
-  - "Si una CABA es monorrol o monodisciplinar (deja de ser transversal)"
-  - "Si un docente de planta TC NO está adscrito a ninguna CABA (incumple Art. 73)"
-extends_to: "[[con-escuela]] (CABAs atraviesan Escuelas) · [[con-cca]] (CABAs activan paquetes CCA)"
 
-recorded_at: "2026-04-26"
-valid_from: "2025-05-06"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
+
+
+
+rol_seleccionado: estudiante-soberano
 
 "@type": Organization
 
-tupla__relations:
-  - rel_id: rel-caba-defined-by-acu00425
-    rel_nombre: norm_implements
-    rel_direccion: pre
-    rel_target: "[[con-acu-004-25]]"
-    rel_frame: normativo
-  - rel_id: rel-caba-related-soberania-cognitiva
-    rel_nombre: skos_related
-    rel_direccion: pre
-    rel_target: "[[con-soberania-cognitiva]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_strength: 0.9
-      skos_evidence: "CABAs articulan pluralidad epistémica del Art. 5g en práctica cotidiana"
-  - rel_id: rel-caba-atraviesa-escuelas
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-escuela]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "Art. 73: CABAs son estructura básica de las Escuelas, transversales"
-  - rel_id: rel-caba-activa-omt
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-omt]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "CABA es dispositivo activador del ciclo virtuoso ΩMT (M02): activa simultáneamente las retroalimentaciones R1-R6 que aceleran capacidad transformativa institucional"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 7
 
-tags: [glosario-universal, concepto-normativo, caba, comunidad-academica-base, art-73, m00-base, refundacional, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-normativo, layer-investigador]
+tags:
+  - glosario-universal
+  - concepto-normativo
+  - t1-normativo
+  - caba
+  - comunidad-academica-base
+  - art-73
+  - m00-base
+  - refundacional
+  - audit-v2-2
+  - tpl-v2
 ---
 
-# CABA — Comunidad Académica de Base (Art. 73 ACU-004-25)
+
+# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
 
 > [!important]+ ⚛️ Concepto refundacional · célula transversal del nuevo modelo
-> La CABA es el **dispositivo MÁS NOVEDOSO** de la estructura organizativa post-ACU-004-25. Articula la **pluralidad epistémica** del Art. 5g ([[con-soberania-cognitiva|Soberanía Cognitiva]]) en la práctica académica cotidiana. Es la materialización del **salto cuántico Sub-N1 → N4** del corpus MI-12.
+> La CABA es el **dispositivo MÁS NOVEDOSO** de la estructura organizativa post-ACU-004-25. Articula la pluralidad epistémica del Art. 5g (Soberanía Cognitiva) en la práctica académica cotidiana. Es la materialización del **salto cuántico Sub-N1 → N4**.
 
-## Definición operativa (cita literal)
+---
 
-> "La Comunidad Académica de Base es la estructura básica, dinámica y flexible de las escuelas, que se organiza de acuerdo con el interés cognitivo de los docentes, desde su área específica del campo de conocimiento-saber. Todo profesor está adscrito a mínimo una CABA." — **ACU-004-25 Art. 73**.
+## §0 · 🎭 Vista por rol institucional
 
-## Características distintivas
+`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
 
-| Atributo | Detalle |
-|---|---|
-| **Naturaleza** | Estructura básica, dinámica, flexible |
-| **Organizador** | Interés cognitivo de los docentes + área específica del campo conocimiento-saber |
-| **Adscripción** | Obligatoria — todo docente de planta TC en al menos UNA CABA |
-| **Transversalidad** | Puede atravesar 1 a N Escuelas |
-| **Formalización** | Puede nacer informal; madurar a formal con reconocimiento CSU |
-| **Función** | Activar R1-R6 simultáneamente (ciclo virtuoso ΩMT) |
+---
 
-## Fuentes primaria + genealogía
+## §1 · Definición canónica (cita literal)
 
-| Fuente | Aporte |
-|---|---|
-| **ACU-004-25 Art. 73** | Institucionalización mandatada |
-| **Wenger (1998) Communities of Practice** | Aprendizaje situado en comunidades |
-| **Geels (2002) MLP** | Nicho transformativo dentro de regímenes |
+> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
 
-## Invariantes operativas DDD
+| Sub-tipo | Pasteur | Effective force UDFJC |
+|---|:-:|:-:|
+| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
 
-1. **≥ 3 actores de roles distintos** (estudiante + docente + investigador como mínimo).
-2. Organizada por **par específico conocimiento-saber**.
-3. **Todo profesor** de planta TC adscrito a mínimo UNA CABA.
-4. Puede atravesar **1 a N Escuelas** (transversal).
-5. Activa las **6 retroalimentaciones R1-R6** simultáneamente con intensidad ≥ 0.7.
-6. Puede nacer informal; madurar a formal con reconocimiento CSU.
+> **Cita literal Art. 73**: "La Comunidad Académica de Base es la estructura básica, dinámica y flexible de las escuelas, que se organiza de acuerdo con el interés cognitivo de los docentes, desde su área específica del campo de conocimiento-saber. Todo profesor está adscrito a mínimo una CABA."
 
-## Lenguaje ubicuo asociado
+## §2 · 📜 Anclaje normativo + cadena de adopción
 
-CABA · Comunidad Académica de Base · CoP · Nicho transformativo · Salto cuántico Sub-N1 → N4 · Activación R1-R6 simultánea · Adscripción docente mínima.
+```dataviewjs
+const me = dv.current();
+const f = me.concepto_facet_normative;
+if (!f) {
+  dv.paragraph("(sin facet normative)");
+} else {
+  dv.table(["Campo", "Valor"], [
+    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
+    ["**Authority level**", f.normative_authority_level ?? "—"],
+    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
+    ["**Chain status**", f.chain_status ?? "—"]
+  ]);
+  const chain = f.adoption_chain ?? [];
+  if (chain.length) {
+    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
+    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
+      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
+  }
+}
+```
+
+## §3 · 🧩 Estructura DDD · invariantes operativas
+
+```dataviewjs
+const me = dv.current();
+const f = me.concepto_facet_ddd;
+if (!f) {
+  dv.paragraph("(sin facet DDD)");
+} else {
+  dv.header(4, `DDD · ${f.ddd_id ?? "—"} · ${f.ddd_aggregate_root ?? "—"}`);
+  dv.table(["Atributo", "Valor"], [
+    ["Bounded Context", f.ddd_bc_ref ?? "—"],
+    ["Rol en BC", f.ddd_role_in_context ?? "—"]
+  ]);
+  if ((f.ddd_invariants ?? []).length) {
+    dv.header(5, "Invariantes operativas");
+    dv.list(f.ddd_invariants);
+  }
+  if ((f.ddd_ubiquitous_terms ?? []).length) {
+    dv.header(5, "Lenguaje ubicuo");
+    dv.paragraph((f.ddd_ubiquitous_terms ?? []).join(" · "));
+  }
+}
+```
+
+## §4 · 🔻 Pre-requisitos cognitivos
+
+```dataviewjs
+const prereq = dv.current().concepto_prerequisitos ?? [];
+if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");
+else dv.list(prereq);
+```
+
+## §5 · 🔺 Conceptos que declaran este como pre-requisito
+
+```dataviewjs
+const me = dv.current();
+const here = me.file.name;
+const folder = me.file.folder;
+const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
+const matchHere = (target) => {
+  if (!target) return false;
+  if (typeof target === "object" && target.path !== undefined) return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
+  const s = String(target);
+  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
+  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
+  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
+};
+const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
+dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito`);
+if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");
+else dv.list(habilitados.map(p => p.file.link));
+```
+
+## §7 · 🤝 Relaciones tipadas (outgoing)
+
+```dataviewjs
+const me = dv.current();
+const rels = me.tupla__relations ?? [];
+const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
+const relMap = vocabPage?.relaciones ?? {};
+const frameMap = vocabPage?.frames ?? {};
+
+const lookupRel = (n, d) => {
+  const dir = d ?? "co";
+  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
+};
+const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
+const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
+const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
+
+const groups = {};
+for (const r of rels) {
+  const k = r.rel_frame ?? "general";
+  groups[k] = groups[k] ?? [];
+  groups[k].push(r);
+}
+for (const [frame, rs] of Object.entries(groups)) {
+  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
+  const byRel = {};
+  for (const r of rs) {
+    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
+    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
+    byRel[key].items.push(r);
+  }
+  for (const grp of Object.values(byRel)) {
+    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
+    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
+    dv.table(["→ Target", "Evidencia"],
+      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));
+  }
+}
+```
+
+## §8 · 🎭 Vista por rol seleccionado
+
+```dataviewjs
+const me = dv.current();
+const rol = me.rol_seleccionado ?? "estudiante-soberano";
+const vistas = {
+  "estudiante-soberano": {
+    titulo: "🎓 Para el Estudiante Soberano",
+    contenido: [
+      "**Tu nicho transformativo**: la CABA es donde puedes ejercer agencia académica activa · investigar + co-construir saberes con docentes y otros estudiantes.",
+      "- Puedes vincularte a una CABA del campo conocimiento-saber que te interese (no necesitas estar adscrito a la Escuela del docente).",
+      "- En la CABA activas las 6 retroalimentaciones R1-R6 que aceleran tu trayectoria.",
+      "**Acción concreta**: identifica una CABA activa o propón conformar una en torno a un par conocimiento-saber relevante para tu territorio."
+    ]
+  },
+  "docente-disenador": {
+    titulo: "🎨 Para el Docente Diseñador",
+    contenido: [
+      "**Tu CABA es tu dispositivo de diseño curricular**: ahí integras docencia + investigación + extensión bajo un mismo par conocimiento-saber.",
+      "- Los Paquetes CCA emergen del trabajo de la CABA · NO de un departamento aislado.",
+      "**Acción concreta**: vincula tus Paquetes CCA al campo de tu CABA · documenta cómo cada Paquete activa R1-R6."
+    ]
+  },
+  "docente-formador": {
+    titulo: "🎤 Para el Docente Formador",
+    contenido: [
+      "**Tu aula** se nutre de la CABA: trae problemas reales investigados ahí (R4) · semilleros (R1) · saberes territoriales (R6).",
+      "**Acción concreta**: en cada sesión invoca explícitamente el trabajo de la CABA + invita estudiantes a vincularse."
+    ]
+  },
+  "docente-investigador-pasteur": {
+    titulo: "🔬 Para el Investigador Pasteur",
+    contenido: [
+      "**La CABA es tu hábitat institucional**: tu PM2 (investigación territorial) opera bajo el paraguas del par conocimiento-saber de la CABA.",
+      "- Una CABA bien diseñada articula tu investigación con saberes territoriales (R6) y los retroalimenta al currículo (R2-R3).",
+      "**Acción concreta**: documenta en tu PM2 cómo tu investigación se nutre de la CABA y la nutre de regreso."
+    ]
+  },
+  "docente-emprendedor-coop": {
+    titulo: "🤝 Para el Emprendedor/Coop",
+    contenido: [
+      "**La CABA es tu interfaz** con el territorio · convenios PM3 deben articular el campo conocimiento-saber de una o más CABAs.",
+      "**Acción concreta**: incluye en convenios cláusula de articulación con CABAs específicas + documenta retornos a las mismas."
+    ]
+  },
+  "docente-director": {
+    titulo: "🏛️ Para el Docente Director",
+    contenido: [
+      "**Tu obligación de gobernanza**: garantizar que TODOS los docentes de planta TC estén adscritos a mínimo UNA CABA (Art. 73 invariante).",
+      "- Verificar que las CABAs tengan ≥3 roles · NO sean monorrol o monodisciplinares.",
+      "**Acción concreta**: reportar a CACAD el mapa de adscripción CABAs + activación R1-R6 · CABAs sin esto incumplen Art. 73."
+    ]
+  }
+};
+const v = vistas[rol] ?? vistas["estudiante-soberano"];
+dv.header(3, v.titulo);
+for (const linea of v.contenido) dv.paragraph(linea);
+```
+
+## §10 · 📜 Citado en
+
+```dataviewjs
+const me = dv.current();
+dv.list(me.cited_in ?? []);
+dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
+```
+
+---
 
 ## Notas de aplicación
 
 - **NO confundir** con grupo de investigación (Minciencias-COL) ni con departamento administrativo.
 - **Cuándo invocarla**: como dispositivo activador de R1-R6 + materializador de Soberanía Cognitiva en práctica académica.
-- **Riesgo monorrol**: una "CABA" con un solo rol (solo docentes / solo estudiantes) deja de ser transversal — viola Art. 73.
+- **Riesgo monorrol**: una "CABA" con un solo rol deja de ser transversal — viola Art. 73.
+
+## Historial
+
+| Versión | Fecha | Cambios |
+|---|---|---|
+| v1.0.0 | 2026-04-26 | Concepto inicial v5.2 legacy |
+| **v2.0.0** | **2026-04-27** | **Migración Sprint 1A** (audit v2.2): facets v2.0 SOTA + adoption_chain (ACU-004-25 Art. 73) + concepto_prerequisitos + body Metabind/DataviewJS reactivo + 12 secciones canónicas + cssclass tpl-t1-normativo. Preservadas: cita literal Art. 73 + invariantes DDD (renderizadas dinámicamente desde `concepto_facet_ddd`). |

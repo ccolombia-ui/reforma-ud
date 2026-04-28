@@ -2,20 +2,12 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:cca
 kd_title: "CCA — Paquete Comprensivo-Experimental-Transformativo (unidad creditizable triádica M06)"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-27
-kd_updated: 2026-04-27
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-06, sec-MI12-12]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Paquete CCA"
 
 skos_prefLabel: "CCA — Paquete creditizable Comprensivo-Experimental-Transformativo"
 skos_altLabel: ["Paquete CCA", "CCA Package", "Unidad creditizable triádica"]
-skos_hiddenLabel: ["cca", "paquete-cca"]
 skos_definition: "Unidad creditizable propuesta en el modelo BMK-002 del paper M06 (Madera Sepúlveda 2026) que articula los 3 vectores de las funciones misionales como una sola unidad indivisible: (V1) Comprensivo — apropiación crítica del conocimiento (PM1 Formación); (V2) Experimental — generación de evidencia y prototipos (PM2 Investigación); (V3) Transformativo — aplicación en contexto territorial (PM3 Extensión). Un Paquete CCA típico vale 4-12 créditos académicos SNIES y se diseña para que el estudiante curse los 3 vectores en simultaneidad temporal. Es una operacionalización del Art. 7 ACU-004-25 (funciones misionales) que rompe el silo curricular tradicional de cursos PM1 separados de proyectos PM2 separados de prácticas PM3."
 skos_scopeNote: "CCA NO sustituye al crédito académico (Decreto 1330) — el CCA es un PAQUETE que se mide en créditos. Su novedad está en la triada V1∧V2∧V3 simultánea, no en una nueva unidad de medida. Las CABAs (Art. 73) son las estructuras institucionales que activan paquetes CCA en las Escuelas."
 skos_example: "Un Paquete CCA típico de 8 créditos en una Escuela de Bioeconomía: V1 (12 horas/semana lectura + tutoría sobre biotecnología territorial), V2 (8 horas/semana laboratorio con datos reales del territorio), V3 (8 horas/semana acompañamiento a JACs en proyecto productivo)."
@@ -29,75 +21,28 @@ iso_subject_field: "Diseño curricular / Articulación misional / Educación uni
 iso_term_status: preferred
 iso_standardized_by: "Madera Sepúlveda (2026) M06 BMK-002 — elaboración propia"
 
-align_schema_type: DefinedTerm
-concept_subtype: DEFINITION
 pasteur_quadrant: PASTEUR
-pasteur_axis_use: 0.95
-pasteur_axis_knowledge: 0.7
 
-concepto_capabilities: [DDD]
 
-concepto_facet_ddd:
-  ddd_id: "paquete_cca"
-  ddd_aggregate_root: "PaqueteCCA"
-  ddd_bc_ref: "[[bc-curriculo-udfjc]]"
-  ddd_role_in_context: "Aggregate Root de la unidad curricular triádica. Encapsula los 3 vectores V1∧V2∧V3 con sus respectivos créditos parciales sumando el total del paquete. Las CABAs son los Aggregate Coordinators que activan paquetes en Escuelas."
-  ddd_invariants:
-    - "Un Paquete CCA debe articular simultáneamente V1 (Comprensivo) ∧ V2 (Experimental) ∧ V3 (Transformativo) — no son 3 cursos separados"
-    - "El total de créditos del paquete debe respetar el Decreto 1330 (1 crédito SNIES = 48 horas-reloj)"
-    - "Un paquete CCA es activable solo por una CABA (Art. 73 ACU-004-25)"
 
-applicable_domain: "Diseño curricular post-ACU-004-25; rediseño de programas académicos en Escuelas"
-assumptions:
-  - "La triada V1∧V2∧V3 es operativamente integrable en una sola unidad curricular"
-  - "Las Escuelas tienen capacidad institucional para coordinar paquetes (vía CABAs)"
-breaks_at:
-  - "Si los 3 vectores se ofrecen secuencialmente (no simultáneamente) — degenera a 3 cursos tradicionales"
-extends_to: ""
 
-recorded_at: "2026-04-27"
-valid_from: "2026-04-27"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
 
 "@type": DefinedTerm
 
-tupla__relations:
-  - rel_id: rel-cca-mide-en-creditos
-    rel_nombre: skos_related
-    rel_direccion: pre
-    rel_target: "[[con-credito-academico]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "El Paquete CCA es una unidad agregada que se mide en créditos académicos según Decreto 1330. Coexiste con el crédito como unidad de medición (no lo sustituye)."
-  - rel_id: rel-cca-operacionaliza-funciones
-    rel_nombre: norm_implements
-    rel_direccion: pre
-    rel_target: "[[con-funciones-misionales]]"
-    rel_frame: normativo
-    rel_propiedades:
-      norm_evidence: "Art. 7 ACU-004-25 establece PM1+PM2+PM3 como funciones misionales; el Paquete CCA las articula como triada V1∧V2∧V3 simultánea — operacionalización curricular del mandato misional."
-  - rel_id: rel-cca-activado-por-caba
-    rel_nombre: ddd_part_of
-    rel_direccion: pre
-    rel_target: "[[con-caba]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "Las CABAs (Art. 73 ACU-004-25) son las estructuras institucionales que activan paquetes CCA en las Escuelas. Un CCA sin CABA no es operativo."
-  - rel_id: rel-cca-en-escuela
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-escuela]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "Las Escuelas (Arts. 69-72) son el contenedor institucional donde se ofrecen los paquetes CCA, activados por CABAs transversales."
 
 cited_in: ["[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-meta-instrumental, cca, paquete-creditizable, m06-corpus, audit-v1]
-cssclasses: [keter-iso, concepto-universal, layer-disenador]
+tags:
+  - glosario-universal
+  - concepto-meta-instrumental
+  - t3-metodologico-instrumental
+  - cca
+  - paquete-creditizable
+  - m06-corpus
+  - audit-v2-2
 ---
+
 
 # CCA — Paquete Comprensivo-Experimental-Transformativo
 

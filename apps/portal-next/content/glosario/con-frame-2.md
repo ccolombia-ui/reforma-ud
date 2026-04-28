@@ -2,19 +2,12 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:frame-2
 kd_title: "Frame 2 — Sistemas de Innovación (Schot & Steinmueller, 2018)"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-01, sec-MI12-12]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Frame 2 — Sistemas de Innovación"
 
 skos_prefLabel: "Frame 2 — Sistemas de Innovación"
 skos_altLabel: ["Innovation Systems Approach", "NIS", "Triple Helix Frame", "Política CTI Frame 2"]
-skos_hiddenLabel: ["frame-2", "frame2", "segundo marco innovacion"]
 skos_definition: "Segundo marco conceptual de política de innovación dominante 1980s-2010s. Reemplaza el modelo lineal Frame 1 con enfoque sistémico: la innovación emerge de la interacción entre actores (universidad-industria-gobierno = Triple Hélice de Etzkowitz-Leydesdorff 1995). Su pregunta rectora es '¿cómo conectar actores?'. Mide éxito en redes, clústeres regionales, transferencia tecnológica y capital social del ecosistema. Asume que mejorando las conexiones se producen externalidades positivas — pero NO cuestiona la dirección del crecimiento económico subyacente."
 skos_scopeNote: "Frame 2 representa un avance sobre Frame 1 al reconocer que la innovación es interactiva, no lineal. Sin embargo su limitación crítica es que asume crecimiento económico como fin natural sin cuestionar SI el tipo de crecimiento generado es deseable. Frame 3 supera esta omisión añadiendo direccionalidad transformativa explícita."
 skos_example: "Indicadores típicos Frame 2: # convenios universidad-empresa, # spin-offs creados, índice triple hélice regional, transferencia tecnológica, parques tecnológicos. UDFJC produce datos Frame 2 vía CIDC, contratos de extensión, acuerdos con sector productivo."
@@ -28,59 +21,29 @@ iso_subject_field: "Política CTI sistémica / Triple Hélice / National Innovat
 iso_term_status: preferred
 iso_standardized_by: "Schot & Steinmueller (2018); Etzkowitz & Leydesdorff (1995); Lundvall (1992); Freeman (1987)"
 
-align_schema_type: DefinedTerm
-concept_subtype: DEFINITION
 pasteur_quadrant: PASTEUR
-pasteur_axis_use: 0.7
-pasteur_axis_knowledge: 0.85
 
-concepto_capabilities: [NEON]
 
-concepto_facet_neon:
-  neon_scenario: S3
-  neon_alignment_strategy: DERIVED_FROM
-  neon_reuse_source: "[[schot2018frame3]] + [[etzkowitz1995triplehelix]] + Lundvall 1992 + Freeman 1987"
-  neon_alignment_confidence: 0.95
 
-applicable_domain: "Análisis de ecosistemas de innovación / clústeres regionales / política CTI 1980s-2010s"
-assumptions:
-  - "El crecimiento económico es deseable per se"
-  - "Mejorar conexiones produce externalidades positivas automáticas"
-breaks_at:
-  - "No cuestiona la dirección del crecimiento (sostenible vs extractivo)"
-  - "Crisis ecológica + desigualdad sistémica refutan la suficiencia de Frame 2"
-extends_to: "[[con-frame-3]] (añade direccionalidad transformativa)"
 
-recorded_at: "2026-04-26"
-valid_from: "1985-01-01"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
 
 "@type": DefinedTerm
 
-tupla__relations:
-  - rel_id: rel-frame2-extends-frame1
-    rel_nombre: skos_broader
-    rel_direccion: post
-    rel_target: "[[con-frame-1]]"
-    rel_frame: skos
-  - rel_id: rel-frame2-precedes-frame3
-    rel_nombre: skos_narrower
-    rel_direccion: pre
-    rel_target: "[[con-frame-3]]"
-    rel_frame: skos
-  - rel_id: rel-frame2-related-quintuple-helix
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-quintuple-helix]]"
-    rel_frame: skos
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, frame-2, sistemas-innovacion, triple-helix, m01-corpus, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-neon, layer-investigador]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t2-academico-teorico
+  - frame-2
+  - sistemas-innovacion
+  - triple-helix
+  - m01-corpus
+  - audit-v2-2
 ---
+
 
 # Frame 2 — Sistemas de Innovación (Schot & Steinmueller, 2018)
 

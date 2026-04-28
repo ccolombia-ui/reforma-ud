@@ -5,7 +5,7 @@ import { useSortable, SortableContext, horizontalListSortingStrategy } from '@dn
 import { CSS } from '@dnd-kit/utilities';
 import { X, BookMarked, FileText, Building2, SplitSquareHorizontal, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { canonicPaper } from '#site/content';
+import { canonicPaper, concepto, note, community } from '#site/content';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
 import type { SecondaryTab, PaneId } from '@/lib/panes-state';
@@ -253,12 +253,83 @@ function PaneContent({ tab }: Readonly<{ tab: SecondaryTab }>) {
       </article>
     );
   }
+
+  if (tab.kind === 'concepto') {
+    const c = concepto.find((x) => x.id === tab.id);
+    if (!c) {
+      return <div className="p-6 text-sm text-muted-foreground">Concepto {tab.id} no encontrado.</div>;
+    }
+    return (
+      <article className="px-4 md:px-6 py-6">
+        <header className="mb-4">
+          <Badge variant="outline" className="font-mono text-[10px] mb-2">CONCEPTO</Badge>
+          <h1 className="text-xl font-semibold leading-tight tracking-tight">
+            {c.skos_prefLabel ?? c.kd_title}
+          </h1>
+        </header>
+        {c.skos_definition && (
+          <div className="mb-4 rounded-md border-l-4 border-primary/60 bg-primary/5 p-3 text-sm">
+            {c.skos_definition}
+          </div>
+        )}
+        <div className="prose-paper">
+          <MDXWithHoverPreview code={c.body} />
+          <MermaidRenderer deps={[c.id]} />
+        </div>
+        <div className="mt-6 border-t pt-3 font-mono text-[10px] text-muted-foreground">
+          {c.kd_id}{c.kd_version && ` · v${c.kd_version}`}
+        </div>
+      </article>
+    );
+  }
+
+  if (tab.kind === 'note') {
+    const n = note.find((x) => x.slug === decodeURIComponent(tab.id));
+    if (!n) {
+      return <div className="p-6 text-sm text-muted-foreground">Nota {tab.id} no encontrada.</div>;
+    }
+    return (
+      <article className="px-4 md:px-6 py-6">
+        <header className="mb-4">
+          <Badge variant="outline" className="font-mono text-[10px] mb-2">NOTA</Badge>
+          <h1 className="text-xl font-semibold leading-tight tracking-tight">{n.title}</h1>
+        </header>
+        <div className="prose-paper">
+          <MDXWithHoverPreview code={n.body} />
+          <MermaidRenderer deps={[n.slug]} />
+        </div>
+      </article>
+    );
+  }
+
+  if (tab.kind === 'community') {
+    const comm = community.find((x) => x.slug === decodeURIComponent(tab.id));
+    if (!comm) {
+      return <div className="p-6 text-sm text-muted-foreground">Comunidad {tab.id} no encontrada.</div>;
+    }
+    return (
+      <article className="px-4 md:px-6 py-6">
+        <header className="mb-4">
+          <Badge variant="outline" className="font-mono text-[10px] mb-2">
+            {comm.type?.toUpperCase() ?? 'COMUNIDAD'}
+          </Badge>
+          <h1 className="text-xl font-semibold leading-tight tracking-tight">
+            {comm.shortName ?? comm.name}
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">{comm.description}</p>
+        </header>
+        <div className="prose-paper">
+          <MDXWithHoverPreview code={comm.body} />
+          <MermaidRenderer deps={[comm.slug]} />
+        </div>
+      </article>
+    );
+  }
+
   return (
     <div className="p-6">
       <h1 className="text-xl font-semibold mb-2">{tab.title}</h1>
-      <p className="text-sm text-muted-foreground">
-        Vista de {tab.kind} en pane secundario. Soporte completo en v6.0.
-      </p>
+      <p className="text-sm text-muted-foreground italic">Tipo {tab.kind} sin vista implementada.</p>
     </div>
   );
 }

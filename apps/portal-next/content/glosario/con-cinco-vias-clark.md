@@ -2,19 +2,12 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:cinco-vias-clark
 kd_title: "Cinco Vías de Clark (R-1 a R-5) — universidad emprendedora (Clark, 1998)"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-01, sec-MI12-02, sec-MI12-12]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Cinco Vías de Clark (R-1..R-5)"
 
 skos_prefLabel: "Cinco Vías de Clark — universidad emprendedora"
 skos_altLabel: ["5 Vías Clark", "Pathways to Entrepreneurial University", "R-1..R-5 Clark"]
-skos_hiddenLabel: ["cinco-vias-clark", "5-vias-clark"]
 skos_definition: "Cinco vías o transformaciones empíricas que Burton R. Clark identificó (1998, *Creating Entrepreneurial Universities*) como rasgos comunes de universidades europeas que se convirtieron exitosamente en universidades emprendedoras: (R-1) Núcleo de dirección reforzado; (R-2) Periferia de desarrollo expandida (oficinas de transferencia, parques tecnológicos); (R-3) Base financiera diversificada (más allá de transferencias estatales); (R-4) Centro académico estimulado (departamentos investigativamente activos); (R-5) Cultura emprendedora integradora. Marco teórico de referencia para la reforma UDFJC, particularmente para los riesgos de transición RT3 (financiación) y para el ciclo virtuoso ΩMT M02."
 skos_scopeNote: "ATENCIÓN — la nomenclatura R-1 a R-5 de Clark es DISTINTA de las **6 retroalimentaciones R1-R6** del ciclo virtuoso ΩMT M02 (que es elaboración propia Madera Sepúlveda 2026). Para evitar confusión, M01 §5.2 etiqueta los riesgos de transición como **RT1-RT6** (con T) preservando R-1..R-5 para Clark y R1-R6 para retroalimentaciones."
 skos_example: "Clark R-3 (financiación diversificada) es palanca crítica para la sostenibilidad de la reforma UDFJC: depender solo de transferencias del Distrito Capital es estrategia frágil; la diversificación vía contratos de extensión (PM3), proyectos investigativos competitivos (PM2) y emprendimiento spin-off es lo que Clark identifica como rasgo de universidades emprendedoras."
@@ -28,45 +21,29 @@ iso_subject_field: "Estudios de educación superior / Universidad emprendedora /
 iso_term_status: preferred
 iso_standardized_by: "Clark, B. R. (1998). *Creating Entrepreneurial Universities: Organizational Pathways of Transformation*. Pergamon."
 
-align_schema_type: DefinedTerm
-concept_subtype: DEFINITION
 pasteur_quadrant: PASTEUR
-pasteur_axis_use: 0.85
-pasteur_axis_knowledge: 0.85
 
-concepto_capabilities: [NEON]
 
-concepto_facet_neon:
-  neon_scenario: S3
-  neon_alignment_strategy: DERIVED_FROM
-  neon_reuse_source: "[[clark1998entrepreneurial]] — Clark, B. R. (1998). *Creating Entrepreneurial Universities*. Pergamon."
-  neon_alignment_confidence: 0.95
 
-applicable_domain: "Diseño de reforma universitaria + análisis comparativo IES + planificación de sostenibilidad financiera"
-assumptions: ["Las 5 vías son condiciones empíricas (no teorema deductivo)"]
-breaks_at: ["Si se aplican mecánicamente sin contexto institucional (Clark las identificó en universidades europeas; aplicación CO requiere adaptación)"]
-extends_to: ""
 
-recorded_at: "2026-04-26"
-valid_from: "1998-01-01"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
 
 "@type": DefinedTerm
 
-tupla__relations:
-  - rel_id: rel-clark-fuente
-    rel_nombre: norm_implements
-    rel_direccion: pre
-    rel_target: "[[clark1998entrepreneurial]]"
-    rel_frame: bibliografico
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, cinco-vias-clark, universidad-emprendedora, m01-corpus, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-neon, layer-disenador]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t2-academico-teorico
+  - cinco-vias-clark
+  - universidad-emprendedora
+  - clark-1998
+  - m01-corpus
+  - audit-v2-2
 ---
+
 
 # Cinco Vías de Clark (R-1 a R-5)
 

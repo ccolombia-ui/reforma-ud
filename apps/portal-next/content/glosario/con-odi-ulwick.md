@@ -2,19 +2,12 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:odi-ulwick
 kd_title: "ODI — Outcome-Driven Innovation (Ulwick)"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-01, sec-MI12-04]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "ODI — Outcome-Driven Innovation"
 
 skos_prefLabel: "ODI — Outcome-Driven Innovation"
 skos_altLabel: ["Innovación dirigida por outcomes", "Ulwick ODI", "Outcome-Driven Innovation Methodology"]
-skos_hiddenLabel: ["odi", "odi-ulwick", "outcome-driven-innovation"]
 skos_definition: "Metodología de innovación formulada por Anthony W. Ulwick (Strategyn, 2002-2016) que operacionaliza JTBD (Christensen) midiendo cuantitativamente cuánto importa cada outcome (resultado deseado) para los usuarios y cuánto está siendo satisfecho actualmente. La fórmula clave es la matriz Importance × Satisfaction: outcomes con alta importancia + baja satisfacción son oportunidades de innovación. Aplicado al M04 cap-MI12, ODI permite mapear cuantitativamente las prioridades JTBD de los 6 roles institucionales UDFJC y las brechas Importance/Satisfaction donde la reforma puede aportar valor."
 skos_scopeNote: "ODI extiende JTBD añadiendo metodología de medición cuantitativa. Mientras JTBD identifica los jobs cualitativamente, ODI mide qué tan bien se cumplen actualmente y cuáles son las brechas críticas. Combinados: JTBD = qué; ODI = cuánto importa y cuánto se satisface."
 skos_example: "Para el rol Estudiante Soberano UDFJC: outcome 'desarrollar capacidad de pensamiento crítico interdisciplinar' tiene Importance = 9.2/10 y Satisfaction actual = 4.5/10 → brecha 4.7 → oportunidad alta para reforma curricular vía CABAs interdisciplinares."
@@ -28,47 +21,29 @@ iso_subject_field: "Metodologías de innovación / Diseño centrado en outcomes"
 iso_term_status: preferred
 iso_standardized_by: "Ulwick, A. W. (2002, 2016). *What Customers Want*. McGraw-Hill"
 
-align_schema_type: DefinedTerm
-concept_subtype: DEFINITION
 pasteur_quadrant: PASTEUR
-pasteur_axis_use: 0.9
-pasteur_axis_knowledge: 0.6
 
-concepto_capabilities: [NEON]
 
-concepto_facet_neon:
-  neon_scenario: S3
-  neon_alignment_strategy: DERIVED_FROM
-  neon_reuse_source: "[[ulwick2016jobs]] + Strategyn metodología"
-  neon_alignment_confidence: 0.9
 
-applicable_domain: "Análisis cuantitativo de prioridades de innovación + diseño de roadmap UDFJC"
-assumptions: ["Los outcomes son medibles cuantitativamente"]
-breaks_at: ["Si se aplican métricas sin entender el job subyacente"]
-extends_to: "[[con-jtbd-christensen]]"
 
-recorded_at: "2026-04-26"
-valid_from: "2002-01-01"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
 
 "@type": DefinedTerm
 
-tupla__relations:
-  - rel_id: rel-odi-extends-jtbd
-    rel_nombre: skos_narrower
-    rel_direccion: pre
-    rel_target: "[[con-jtbd-christensen]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "ODI operacionaliza JTBD añadiendo medición cuantitativa Importance × Satisfaction"
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-meta-instrumental, odi, ulwick, m01-corpus, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-neon, layer-disenador]
+tags:
+  - glosario-universal
+  - concepto-meta-instrumental
+  - t3-metodologico-instrumental
+  - odi
+  - ulwick
+  - outcome-driven-innovation
+  - m01-corpus
+  - audit-v2-2
 ---
+
 
 # ODI — Outcome-Driven Innovation (Ulwick)
 

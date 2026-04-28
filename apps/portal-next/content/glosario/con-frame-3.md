@@ -2,22 +2,15 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:frame-3
 kd_title: "Frame 3 — Cambio Transformativo (Schot & Steinmueller, 2018)"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-00, sec-MI12-01, sec-MI12-02, sec-MI12-07, sec-MI12-08, sec-MI12-12]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Frame 3 — Cambio Transformativo"
 
 skos_prefLabel: "Frame 3 — Cambio Transformativo"
 skos_altLabel:
   - "Transformative Innovation Policy (TIP)"
   - "Política CTI Frame 3"
   - "Innovación direccional"
-skos_hiddenLabel: ["frame-3", "frame3", "tercer marco innovacion"]
 skos_definition: "Tercer marco conceptual de política de innovación (Schot & Steinmueller, 2018) que reemplaza la pregunta '¿cuánta ciencia producir?' (Frame 1) y '¿cómo conectar actores?' (Frame 2) por '¿hacia dónde dirigir la innovación?'. Exige direccionalidad explícita hacia transformaciones sociotécnicas que aborden desafíos de pobreza, injusticia, insostenibilidad y desigualdad. No basta con producir conocimiento ni con conectar ecosistemas: es necesario asumir misiones transformativas con horizonte ético-político definido. Adoptado formalmente por el CONPES 4069/2021 como paradigma rector de la Política Nacional CTI colombiana 2022-2031, y por extensión —vía cadena normativa multinivel— se convierte en mandato vinculante para las IES públicas como la UDFJC."
 skos_scopeNote: "Frame 3 NO sustituye a Frames 1-2 sino los integra y los re-orienta. Una IES puede seguir produciendo investigación básica (Frame 1) y articulando ecosistemas (Frame 2), pero ahora debe demostrar la **dirección transformativa** de su producción. La diferencia es ontológica: el éxito ya no se mide solo en publicaciones (Frame 1) ni en redes (Frame 2), sino en contribución a transformación socio-técnica verificable."
 skos_example: "Un proyecto de investigación PM2 sobre soberanía energética comunitaria que (a) produce conocimiento (Frame 1), (b) articula universidad-comunidad-gobierno (Frame 2), Y (c) contribuye explícitamente a transformación socio-técnica hacia descarbonización + soberanía territorial (Frame 3) — los tres frames operando integradamente."
@@ -31,75 +24,33 @@ iso_subject_field: "Política de innovación / Estudios CTI / Sustainability tra
 iso_term_status: preferred
 iso_standardized_by: "Schot & Steinmueller (2018) Research Policy 47(9) pp. 1554-1567; adoptado por CONPES 4069/2021 (Colombia)"
 
-align_schema_type: DefinedTerm
 align_dbpedia: ""
 align_wikidata: ""
 
-concept_subtype: DEFINITION
 pasteur_quadrant: PASTEUR
-pasteur_axis_use: 0.95
-pasteur_axis_knowledge: 0.95
 
-concepto_capabilities: [NEON]
 
-concepto_facet_neon:
-  neon_scenario: S3
-  neon_external_ontology_uri: ""
-  neon_alignment_strategy: DERIVED_FROM
-  neon_reuse_source: "[[schot2018frame3]] — Schot, J. & Steinmueller, W. E. (2018). Three frames for innovation policy: R&D, systems of innovation and transformative change. *Research Policy*, 47(9), 1554-1567"
-  neon_alignment_confidence: 0.95
-  neon_methodological_notes: "Reuso S3 (ontología externa) de literatura especializada en sustainability transitions. Adopción colombiana vía CONPES 4069/2021 hace que el concepto pase de marco teórico académico a paradigma normativo vinculante para SNCTI."
 
-applicable_domain: "Política de innovación + diseño de programas de investigación-creación-innovación + extensión territorial UDFJC"
-assumptions:
-  - "La direccionalidad transformativa es operacionalizable mediante misiones (PIIOM 5 misiones)"
-  - "Frame 3 NO niega Frames 1-2; los integra y reorienta"
-breaks_at:
-  - "Si se aplica sin métricas verificables de transformación (riesgo de retórica vacía)"
-  - "Si se confunde direccionalidad con dirigismo central planificado"
-extends_to: "[[con-cinco-misiones-piiom]] — operacionalización colombiana"
 
-recorded_at: "2026-04-26"
-valid_from: "2018-01-01"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
 
 "@type": DefinedTerm
 
-tupla__relations:
-  - rel_id: rel-frame3-supersedes-frame2
-    rel_nombre: skos_broader
-    rel_direccion: post
-    rel_target: "[[con-frame-2]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "Frame 3 integra y reorienta Frame 2 (sistemas de innovación) añadiendo direccionalidad"
-  - rel_id: rel-frame3-supersedes-frame1
-    rel_nombre: skos_broader
-    rel_direccion: post
-    rel_target: "[[con-frame-1]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "Frame 3 integra Frame 1 (R&D) con direccionalidad explícita"
-  - rel_id: rel-frame3-adopted-conpes-4069
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-conpes-4069]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "CONPES 4069/2021 adopta Frame 3 como paradigma rector de la Política Nacional CTI 2022-2031"
-  - rel_id: rel-frame3-fuente-schot
-    rel_nombre: norm_implements
-    rel_direccion: pre
-    rel_target: "[[schot2018frame3]]"
-    rel_frame: bibliografico
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 5
 
-tags: [glosario-universal, concepto-academico, frame-3, transformative-innovation, schot-steinmueller, m01-corpus, capa-investigador, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-neon, layer-investigador]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t2-academico-teorico
+  - frame-3
+  - transformative-innovation
+  - schot-steinmueller
+  - m01-corpus
+  - capa-investigador
+  - audit-v2-2
 ---
+
 
 # Frame 3 — Cambio Transformativo (Schot & Steinmueller, 2018)
 

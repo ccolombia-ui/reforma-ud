@@ -487,13 +487,20 @@ export function Sidebar() {
   const [collapsed] = useLeftCollapsed();
   const [width, setWidth] = useLeftWidth();
   const tree = buildCommunityTree();
-  const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
+  // v6.x fix · papers debe ser memoizado para no recrear nueva referencia
+  // en cada render (rompía useEffect de Recientes con loop infinito).
+  const papers = useMemo(
+    () => [...canonicPaper].sort((a, b) => a.number - b.number),
+    [],
+  );
   const conceptos = useMemo(() => [...concepto].sort(
     (a, b) => (a.skos_prefLabel ?? a.kd_title).localeCompare(b.skos_prefLabel ?? b.kd_title, 'es'),
   ), []);
   const [filter, setFilter] = useState('');
 
   // v6.3 G-SBL-01 · Recientes (top 5 visitados con title resuelto).
+  // FIX v6.x · solo pathname como dep. papers/conceptos se acceden via closure
+  // pero NO van en deps (las collections de velite son stable references).
   const [recents, setRecents] = useState<Array<{ path: string; label: string }>>([]);
   useEffect(() => {
     if (!pathname || pathname === '/') return;
@@ -503,15 +510,15 @@ export function Sidebar() {
       /^\/glosario\/con-/.test(pathname) ||
       (/^\/comunidades\//.test(pathname) && !/(biblioteca|grafo)\/?$/.test(pathname));
     if (!isDocRoute) return;
-    // Resolver label
+    // Resolver label leyendo collections directamente (referencias stable de velite).
     let label = pathname;
     const mMatch = pathname.match(/^\/canonico\/(m\d{2})/i);
     if (mMatch) {
-      const p = papers.find((x) => x.id === mMatch[1].toLowerCase());
+      const p = canonicPaper.find((x) => x.id === mMatch[1].toLowerCase());
       if (p) label = `${p.id.toUpperCase()} · ${p.title}`;
     } else if (pathname.startsWith('/glosario/')) {
       const cid = pathname.replace('/glosario/', '').replace(/\/$/, '');
-      const c = conceptos.find((x) => x.id === cid);
+      const c = concepto.find((x) => x.id === cid);
       if (c) label = c.skos_prefLabel ?? c.kd_title;
     } else if (pathname.startsWith('/comunidades/')) {
       const cleaned = pathname.replace(/^\//, '').replace(/\/$/, '');
@@ -526,7 +533,7 @@ export function Sidebar() {
       localStorage.setItem('reforma-ud:recents', JSON.stringify(next));
       setRecents(next);
     } catch { /* ignore storage errors */ }
-  }, [pathname, papers, conceptos]);
+  }, [pathname]);
 
   useEffect(() => {
     try {

@@ -2,24 +2,15 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:escuela
 kd_title: "Escuela UDFJC (Arts. 69-72 ACU-004-25) — unidad académica básica de adscripción docente por campo del conocimiento-saber"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
-kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_updated: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_supersedes: 60-glosario/con-escuela (formato previo SUPERSEDED — re-construido aquí con rigor v5.2)
-kd_transcluible_en: [sec-MI12-00, sec-MI12-01, sec-MI12-02, sec-MI12-04, sec-MI12-05, sec-MI12-07, sec-MI12-10, sec-MI12-12]
+kd_version: v1.1.0
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Escuela UDFJC"
 
 skos_prefLabel: "Escuela UDFJC"
 skos_altLabel:
   - "Unidad académica básica UDFJC"
   - "Campo del conocimiento-saber organizado"
   - "School (UDFJC reformada)"
-skos_hiddenLabel: ["escuela", "school"]
 skos_definition: "Unidad académica básica de la UDFJC reformada donde están adscritos los docentes y su productividad académica en torno a un campo del conocimiento-saber. Permea las demás unidades a través de investigación-creación, extensión y formación. Coexiste con Facultades, Institutos y Centros como estructuras paralelas no jerárquicas. Es atravesada transversalmente por CABAs (Comunidades Académicas de Base). Cada Escuela está dirigida por un(a) Director(a) elegido(a) por los docentes (4 años, sin reelección inmediata). El Art. 71 prevé la creación de aproximadamente 25 Escuelas vía decreto del CSU. Las Escuelas reemplazan estructuralmente la combinación Facultad-Departamento del Acuerdo CSU 003/1997."
 skos_scopeNote: "El término 'Escuela' aparece en al menos 4 contextos en el corpus MI-12: (a) NORMATIVO-estructural (este glosario): unidad académica básica post-ACU-004-25; (b) JTBD-ecosistema (M04 BPA-003): ecosistema de 6 roles institucionales; (c) MLP-transformativa (M02): nicho transformativo Geels donde operan PM1-PM2-PM3 con R1-R6; (d) BMK-TDABC (M05/M10): unidad de comparación o piloto de costeo. Los contextos (b)(c)(d) son **wrappers** que aplican al átomo NORMATIVO de este glosario."
 skos_example: "La 'Escuela de Física' del corpus MI-12 (ej-MI12-01) es la unidad NORMATIVA + estructural: agrupa los docentes-investigadores adscritos al campo Energía-Materia-Información, dirigida por su Director electo, atravesada por las CABAs activas (Electromagnetismo, Mecánica Cuántica, Astrofísica), y coordinada para PM1 vía Facultad reformada bajo VRF, para PM2 vía Instituto bajo VRICI, para PM3 vía Centro bajo VRC."
@@ -33,96 +24,55 @@ iso_subject_field: "Estructura académica reformada UDFJC / Gobernanza de Escuel
 iso_term_status: preferred
 iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 69-72"
 
-align_schema_type: EducationalOrganization
 align_dbpedia: "http://dbpedia.org/resource/School"
 align_wikidata: ""
 
-concept_subtype: DEFINITION
 pasteur_quadrant: EDISON
-pasteur_axis_use: 1.0
-pasteur_axis_knowledge: 0.4
 
-concepto_capabilities: [NORMATIVE, DDD]
 
-concepto_facet_normative:
-  norm_legal_ref: "[[con-acu-004-25]]"
-  norm_article: "Arts. 58-59 (campo del conocimiento-saber) + 69-72 (Escuelas, Director, Consejo de Escuela) + 71 (~25 Escuelas por decreto CSU)"
-  norm_jurisdiction: "Acuerdo Superior UDFJC"
-  norm_effective_date: "2025-05-06"
-  norm_legal_force: BINDING
-  norm_compliance_scope: "Toda Escuela UDFJC reformada"
-  norm_supersedes: "Estructura Facultad-Departamento del Acuerdo CSU 003/1997 (organizada por afinidad disciplinar amplia)"
+# ═══════════════════════════════════════════════════════════════════════════
+#  Facet TYPE — Capa 1 del patrón Type → Schema → Instance (v1.1.0)
+# ═══════════════════════════════════════════════════════════════════════════
 
-concepto_facet_ddd:
-  ddd_id: "escuela"
-  ddd_aggregate_root: "Escuela"
-  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
-  ddd_role_in_context: "Aggregate Root del subdominio Estructura Académica Básica. Encapsula identidad institucional (id, nombre, campo del conocimiento-saber), agrupa docentes adscritos como Entities, mantiene invariantes de coherencia presupuestal y curricular. Coexiste con Facultad, Instituto, Centro como Aggregate Roots paralelos NO jerárquicos."
-  ddd_invariants:
-    - "Una Escuela debe declarar al menos un campo del conocimiento-saber"
-    - "Los docentes de planta tiempo completo están adscritos a una Escuela como anclaje primario"
-    - "El Director debe ser docente de planta tiempo completo"
-    - "El Director se elige por voto de los docentes de la Escuela; periodo 4 años; sin reelección inmediata"
-    - "El Consejo de Escuela tiene representación 70% docentes + 30% CV+entrevista (Art. 72)"
-    - "Una Escuela puede ser atravesada por N CABAs transversales (≥0)"
-    - "Una Escuela desarrolla simultáneamente PM1+PM2+PM3 (no compartimentada)"
-  ddd_ubiquitous_terms:
-    - "Escuela"
-    - "Director(a) de Escuela"
-    - "Consejo de Escuela"
-    - "Docente adscrito"
-    - "Campo del conocimiento-saber"
-    - "CABA (atraviesa Escuelas)"
 
-applicable_domain: "UDFJC desde 2025-05-06; constitución progresiva de las ~25 Escuelas durante Período de Transición Art. 96 (4 años máximo)"
-assumptions:
-  - "El CSU expide los decretos creadores de las ~25 Escuelas según Art. 71"
-  - "Los docentes históricamente adscritos a Departamentos transitan a adscripción a Escuelas"
-breaks_at:
-  - "Una Escuela sin campo del conocimiento-saber declarado viola Art. 69"
-  - "Si retorna a estructura Facultad-Departamento (incumple ACU-004-25)"
-extends_to: "[[con-caba]] (células dinámicas que atraviesan Escuelas)"
+normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+normative_locator: "ACU-004-25 Arts. 58-59 + 69-72 + 71 (~25 Escuelas por decreto CSU)"
+normative_text: "[Texto literal Arts. 69-72 · Escuelas + Director + Consejo + creación]"
+normative_authority_level: ESTATUTARIO
+derogated_by: ""
+derogates:
+    - "Estructura Facultad-Departamento del Acuerdo CSU 003/1997 (organizada por afinidad disciplinar amplia)"
+modification_type: ""
+chain_status: LINEAR
+conflicts_with: []
 
-recorded_at: "2026-04-26"
-valid_from: "2025-05-06"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
+
+
+
+
+rol_seleccionado: docente-director
 
 "@type": EducationalOrganization
 
-tupla__relations:
-  - rel_id: rel-escuela-defined-by-acu00425
-    rel_nombre: norm_implements
-    rel_direccion: pre
-    rel_target: "[[con-acu-004-25]]"
-    rel_frame: normativo
-  - rel_id: rel-escuela-organizada-por-campo
-    rel_nombre: skos_related
-    rel_direccion: pre
-    rel_target: "[[con-campo-conocimiento-saber]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_strength: 1.0
-      skos_evidence: "Art. 69: Escuelas se organizan por campo del conocimiento-saber"
-  - rel_id: rel-escuela-atravesada-cabas
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-caba]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "Art. 73: CABAs son células transversales que atraviesan Escuelas"
-  - rel_id: rel-escuela-coexiste-facultad
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-facultad]]"
-    rel_frame: skos
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-04--jtbd-comunidad]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-10--tdabc]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 8
 
-tags: [glosario-universal, concepto-normativo, escuela, unidad-academica-basica, arts-69-72, m00-base, polisemia-reconciliada, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-normativo, layer-disenador]
+tags:
+  - glosario-universal
+  - concepto-normativo
+  - t1-normativo
+  - escuela
+  - unidad-academica-basica
+  - arts-69-72
+  - m00-base
+  - polisemia-reconciliada
+  - patron-capa-1-type
+  - mandato-art-105
+  - audit-v2-3
+  - tpl-v2
 ---
+
 
 # Escuela UDFJC reformada (Arts. 69-72 ACU-004-25)
 
@@ -162,3 +112,34 @@ Escuela · Director(a) de Escuela · Consejo de Escuela · Docente adscrito · C
 
 - **Cuándo invocarla**: cuando se hable de la unidad académica básica de adscripción docente. Si el contexto es JTBD ecosistema, MLP nicho o BMK comparativa, citar wrapper aplicable.
 - **Sustitución estructural**: las Escuelas reemplazan al modelo Facultad-Departamento del Acuerdo 003/1997. Coexisten complementariamente con la Facultad reformada (no jerárquicamente).
+
+## Patrón Type → Schema → Instance (v1.1.0 · 2026-04-27)
+
+Este concepto es la **Capa 1 (Type jurídico abstracto)** de un patrón 3-capas que materializa el mandato Art. 105 ACU-004-25:
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+flowchart TB
+    C1["★ Capa 1 · Type jurídico abstracto<br/>[[con-escuela]] · este archivo"]:::c1activa
+    C2["Capa 2 · Schema metodológico<br/>[[con-escuela-generica-udfjc]]"]:::c2
+    C3["Capa 3 · Instances mandatorias<br/>7 escuelas Art. 105"]:::c3
+    F["[[con-escuela-fisica]]<br/>★ piloto"]:::piloto
+
+    C1 -->|inherits jurídico| C2
+    C2 -->|generates schema| C3
+    C3 --> F
+
+    classDef c1activa fill:#0891b2,color:#fff,stroke:#fbbf24,stroke-width:4px
+    classDef c2 fill:#7c3aed,color:#fff,stroke:#5b21b6,stroke-width:2px
+    classDef c3 fill:#10b981,color:#fff,stroke:#047857,stroke-width:2px
+    classDef piloto fill:#a78bfa,color:#fff,stroke:#7c3aed,stroke-width:3px
+```
+
+### Mandato Art. 105 — 7 escuelas mandatorias
+
+El Art. 105 ACU-004-25 ordena la conformación de **nuevas escuelas** en plazo de 2 años (deadline **2027-05-05**), distribuidas en:
+
+- **Bloque Ciencias Básicas (4 escuelas)** — incluye [[con-escuela-fisica|Escuela de Física]] (piloto del patrón) + 3 escuelas adicionales pendientes de confirmación nominal.
+- **Bloque Ciencias de la Salud (3 escuelas)** — pendientes de confirmación nominal.
+
+Cada instancia (Capa 3) hereda jurídicamente este Type (Capa 1) vía el schema metodológico (Capa 2). Ver dashboard agregado: [[_dash-escuelas]].

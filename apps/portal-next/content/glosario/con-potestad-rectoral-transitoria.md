@@ -38,12 +38,12 @@ pasteur_axis_knowledge: 0.3
 concepto_capabilities: [NORMATIVE]
 
 concepto_facet_normative:
-  norm_legal_ref: "[[con-acu-004-25]]"
-  norm_article: "Art. 107"
-  norm_jurisdiction: "Acuerdo Superior UDFJC"
-  norm_effective_date: "2025-05-06"
-  norm_legal_force: BINDING
-  norm_compliance_scope: "Designaciones de Directores de Escuelas, Centros e Institutos durante 2025-05-05 a 2027-05-05"
+norm_legal_ref: "[[con-acu-004-25]]"
+norm_article: "Art. 107"
+norm_jurisdiction: "Acuerdo Superior UDFJC"
+norm_effective_date: "2025-05-06"
+norm_legal_force: BINDING
+norm_compliance_scope: "Designaciones de Directores de Escuelas, Centros e Institutos durante 2025-05-05 a 2027-05-05"
 
 applicable_domain: "UDFJC, vigente exclusivamente entre 2025-05-05 y 2027-05-05"
 assumptions: ["El régimen electoral general retoma plena vigencia el 2027-05-05"]

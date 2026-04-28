@@ -2,19 +2,12 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:quintuple-helix
 kd_title: "Quintuple Helix (Carayannis 2012) — modelo innovación 5 actores incluyendo medio ambiente"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-01, sec-MI12-02, sec-MI12-12]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Quintuple Helix Model"
 
 skos_prefLabel: "Quintuple Helix Model"
 skos_altLabel: ["Quíntuple Hélice", "Modelo Q5", "5-Helix Innovation"]
-skos_hiddenLabel: ["quintuple-helix", "quintuple-helice", "5-helice"]
 skos_definition: "Modelo de ecosistema de innovación formulado por Elias G. Carayannis (2012) que extiende los modelos previos de hélice triple (universidad-industria-gobierno; Etzkowitz-Leydesdorff 1995) y cuádruple (+ sociedad civil; Carayannis-Campbell 2009) incorporando el **medio ambiente natural** como quinto actor co-creador de la innovación. La incorporación del medio ambiente reconoce que la innovación sostenible requiere considerar a la naturaleza no solo como recurso a explotar sino como agente activo del ecosistema de innovación. Adoptado por el CONPES 4069/2021 como modelo de referencia de la Política Nacional CTI colombiana, articulando los 5 actores: (1) Universidad, (2) Industria/Sector productivo, (3) Gobierno, (4) Sociedad civil/Comunidades, (5) Medio ambiente natural."
 skos_scopeNote: "Quintuple Helix es el modelo congruente con Frame 3 (cambio transformativo): la direccionalidad transformativa requiere considerar al medio ambiente como agente, no solo como destinatario de externalidades. NO sustituye Triple Helix sino la extiende. Conexión natural con CONPES 3934/2018 (crecimiento verde) que opera como destino económico-ambiental de las 5 misiones PIIOM."
 skos_example: "Un proyecto de investigación PM2 sobre biorremediación de humedales urbanos articula los 5 actores: (1) UDFJC investiga procesos biológicos; (2) sector productivo aporta tecnologías de monitoreo; (3) Alcaldía Bogotá DC regula y financia; (4) JAC Suba participa en diagnóstico territorial; (5) ecosistema de humedal es agente activo cuya respuesta determina el éxito."
@@ -28,59 +21,32 @@ iso_subject_field: "Política CTI / Sustainability transitions / Modelos de inno
 iso_term_status: preferred
 iso_standardized_by: "Carayannis, E. G., Barth, T. D., & Campbell, D. F. J. (2012). The Quintuple Helix innovation model. *Journal of Innovation and Entrepreneurship*"
 
-align_schema_type: DefinedTerm
 align_dbpedia: ""
 align_wikidata: ""
 
-concept_subtype: DEFINITION
 pasteur_quadrant: PASTEUR
-pasteur_axis_use: 0.85
-pasteur_axis_knowledge: 0.85
 
-concepto_capabilities: [NEON]
 
-concepto_facet_neon:
-  neon_scenario: S3
-  neon_alignment_strategy: DERIVED_FROM
-  neon_reuse_source: "[[carayannis2012quintuple]] + Etzkowitz & Leydesdorff (1995) Triple Helix + Carayannis-Campbell (2009) Quadruple Helix"
-  neon_alignment_confidence: 0.95
 
-applicable_domain: "Diseño de proyectos de investigación-creación-innovación + extensión territorial UDFJC + Política Nacional CTI"
-assumptions:
-  - "El medio ambiente puede modelarse como agente co-creador, no solo recurso"
-breaks_at: ["Si se aplica como mero check-list de actores sin co-creación real"]
-extends_to: "[[con-frame-3]]"
 
-recorded_at: "2026-04-26"
-valid_from: "2012-01-01"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
 
 "@type": DefinedTerm
 
-tupla__relations:
-  - rel_id: rel-q5-supersedes-triple
-    rel_nombre: skos_broader
-    rel_direccion: post
-    rel_target: "Triple Helix Model (Etzkowitz & Leydesdorff 1995 — referencia académica, sin nodo en corpus)"
-    rel_frame: bibliografico
-  - rel_id: rel-q5-adopted-conpes-4069
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-conpes-4069]]"
-    rel_frame: skos
-  - rel_id: rel-q5-fuente-carayannis
-    rel_nombre: norm_implements
-    rel_direccion: pre
-    rel_target: "[[carayannis2012quintuple]]"
-    rel_frame: bibliografico
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, quintuple-helix, carayannis-2012, sostenibilidad-innovacion, m01-corpus, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-neon, layer-investigador]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t2-academico-teorico
+  - quintuple-helix
+  - carayannis-2012
+  - sostenibilidad-innovacion
+  - m01-corpus
+  - audit-v2-2
 ---
+
 
 # Quintuple Helix Model (Carayannis 2012)
 

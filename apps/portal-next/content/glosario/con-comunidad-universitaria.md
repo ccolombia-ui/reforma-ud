@@ -2,20 +2,12 @@
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:comunidad-universitaria
 kd_title: "Comunidad Universitaria UDFJC (Arts. 8-17 ACU-004-25)"
 kd_type: glosario-universal
-kd_parent: urn:aleia:udfjc:reforma:cap-mi12
 kd_status: APPROVED
 kd_version: v1.0.0
-kd_created: 2026-04-26
-kd_updated: 2026-04-26
-kd_responsible: urn:aleia:hu:ccolombia
-kd_transcluible_en: [sec-MI12-00, sec-MI12-04, sec-MI12-12]
 
-tupla_tipo: DEFINITION
-tupla_concepto: "Comunidad Universitaria UDFJC"
 
 skos_prefLabel: "Comunidad Universitaria UDFJC"
 skos_altLabel: ["Comunidad UDFJC", "Universitarios UDFJC", "University Community"]
-skos_hiddenLabel: ["estamentos UD", "comunidad-academica"]
 skos_definition: "Conjunto de personas que componen institucionalmente la UDFJC y participan en su acción misional con derechos y deberes correlativos. Está integrada por cuatro estamentos primarios —docentes, estudiantes, egresados y personal administrativo— a los que se suma el sector productivo en ciertos espacios consultivos. Cada estamento tiene representación democrática en los órganos de gobierno (CSU, CACAD, Asamblea Universitaria, Consejos de Escuela, Claustros) según ponderaciones específicas establecidas en el Acuerdo. Sus derechos y deberes se desarrollan en los Arts. 8-17 del ACU-004-25."
 skos_scopeNote: "El concepto NO es meramente administrativo (lista de personas en nómina + lista de matrícula) sino constitutivo: la Comunidad Universitaria es el sujeto colectivo de la autonomía universitaria del Art. 5b. Sus decisiones colectivas, mediadas por órganos democráticos, son la fuente legítima del autogobierno universitario."
 skos_example: "La Asamblea Universitaria (Art. 45-48), con 105 miembros (40 docentes + 40 estudiantes + 15 egresados + 10 administrativos), es la materialización institucional más completa de la Comunidad Universitaria como sujeto deliberativo."
@@ -29,87 +21,48 @@ iso_subject_field: "Gobernanza universitaria / Derecho político universitario /
 iso_term_status: preferred
 iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 8-17"
 
-align_schema_type: Organization
 align_dbpedia: ""
 align_wikidata: ""
 
-concept_subtype: DEFINITION
 pasteur_quadrant: EDISON
-pasteur_axis_use: 0.95
-pasteur_axis_knowledge: 0.4
 
-concepto_capabilities: [NORMATIVE, DDD]
 
-concepto_facet_normative:
-  norm_legal_ref: "[[con-acu-004-25]]"
-  norm_article: "Arts. 8-17 (estamentos, derechos, deberes)"
-  norm_jurisdiction: "Consejo Superior Universitario UDFJC"
-  norm_effective_date: "2025-05-06"
-  norm_legal_force: BINDING
-  norm_compliance_scope: "Reconocimiento de membresía + derechos + deberes correlativos para cada miembro de los estamentos"
 
-concepto_facet_ddd:
-  ddd_id: "comunidad_universitaria"
-  ddd_aggregate_root: "ComunidadUniversitaria"
-  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
-  ddd_role_in_context: "Aggregate Root del bounded context Gobierno Académico que agrupa Estamentos como Entities. Cada Estamento contiene Personas con identidad propia (Docente, Estudiante, Egresado, Administrativo)."
-  ddd_invariants:
-    - "Toda persona que pertenezca a la Comunidad Universitaria está adscrita a UN Estamento primario"
-    - "Cada Estamento tiene representación democrática garantizada en órganos de gobierno"
-    - "Los derechos y deberes son correlativos (no se pueden ejercer derechos sin asumir deberes)"
-    - "El sector productivo participa en espacios consultivos limitados (no es estamento primario)"
-  ddd_ubiquitous_terms:
-    - "Comunidad Universitaria"
-    - "Estamentos"
-    - "Docentes · Estudiantes · Egresados · Administrativos"
-    - "Sector productivo"
-    - "Representación democrática"
-    - "Derechos y deberes correlativos"
+normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+normative_locator: "ACU-004-25 Arts. 8-17"
+normative_text: "[Texto literal Arts. 8-17 · 4 estamentos · derechos y deberes correlativos]"
+normative_authority_level: ESTATUTARIO
+derogated_by: ""
+derogates: []
+modification_type: ""
+chain_status: LINEAR
+conflicts_with: []
 
-applicable_domain: "Toda persona vinculada institucionalmente a la UDFJC bajo modalidades reconocidas (matrícula, nómina, contrato, calidad de egresado)."
-assumptions:
-  - "El reconocimiento de estamentos es operacionalizable vía registros institucionales (SNIES estudiantes, nómina docentes, base de egresados)"
-breaks_at:
-  - "Si la institución pierde su carácter público (improbable)"
-  - "Si se reforma vía nuevo Acuerdo CSU"
-extends_to: "[[con-asamblea-universitaria]] (representación deliberativa máxima)"
 
-recorded_at: "2026-04-26"
-valid_from: "2025-05-06"
-lifecycle_state: ACTIVE
-concepto_anchor_chain_status: LINEAR
+
+
+rol_seleccionado: estudiante-soberano
+
+
 
 "@type": Organization
 
-tupla__relations:
-  - rel_id: rel-comunidad-defined-by-acu00425
-    rel_nombre: norm_implements
-    rel_direccion: pre
-    rel_target: "[[con-acu-004-25]]"
-    rel_frame: normativo
-  - rel_id: rel-comunidad-representada-asamblea
-    rel_nombre: skos_related
-    rel_direccion: post
-    rel_target: "[[con-asamblea-universitaria]]"
-    rel_frame: skos
-    bc_domain: gobernanza
-    rel_propiedades:
-      skos_evidence: "Asamblea Universitaria es la representación deliberativa máxima de la Comunidad Universitaria"
-  # — v1.1.0 cross-references M01 (Fase B audit refactor) ——————————
-  - rel_id: rel-comunidad-afectada-rt6
-    rel_nombre: skos_related
-    rel_direccion: co
-    rel_target: "[[con-riesgos-rt1-rt6]]"
-    rel_frame: skos
-    rel_propiedades:
-      skos_evidence: "RT6 (resistencia al cambio no gestionada) afecta directamente la apropiación de la reforma por los estamentos. Mitigación crítica: comunicación + capacitación dirigidas a Comunidad Universitaria (M01 §5.2)"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-normativo, comunidad-universitaria, estamentos, arts-8-17, m00-base, audit-v1]
-cssclasses: [keter-iso, concepto-universal, concepto-normativo, layer-disenador]
+tags:
+  - glosario-universal
+  - concepto-normativo
+  - t1-normativo
+  - comunidad-universitaria
+  - estamentos
+  - arts-8-17
+  - m00-base
+  - audit-v2-2
+  - tpl-v2
 ---
+
 
 # Comunidad Universitaria UDFJC (Arts. 8-17 ACU-004-25)
 

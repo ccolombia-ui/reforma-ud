@@ -38,12 +38,12 @@ pasteur_axis_knowledge: 0.3
 concepto_capabilities: [NORMATIVE]
 
 concepto_facet_normative:
-  norm_legal_ref: "[[con-acu-004-25]]"
-  norm_article: "Art. 99"
-  norm_jurisdiction: "Acuerdo Superior UDFJC"
-  norm_effective_date: "2025-05-06"
-  norm_legal_force: BINDING
-  norm_compliance_scope: "Régimen aplicable a Acuerdos 04/1996, 027/1993, 011/2002, 009/1996 hasta su sustitución"
+norm_legal_ref: "[[con-acu-004-25]]"
+norm_article: "Art. 99"
+norm_jurisdiction: "Acuerdo Superior UDFJC"
+norm_effective_date: "2025-05-06"
+norm_legal_force: BINDING
+norm_compliance_scope: "Régimen aplicable a Acuerdos 04/1996, 027/1993, 011/2002, 009/1996 hasta su sustitución"
 
 applicable_domain: "UDFJC durante el Período de Transición (2025-05-06 → conforme se expidan los nuevos estatutos derivados)"
 assumptions:
