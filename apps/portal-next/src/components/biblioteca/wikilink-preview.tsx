@@ -6,7 +6,7 @@ import { ExternalLink, BookMarked, FileText, AlertTriangle } from 'lucide-react'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
 import { canonicPaper, community, note } from '#site/content';
-import { MDXContent } from '@/components/mdx-content';
+import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { useDocTabs } from '@/lib/doc-tabs';
 import { cn } from '@/lib/utils';
 
@@ -232,7 +232,7 @@ function PreviewBody({ resolved }: Readonly<{ resolved: ResolvedDoc }>) {
         </header>
         <div className="border-t pt-2">
           <div className="prose-paper prose-sm prose-hover-preview text-[11px] leading-relaxed line-clamp-[10] [&_h2]:text-xs [&_h2]:mt-2 [&_h3]:text-xs [&_p]:my-1 [&_pre]:hidden [&_table]:hidden [&_img]:hidden [&_.callout]:hidden">
-            <MDXContent code={resolved.body} />
+            <MDXWithHoverPreview code={resolved.body} />
           </div>
         </div>
         <div className="flex items-center justify-between pt-1 border-t">
@@ -263,7 +263,7 @@ function PreviewBody({ resolved }: Readonly<{ resolved: ResolvedDoc }>) {
         </header>
         <div className="border-t pt-2">
           <div className="prose-paper prose-sm prose-hover-preview text-[11px] leading-relaxed line-clamp-[10] [&_h2]:text-xs [&_h2]:mt-2 [&_h3]:text-xs [&_p]:my-1 [&_pre]:hidden [&_table]:hidden [&_img]:hidden [&_.callout]:hidden">
-            <MDXContent code={resolved.body} />
+            <MDXWithHoverPreview code={resolved.body} />
           </div>
         </div>
         <div className="flex items-center justify-between pt-1 border-t">
