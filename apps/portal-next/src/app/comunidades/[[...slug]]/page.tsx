@@ -17,6 +17,7 @@ import { ComunidadDefinicion } from '@/components/comunidad/comunidad-definicion
 import { MisionesColectivas } from '@/components/comunidad/misiones-colectivas';
 import { RolesGrid } from '@/components/comunidad/roles-grid';
 import { GlosarioComunidad } from '@/components/comunidad/glosario-comunidad';
+import { Discusiones } from '@/components/comunidad/discusiones';
 import { getComprehension } from '@/lib/comprehension';
 import { community, note, canonicPaper } from '#site/content';
 import type { Metadata } from 'next';
@@ -404,6 +405,9 @@ export default async function CommunityPage({
           )}
         </aside>
       </div>
+
+      {/* v7.2 — Discusiones por comunidad */}
+      <Discusiones term={`comunidad:${c.slug}`} />
     </div>
   );
 }

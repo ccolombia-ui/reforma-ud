@@ -226,9 +226,41 @@ Esto permite que cada comunidad tenga "su propio glosario" sin duplicar contenid
 - G-V7-07: sync-actualidad.mjs + colección Velite Actualidad + página /actualidad/
 - Actualizar NoticiasRelacionadas para leer de `actualidad` collection
 
-### v7.2 — Discusiones (requiere backend)
-- Decisión tecnológica: Supabase comments vs GitHub Discussions API
-- G-COM-02: foro threaded discussions
+### v7.2 — Discusiones (CERRADO 2026-04-28 — giscus)
+- ✅ Decisión: **giscus** (zero-infra, GitHub Discussions backend)
+- ✅ Repo Discussions habilitado en `ccolombia-ui/reforma-ud`
+- ✅ Categoría General · `repoId=R_kgDOSL4ryQ` · `categoryId=DIC_kwDOSL4ryc4C75AG`
+- ✅ Componente `<Discusiones term=...>` integrado en:
+  - `/canonico/[mid]/` (paper) — term `paper:m##`
+  - `/glosario/[conceptoId]/` (concepto) — term `concepto:con-*`
+  - `/comunidades/[[...slug]]/` (CoP) — term `comunidad:<slug>`
+- ✅ Theme dark/light auto-detect via MutationObserver en `<html class>`
+- ✅ services-registry: `foro` → `status: 'active'`, href `/<cop>#discusiones`
+
+**Setup precondición** (ya completada): `gh repo edit --enable-discussions`
+
+**Por qué giscus**:
+- Zero backend (no Supabase, no auth own-built)
+- Auth via GitHub (los usuarios target ya tienen cuenta)
+- Markdown nativo, reacciones, threading
+- Open source, dropin component vía `@giscus/react`
+- Theme dynamic match con el portal
+
+**Limitación conocida**: requiere cuenta GitHub para comentar. Los lectores anónimos pueden leer pero no participar. Aceptable para MVP académico/institucional.
+
+### v7.3 — ComunidadTabs (G-V7-08) + scroll-spy (próximo)
+- Tabs internos: Inicio | Misiones | Glosario | Noticias | Discusiones
+- Scroll-spy con IntersectionObserver
+- Anchor URLs estables: `/comunidades/gobierno#misiones`
+
+### v7.4 — Usability gaps (subset AUDIT-usability-gaps-20)
+- G02 skeleton states durante load
+- G11 deep-link al heading (hash navigation con scroll suave)
+- G07 print improvements
+
+### v7.5 — A11y AAA + Telemetry
+- G09 a11y AAA compliance
+- G20 telemetry mejor (ya hay Vercel Analytics)
 
 ---
 

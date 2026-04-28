@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
+import { Discusiones } from '@/components/comunidad/discusiones';
 import { concepto, canonicPaper, note } from '#site/content';
 import type { Metadata } from 'next';
 
@@ -182,6 +183,9 @@ export default async function ConceptoPage({ params }: { params: Promise<{ conce
           </div>
         </section>
       )}
+
+      {/* v7.2 — Discusiones por concepto */}
+      <Discusiones term={`concepto:${c.id}`} />
 
       {/* Footer mínimo */}
       <div className="mt-12 border-t pt-4 text-[10px] text-muted-foreground">

@@ -10,6 +10,7 @@ import { MermaidRenderer } from '@/components/biblioteca/mermaid-renderer';
 import { ComprehensionInline } from '@/components/biblioteca/comprehension-inline';
 import { PresaberesCallout } from '@/components/biblioteca/presaberes-callout';
 import { DeliberacionPanel } from '@/components/biblioteca/deliberacion-panel';
+import { Discusiones } from '@/components/comunidad/discusiones';
 import { ComparativeSplit, CompareButton } from '@/components/workspace/workspace-shell';
 import { InfographicQuickstart, InfographicBadge } from '@/components/biblioteca/infographic-quickstart';
 import { PrintButton } from '@/components/print-button';
@@ -155,6 +156,9 @@ export default async function PaperPage({ params }: { params: Promise<{ mid: str
 
           {/* v4.5b D8 — Deliberación de la comunidad (bottom-up, localStorage MVP) */}
           <DeliberacionPanel paperId={mid} />
+
+          {/* v7.2 — Discusiones GitHub Discussions (giscus) por paper */}
+          <Discusiones term={`paper:${mid}`} />
 
           {/* Backlinks */}
           {backlinks.length > 0 && (

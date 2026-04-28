@@ -55,10 +55,10 @@ export const COP_SERVICES: CopService[] = [
     id: 'foro',
     name: 'Discusiones',
     emoji: '💬',
-    description: 'Discusión asíncrona por hilo con menciones y referencias.',
+    description: 'Discusión asíncrona vía GitHub Discussions (giscus). Cuenta GitHub requerida.',
     Icon: MessageSquare,
-    status: 'soon',
-    href: (slug) => `/${slug}/foro`,
+    status: 'active',
+    href: (slug) => `/${slug}#discusiones`,
   },
   {
     id: 'aprendizaje',
