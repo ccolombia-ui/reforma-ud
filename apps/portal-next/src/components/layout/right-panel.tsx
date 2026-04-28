@@ -278,7 +278,10 @@ export function RightPanel() {
               {tab === 'grafo' && (
                 <div className="h-full">
                   {activeDoc ? (
-                    <PaperLocalGraph paperId={activeDoc.id} hops={1} />
+                    /* v6.0 G-SVC-01 · `nodeId` genérico acepta paper m##,
+                       concepto con-XXX, note slug, comunidad slug. Si el id
+                       no está en el grafo, el componente muestra mensaje. */
+                    <PaperLocalGraph nodeId={activeDoc.id} hops={1} />
                   ) : (
                     /* Sin doc activo → grafo GLOBAL del corpus (107 nodos, 125 aristas). */
                     <VisNetworkGraph src="/static/graph-global.json" />

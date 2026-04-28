@@ -1,14 +1,16 @@
 'use client';
 
-import { canonicPaper, note, concepto } from '#site/content';
+import { canonicPaper, note, concepto, community } from '#site/content';
 
 export type ActiveDoc = {
   id: string;
   href: string;
   title: string;
-  kind: 'paper' | 'note' | 'concepto';
+  kind: 'paper' | 'note' | 'concepto' | 'community';
   number?: number;
   toc?: Array<{ title: string; url: string; items?: Array<{ title: string; url: string }> }>;
+  /** v6.0 · cites del frontmatter (papers vinculados). Disponible para community/note. */
+  cites?: string[];
 };
 
 /**
@@ -53,18 +55,41 @@ export function getActiveDocFromPath(pathname: string | null | undefined): Activ
     }
   }
 
-  // /comunidades/.../slug → buscar nota
+  // /comunidades/.../slug → primero buscar nota, luego comunidad
   if (clean.startsWith('/comunidades/')) {
     const slug = clean.replace(/^\//, '');
-    const noteDoc = note.find((n) => n.slug === slug);
-    if (noteDoc) {
-      return {
-        id: noteDoc.slug,
-        href: noteDoc.href,
-        title: noteDoc.title,
-        kind: 'note',
-        toc: noteDoc.toc,
-      };
+    // Sub-rutas de comunidad (no son notes ni community en si): biblioteca, grafo, biblioteca/<docId>
+    const lastSeg = slug.split('/').pop();
+    const isSubroute = lastSeg === 'biblioteca' || lastSeg === 'grafo';
+    const isBibliotecaDoc = slug.includes('/biblioteca/');
+
+    if (!isSubroute && !isBibliotecaDoc) {
+      // 1) Nota (mdx hijo en vault de comunidad)
+      const noteDoc = note.find((n) => n.slug === slug);
+      if (noteDoc) {
+        return {
+          id: noteDoc.slug,
+          href: noteDoc.href,
+          title: noteDoc.title,
+          kind: 'note',
+          toc: noteDoc.toc,
+          cites: noteDoc.cites ?? [],
+        };
+      }
+      // 2) Comunidad (index.mdx de unidad organizativa)
+      // v6.0 G-SVC-04 · antes /comunidades/<slug> retornaba null;
+      // ahora retorna kind:'community' para que tabs activen contexto.
+      const cop = community.find((c) => c.slug === slug);
+      if (cop) {
+        return {
+          id: cop.slug,
+          href: cop.href,
+          title: cop.shortName ?? cop.name,
+          kind: 'community',
+          toc: cop.toc,
+          cites: cop.cites ?? [],
+        };
+      }
     }
   }
 

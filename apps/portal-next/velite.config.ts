@@ -339,6 +339,16 @@ const concepto = defineCollection({
       cited_in: s.array(s.string()).default([]),
       cited_count: s.number().default(0),
       tags: s.array(s.string()).default([]),
+      // v6.0 G-SVC-02 · relations opcional para simetria con paper. Permite
+      // que el RefsPanel renderice "salientes" (papers/conceptos relacionados)
+      // ademas de "entrantes" (backlinks via grafo).
+      relations: s
+        .object({
+          pre: s.array(s.string()).default([]),
+          pos: s.array(s.string()).default([]),
+          custom: s.record(s.array(s.string())).default({}),
+        })
+        .default({ pre: [], pos: [], custom: {} }),
       body: s.markdown(),
       toc: s.toc(),
       slug: s.path(),
@@ -401,6 +411,14 @@ const note = defineCollection({
       title: s.string(),
       tags: s.array(s.string()).default([]),
       cites: s.array(s.string()).default([]),
+      // v6.0 G-SVC-02 · relations opcional para simetria con paper.
+      relations: s
+        .object({
+          pre: s.array(s.string()).default([]),
+          pos: s.array(s.string()).default([]),
+          custom: s.record(s.array(s.string())).default({}),
+        })
+        .default({ pre: [], pos: [], custom: {} }),
       body: s.markdown(),
       toc: s.toc(),
       slug: s.path(),

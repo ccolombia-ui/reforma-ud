@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Link2, ChevronRight, BookMarked, FileText, Building2, ArrowUpRight, ArrowDownLeft, Users, BookOpen, Scale, Image as ImageIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { canonicPaper } from '#site/content';
+import { canonicPaper, note, concepto, community } from '#site/content';
 import type { ActiveDoc } from '@/lib/active-doc';
 import { cn } from '@/lib/utils';
 
@@ -72,9 +72,39 @@ export function RefsPanel({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
   if (error) return <EmptyState reason="error" message={error} />;
   if (!data) return <EmptyState reason="no-doc" />;
 
-  // Outgoing: solo papers canónicos tienen `relations` por ahora (v4.5c)
-  const paper = doc.kind === 'paper' ? canonicPaper.find((p) => p.id === doc.id) : null;
-  const rel = (paper as { relations?: CanonicRelations } | null)?.relations;
+  // v6.0 G-SVC-02 · Outgoing relations para todos los kinds (no solo papers).
+  // Note + Concepto ahora declaran `relations` opcional en su schema Velite.
+  // Plus: cites[] flat en note/community se promueve a relations.custom.cites.
+  let rel: CanonicRelations | undefined;
+  if (doc.kind === 'paper') {
+    const paper = canonicPaper.find((p) => p.id === doc.id);
+    rel = (paper as { relations?: CanonicRelations } | null)?.relations;
+  } else if (doc.kind === 'note') {
+    const n = note.find((x) => x.slug === doc.id);
+    if (n) {
+      const baseRel = (n as { relations?: { pre: string[]; pos: string[]; custom: Record<string, string[]> } }).relations;
+      rel = {
+        pre: baseRel?.pre ?? [],
+        pos: baseRel?.pos ?? [],
+        custom: { ...(baseRel?.custom ?? {}), ...(n.cites.length > 0 ? { cites: n.cites } : {}) },
+      };
+    }
+  } else if (doc.kind === 'concepto') {
+    const c = concepto.find((x) => x.id === doc.id);
+    if (c) {
+      const baseRel = (c as { relations?: { pre: string[]; pos: string[]; custom: Record<string, string[]> } }).relations;
+      rel = {
+        pre: baseRel?.pre ?? [],
+        pos: baseRel?.pos ?? [],
+        custom: { ...(baseRel?.custom ?? {}), ...(c.cited_in.length > 0 ? { cited_in: c.cited_in } : {}) },
+      };
+    }
+  } else if (doc.kind === 'community') {
+    const cop = community.find((x) => x.slug === doc.id);
+    if (cop && cop.cites.length > 0) {
+      rel = { pre: [], pos: [], custom: { cites: cop.cites } };
+    }
+  }
   const customGroups = rel?.custom ?? {};
   const outgoingTotal =
     (rel?.pre?.length ?? 0) +
@@ -274,18 +304,22 @@ function customIcon(k: string): typeof BookOpen {
   if (k === 'glosario') return BookOpen;
   if (k === 'normas') return Scale;
   if (k === 'figuras') return ImageIcon;
+  if (k === 'cites' || k === 'cited_in') return BookMarked;
   return Link2;
 }
 function customTone(k: string): 'amber' | 'emerald' | 'blue' | 'rose' | 'violet' | 'slate' {
   if (k === 'glosario') return 'amber';
   if (k === 'normas') return 'rose';
   if (k === 'figuras') return 'violet';
+  if (k === 'cites' || k === 'cited_in') return 'blue';
   return 'slate';
 }
 function prettyCustomLabel(k: string): string {
   if (k === 'glosario') return 'Glosario invocado';
   if (k === 'normas') return 'Normas';
   if (k === 'figuras') return 'Figuras';
+  if (k === 'cites') return 'Cita papers';
+  if (k === 'cited_in') return 'Citado en papers';
   return k.charAt(0).toUpperCase() + k.slice(1);
 }
 

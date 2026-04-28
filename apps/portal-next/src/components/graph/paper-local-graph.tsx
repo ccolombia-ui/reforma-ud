@@ -32,10 +32,25 @@ type GraphData = {
 };
 
 /**
- * PaperLocalGraph — extrae del grafo global el subgrafo centrado en paperId
+ * PaperLocalGraph — extrae del grafo global el subgrafo centrado en `nodeId`
  * con N-hops de vecinos. Resalta el nodo activo.
+ *
+ * v6.0 G-SVC-01 · acepta cualquier nodeId del grafo (paper m##, concepto
+ * con-XXX, note slug completo, comunidad slug). El alias `paperId` se
+ * mantiene retro-compatible con call-sites antiguos.
  */
-export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?: number }) {
+export function PaperLocalGraph({
+  paperId,
+  nodeId,
+  hops = 2,
+}: {
+  /** @deprecated v6.0 · usar `nodeId` (genérico). Mantenido por compat. */
+  paperId?: string;
+  /** ID del nodo central en graph-global.json (m##, con-*, slug, ...). */
+  nodeId?: string;
+  hops?: number;
+}) {
+  const focusId = nodeId ?? paperId ?? '';
   const containerRef = useRef<HTMLDivElement>(null);
   const networkRef = useRef<Network | null>(null);
   const [global, setGlobal] = useState<GraphData | null>(null);
@@ -46,10 +61,10 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
 
   // v5.0j Gap 4 · click en nodo NO reemplaza el doc actual; abre en pane
   // derecho (pane B). Si el nodo es el doc activo, no-op (ya está abierto).
-  const openInRightPane = useCallback((nodeId: string) => {
-    if (nodeId === paperId) return; // ya estamos viendo este doc
-    panesState.openInNextPane(nodeId);
-  }, [panesState, paperId]);
+  const openInRightPane = useCallback((id: string) => {
+    if (id === focusId) return; // ya estamos viendo este doc
+    panesState.openInNextPane(id);
+  }, [panesState, focusId]);
 
   // Fetch global graph una sola vez
   useEffect(() => {
@@ -68,11 +83,17 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
       });
   }, []);
 
-  // Subgrafo centrado en paperId con N-hops
+  // v6.0 · ¿el focusId existe en el grafo? Si no, no construimos subgrafo.
+  const focusInGraph = useMemo(() => {
+    if (!global || !focusId) return false;
+    return global.nodes.some((n) => n.id === focusId);
+  }, [global, focusId]);
+
+  // Subgrafo centrado en focusId con N-hops
   const subgraph = useMemo<GraphData | null>(() => {
-    if (!global) return null;
-    const reachable = new Set<string>([paperId]);
-    let frontier = new Set<string>([paperId]);
+    if (!global || !focusInGraph) return null;
+    const reachable = new Set<string>([focusId]);
+    let frontier = new Set<string>([focusId]);
     for (let h = 0; h < hops; h++) {
       const next = new Set<string>();
       for (const e of global.edges) {
@@ -84,7 +105,7 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
       if (frontier.size === 0) break;
     }
     const nodes = global.nodes.filter((n) => reachable.has(n.id)).map((n) => {
-      if (n.id === paperId) {
+      if (n.id === focusId) {
         return {
           ...n,
           borderWidth: 4,
@@ -98,7 +119,7 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
     });
     const edges = global.edges.filter((e) => reachable.has(e.from) && reachable.has(e.to));
     return { nodes, edges };
-  }, [global, paperId, hops]);
+  }, [global, focusId, focusInGraph, hops]);
 
   // Render vis-network
   useEffect(() => {
@@ -198,6 +219,13 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
             Error: {error}
           </div>
         )}
+        {!loading && !error && global && !focusInGraph && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center text-xs text-muted-foreground">
+            <div className="font-mono text-[10px] uppercase tracking-wide">{focusId || '—'}</div>
+            <p>Este nodo aún no aparece en el grafo global del corpus.</p>
+            <p className="text-[10px]">Pendiente de indexación · ver scripts/build-graph.mjs</p>
+          </div>
+        )}
         <div ref={containerRef} className="absolute inset-0" />
       </div>
       {selected && (
@@ -218,7 +246,7 @@ export function PaperLocalGraph({ paperId, hops = 2 }: { paperId: string; hops?:
                 variant="outline"
                 className="gap-1.5 h-7 text-xs flex-1"
                 onClick={() => openInRightPane(selected.id)}
-                disabled={selected.id === paperId}
+                disabled={selected.id === focusId}
                 title="Abrir en pane derecho (preserva el doc actual)"
               >
                 <SplitSquareHorizontal className="h-3 w-3" />
