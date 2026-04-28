@@ -33,7 +33,8 @@ kd_priority: P1
 
 | Gap | Descripción | Decisión v7 |
 |---|---|---|
-| **G-HOVER-01** | RefsPanel items sin hover-preview | **v7.0 — implementar** (follow-up v6.6 ya documentado) |
+| **G-HOVER-01** | RefsPanel items sin hover-preview | ✅ CERRADO v7.0 — WikiLinkPreview en refs-panel |
+| **G-HOVER-02** | Wikilinks a `/glosario/con-*` no resolvían (broken) | ✅ CERRADO v7.8 — resolveHref maneja /glosario/ vía concepto collection |
 
 ---
 

@@ -47,15 +47,14 @@ function resolveHref(href: string): ResolvedDoc {
   }
 
   if (cleanHref.startsWith('/glosario/')) {
-    const slug = cleanHref.replace('/glosario/', '').replace(/\/$/, '');
-    const doc = concepto.find((c) => c.slug === slug);
+    const doc = concepto.find((c) => c.href === cleanHref || c.href === cleanHref + '/');
     if (doc) {
       return {
         kind: 'concepto',
         slug: doc.slug,
         title: doc.kd_title ?? doc.skos_prefLabel ?? doc.slug,
         definition: doc.skos_definition,
-        href: `/glosario/${doc.slug}/`,
+        href: doc.href,
         body: doc.body,
       };
     }
