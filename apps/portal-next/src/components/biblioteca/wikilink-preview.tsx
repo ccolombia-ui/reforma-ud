@@ -9,84 +9,12 @@ import { canonicPaper, community, concepto, note } from '#site/content';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { useDocTabs } from '@/lib/doc-tabs';
 import { usePanesState } from '@/lib/panes-state';
+import { resolveHref, type ResolvedDoc } from '@/lib/resolve-href';
 import { useSplitMode } from '@/lib/ui-state';
 import { cn } from '@/lib/utils';
 
 /** G18 — limita la profundidad de hover-cards anidados (max 1 nivel). */
 const HoverDepthCtx = createContext<number>(0);
-
-type ResolvedDoc =
-  | { kind: 'paper'; id: string; title: string; description: string; href: string; body: string; number: number }
-  | { kind: 'note';  slug: string; title: string; description?: string; href: string; body: string }
-  | { kind: 'concepto'; slug: string; title: string; definition?: string; href: string; body: string }
-  | { kind: 'community'; slug: string; name: string; description: string; href: string }
-  | { kind: 'broken'; href: string };
-
-/**
- * Resuelve un href interno a su doc destino consultando las colecciones Velite.
- * Soporta: /canonico/m05, /canonico/m05#anchor, /comunidades/.../slug
- */
-function resolveHref(href: string): ResolvedDoc {
-  if (!href || href === '#') return { kind: 'broken', href };
-  const cleanHref = href.split('#')[0];
-
-  if (cleanHref.startsWith('/canonico/')) {
-    const id = cleanHref.replace('/canonico/', '').replace(/\/$/, '');
-    const paper = canonicPaper.find((p) => p.id === id);
-    if (paper) {
-      return {
-        kind: 'paper',
-        id: paper.id,
-        title: paper.title,
-        description: paper.description,
-        href: paper.href,
-        body: paper.body,
-        number: paper.number,
-      };
-    }
-  }
-
-  if (cleanHref.startsWith('/glosario/')) {
-    const doc = concepto.find((c) => c.href === cleanHref || c.href === cleanHref + '/');
-    if (doc) {
-      return {
-        kind: 'concepto',
-        slug: doc.slug,
-        title: doc.kd_title ?? doc.skos_prefLabel ?? doc.slug,
-        definition: doc.skos_definition,
-        href: doc.href,
-        body: doc.body,
-      };
-    }
-  }
-
-  if (cleanHref.startsWith('/comunidades/')) {
-    // Try note first, then community
-    const slug = cleanHref.replace(/^\//, '').replace(/\/$/, '');
-    const noteDoc = note.find((n) => n.slug === slug);
-    if (noteDoc) {
-      return {
-        kind: 'note',
-        slug: noteDoc.slug,
-        title: noteDoc.title,
-        href: noteDoc.href,
-        body: noteDoc.body,
-      };
-    }
-    const cop = community.find((c) => c.slug === slug);
-    if (cop) {
-      return {
-        kind: 'community',
-        slug: cop.slug,
-        name: cop.shortName ?? cop.name,
-        description: cop.description ?? '',
-        href: `/${cop.slug}`,
-      };
-    }
-  }
-
-  return { kind: 'broken', href };
-}
 
 export function WikiLinkPreview(props: Readonly<{
   href: string;
@@ -122,7 +50,10 @@ function WikiLinkPreviewInner({
   children: React.ReactNode;
 }>) {
   const [opened, setOpened] = useState(false);
-  const resolved = useMemo(() => resolveHref(href), [href]);
+  const resolved = useMemo(
+    () => resolveHref(href, { canonicPaper, community, concepto, note }),
+    [href],
+  );
   const { replaceActive, openInNewTab, openInBackground } = useDocTabs();
   const panesState = usePanesState();
   const { splitMode } = useSplitMode();

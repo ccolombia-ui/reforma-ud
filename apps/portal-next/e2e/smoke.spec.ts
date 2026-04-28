@@ -70,3 +70,31 @@ test('smoke · right-panel renderiza 6 tabs flat (sin agrupador Conexiones)', as
       `tab "${label}" presente`).toBeVisible();
   }
 });
+
+/**
+ * G-HOVER-02 regresión · v7.8 (2026-04-28)
+ *
+ * Pre-fix: resolveHref no manejaba `/glosario/con-*` → kind:'broken' →
+ * la HoverCard nunca aparecía en wikilinks a conceptos del glosario.
+ *
+ * Este test garantiza que al hacer hover sobre un wikilink que apunta
+ * a /glosario/con-*, la HoverCard se monta y muestra el badge "Glosario".
+ */
+test('smoke · hover sobre wikilink /glosario/con-* monta HoverCard con badge "Glosario"', async ({ page }) => {
+  await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
+
+  // Encontrar el primer wikilink que apunte al glosario
+  const wikilink = page.locator('a.wikilink[href^="/glosario/con-"]').first();
+  await wikilink.scrollIntoViewIfNeeded();
+  await expect(wikilink).toBeVisible({ timeout: 8_000 });
+
+  // Hover (HoverCard tiene openDelay=300ms). force:true bypassa el actionability
+  // check si hay shifts menores en el layout.
+  await wikilink.hover({ force: true });
+
+  // El HoverCard debe aparecer con el badge "Glosario" — confirmación de que
+  // resolveHref devolvió kind:'concepto' (no broken).
+  const glosarioBadge = page.getByText('Glosario', { exact: true }).first();
+  await expect(glosarioBadge, 'badge "Glosario" visible en HoverCard tras hover').toBeVisible({ timeout: 3_000 });
+});
+
