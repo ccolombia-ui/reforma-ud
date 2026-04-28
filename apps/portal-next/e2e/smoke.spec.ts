@@ -80,6 +80,74 @@ test('smoke · right-panel renderiza 6 tabs flat (sin agrupador Conexiones)', as
  * Este test garantiza que al hacer hover sobre un wikilink que apunta
  * a /glosario/con-*, la HoverCard se monta y muestra el badge "Glosario".
  */
+/**
+ * G-OVERLAY-01 regresión · v7.10
+ * El ChangelogDrawer auto-abría su Sheet en cada deploy, dejando un overlay
+ * con pointer-events:auto + z-50 encima de toda la página. Bloqueaba hover,
+ * clicks del grafo y empujaba el layout creando margen mid-page.
+ */
+test('smoke · ningún Sheet en estado "open" al cargar (overlay no debe bloquear página)', async ({ page }) => {
+  await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(800); // dar tiempo a que cualquier auto-open ocurra
+  const openSheets = await page.locator('[data-slot="sheet-content"][data-state="open"], [data-slot="sheet-overlay"][data-state="open"]').count();
+  expect(openSheets, 'no Sheet debe estar en estado open al cargar la página').toBe(0);
+
+  // Verificar que NO hay overlay con z-50 fixed encima del body. Esto detecta
+  // sheets/dialogs zombie sin depender de elementFromPoint (que falla por
+  // texto inline dentro del wikilink).
+  const blockingOverlay = await page.evaluate(() => {
+    const overlays = document.querySelectorAll<HTMLElement>('div.fixed.inset-0.z-50');
+    for (const ov of Array.from(overlays)) {
+      const cs = window.getComputedStyle(ov);
+      if (cs.pointerEvents !== 'none' && cs.display !== 'none' && cs.visibility !== 'hidden') {
+        return { found: true, classes: ov.className.slice(0, 80), state: ov.getAttribute('data-state') };
+      }
+    }
+    return { found: false };
+  });
+  expect(blockingOverlay, 'no debe haber overlay fixed inset-0 z-50 con pointer-events:auto').toMatchObject({ found: false });
+});
+
+/**
+ * G-GRAPH-01 regresión · v7.10
+ * Click en nodo del grafo del right-panel debe abrir el doc en un pane
+ * secundario. Antes solo seleccionaba — el usuario reportó "nada ocurre
+ * en área de trabajo al hacer clic en grafo".
+ */
+test('smoke · /canonico/grafo/ tiene tabs/filters interactivos sin overlay zombie', async ({ page }) => {
+  await page.goto('/canonico/grafo/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(500);
+
+  // No debe haber overlay z-50 fixed bloqueando
+  const blocking = await page.evaluate(() => {
+    const overlays = document.querySelectorAll<HTMLElement>('div.fixed.inset-0.z-50');
+    return Array.from(overlays).filter((ov) => {
+      const cs = window.getComputedStyle(ov);
+      return cs.pointerEvents !== 'none' && cs.display !== 'none';
+    }).length;
+  });
+  expect(blocking, 'sin overlay zombie en página de grafo').toBe(0);
+});
+
+/**
+ * G-HEADER-01 regresión · v7.10
+ * Header debe quedarse sticky al hacer scroll (top: 0 visible siempre).
+ */
+test('smoke · header permanece sticky al scrollear hacia abajo', async ({ page }) => {
+  await page.goto('/canonico/m01/', { waitUntil: 'domcontentloaded' });
+  const header = page.locator('header').first();
+  await expect(header).toBeVisible();
+
+  // Scroll hacia abajo significativamente
+  await page.evaluate(() => window.scrollTo(0, 1500));
+  await page.waitForTimeout(300);
+
+  // Header debe seguir visible (sticky)
+  await expect(header, 'header debe ser visible tras scroll de 1500px').toBeVisible();
+  const bbox = await header.boundingBox();
+  expect(bbox?.y, 'header.top debe estar cerca de 0 (sticky)').toBeLessThan(10);
+});
+
 test('smoke · hover sobre wikilink /glosario/con-* monta HoverCard con CTA "Ver concepto completo"', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
 

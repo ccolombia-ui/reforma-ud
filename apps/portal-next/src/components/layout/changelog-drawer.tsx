@@ -33,12 +33,12 @@ export function ChangelogDrawer() {
           const lastSeen = localStorage.getItem(STORAGE_KEY);
           if (lastSeen !== data.version) {
             setIsNew(true);
-            // Auto-open la primera vez en esta sesión
-            const shownThisSession = sessionStorage.getItem('reforma-ud:changelog-shown');
-            if (!shownThisSession) {
-              setOpen(true);
-              sessionStorage.setItem('reforma-ud:changelog-shown', '1');
-            }
+            // v7.10 · QUITADO el auto-open. El Sheet bloqueaba pointer events
+            // de toda la página (overlay con z-50 + pointer-events:auto cuando
+            // el state quedaba "open") y rompía hover-preview, navegación del
+            // grafo, y empujaba el layout creando un margen mid-page.
+            // Ahora el indicador floating bottom-left "Novedades" sigue visible
+            // y el usuario decide cuándo abrir el drawer.
           }
         } catch {}
       })

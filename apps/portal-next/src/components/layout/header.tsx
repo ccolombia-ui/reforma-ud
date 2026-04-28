@@ -116,7 +116,7 @@ export function Header() {
 
   return (
     <header
-      className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b bg-background/85 px-2 backdrop-blur-md md:px-3"
+      className="sticky top-0 z-30 flex h-12 items-center gap-1.5 border-b bg-background/90 px-2 backdrop-blur-md md:px-3"
       data-pagefind-ignore
     >
       {/* Mobile: hamburger → Sheet drawer con sidebar */}

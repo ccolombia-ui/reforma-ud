@@ -53,11 +53,12 @@ const options: HTMLReactParserOptions = {
   },
 };
 
-export function MDXWithHoverPreview({ code, collapsible = true }: Readonly<{ code: string; collapsible?: boolean }>) {
-  // v5.0j Gap 1 · headings h2-h4 envueltos en <details> nativos.
-  // v5.0k · try/catch defensivo: si wrap o parse falla por HTML malformed
-  // (algunos rehype plugins generan output no estricto), fallback a render
-  // directo del code original sin colapsabilidad.
+export function MDXWithHoverPreview({ code, collapsible = false }: Readonly<{ code: string; collapsible?: boolean }>) {
+  // v7.9 · collapsible default OFF — wrapHeadingsInCollapsibles (regex-based)
+  // corrompía SVG inline (Mermaid) inyectando </div></details> como valor de
+  // atributos SVG (`<line y1="...">`, `<path d="...">`). Eso rompía hidratación
+  // y la HoverCard de Radix nunca se abría aunque el wrapper estuviera presente.
+  // Re-activable por consumer si en algún caso el body NO tiene Mermaid.
   const transformed = useMemo(() => {
     if (!collapsible) return code;
     try {

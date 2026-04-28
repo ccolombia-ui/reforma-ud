@@ -164,18 +164,22 @@ export function PaperLocalGraph({
       },
     );
 
+    // v7.10 · single click ahora abre el nodo en el área de trabajo además de
+    // seleccionarlo para inspección. Antes solo seleccionaba (mostraba detalle
+    // en panel lateral del grafo) — UX confusa: el usuario reportó "clic en
+    // grafo no hace nada en área de trabajo". DoubleClick mantiene mismo
+    // comportamiento para retrocompatibilidad.
     network.on('click', (params: { nodes: string[] }) => {
       if (params.nodes.length > 0) {
         const nodeId = params.nodes[0];
         const node = subgraph.nodes.find((n) => n.id === nodeId);
         setSelected(node ?? null);
+        openInRightPane(nodeId);
       } else {
         setSelected(null);
       }
     });
 
-    // v5.0j Gap 4 · doubleClick abre el nodo en pane derecho (preserva el
-    // doc actual en pane A). Antes hacía window.location.href que reemplazaba.
     network.on('doubleClick', (params: { nodes: string[] }) => {
       if (params.nodes.length > 0) {
         openInRightPane(params.nodes[0]);

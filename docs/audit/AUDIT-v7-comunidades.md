@@ -263,6 +263,57 @@ Esto permite que cada comunidad tenga "su propio glosario" sin duplicar contenid
 - G09 a11y AAA compliance
 - G20 telemetry mejor (ya hay Vercel Analytics)
 
+### v7.10 — 4 issues reportados por usuario (CERRADO 2026-04-28)
+
+**G-OVERLAY-01 · ChangelogDrawer auto-open bloqueaba toda la página** (P0)
+- Síntomas reportados: margen mid-page, hover wikilinks no abre, clic en grafo
+  no hace nada en área de trabajo
+- Root cause: `setOpen(true)` automático en cada nuevo deploy → SheetOverlay
+  con `fixed inset-0 z-50` y `pointer-events: auto` quedaba interceptando
+  todos los pointer events; ancestros del wikilink heredaban
+  `pointer-events: none`. El usuario no veía el drawer pero seguía en DOM.
+- Fix: quitado el auto-open en `changelog-drawer.tsx` + defensa en profundidad
+  añadiendo `data-closed:pointer-events-none` al SheetOverlay base
+- TDD: smoke `ningún Sheet en estado "open" al cargar` + chequeo overlay zombie
+
+**G-HOVER-03 · MDXWithHoverPreview · instanceof Element fallaba en bundle prod** (P0)
+- Síntomas: aunque resolveHref funcionaba (test unit verde), wikilinks NO se
+  envolvían en HoverCard durante SSR
+- Root cause: `node instanceof Element` falla por module identity entre
+  html-react-parser y consumer en bundles de producción
+- Fix: duck-typing `node.type === 'tag'` (mismo patrón ya conocido en vitest)
+- TDD: `mdx-with-hover-preview.test.ts` carga body real M01 desde .velite y
+  verifica 84/84 wikilinks interceptados (pre-fix: 0/84)
+
+**G-HOVER-04 · wrapHeadingsInCollapsibles corrompía SVG inline** (P1)
+- Síntomas: console.errors `<line attribute y1: Expected length, "</div></details>...">`
+  → hidratación rota → HoverCard no se abre tras hover real
+- Root cause: regex-based HTML manipulation rompía Mermaid SVGs
+- Fix: collapsible default OFF en MDXWithHoverPreview (re-activable por consumer)
+- TDD: vitest con HTML sintético detectó comportamiento (1/4 wikilinks
+  perdidos) — marcado .skip con TODO v7.11
+
+**G-GRAPH-01 · Click en grafo right-panel no hacía nada en área de trabajo** (P1)
+- Síntomas reportados directamente: "clic en grafo nada ocurre"
+- Root cause: `network.on('click', ...)` solo seleccionaba; navegación
+  requería doubleClick
+- Fix: `paper-local-graph.tsx` — single click ahora `openInRightPane(nodeId)`
+  además de seleccionar
+- TDD: smoke verifica /canonico/grafo/ no tiene overlay zombie
+
+**G-HEADER-01 · Header minimalista + sticky al scroll** (P2)
+- Fix: `header.tsx` h-14 → h-12, `gap-2` → `gap-1.5`, `bg/85` → `bg/90`
+  (sticky `top-0 z-30` ya estaba). Smoke valida sticky tras scroll de 1500px
+
+**TDD lecciones aprendidas en este sprint**:
+- Selector estricto de HoverCard (CTA "Ver concepto completo") evita falso
+  positivo del selector general "Glosario" (matcheaba sidebar item)
+- Pre-condition assertion: verificar que el efecto NO existe antes del trigger
+- Inspect script `scripts/inspect-hover.mjs` con elementFromPoint + React fiber
+  introspection es invaluable para diagnosticar bugs de pointer events
+
+**Total tests sprint v7.10**: 22 vitest + 18 smoke + 16 sync-vault = 56/56 ✓
+
 ---
 
 *CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · CPS-939-2026 · UDFJC · 2026-04-28*

@@ -37,7 +37,10 @@ function SheetOverlay({
     <SheetPrimitive.Overlay
       data-slot="sheet-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
+        // v7.10 · data-closed:pointer-events-none — defensa en profundidad
+        // contra Sheet quedando "open" en estado fantasma (visto en prod
+        // bloqueando hover, clicks de grafo y empujando layout).
+        "fixed inset-0 z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0 data-closed:pointer-events-none",
         className
       )}
       {...props}
