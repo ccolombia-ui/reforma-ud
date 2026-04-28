@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link2, ChevronRight, BookMarked, FileText, Building2, ArrowUpRight, ArrowDownLeft, Users, BookOpen, Scale, Image as ImageIcon, Pin, PinOff } from 'lucide-react';
+import { WikiLinkPreview } from '@/components/biblioteca/wikilink-preview';
 import { Badge } from '@/components/ui/badge';
 import { canonicPaper, note, concepto, community } from '#site/content';
 import type { ActiveDoc } from '@/lib/active-doc';
@@ -318,6 +319,15 @@ function RelationItem({
     </span>
   );
   if (resolved.href) {
+    // G-V7-06: hover-preview para papers (m##) y conceptos (con-*)
+    const isResolvable = /^m\d{2}$/i.test(id) || /^con-/.test(id);
+    if (isResolvable) {
+      return (
+        <WikiLinkPreview href={resolved.href} className="block hover:opacity-90 transition-opacity">
+          {Inner}
+        </WikiLinkPreview>
+      );
+    }
     return (
       <Link href={resolved.href} className="block hover:opacity-90 transition-opacity">
         {Inner}

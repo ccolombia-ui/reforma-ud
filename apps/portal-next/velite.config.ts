@@ -387,6 +387,29 @@ const community = defineCollection({
       shortName: s.string().optional(),
       description: s.string(),
       cites: s.array(s.string()).default([]),
+      // v7.0 — modelo extendido de comunidad
+      conceptoId: s.string().optional(),         // con-* que define la comunidad (su constitución)
+      glosarioTags: s.array(s.string()).default([]), // tags para filtrar glosario contextual
+      roles: s.array(s.object({
+        nivel: s.number(),                        // N1=1, N2=2, N3=3, N4=4
+        nombre: s.string(),
+        descripcion: s.string().optional(),
+        emoji: s.string().optional(),
+      })).default([]),
+      misionesColectivas: s.array(s.object({
+        id: s.string(),                           // "MC-001"
+        titulo: s.string(),
+        descripcion: s.string().optional(),
+        progreso: s.number().default(0),          // 0-100
+        estado: s.enum(['pendiente', 'activo', 'completado']).default('pendiente'),
+        papers: s.array(s.string()).default([]),  // papers relacionados
+      })).default([]),
+      miembros: s.array(s.object({
+        nombre: s.string(),
+        rol: s.string().optional(),
+        nivel: s.number().optional(),             // N1-N4
+        avatar: s.string().optional(),
+      })).default([]),
       body: s.markdown(),
       toc: s.toc(),
       slug: s.path(),

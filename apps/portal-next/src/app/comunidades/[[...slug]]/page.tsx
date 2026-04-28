@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, FileText, Folder, Network, BookMarked, Building2, GraduationCap, Microscope, Globe, Landmark } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChevronLeft, ChevronRight, FileText, BookMarked, Building2, GraduationCap, Microscope, Globe, Landmark } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -13,6 +13,10 @@ import { ServiceTiles } from '@/components/dashboard/service-tiles';
 import { BibliotecaView } from '@/components/biblioteca/biblioteca-view';
 import { DocumentReader } from '@/components/biblioteca/document-reader';
 import { NoticiasRelacionadas } from '@/components/comunidad/noticias-relacionadas';
+import { ComunidadDefinicion } from '@/components/comunidad/comunidad-definicion';
+import { MisionesColectivas } from '@/components/comunidad/misiones-colectivas';
+import { RolesGrid } from '@/components/comunidad/roles-grid';
+import { GlosarioComunidad } from '@/components/comunidad/glosario-comunidad';
 import { getComprehension } from '@/lib/comprehension';
 import { community, note, canonicPaper } from '#site/content';
 import type { Metadata } from 'next';
@@ -131,23 +135,6 @@ function findCommunity(slug: string) {
   return community.find((c) => c.slug === slug);
 }
 
-function findChildren(parentSlug: string) {
-  // Hijos directos = aquellos cuyo slug = parent + 1 segmento más,
-  // o que pasan por un grupo sintético como facultades/escuelas/etc.
-  return community.filter((c) => {
-    if (c.slug === parentSlug) return false;
-    if (!c.slug.startsWith(parentSlug + '/')) return false;
-    const rest = c.slug.slice(parentSlug.length + 1);
-    // Hijos directos: 1 segmento. Pero también incluyo "grupo + 1 nodo" para mostrar
-    // facultades/cmn al nivel de formacion (saltando el nodo sintético "facultades")
-    const segments = rest.split('/');
-    return segments.length === 1 || segments.length === 2;
-  });
-}
-
-function findNotes(communitySlug: string) {
-  return note.filter((n) => n.communitySlug === communitySlug);
-}
 
 function buildBreadcrumb(slug: string) {
   const parts = slug.split('/');
@@ -260,10 +247,15 @@ export default async function CommunityPage({
   const c = findCommunity(fullSlug);
   if (!c) notFound();
 
-  const children = findChildren(fullSlug);
-  const notes = findNotes(fullSlug);
   const crumbs = buildBreadcrumb(fullSlug);
   const cited = canonicPaper.filter((p) => c.cites?.includes(p.id));
+
+  // v7.0 — datos del modelo extendido
+  const misionesColectivas = (c as unknown as { misionesColectivas?: unknown[] }).misionesColectivas ?? [];
+  const roles = (c as unknown as { roles?: unknown[] }).roles ?? [];
+  const miembros = (c as unknown as { miembros?: unknown[] }).miembros ?? [];
+  const conceptoId = (c as unknown as { conceptoId?: string }).conceptoId;
+  const glosarioTags = (c as unknown as { glosarioTags?: string[] }).glosarioTags ?? [];
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
@@ -284,7 +276,7 @@ export default async function CommunityPage({
         ))}
       </nav>
 
-      {/* Header con hero + atención + acciones rápidas */}
+      {/* Hero */}
       <header className="mb-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
@@ -293,9 +285,14 @@ export default async function CommunityPage({
                 {TYPE_ICONS[c.type]}
                 {TYPE_LABEL[c.type] ?? c.type}
               </Badge>
-              {c.cites && c.cites.length > 0 && (
-                <Badge className="gap-1 border-amber-500/30 bg-amber-500/15 text-amber-700 dark:text-amber-300">
-                  ⚠ Atención · {c.cites.length} {c.cites.length === 1 ? 'paper' : 'papers'} fundantes
+              {miembros.length > 0 && (
+                <Badge variant="secondary" className="text-[10px]">
+                  {miembros.length} miembros
+                </Badge>
+              )}
+              {misionesColectivas.filter((m: unknown) => (m as { estado: string }).estado === 'activo').length > 0 && (
+                <Badge className="gap-1 border-amber-500/30 bg-amber-500/15 text-amber-700 dark:text-amber-300 text-[10px]">
+                  {misionesColectivas.filter((m: unknown) => (m as { estado: string }).estado === 'activo').length} misiones activas
                 </Badge>
               )}
             </div>
@@ -318,18 +315,44 @@ export default async function CommunityPage({
         </div>
       </header>
 
+      {/* v7.0 — Definición: concepto fundante del glosario */}
+      {conceptoId && (
+        <>
+          <ComunidadDefinicion conceptoId={conceptoId} />
+          <Separator className="my-8" />
+        </>
+      )}
+
       {/* Dashboard BSC-S/RBM con KPIs P1-P4 + tabs Lista/RBM/Kanban/Grafo */}
       <DashboardCop copSlug={c.slug} />
 
       <Separator className="my-10" />
 
-      {/* Servicios estilo Creciverso */}
+      {/* Servicios — incluye noticias, glosario, biblioteca, grafo, discusiones */}
       <ServiceTiles copSlug={c.slug} />
 
       <Separator className="my-10" />
 
-      {/* v5.0z · Tablero de noticias relacionadas (inductor de opinión).
-          Feed centralizado en content/feed/ + distribución por relación tag-based. */}
+      {/* v7.0 — Misiones colectivas con progress */}
+      {misionesColectivas.length > 0 && (
+        <>
+          <MisionesColectivas
+            misiones={misionesColectivas as Parameters<typeof MisionesColectivas>[0]['misiones']}
+            copSlug={c.slug}
+          />
+          <Separator className="my-10" />
+        </>
+      )}
+
+      {/* v7.0 — Glosario contextual de la comunidad */}
+      {glosarioTags.length > 0 && (
+        <>
+          <GlosarioComunidad tags={glosarioTags} />
+          <Separator className="my-10" />
+        </>
+      )}
+
+      {/* Noticias relacionadas (feed centralizado + distribución tag-based) */}
       <NoticiasRelacionadas
         communitySlug={c.slug}
         communityCites={c.cites ?? []}
@@ -337,15 +360,26 @@ export default async function CommunityPage({
 
       <Separator className="my-10" />
 
+      {/* v7.0 — Roles y miembros */}
+      {roles.length > 0 && (
+        <>
+          <RolesGrid
+            roles={roles as Parameters<typeof RolesGrid>[0]['roles']}
+            miembros={miembros as Parameters<typeof RolesGrid>[0]['miembros']}
+          />
+          <Separator className="my-10" />
+        </>
+      )}
+
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
         <main className="min-w-0 space-y-10">
-          {/* Body MDX (descripción de la CoP) */}
+          {/* Body MDX */}
           <section className="prose-paper">
             <MDXWithHoverPreview code={c.body} />
           </section>
         </main>
 
-        {/* Right rail */}
+        {/* Right rail — papers fundantes */}
         <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
           {cited.length > 0 && (
             <section>

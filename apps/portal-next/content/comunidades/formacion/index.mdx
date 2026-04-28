@@ -2,20 +2,65 @@
 type: vicerrectoria
 name: "Vicerrectoria de Formacion"
 shortName: "VR Formacion"
-description: "Responsable de escuelas, facultades, programas academicos y procesos de formacion de la UDFJC."
+description: "Escuelas, facultades y programas academicos de la UDFJC. Diseña rutas formativas, creditos CCA y Paquetes de Aprendizaje."
 cites: [m01, m04, m06]
+conceptoId: con-vicerrectoria-formacion
+glosarioTags: [t2-academico-teorico, t4-operativo-institucional, concepto-formacion, cca, creditos]
+roles:
+  - nivel: 1
+    nombre: Observador
+    descripcion: "Conoce los programas y escuelas. Lee M01 y M04."
+    emoji: "👁️"
+  - nivel: 2
+    nombre: Docente Disenador
+    descripcion: "Diseña experiencias de aprendizaje y articula creditos CCA."
+    emoji: "🎨"
+  - nivel: 3
+    nombre: Lider Academico
+    descripcion: "Coordina diseños curriculares y lidera misiones colectivas de formacion."
+    emoji: "🏫"
+  - nivel: 4
+    nombre: Mentor Formativo
+    descripcion: "Propone nuevas rutas formativas y negocia con el Consejo Academico."
+    emoji: "🎓"
+misionesColectivas:
+  - id: MC-FOR-01
+    titulo: "Mapa de creditos CCA en todas las facultades"
+    descripcion: "Inventariar y mapear creditos CCA en todas las unidades academicas."
+    progreso: 35
+    estado: activo
+    papers: [m06, m04]
+  - id: MC-FOR-02
+    titulo: "Diseño de 3 Paquetes CCA piloto"
+    descripcion: "Crear 3 paquetes CCA demostrativos para la CABA bioeconomia territorial."
+    progreso: 15
+    estado: activo
+    papers: [m04, m06, m08]
+  - id: MC-FOR-03
+    titulo: "Benchmark curriculos 21 IES"
+    descripcion: "Comparar estructuras curriculares con 21 IES colombianas."
+    progreso: 60
+    estado: activo
+    papers: [m05, m03]
+miembros:
+  - nombre: "VR Formacion UDFJC"
+    rol: "Vicerrectoria"
+    nivel: 4
+  - nombre: "Docentes Disenadores"
+    rol: "Practicantes CCA"
+    nivel: 2
 ---
 
 # Vicerrectoria de Formacion
 
-Responsable de escuelas, facultades, programas academicos y procesos de formacion de la UDFJC.
+Responsable de escuelas, facultades, programas academicos y procesos de formacion de la UDFJC. Es el eje del diseño curricular de la reforma, articulando creditos CCA, Paquetes de Aprendizaje y las rutas de las Escuelas Emprendedoras Transformativas.
 
 ## Fundado en
 
-- [[m01]]
-- [[m04]]
-- [[m06]]
+- [[m01]] — Mandato: Art. 8-17 ACU 004-25 define la comunidad formativa
+- [[m04]] — JTBD: 6 roles de la comunidad UDFJC (Disenador, Facilitador, Pasteur...)
+- [[m06]] — BMK Creditos CCA: benchmark y diseño de creditos academicos
 
-## Notas
+## Mision de esta comunidad
 
-En este espacio iran las notas vivas de esta comunidad.
+Disenar y desplegar rutas formativas que articulen docencia, investigacion y extension en Paquetes de Aprendizaje CCA, con trazabilidad a los estandares internacionales (M03) y al framework BSC×RBM×CRISP (M08).
