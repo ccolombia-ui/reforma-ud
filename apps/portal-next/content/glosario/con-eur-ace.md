@@ -27,13 +27,20 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, eur-ace, enaee, m03-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t7-referencia-internacional
+  - eur-ace
+  - enaee
+  - aspirational-reference
+  - m03-corpus
+  - audit-v2-2
 ---
 
 

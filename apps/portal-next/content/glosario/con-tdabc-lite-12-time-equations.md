@@ -27,13 +27,23 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
+
+
+
 
 
 cited_in: ["[[sec-MI12-10--tdabc]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-meta-instrumental, tdabc-lite, m10-corpus, propietario-udfjc, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-meta-instrumental
+  - t5-sintesis-investigacion
+  - tdabc-lite
+  - kaplan-anderson
+  - propietario-udfjc
+  - m10-corpus
+  - audit-v2-2
 ---
 
 

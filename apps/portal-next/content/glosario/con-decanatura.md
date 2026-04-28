@@ -30,15 +30,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Arts. 18e + 65 + 67 + 83"
-normative_text: "Art. 67 - Designación del Decano: Periodo 4 años; Mecanismo: Elección directa ponderada (100 puntos): Votación ponderada 70 puntos (docentes 30, estudiantes 30, egresados 10), Evaluación hoja de vida 20 puntos, Entrevista con rector 10 puntos. No hay reelección inmediata (Art. 83)."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -46,7 +37,6 @@ conflicts_with: []
 
 rol_seleccionado: docente-director
 
-"@type": GovernmentOrganization
 
 
 cited_in:

@@ -30,13 +30,21 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-internacional, unesco-2021, reimagining, bien-comun-educativo, m01-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-internacional
+  - t7-referencia-internacional
+  - unesco-2021
+  - reimagining
+  - bien-comun-educativo
+  - aspirational-reference
+  - m01-corpus
+  - audit-v2-2
 ---
 
 

@@ -27,13 +27,20 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-06--bmk-creditos-cca]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, dublin-descriptors, bologna-process, m06-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t7-referencia-internacional
+  - dublin-descriptors
+  - bologna-process
+  - aspirational-reference
+  - m06-corpus
+  - audit-v2-2
 ---
 
 

@@ -34,16 +34,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-decreto-1421-2017-men]]"
-normative_locator: "Decreto 1421 de 2017 · 11 artículos + transitorios"
-normative_text: "[Texto literal · ver atomics en 0-normatividad/1--normas-nacionales/decreto-men-1421-2017/]"
-normative_authority_level: REGLAMENTARIO
-derogated_by: ""
-derogates: []
-modification_type: "Modifica Decreto 1075 de 2015 (Decreto Único Reglamentario Sector Educación)"
-chain_status: LINEAR
-conflicts_with: []
-conflict_evidence: ""
 
 
 
@@ -51,13 +41,7 @@ conflict_evidence: ""
 
 rol_seleccionado: estudiante-soberano
 
-"@type": Legislation
 "@context":
-  "@vocab": https://schema.org/
-skos: http://www.w3.org/2004/02/skos/core#
-iso1087: https://www.iso.org/obp/ui/#iso:std:iso:1087
-prov: http://www.w3.org/ns/prov#
-dct: http://purl.org/dc/terms/
 
 
 cited_in:

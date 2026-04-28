@@ -27,13 +27,20 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-sintesis, taxonomia-n1-n4, salto-cuantico, m01-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-sintesis
+  - t5-sintesis-investigacion
+  - taxonomia-n1-n4
+  - salto-cuantico
+  - propietario-udfjc
+  - m01-corpus
+  - audit-v2-2
 ---
 
 

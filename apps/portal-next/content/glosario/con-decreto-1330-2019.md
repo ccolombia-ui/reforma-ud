@@ -25,24 +25,12 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-decreto-1330-2019-men]]"
-normative_locator: "Decreto MEN 1330/2019 · Arts. 2-3 (programa); 11-12 (créditos); 35 (renovación)"
-normative_text: "[Texto literal · ver atomics en 0-normatividad/1--normas-nacionales/decreto-1330-2019/]"
-normative_authority_level: REGLAMENTARIO
-derogated_by: ""
-derogates:
-    - "Decreto MEN 1295/2010 (sustituido en lo pertinente)"
-modification_type: "Sustituye Capítulo 2 + suprime Capítulo 7 del Título 3 Parte 5 Libro 2 del Decreto 1075/2015"
-chain_status: LINEAR
-conflicts_with: []
-conflict_evidence: ""
 
 
 
 
 rol_seleccionado: estudiante-soberano
 
-"@type": Legislation
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-11--datasets-men]]"]

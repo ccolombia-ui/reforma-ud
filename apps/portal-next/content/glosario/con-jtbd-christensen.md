@@ -30,7 +30,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-04--jtbd-comunidad]]"]

@@ -27,13 +27,20 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": GovernmentService
 
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-11--datasets-men]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-academico, snies, men-colombia, m11-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t6-datos-sistemas
+  - snies
+  - men-colombia
+  - dataset-oficial
+  - m11-corpus
+  - audit-v2-2
 ---
 
 

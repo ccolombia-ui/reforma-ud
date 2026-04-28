@@ -26,13 +26,21 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": GovernmentOrganization
 
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, arcu-sur, mercosur, m03-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t7-referencia-internacional
+  - arcu-sur
+  - mercosur
+  - aspirational-reference
+  - benchmark-comparativo
+  - m03-corpus
+  - audit-v2-2
 ---
 
 

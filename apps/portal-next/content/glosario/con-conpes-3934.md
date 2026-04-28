@@ -30,7 +30,6 @@ pasteur_quadrant: EDISON
 
 rol_seleccionado: docente-emprendedor-coop
 
-"@type": Legislation
 
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]

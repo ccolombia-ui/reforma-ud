@@ -31,22 +31,12 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-resolucion-rectoria-207-2016-udfjc]]"
-normative_locator: "Resolución 207 de 2016 · niveles Directivo/Técnico/Operativo/Evaluador"
-normative_text: "[Texto literal · ver atomics en 0-normatividad/2--normas-institucionales/resolucion-rectoria-207-2016/]"
-normative_authority_level: INSTITUCIONAL
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentService
 
 
 cited_in:

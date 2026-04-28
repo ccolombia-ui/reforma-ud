@@ -25,15 +25,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Arts. 33-39 + Art. 107"
-normative_text: "[Texto literal Arts. 33-39]"
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -41,7 +32,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentOrganization
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]

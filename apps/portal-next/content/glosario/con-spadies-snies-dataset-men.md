@@ -27,13 +27,21 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": GovernmentService
 
 
 cited_in: ["[[sec-MI12-11--datasets-men]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, spadies, men-colombia, m11-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t6-datos-sistemas
+  - spadies
+  - men-colombia
+  - dataset-oficial
+  - desercion-trayectorias
+  - m11-corpus
+  - audit-v2-2
 ---
 
 

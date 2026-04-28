@@ -29,13 +29,20 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-academico, mit-urop, research-based-learning, m03-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t7-referencia-internacional
+  - mit-urop
+  - research-based-learning
+  - aspirational-reference
+  - m03-corpus
+  - audit-v2-2
 ---
 
 

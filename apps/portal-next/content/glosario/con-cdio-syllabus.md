@@ -29,13 +29,21 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-academico, cdio-syllabus, ingenieria-educacion, m03-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t7-referencia-internacional
+  - cdio-syllabus
+  - ingenieria-educacion
+  - crawley-2014
+  - aspirational-reference
+  - m03-corpus
+  - audit-v2-2
 ---
 
 

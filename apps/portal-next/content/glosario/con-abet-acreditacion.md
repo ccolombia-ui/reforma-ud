@@ -29,13 +29,20 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": GovernmentOrganization
 
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-academico, abet, acreditacion-programatica, m03-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t7-referencia-internacional
+  - abet
+  - acreditacion-programatica
+  - aspirational-reference
+  - m03-corpus
+  - audit-v2-2
 ---
 
 

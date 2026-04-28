@@ -31,7 +31,6 @@ pasteur_quadrant: EDISON
 
 rol_seleccionado: docente-emprendedor-coop
 
-"@type": GovernmentService
 
 
 cited_in: ["[[sec-MI12-09--ds-presupuesto-nicsp]]"]

@@ -32,17 +32,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 73"
-normative_text: "La Comunidad Académica de Base es la estructura básica, dinámica y flexible de las escuelas, que se organiza de acuerdo con el interés cognitivo de los docentes, desde su área específica del campo de conocimiento-saber. Todo profesor está adscrito a mínimo una CABA."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates:
-    - "Concepto NUEVO en ACU-004-25 (sin precedente exacto en ACU 003/1997 — superseded el modelo departamental)"
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
-conflict_evidence: ""
 
 
 
@@ -51,7 +40,6 @@ conflict_evidence: ""
 
 rol_seleccionado: estudiante-soberano
 
-"@type": Organization
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-12--meta-paper-integrador]]"]

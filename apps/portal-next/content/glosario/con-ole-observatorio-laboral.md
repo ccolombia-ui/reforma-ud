@@ -27,13 +27,21 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": GovernmentService
 
 
 cited_in: ["[[sec-MI12-11--datasets-men]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, ole, men-colombia, m11-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t6-datos-sistemas
+  - ole
+  - men-colombia
+  - dataset-oficial
+  - empleabilidad-pila
+  - m11-corpus
+  - audit-v2-2
 ---
 
 

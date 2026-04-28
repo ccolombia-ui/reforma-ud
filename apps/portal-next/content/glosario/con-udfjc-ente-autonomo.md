@@ -38,10 +38,7 @@ pasteur_quadrant: EDISON
 
 rol_seleccionado: docente-director
 
-"@type": CollegeOrUniversity
 "@context":
-  "@vocab": "https://schema.org/"
-skos: "http://www.w3.org/2004/02/skos/core#"
 
 
 cited_in:

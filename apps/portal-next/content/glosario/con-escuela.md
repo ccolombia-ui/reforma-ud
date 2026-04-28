@@ -35,16 +35,6 @@ pasteur_quadrant: EDISON
 # ═══════════════════════════════════════════════════════════════════════════
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Arts. 58-59 + 69-72 + 71 (~25 Escuelas por decreto CSU)"
-normative_text: "[Texto literal Arts. 69-72 · Escuelas + Director + Consejo + creación]"
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates:
-    - "Estructura Facultad-Departamento del Acuerdo CSU 003/1997 (organizada por afinidad disciplinar amplia)"
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -52,7 +42,6 @@ conflicts_with: []
 
 rol_seleccionado: docente-director
 
-"@type": EducationalOrganization
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-04--jtbd-comunidad]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-10--tdabc]]", "[[sec-MI12-12--meta-paper-integrador]]"]

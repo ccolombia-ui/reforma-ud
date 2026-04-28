@@ -27,7 +27,7 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTermSet
+
 
 
 cited_in: ["[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-12--meta-paper-integrador]]"]

@@ -31,15 +31,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 85 §1"
-normative_text: "Subsistema 1: Gestión Estratégica y de Planeación · Define líneas de acción institucional para la optimización de recursos, eficacia de los planes, evaluación continua de procesos, mejoramiento continuo y aseguramiento de la calidad."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -47,7 +38,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentService
 
 
 cited_in:

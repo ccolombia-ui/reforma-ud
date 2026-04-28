@@ -31,23 +31,12 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acuerdo-csu-009-2018-udfjc]]"
-normative_locator: "Acuerdo CSU 009 de 2018 · PED 2018-2030"
-normative_text: "[Texto literal · ver atomics en 0-normatividad/2--normas-institucionales/csu-acu-009-2018/]"
-normative_authority_level: INSTITUCIONAL
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: BRANCHING
-conflicts_with: []
-conflict_evidence: "Tras ACU-004-25 (2025), el PED 2018-2030 debe re-articularse con la nueva arquitectura misional · pendiente"
 
 
 
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentService
 
 
 cited_in:

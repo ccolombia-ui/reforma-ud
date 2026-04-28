@@ -27,7 +27,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTermSet
 
 
 cited_in: ["[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-12--meta-paper-integrador]]"]

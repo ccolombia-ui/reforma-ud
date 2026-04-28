@@ -31,22 +31,12 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-decreto-1083-2015-funcion-publica]]"
-normative_locator: "Decreto 1083 de 2015 · modificado por Decreto 1499/2017 · Art. 133 Ley 1753/2015"
-normative_text: "[Texto literal · ver atomics en 0-normatividad/1--normas-nacionales/decreto-1083-2015-mipg/]"
-normative_authority_level: REGLAMENTARIO
-derogated_by: ""
-derogates: []
-modification_type: "Modificado por Decreto 1499 de 2017 (versión vigente al 2026-04-27)"
-chain_status: LINEAR
-conflicts_with: []
 
 
 
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentService
 
 
 cited_in:

@@ -31,15 +31,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 33 + Ley 1712/2014 + MIPG D5"
-normative_text: "Dependencias de la Rectoría: ... Oficina de Comunicaciones, y las demás que determine el CSU."
-normative_authority_level: LEGAL
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -47,7 +38,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentOrganization
 
 
 cited_in:

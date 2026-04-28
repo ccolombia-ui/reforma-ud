@@ -27,13 +27,21 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-meta-instrumental, framework-m08, 86-indicadores, s0-s5, m08-corpus, propietario-udfjc, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-meta-instrumental
+  - t5-sintesis-investigacion
+  - framework-m08
+  - 86-indicadores
+  - s0-s5
+  - propietario-udfjc
+  - m08-corpus
+  - audit-v2-2
 ---
 
 

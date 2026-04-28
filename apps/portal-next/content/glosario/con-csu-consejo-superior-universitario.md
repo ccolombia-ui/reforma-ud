@@ -28,15 +28,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Arts. 22-29 + Ley 30/1992 Arts. 64-65"
-normative_text: "[Texto literal Arts. 22-29 ACU-004-25]"
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -44,7 +35,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentOrganization
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]"]

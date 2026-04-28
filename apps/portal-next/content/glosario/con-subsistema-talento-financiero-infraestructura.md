@@ -37,7 +37,6 @@ pasteur_quadrant: EDISON
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentService
 
 
 cited_in:

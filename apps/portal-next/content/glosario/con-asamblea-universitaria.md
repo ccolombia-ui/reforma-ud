@@ -25,16 +25,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Arts. 45-48"
-normative_text: "[Texto literal Arts. 45-48 · 105 miembros · sesiones bianuales]"
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates:
-    - "Concepto NUEVO en ACU-004-25 (sin precedente en ACU 003/1997)"
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -42,7 +32,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentOrganization
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-12--meta-paper-integrador]]"]

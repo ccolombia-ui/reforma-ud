@@ -27,7 +27,6 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": SoftwareApplication
 
 
 cited_in: ["[[sec-MI12-04--jtbd-comunidad]]"]

@@ -29,23 +29,14 @@ iso_standardized_by: "Consejo Superior Universitario, Universidad Distrital Fran
 
 pasteur_quadrant: PASTEUR
 
-normative_source: "[[cita-acuerdo-csu-011-2018-udfjc]]"
-normative_locator: "Acuerdo CSU 011 de 2018 · PUI"
-normative_text: "[Texto literal · ver atomics en 0-normatividad/2--normas-institucionales/csu-acu-011-2018/]"
-normative_authority_level: INSTITUCIONAL
-derogated_by: ""
-derogates: []
-modification_type: "Actualiza el PUI previo (1ra versión 2007 · 2da actualización 2018 · 3ra pendiente post-ACU-004-25)"
-chain_status: BRANCHING
-conflicts_with: []
-conflict_evidence: "Tras ACU-004-25 (2025) el PUI debe re-articularse con nueva arquitectura misional · pendiente"
+
+
 
 
 
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentService
 
 
 cited_in:

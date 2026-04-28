@@ -31,15 +31,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 65 (estructura de Facultades)"
-normative_text: "Estructura de Facultades: Una Decanatura, Un Consejo de Facultad, Áreas de formación con programas de pregrado y posgrado, Unidades de apoyo a la gestión curricular, Una secretaría académica."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -47,7 +38,6 @@ conflicts_with: []
 
 rol_seleccionado: docente-disenador
 
-"@type": Organization
 
 
 cited_in:

@@ -29,7 +29,6 @@ pasteur_quadrant: BOHR
 
 rol_seleccionado: docente-investigador-pasteur
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]

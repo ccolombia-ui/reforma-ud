@@ -27,13 +27,20 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-meta-instrumental, culture-lag, ogburn, m05-corpus, propietario-udfjc, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-meta-instrumental
+  - t5-sintesis-investigacion
+  - culture-lag
+  - ogburn
+  - propietario-udfjc
+  - m05-corpus
+  - audit-v2-2
 ---
 
 

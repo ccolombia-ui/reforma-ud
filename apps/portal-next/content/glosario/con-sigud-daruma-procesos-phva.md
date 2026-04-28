@@ -27,13 +27,20 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": SoftwareApplication
 
 
 cited_in: ["[[sec-MI12-10--tdabc]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-academico, sigud, daruma, m10-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-academico
+  - t6-datos-sistemas
+  - sigud
+  - daruma
+  - sistema-interno-udfjc
+  - m10-corpus
+  - audit-v2-2
 ---
 
 

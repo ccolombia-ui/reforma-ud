@@ -31,15 +31,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-ley-87-1993-control-interno]]"
-normative_locator: "Ley 87/1993 + Decreto 1083/2015 D7 + ACU-004-25 Art. 33"
-normative_text: "Dependencias de la Rectoría: Secretaría General, Oficina de Planeación, Oficina de Control Interno, Oficina de Comunicaciones... (Art. 33 ACU-004-25). Marco superior: Ley 87/1993 establece normas para el ejercicio del control interno en entidades del Estado."
-normative_authority_level: LEGAL
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -48,7 +39,6 @@ conflicts_with: []
 
 rol_seleccionado: docente-director
 
-"@type": GovernmentOrganization
 
 
 cited_in:

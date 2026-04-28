@@ -32,15 +32,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-resolucion-rectoria-207-2016-udfjc]]"
-normative_locator: "Resolución Rectoría 207/2016 · adopción institucional"
-normative_text: "[Adopción institucional vía SIGUD; texto canónico de ISO 9001:2015 en standard ISO]"
-normative_authority_level: INSTITUCIONAL
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -48,7 +39,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": DefinedTerm
 
 
 cited_in:

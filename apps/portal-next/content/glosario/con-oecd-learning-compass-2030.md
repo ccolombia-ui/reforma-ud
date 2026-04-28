@@ -32,15 +32,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 4 (Misión) + Art. 5a-g (Principios)"
-normative_text: "[Marco OECD adoptado por declaración misional ACU-004-25 + PUI 2018]"
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -48,7 +39,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": Legislation
 
 
 cited_in:

@@ -29,7 +29,6 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]

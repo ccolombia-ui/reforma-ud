@@ -27,7 +27,6 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-10--tdabc]]"]

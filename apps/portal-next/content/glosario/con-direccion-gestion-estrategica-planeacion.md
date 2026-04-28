@@ -32,16 +32,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 86c + Art. 87d + Art. 85 §1"
-normative_text: "El Sistema de Gestión Administrativa está integrado por las siguientes instancias: c) Dirección de Gestión Estratégica y de Planeación. (Art. 86c). El (la) director (a) de Gestión Estratégica y de Planeación es miembro del Consejo de Gestión Administrativa (Art. 87d)."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates:
-    - "Oficina Asesora de Planeación del régimen ACU 003/1997 (transformada en Dirección con jerarquía elevada)"
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -50,7 +40,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentOrganization
 
 
 cited_in:

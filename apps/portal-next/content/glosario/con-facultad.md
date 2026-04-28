@@ -31,16 +31,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Arts. 64-67"
-normative_text: "[Texto literal Arts. 64-67 · Facultad reformada coexistente con Escuelas]"
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates:
-    - "Facultad del Acuerdo CSU 003/1997 (estructura jerárquica con Departamentos hijos) — supersede por modelo Escuelas-CABAs Art. 69+"
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -48,7 +38,6 @@ conflicts_with: []
 
 rol_seleccionado: docente-director
 
-"@type": EducationalOrganization
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-04--jtbd-comunidad]]"]

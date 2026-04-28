@@ -34,12 +34,7 @@ pasteur_quadrant: EDISON
 
 rol_seleccionado: docente-disenador
 
-"@type": GovernmentOrganization
 "@context":
-  "@vocab": "https://schema.org/"
-skos: "http://www.w3.org/2004/02/skos/core#"
-iso1087: "https://www.iso.org/obp/ui/#iso:std:iso:1087"
-prov: "http://www.w3.org/ns/prov#"
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-12--meta-paper-integrador]]"]

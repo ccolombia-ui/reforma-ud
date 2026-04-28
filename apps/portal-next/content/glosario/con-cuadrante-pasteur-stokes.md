@@ -29,7 +29,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-03--estandares-internacionales]]"]

@@ -27,13 +27,20 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": ResearchProject
 
 
 cited_in: ["[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-investigacion, bmk-002, benchmark-cca, m06-corpus, propietario-udfjc, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-investigacion
+  - t5-sintesis-investigacion
+  - bmk-002
+  - benchmark-cca
+  - propietario-udfjc
+  - m06-corpus
+  - audit-v2-2
 ---
 
 

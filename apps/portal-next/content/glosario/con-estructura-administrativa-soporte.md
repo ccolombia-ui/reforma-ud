@@ -27,7 +27,6 @@ pasteur_quadrant: EDISON
 
 
 
-"@type": Organization
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]

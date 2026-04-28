@@ -30,12 +30,7 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 "@context":
-  "@vocab": "https://schema.org/"
-skos: "http://www.w3.org/2004/02/skos/core#"
-iso1087: "https://www.iso.org/obp/ui/#iso:std:iso:1087"
-prov: "http://www.w3.org/ns/prov#"
 
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-12--meta-paper-integrador]]"]

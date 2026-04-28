@@ -35,15 +35,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-normative_source: "[[cita-decreto-1421-2017-men]]"
-normative_locator: "Decreto MEN 1421/2017 · adopción nacional"
-normative_text: "[Texto literal CAST UDL Guidelines 3.0 + adopción Decreto 1421/2017]"
-normative_authority_level: REGLAMENTARIO
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -51,12 +42,7 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": Legislation
 "@context":
-  "@vocab": https://schema.org/
-skos: http://www.w3.org/2004/02/skos/core#
-iso1087: https://www.iso.org/obp/ui/#iso:std:iso:1087
-prov: http://www.w3.org/ns/prov#
 
 
 cited_in:

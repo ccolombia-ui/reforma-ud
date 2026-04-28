@@ -34,16 +34,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 87 (composición de 6 cargos + reglamento propio)"
-normative_text: "El Consejo de Gestión Administrativa actúa como la instancia de dirección y coordinación del Sistema de Gestión Administrativa. Composición: a) Rector(a), quien lo preside; b) Vicerrectores(as); c) Secretario(a) general; d) Director(a) de Gestión Estratégica y de Planeación; e) Gerente administrativo y financiero; f) Director(a) de Bienestar Universitario y Buen Vivir. PARÁGRAFO: El Consejo de Gestión Administrativa se da su propio reglamento."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates:
-    - "Concepto NUEVO en ACU-004-25 (no existía órgano colegiado de coordinación administrativa en ACU 003/1997)"
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -51,13 +41,7 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentOrganization
 "@context":
-  "@vocab": https://schema.org/
-skos: http://www.w3.org/2004/02/skos/core#
-iso1087: https://www.iso.org/obp/ui/#iso:std:iso:1087
-prov: http://www.w3.org/ns/prov#
-dct: http://purl.org/dc/terms/
 
 
 cited_in:

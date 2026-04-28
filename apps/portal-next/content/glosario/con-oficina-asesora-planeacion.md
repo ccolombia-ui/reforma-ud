@@ -30,15 +30,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 33"
-normative_text: "Dependencias de la Rectoría: Secretaría General, Oficina de Planeación, Oficina de Control Interno, Oficina de Comunicaciones, y las demás que determine el CSU."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates: []
-modification_type: "Coexistencia transitoria con DGEP (Art. 86c) · transición progresiva durante Período Transición Art. 96"
-chain_status: BRANCHING
-conflicts_with: []
 
 
 
@@ -46,7 +37,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentOrganization
 
 
 cited_in:

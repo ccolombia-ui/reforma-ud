@@ -28,13 +28,7 @@ align_wikidata: ""
 align_neon_odp: ""
 pasteur_quadrant: EDISON
 rol_seleccionado: estudiante-soberano
-"@type": Legislation
 "@context":
-  "@vocab": https://schema.org/
-skos: http://www.w3.org/2004/02/skos/core#
-iso1087: https://www.iso.org/obp/ui/#iso:std:iso:1087
-prov: http://www.w3.org/ns/prov#
-dct: http://purl.org/dc/terms/
 cited_in:
   - "[[sec-MI12-00--carta-constitucional-acu-004-25]]"
   - "[[sec-MI12-01--mandato-normativo]]"

@@ -29,7 +29,6 @@ pasteur_quadrant: EDISON
 
 rol_seleccionado: docente-director
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]

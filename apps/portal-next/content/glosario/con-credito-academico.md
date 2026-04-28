@@ -34,7 +34,6 @@ pasteur_quadrant: EDISON
 
 rol_seleccionado: docente-disenador
 
-"@type": QuantitativeValue
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-10--tdabc]]", "[[sec-MI12-11--datasets-men]]"]

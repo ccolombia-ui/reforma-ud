@@ -27,13 +27,20 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": SoftwareApplication
 
 
 cited_in: ["[[sec-MI12-11--datasets-men]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-meta-instrumental, frame-men-kdmo, m11-corpus, propietario-udfjc, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-meta-instrumental
+  - t6-datos-sistemas
+  - frame-men-kdmo
+  - arquitectura-ingesta-semantica
+  - propietario-udfjc
+  - m11-corpus
+  - audit-v2-2
 ---
 
 

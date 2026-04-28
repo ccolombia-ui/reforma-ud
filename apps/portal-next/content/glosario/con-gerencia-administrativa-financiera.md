@@ -32,16 +32,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 86d + Art. 87e + Art. 85 §2"
-normative_text: "El Sistema de Gestión Administrativa está integrado por: d) Gerencia Administrativa y Financiera (Art. 86d). El (la) gerente administrativo y financiero es miembro del Consejo de Gestión Administrativa (Art. 87e). Subsistema 2 (Art. 85 §2): Talento Humano, Gestión Financiera e Infraestructura · garantiza la disposición de infraestructura física y tecnológica, recursos financieros y talento humano para el óptimo desarrollo de las funciones universitarias."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates:
-    - "Vicerrectoría Administrativa y Financiera del ACU 003/1997 (degradada a Gerencia)"
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -50,7 +40,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentOrganization
 
 
 cited_in:

@@ -27,13 +27,20 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-09--ds-presupuesto-nicsp]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-meta-instrumental, smmlv-pais, normalizacion-cross-country, m09-corpus, propietario-udfjc, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-meta-instrumental
+  - t6-datos-sistemas
+  - smmlv-pais
+  - normalizacion-cross-country
+  - propietario-udfjc
+  - m09-corpus
+  - audit-v2-2
 ---
 
 

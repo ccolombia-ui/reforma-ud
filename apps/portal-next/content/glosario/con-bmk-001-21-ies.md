@@ -27,13 +27,20 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": ResearchProject
 
 
 cited_in: ["[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2
 
-tags: [glosario-universal, concepto-investigacion, bmk-001, benchmark, m05-corpus, propietario-udfjc, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-investigacion
+  - t5-sintesis-investigacion
+  - bmk-001
+  - benchmark
+  - propietario-udfjc
+  - m05-corpus
+  - audit-v2-2
 ---
 
 

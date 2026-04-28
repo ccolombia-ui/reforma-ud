@@ -28,7 +28,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTermSet
 
 
 cited_in: ["[[sec-MI12-04--jtbd-comunidad]]", "[[sec-MI12-12--meta-paper-integrador]]"]

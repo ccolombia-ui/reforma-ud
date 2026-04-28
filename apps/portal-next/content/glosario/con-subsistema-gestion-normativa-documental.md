@@ -31,15 +31,6 @@ pasteur_quadrant: EDISON
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 85 §3"
-normative_text: "Subsistema 3: Gestión Normativa y Documental · Orienta con fundamento en el marco legal, las capacidades institucionales y de gobierno, la seguridad jurídica en la toma de decisiones y la gestión general de la Institución."
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates: []
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -47,7 +38,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": GovernmentService
 
 
 cited_in:

@@ -27,7 +27,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-12--meta-paper-integrador]]"]

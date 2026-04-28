@@ -32,16 +32,6 @@ pasteur_quadrant: PASTEUR
 
 
 
-normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
-normative_locator: "ACU-004-25 Art. 5g + Art. 59"
-normative_text: "[Pluralidad y Diversidad de Saberes Art. 5g + campo conocimiento-saber Art. 59]"
-normative_authority_level: ESTATUTARIO
-derogated_by: ""
-derogates:
-    - "Concepto NUEVO en ACU-004-25 (sin precedente en ACU 003/1997)"
-modification_type: ""
-chain_status: LINEAR
-conflicts_with: []
 
 
 
@@ -49,7 +39,6 @@ conflicts_with: []
 
 rol_seleccionado: estudiante-soberano
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-12--meta-paper-integrador]]"]

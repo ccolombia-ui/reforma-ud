@@ -27,13 +27,20 @@ pasteur_quadrant: PETER
 
 
 
-"@type": DefinedTerm
 
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]"]
 cited_count: 1
 
-tags: [glosario-universal, concepto-meta-instrumental, cognia-deprecated, anti-patron, m03-corpus, audit-v1]
+tags:
+  - glosario-universal
+  - concepto-meta-instrumental
+  - t7-referencia-internacional
+  - cognia-deprecated
+  - anti-patron
+  - deprecated-for-higher-education
+  - m03-corpus
+  - audit-v2-2
 ---
 
 
