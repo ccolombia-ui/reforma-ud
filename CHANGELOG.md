@@ -6,6 +6,40 @@
 
 ---
 
+## [v5.0p → v5.0ab] — 2026-04-27 · Iteración consolidada — Kanban + sidebar limpio + news feed + right-panel plano
+
+> Cadena de releases incrementales (16 deploys en 1 día). Ver commits en `git log v4.0.0-rc.1..v5.0ab` para detalle. Resumen consolidado:
+
+### Added
+- **Kanban narrativo CRISP-DM** (5 fases) en `/canonico` con cards minimal M## + pregunta + botones "Ir directo" / "Ventana derecha" (split pane B). Reemplaza catálogo viejo.
+- **12 hallazgos verificados** por paper en formato narrativo storytelling (`hallazgo` cards coloreadas por fase).
+- **Right-panel plano · 6 tabs** (esquema, grafo, evolucion, refs, comunidad, asistente). Eliminado el agrupador "Conexiones" (accordion) que envolvía esquema/grafo/evolucion.
+- **News feed centralizado** · velite collection `news` (`content/feed/*.md`) + `NoticiasRelacionadas` componente con distribución contextual por tags a comunidades.
+- **Infografías one-pager** para `/canonico` (Reforma Vinculante UDFJC) y `/glosario` (74 conceptos universales).
+- **Sidebar headers como Links** (patrón Linear/Notion: chevron toggle + texto navega) — Reforma Vinculante UDFJC y Glosario navegan a sus dashboards.
+
+### Changed
+- **Títulos M01-M12 cortos** alineados con mental-model: Mandato Normativo, Ciclo Virtuoso, Estándares Internacionales, JTBD Comunidad, BMK Procesos Misionales, BMK Créditos CCA, 21 BPA, Framework BSC×RBM×CRISP, DS Presupuesto NICSP, TDABC, Datasets MEN, Meta-paper Integrador.
+- **M03 ↔ M08 swap canónico** · m03 ahora es Estándares (en `crispPhase: business`), m08 es Framework (en `modeling`). El frontmatter de title/description/tags estaba desalineado con el body — fix de raíz.
+- **crispPhase reasignado**: M09/M10/M11 → modeling (antes data-prep/evaluation); M12 → evaluation (antes deployment). Deployment queda vacío con hint "pendiente acuerdos".
+- **Sidebar reordenado**: Grafo semántico → Glosario → Reforma Vinculante UDFJC. Eliminados sub-headers redundantes "Biblioteca" y "Hub".
+- **Comunidades**: tree flat sin wrapper duplicado. Las 4 unidades organizativas (Gobierno, VR Formación, VR Investigación, VR Extensión) son roots top-level directos.
+
+### Fixed
+- **Doble "COMUNIDADES" en sidebar** (v5.0ab): `buildCommunityTree` creaba un nodo intermedio `comunidades` cuando los hijos tenían slug `comunidades/<X>`. El wrapper se promovía a root. Fix: detectar y splice por children. ROOT_ORDER comparison usa `node.segment` ahora.
+- **"Ventana derecha" no transfería foco a pane B** (v5.0v): tras `openInNextPane()` se llama también `setFocused('b')` para que el right-panel refleje la pane activa.
+- **Hallazgos M02/M05 alucinados** (v5.0u): IIT-Madras nunca apareció en M02; "tendencia global living-lab" fue parafraseado libre. Reescritos contra source verificado.
+
+### Removed
+- Sección "Las 5 Fases CRISP-DM · Stack" (era redundante con el Kanban).
+- Sub-header "Biblioteca" intermedio en sidebar (redundante con SectionToggle root).
+- Sub-header "Hub" intermedio en COMUNIDADES (redundante).
+
+### Roadmap pendiente — v6
+Detalle en [AUDIT v6 — Zone Diagnostic](./docs/audit/AUDIT-v6-zone-diagnostic.md). Sprints v6.0 (service coherence) → v6.4 (persistencia AI + git real).
+
+---
+
 ## [v4.0.0-rc.1] — 2026-04-26 · Op A · Obsidian-engine SOTA + Cherry-pick Flowershow
 
 > Release Candidate. Migración mayor del pipeline MDX → Markdown puro siguiendo

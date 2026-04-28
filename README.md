@@ -4,7 +4,7 @@
 
 **Portal**: [reforma-ud.vercel.app](https://reforma-ud.vercel.app)
 **Repo**: [github.com/ccolombia-ui/reforma-ud](https://github.com/ccolombia-ui/reforma-ud)
-**Versión actual**: v3.5 — [CHANGELOG.md](./CHANGELOG.md)
+**Versión actual**: v5.0ab — [CHANGELOG.md](./CHANGELOG.md) · roadmap v6 en [AUDIT v6 — Zone Diagnostic](./docs/audit/AUDIT-v6-zone-diagnostic.md)
 **Licencia**: CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · CPS-939-2026 · UDFJC
 
 ---
@@ -160,15 +160,17 @@ vercel alias set <new-deploy-url> reforma-ud.vercel.app
 4. Cambios en código siguen el patrón shadcn + Tailwind v4 + radix-ui
 5. PR con título descriptivo + link al audit/decisión que lo justifica
 
-## Roadmap
+## Roadmap v6 (post-v5.0ab)
 
-Ver [CHANGELOG.md](./CHANGELOG.md#roadmap-pendiente) para detalle. En orden:
+Plan completo en [AUDIT v6 — Zone Diagnostic](./docs/audit/AUDIT-v6-zone-diagnostic.md). Sprints:
 
-- **S+2.E.1** File tree con `react-arborist`
-- **S+3** Migración a `dockview` (drag tabs entre paneles)
-- **S+4** Frontmatter editor + stacked tabs
-- **S+5 Phase 2** Importar glosario `glo-*.md` para resolver wikilinks
-- **S+6** ETL Drive → RAG client-side + Open Badge 3.0 + xAPI
+- **v6.0** Service coherence · Grafo genérico (papers+notes+conceptos), schema `relations` en notes/conceptos, `kind:'community'`, ComunidadPanel adaptable
+- **v6.1** Header + atajos · breadcrumb dinámico + dropdown Quick actions + `Alt+1..6` para tabs
+- **v6.2** Productividad workspace · split vertical + focus mode (F11) + scroll restoration + re-open closed tab + scroll-spy TOC
+- **v6.3** Sidebar enriquecido · Recientes + Favoritos + collapse-all + pin de refs
+- **v6.4** Persistencia AI + git real · chat history persistido + GitHub API real para Evolución
+
+**Logros consolidados v5.0p → v5.0ab**: multi-pane workspace · right-panel plano 6 tabs · sidebar simplificado (Grafo + Glosario + Reforma Vinculante) · tree de comunidades flat · feed de noticias contextual (`content/feed/*.md`) · Kanban CRISP-DM 5-fases · 74 conceptos glosario universal · infografías one-pager · narrativa hallazgos M01-M12 verificada.
 
 ---
 
