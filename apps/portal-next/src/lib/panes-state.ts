@@ -23,6 +23,7 @@ import { canonicPaper, note, community, concepto } from '#site/content';
 
 const STORAGE_KEY = 'reforma-ud:panes';
 const LEGACY_PANE_B = 'reforma-ud:pane-b';
+const LAST_PANE_KEY = 'reforma-ud:last-used-pane';   // v7.6 · último pane secundario interactuado
 const EVENT = 'reforma-ud:panes-change';
 
 export type PaneId = string; // 'b', 'c', 'd', ...
@@ -178,6 +179,41 @@ export function usePanesState() {
           tabs: exists ? cur.tabs : [...cur.tabs, tabId],
         }, tabId);
       }
+      writeState(next);
+      return next;
+    });
+  }, []);
+
+  /**
+   * v7.6 · abre tabId en el ÚLTIMO pane secundario usado.
+   * Si no hay panes secundarios → crea pane B con el tab.
+   * Trackea último pane interactuado en localStorage para que persista.
+   */
+  const openInLastUsedPane = useCallback((tabId: string) => {
+    setPanes((prev) => {
+      // Resolver lastUsedPaneId
+      let lastId: PaneId | null = null;
+      try {
+        lastId = localStorage.getItem(LAST_PANE_KEY);
+      } catch {}
+      // Si no hay last válido → primer pane secundario, o crear b
+      const last = (lastId && prev.find((p) => p.id === lastId)) ?? prev[0];
+      if (!last) {
+        // No hay panes — crear B con este tab
+        const fresh: PaneState[] = [{ id: 'b', tabs: [tabId], activeTabId: tabId, history: [tabId], historyIdx: 0 }];
+        try { localStorage.setItem(LAST_PANE_KEY, 'b'); } catch {}
+        writeState(fresh);
+        return fresh;
+      }
+      const idx = prev.findIndex((p) => p.id === last.id);
+      const next = [...prev];
+      const cur = next[idx];
+      const exists = cur.tabs.includes(tabId);
+      next[idx] = pushHistoryFn({
+        ...cur,
+        tabs: exists ? cur.tabs : [...cur.tabs, tabId],
+      }, tabId);
+      try { localStorage.setItem(LAST_PANE_KEY, last.id); } catch {}
       writeState(next);
       return next;
     });
@@ -392,6 +428,7 @@ export function usePanesState() {
     isOpen: panes.length > 0,
     openTabInPane,
     openInNextPane,
+    openInLastUsedPane,
     splitToNewPane,
     activateTab,
     closeTab,

@@ -18,7 +18,7 @@ import { GripVertical, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePanesState, hydrateFromCompareParam, type PaneId } from '@/lib/panes-state';
 import { useDocTabs } from '@/lib/doc-tabs';
-import { useFocusedPane, useWorkspaceOrientation } from '@/lib/ui-state';
+import { useFocusedPane, useWorkspaceOrientation, useSplitMode } from '@/lib/ui-state';
 import { PaneShell } from '@/components/workspace/pane-shell';
 import { cn } from '@/lib/utils';
 
@@ -62,6 +62,10 @@ function WorkspaceShellInner({ children }: Readonly<{ children: React.ReactNode 
 
   const panesState = usePanesState();
   const docTabs = useDocTabs();
+  // v7.6 · split mode controla VISIBILIDAD de panes secundarios.
+  // OFF (default) → render single-pane aunque haya panes en localStorage.
+  // ON → renderiza MultiPaneLayout con todos los panes B+.
+  const { splitMode } = useSplitMode();
   const [focused, setFocused] = useFocusedPane();
 
   // v6.2 G-WS-03 · Scroll restoration por tab en pane A (URL-driven).
@@ -219,7 +223,7 @@ function WorkspaceShellInner({ children }: Readonly<{ children: React.ReactNode 
 
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-      {panesState.isOpen ? (
+      {panesState.isOpen && splitMode ? (
         <MultiPaneLayout
           panes={panesState.panes}
           activateTab={panesState.activateTab}

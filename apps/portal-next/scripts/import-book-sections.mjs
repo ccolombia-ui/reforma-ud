@@ -110,6 +110,50 @@ for (const file of sources) {
     .replaceAll(/!\[\[\.{2}\/[^/\]]+\/([^\]]+?)\]\]/g, '![[$1]]')
     .replaceAll(/\[\[\.{2}\/[^/\]]+\/([^|\]]+?)(\|[^\]]+)?\]\]/g, '[[$1$2]]');
 
+  // 1b) Migrar prefijo legacy glo-* → con-* (vault sigue usando glo- en algunos M##)
+  cleanedBody = cleanedBody
+    .replaceAll(/(!?\[\[)glo-([a-z0-9-]+)/g, '$1con-$2');
+
+  // 1c) Markdown links a archivos del vault → URLs portal o eliminar
+  //   [text](../00-glosoario-universal/con-X.md) → [text](/glosario/con-X/)
+  //   [text](../00-glosoario-universal/_README.md) → [text](/glosario/) (índice)
+  //   [text](../X-folder/_anything.md) → solo el text (sin link, evita 404)
+  cleanedBody = cleanedBody
+    .replaceAll(
+      /\[([^\]]+)\]\(\.{2}\/00-glosoario-universal\/(con-[a-z0-9-]+)(?:\.md)?\)/g,
+      '[$1](/glosario/$2/)',
+    )
+    .replaceAll(
+      /\[([^\]]+)\]\(\.{2}\/00-glosoario-universal\/_[^)]*\)/g,
+      '[$1](/glosario/)',
+    )
+    .replaceAll(
+      /\[([^\]]+)\]\(\.{2}\/[^)]*\.md\)/g,
+      '$1',  // strip link a otros archivos del vault (ej. _audit, sources)
+    )
+    .replaceAll(
+      /\[([^\]]+)\]\(\.{2}\/[^)]*\/?\)/g,
+      '$1',  // strip link a directorios del vault (ej. ../99--sources/biblio/)
+    )
+    .replaceAll(
+      /\[([^\]]+)\]\(glo-([a-z0-9-]+)\.md\)/g,
+      '[$1](/glosario/con-$2/)',  // legacy [t](glo-X.md) → /glosario/con-X/
+    )
+    .replaceAll(
+      /\[([^\]]+)\]\(con-([a-z0-9-]+)\.md\)/g,
+      '[$1](/glosario/con-$2/)',  // [t](con-X.md) → /glosario/con-X/
+    )
+    .replaceAll(
+      /\[([^\]]+)\]\(sec-MI12-(\d{2})[^)]*\.md\)/g,
+      (_match, txt, num) => `[${txt}](/canonico/m${num}/)`,  // [t](sec-MI12-NN.md) → /canonico/mNN/
+    );
+
+  // 1d) Limpiar paths inline tipo `60-glosario/glo-X.md` (ya sin link wrap)
+  //   Reemplaza por su slug equivalente para que sea legible
+  cleanedBody = cleanedBody
+    .replaceAll(/`60-glosario\/glo-([a-z0-9-]+)\.md`/g, '`con-$1`')
+    .replaceAll(/`00-glosoario-universal\/(con-[a-z0-9-]+)\.md`/g, '`$1`');
+
   // 2) Inline embeds de figuras (Mermaid blocks)
   const inlineResult = inlineFigures(cleanedBody);
   cleanedBody = inlineResult.body;
@@ -117,7 +161,11 @@ for (const file of sources) {
   totalInlined += figsInlined;
   totalBroken += inlineResult.broken.length;
 
-  const out = `${destFm}${cleanedBody.startsWith('\n') ? '' : '\n'}${cleanedBody}`;
+  // Normalize all line endings to LF before writing. Otherwise frontmatter
+  // (preserved from existing dest) may keep CRLF while body (read from vault)
+  // is LF — the mixed endings make git emit CRLF→LF warnings and can confuse
+  // the YAML parser at the frontmatter boundary.
+  const out = `${destFm}${cleanedBody.startsWith('\n') ? '' : '\n'}${cleanedBody}`.replaceAll('\r\n', '\n');
   fs.writeFileSync(destFile, out, 'utf-8');
   imported++;
   const figMsg = figsInlined > 0

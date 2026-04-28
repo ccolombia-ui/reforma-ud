@@ -59,11 +59,14 @@ export function PaperLocalGraph({
   const [selected, setSelected] = useState<GraphNode | null>(null);
   const panesState = usePanesState();
 
-  // v5.0j Gap 4 · click en nodo NO reemplaza el doc actual; abre en pane
-  // derecho (pane B). Si el nodo es el doc activo, no-op (ya está abierto).
+  // v7.6 · click en nodo del grafo right-panel:
+  //   - Si splitMode=ON → abre en último pane secundario usado
+  //   - Si splitMode=OFF → openInNextPane (crea/usa pane B, modo legacy)
+  // Razonamiento: el grafo del right panel siempre fue "split-friendly", pero
+  // ahora respeta el toggle global cuando está disponible.
   const openInRightPane = useCallback((id: string) => {
     if (id === focusId) return; // ya estamos viendo este doc
-    panesState.openInNextPane(id);
+    panesState.openInLastUsedPane(id);
   }, [panesState, focusId]);
 
   // Fetch global graph una sola vez

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { ProfileMenu } from '@/components/layout/profile-menu';
-import { useLeftCollapsed, useRightPanel, useFocusMode, useWorkspaceOrientation } from '@/lib/ui-state';
+import { useLeftCollapsed, useRightPanel, useFocusMode, useWorkspaceOrientation, useSplitMode } from '@/lib/ui-state';
 import { canonicPaper, concepto } from '#site/content';
 import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
@@ -76,6 +76,10 @@ export function Header() {
   const { collapsed: rightCollapsed, toggle: toggleRight } = useRightPanel();
   const [focusMode, toggleFocusMode] = useFocusMode();
   const { orientation, toggle: toggleOrientation } = useWorkspaceOrientation();
+  // v7.6 · split mode on/off (default OFF). Convertimos el botón Columns3 actual
+  // en toggle de splitMode (lo que el usuario quería). Orientation queda como
+  // sub-control deferido (cuando splitMode=ON, futura UI permitirá flip H/V).
+  const { splitMode, toggle: toggleSplitMode } = useSplitMode();
   const [isMac, setIsMac] = useState(false);
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
@@ -264,23 +268,46 @@ export function Header() {
           <TooltipContent side="bottom">Notificaciones · próximamente</TooltipContent>
         </Tooltip>
 
-        {/* v6.2 G-WS-01 · Toggle orientación del workspace (split horizontal/vertical) */}
+        {/* v7.6 · Toggle split mode (on/off). Default OFF: clicks van a pane A
+            URL-driven. ON: clicks van al último pane secundario usado. El icono
+            Columns3 indica visualmente si hay división activa. */}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              variant="ghost"
+              variant={splitMode ? 'default' : 'ghost'}
               size="icon"
-              onClick={toggleOrientation}
-              aria-label={orientation === 'horizontal' ? 'Cambiar a split vertical' : 'Cambiar a split horizontal'}
+              onClick={toggleSplitMode}
+              aria-label={splitMode ? 'Desactivar split (single pane)' : 'Activar split (multi pane)'}
+              aria-pressed={splitMode}
               className="hidden sm:inline-flex shrink-0"
             >
-              {orientation === 'horizontal' ? <Columns3 className="h-4 w-4" /> : <Rows3 className="h-4 w-4" />}
+              <Columns3 className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            {orientation === 'horizontal' ? 'Split vertical (panes apilados)' : 'Split horizontal (panes lado a lado)'}
+            {splitMode ? 'Split activo · clic para single pane' : 'Single pane · clic para activar split'}
           </TooltipContent>
         </Tooltip>
+
+        {/* v6.2 G-WS-01 · Sub-toggle orientation (solo visible si splitMode=ON) */}
+        {splitMode && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleOrientation}
+                aria-label={orientation === 'horizontal' ? 'Cambiar a split vertical' : 'Cambiar a split horizontal'}
+                className="hidden sm:inline-flex shrink-0"
+              >
+                {orientation === 'horizontal' ? <Rows3 className="h-4 w-4" /> : <Columns3 className="h-4 w-4 rotate-90" />}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              {orientation === 'horizontal' ? 'Apilar panes (vertical)' : 'Panes lado a lado (horizontal)'}
+            </TooltipContent>
+          </Tooltip>
+        )}
 
         {/* v5.0g · Botón Code2/GitHub removido del header (usuario lo
             consideró ruido). El repo sigue accesible via cmd-K → "github". */}

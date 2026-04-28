@@ -8,6 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { canonicPaper, community, note } from '#site/content';
 import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { useDocTabs } from '@/lib/doc-tabs';
+import { usePanesState } from '@/lib/panes-state';
+import { useSplitMode } from '@/lib/ui-state';
 import { cn } from '@/lib/utils';
 
 /** G18 — limita la profundidad de hover-cards anidados (max 1 nivel). */
@@ -107,6 +109,8 @@ function WikiLinkPreviewInner({
   const [opened, setOpened] = useState(false);
   const resolved = useMemo(() => resolveHref(href), [href]);
   const { replaceActive, openInNewTab, openInBackground } = useDocTabs();
+  const panesState = usePanesState();
+  const { splitMode } = useSplitMode();
   const hoverDepth = useContext(HoverDepthCtx);
   // G18 — bloquea hover-card si ya estamos dentro de otra (máx 1 nivel)
   const allowHover = hoverDepth < 1;
@@ -117,7 +121,9 @@ function WikiLinkPreviewInner({
     className,
   );
 
-  /** Click handler con modificadores estilo Obsidian. */
+  /** Click handler con modificadores estilo Obsidian.
+   *  v7.6 · respeta splitMode: si OFF → pane A (replaceActive). Si ON →
+   *  último pane secundario usado (openInLastUsedPane). */
   function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
     if (resolved.kind === 'broken') return;
     // Permitir ctrl+shift / meta+shift abrir en nueva ventana del navegador (default browser)
@@ -125,9 +131,22 @@ function WikiLinkPreviewInner({
     e.preventDefault();
     if (e.ctrlKey || e.metaKey) {
       openInNewTab(href);
-    } else {
-      replaceActive(href);
+      return;
     }
+    if (splitMode) {
+      // En modo split: abre en el último pane secundario usado (pane B/C).
+      // Solo papers (m##) y notes (slug) tienen tabId resolvible. Community
+      // y broken caen al fallback replaceActive.
+      let tabId: string | null = null;
+      if (resolved.kind === 'paper') tabId = resolved.id;
+      else if (resolved.kind === 'note') tabId = resolved.slug;
+      if (tabId) {
+        panesState.openInLastUsedPane(tabId);
+        return;
+      }
+    }
+    // Default (split OFF o sin tabId resolvible): pane A
+    replaceActive(href);
   }
 
   function handleAuxClick(e: React.MouseEvent<HTMLAnchorElement>) {

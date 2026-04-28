@@ -14,6 +14,7 @@ const KEYS = {
   focusedPane: 'reforma-ud:focused-pane',
   focusMode: 'reforma-ud:focus-mode',  // v6.1 G-WS-02 · ambas barras colapsadas
   workspaceOrientation: 'reforma-ud:workspace-orientation', // v6.2 G-WS-01 · horizontal | vertical
+  splitMode: 'reforma-ud:split-mode',                       // v7.6 · split on/off (default OFF)
 } as const;
 
 export const LEFT_SIDEBAR_MIN = 200;
@@ -469,4 +470,32 @@ export function useWorkspaceOrientation() {
   };
   const toggle = () => setOrient(orient === 'horizontal' ? 'vertical' : 'horizontal');
   return { orientation: orient, setOrientation: setOrient, toggle } as const;
+}
+
+/**
+ * v7.6 · useSplitMode — toggle binary split-on/off del header.
+ *
+ * Default OFF: clicks en wikilinks/refs van a pane A (URL change).
+ * ON: clicks van al último pane secundario usado (B/C/...).
+ *
+ * El usuario activa/desactiva con icono SplitSquareHorizontal en header.
+ */
+export function useSplitMode() {
+  const [split, setSplitState] = useState<boolean>(false);
+  useEffect(() => {
+    const v = read(KEYS.splitMode, false) as boolean;
+    setSplitState(!!v);
+    const onChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ key: string; value: string | boolean }>).detail;
+      if (detail?.key === KEYS.splitMode) setSplitState(!!detail.value);
+    };
+    window.addEventListener(EVENT, onChange);
+    return () => window.removeEventListener(EVENT, onChange);
+  }, []);
+  const setSplit = (v: boolean) => {
+    setSplitState(v);
+    write(KEYS.splitMode, v);
+  };
+  const toggle = () => setSplit(!split);
+  return { splitMode: split, setSplitMode: setSplit, toggle } as const;
 }

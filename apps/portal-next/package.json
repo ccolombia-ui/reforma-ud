@@ -13,7 +13,10 @@
     "lint": "eslint",
     "test": "vitest",
     "test:e2e": "playwright test",
-    "test:smoke": "playwright test e2e/smoke.spec.ts"
+    "test:smoke": "playwright test e2e/smoke.spec.ts",
+    "test:sync-vault": "node --test scripts/test-sync-vault.mjs",
+    "sync:vault": "node scripts/sync-vault.mjs",
+    "sync:vault:dry": "node scripts/sync-vault.mjs --dry-run --skip-papers --skip-fix"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.71",
