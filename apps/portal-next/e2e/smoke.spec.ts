@@ -80,21 +80,25 @@ test('smoke · right-panel renderiza 6 tabs flat (sin agrupador Conexiones)', as
  * Este test garantiza que al hacer hover sobre un wikilink que apunta
  * a /glosario/con-*, la HoverCard se monta y muestra el badge "Glosario".
  */
-test('smoke · hover sobre wikilink /glosario/con-* monta HoverCard con badge "Glosario"', async ({ page }) => {
+test('smoke · hover sobre wikilink /glosario/con-* monta HoverCard con CTA "Ver concepto completo"', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
+
+  // PRE-CONDICIÓN: verificar que el CTA "Ver concepto completo" NO existe
+  // antes del hover. Si existe pre-hover el test es un falso positivo.
+  const ctaPreHover = page.getByText('Ver concepto completo');
+  await expect(ctaPreHover, 'CTA NO debe existir antes del hover (anti-falso-positivo)').toHaveCount(0);
 
   // Encontrar el primer wikilink que apunte al glosario
   const wikilink = page.locator('a.wikilink[href^="/glosario/con-"]').first();
   await wikilink.scrollIntoViewIfNeeded();
   await expect(wikilink).toBeVisible({ timeout: 8_000 });
 
-  // Hover (HoverCard tiene openDelay=300ms). force:true bypassa el actionability
-  // check si hay shifts menores en el layout.
+  // Hover (HoverCard tiene openDelay=300ms)
   await wikilink.hover({ force: true });
 
-  // El HoverCard debe aparecer con el badge "Glosario" — confirmación de que
-  // resolveHref devolvió kind:'concepto' (no broken).
-  const glosarioBadge = page.getByText('Glosario', { exact: true }).first();
-  await expect(glosarioBadge, 'badge "Glosario" visible en HoverCard tras hover').toBeVisible({ timeout: 3_000 });
+  // Selector específico: "Ver concepto completo" SOLO aparece en el body
+  // de la HoverCard para kind:'concepto'. No existe en el sidebar ni body.
+  const cta = page.getByText('Ver concepto completo').first();
+  await expect(cta, 'HoverCard de concepto visible tras hover').toBeVisible({ timeout: 3_000 });
 });
 
