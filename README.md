@@ -63,6 +63,56 @@ pnpm dev          # → http://localhost:3000
 pnpm build        # velite + build-graph + next build
 ```
 
+## Sync vault → portal
+
+El vault Obsidian (Google Drive) es la fuente de verdad del contenido. El portal consume `.md`/`.mdx` sincronizados via scripts. Un solo comando hace el sync completo:
+
+```bash
+cd apps/portal-next
+pnpm sync:vault          # full sync — papers M01-M12 + glosario (~159 conceptos)
+pnpm sync:vault:dry      # dry-run — reporte sin escribir archivos
+pnpm test:sync-vault     # TDD — 16 tests valida prereqs + integridad post-sync
+```
+
+### Qué hace `pnpm sync:vault` (3 pasos)
+
+| Paso | Script | Origen → Destino |
+|---|---|---|
+| [1] Papers M01-M12 | `import-book-sections.mjs` | vault `01-secciones/sec-MI12-*.md` → `content/canonico/m##.mdx` |
+| [2] Glosario | `sync-glosario.mjs` (corre en `c:/tmp/ghs-src/`) | vault `00-glosoario-universal/T1-T7/con-*.md` → `content/glosario/` |
+| [3] Fix YAML | `fix-orphan-indented.mjs` | workaround post-sync: limpia líneas YAML huérfanas en `content/glosario/` |
+
+### Prerrequisitos únicos (setup una sola vez)
+
+1. **Google Drive Stream** montado y sincronizado en `H:\`
+2. **Host sync-glosario** — clonar `_gold-html-static` en ruta corta:
+   ```bash
+   mkdir c:/tmp/ghs-src
+   # copiar sync-glosario.mjs + package.json allí
+   cd c:/tmp/ghs-src && npm install
+   ```
+   Ver guía completa: [`docs/guide-obsidian-sync-buttons.md`](docs/guide-obsidian-sync-buttons.md)
+
+### Flags disponibles
+
+```bash
+pnpm sync:vault -- --skip-papers     # solo glosario
+pnpm sync:vault -- --skip-glosario   # solo papers
+pnpm sync:vault -- --filter all      # incluye glosario DRAFT (default: approved)
+```
+
+### Flujo post-sync
+
+```bash
+pnpm build          # validar compilación (velite + next build)
+pnpm test:sync-vault
+git add content/
+git commit -m "chore(content): sync vault $(date +%Y-%m-%d)"
+git push origin main   # Vercel auto-deploy en ~60s
+```
+
+Para ejecutar el sync **directamente desde Obsidian** como botón, ver [`docs/guide-obsidian-sync-buttons.md`](docs/guide-obsidian-sync-buttons.md).
+
 ## Features destacadas
 
 ### Lectura Obsidian-style

@@ -36,8 +36,71 @@ pnpm test         # vitest
 pnpm test:e2e     # playwright
 pnpm velite       # solo content build (sin graph ni next)
 pnpm graph        # solo regenerar grafo (debe ejecutarse después de velite)
-node scripts/import-book-sections.mjs  # importa el capítulo libro al corpus
 ```
+
+### Sync vault → portal
+
+```bash
+pnpm sync:vault          # full sync en un comando (papers + glosario + fix YAML)
+pnpm sync:vault:dry      # dry-run: reporte sin escribir archivos
+pnpm test:sync-vault     # TDD: 16 tests valida prereqs + conteos + YAML + CRLF
+
+# Flags opcionales (pasar con --)
+pnpm sync:vault -- --skip-papers     # solo glosario
+pnpm sync:vault -- --skip-glosario   # solo papers M01-M12
+pnpm sync:vault -- --filter all      # incluye glosario DRAFT (default: approved)
+```
+
+El orquestador `scripts/sync-vault.mjs` ejecuta 3 pasos en orden:
+
+| Paso | Script | Qué hace |
+|---|---|---|
+| [1] `import-book-sections.mjs` | `node scripts/import-book-sections.mjs` | Vault `01-secciones/sec-MI12-*.md` → `content/canonico/m##.mdx`; limpia wikilinks, migra `glo-*→con-*`, resuelve links relativos al vault |
+| [2] `sync-glosario.mjs` | corre en `c:/tmp/ghs-src/` con env `GHS_CHAPTER` + `GHS_PORTAL_DEST` | Vault `00-glosoario-universal/T1-T7/con-*.md` → `content/glosario/`; filtra `kd_status: approved` por defecto |
+| [3] `fix-orphan-indented.mjs` | `node scripts/fix-orphan-indented.mjs` | Post-fix YAML: elimina líneas indentadas sin clave padre válida (workaround del paso [2]); ~42 archivos × ~367 líneas |
+
+#### Prerrequisitos (setup una sola vez)
+
+1. **Google Drive Stream** montado en `H:\` con carpeta del capítulo libro sincronizada
+2. **Host sync-glosario** en ruta corta (evita problemas con espacios en path):
+   ```bash
+   # setup único — ver docs/guide-obsidian-sync-buttons.md para detalle completo
+   mkdir c:/tmp/ghs-src
+   # copiar sync-glosario.mjs + package.json allí, luego:
+   cd c:/tmp/ghs-src && npm install
+   ```
+
+#### Flujo completo post-sync
+
+```bash
+pnpm sync:vault                    # [1]+[2]+[3]
+pnpm build                         # validar compilación
+pnpm test:sync-vault               # 16 tests pasan
+git add content/
+git commit -m "chore(content): sync vault $(date +%Y-%m-%d)"
+git push origin main               # Vercel deploy auto ~60s
+```
+
+#### Variables de entorno para sync-glosario
+
+| Variable | Valor | Descripción |
+|---|---|---|
+| `GHS_CHAPTER` | `H:\...\3-diseño-capitulo-libro` | Ruta vault completa (hardcoded en sync-vault.mjs) |
+| `GHS_PORTAL_DEST` | `<portal>/content/glosario` | Destino de conceptos (hardcoded) |
+
+No necesitas exportarlas manualmente; `sync-vault.mjs` las inyecta automáticamente.
+
+#### TDD — `scripts/test-sync-vault.mjs`
+
+16 tests en 5 suites usando `node:test` (sin dependencias externas):
+
+| Suite | Tests | Qué valida |
+|---|---|---|
+| Prerequisites | 3 | Vault paths accesibles, `c:/tmp/ghs-src/node_modules` presente |
+| Papers | 3 | Conteo M01-M12 (≥10), frontmatter `kd_id`+`title`, no wikilinks residuales |
+| Glosario | 4 | Conteo conceptos (≥100), frontmatter `kd_id`+`kd_title`, status approved, no orphan-indented |
+| Idempotency | 3 | Dry-run no modifica archivos (mtime invariante) |
+| CRLF | 3 | Parser normaliza CRLF→LF correctamente |
 
 ## Estructura
 
