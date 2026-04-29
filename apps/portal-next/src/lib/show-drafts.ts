@@ -15,9 +15,11 @@ export type PaperLifecycle = 'DRAFT' | 'IN_REVIEW' | 'PUBLISHED' | 'DEPRECATED';
 
 export const VISIBLE_STATUSES: PaperLifecycle[] = ['PUBLISHED', 'DEPRECATED'];
 
+// showDrafts solo activo en development — nunca en production aunque esté seteado.
 export const showDrafts =
   typeof process !== 'undefined' &&
-  process.env.NEXT_PUBLIC_SHOW_DRAFTS === 'true';
+  process.env.NEXT_PUBLIC_SHOW_DRAFTS === 'true' &&
+  process.env.NODE_ENV !== 'production';
 
 /** True si el paper debe mostrarse públicamente. */
 export function isPublished(paper: { kd_status?: string; draft?: boolean }): boolean {

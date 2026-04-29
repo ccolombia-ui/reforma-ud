@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Home, Target, BookOpen, Newspaper, MessageSquare, type LucideIcon } from 'lucide-react';
+import { Home, Target, BookOpen, Newspaper, MessageSquare, Trophy, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-type TabId = 'inicio' | 'misiones-colectivas' | 'glosario' | 'noticias' | 'discusiones';
+type TabId = 'inicio' | 'misiones-cop' | 'misiones-colectivas' | 'glosario' | 'noticias' | 'discusiones';
 
 type Tab = {
   id: TabId;
@@ -14,21 +14,16 @@ type Tab = {
 
 const ALL_TABS: Tab[] = [
   { id: 'inicio',              label: 'Inicio',      Icon: Home },
-  { id: 'misiones-colectivas', label: 'Misiones',    Icon: Target },
+  { id: 'misiones-cop',        label: 'Misiones',    Icon: Trophy },
+  { id: 'misiones-colectivas', label: 'Colectivas',  Icon: Target },
   { id: 'glosario',            label: 'Glosario',    Icon: BookOpen },
   { id: 'noticias',            label: 'Noticias',    Icon: Newspaper },
   { id: 'discusiones',         label: 'Discusiones', Icon: MessageSquare },
 ];
 
 /**
- * ComunidadTabs · v7.3 G-V7-08 — navegación interna por sección.
- *
- * Filtra tabs según las secciones que existen en la página (props `available`),
- * usa IntersectionObserver para scroll-spy del tab activo, y sincroniza el
- * hash de la URL al hacer click.
- *
- * Las secciones de la página deben tener IDs:
- *   inicio · misiones-colectivas · glosario · noticias · discusiones
+ * ComunidadTabs · v8b — secciones de comunidad.
+ * IDs de sección: inicio · misiones-cop · misiones-colectivas · glosario · noticias · discusiones
  */
 export function ComunidadTabs({
   available,
@@ -37,7 +32,6 @@ export function ComunidadTabs({
 }>) {
   const [active, setActive] = useState<TabId>(available[0] ?? 'inicio');
 
-  // Scroll-spy: detecta qué sección está visible y marca el tab
   useEffect(() => {
     const sections = available
       .map((id) => document.getElementById(id))
@@ -46,34 +40,23 @@ export function ComunidadTabs({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Buscar la sección con mayor intersección visible
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]) {
-          setActive(visible[0].target.id as TabId);
-        }
+        if (visible[0]) setActive(visible[0].target.id as TabId);
       },
-      {
-        rootMargin: '-100px 0px -50% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-      }
+      { rootMargin: '-100px 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
-
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, [available]);
 
-  // Sincroniza con hash inicial al montar
   useEffect(() => {
     const hash = window.location.hash.slice(1) as TabId;
     if (hash && available.includes(hash)) {
       setActive(hash);
       const target = document.getElementById(hash);
-      if (target) {
-        // Pequeño delay para que las secciones ya estén renderizadas
-        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-      }
+      if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
   }, [available]);
 
@@ -82,7 +65,6 @@ export function ComunidadTabs({
     const target = document.getElementById(id);
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Actualiza hash sin disparar scroll nativo
       history.replaceState(null, '', `#${id}`);
     }
   }
