@@ -8,24 +8,15 @@ import path from 'path';
  * Sincroniza un concepto del glosario desde Google Drive al portal.
  *
  * DEV  (localhost): ejecuta sync-glosario.mjs directo (G: montada localmente).
- * PROD (Vercel):    dispara GitHub Actions workflow_dispatch con rclone.
+ * PROD (Vercel):    llama al Google Apps Script Web App (GAS_SYNC_URL).
+ *                   El script lee Drive → transforma → push a GitHub → Vercel redeploy.
  *
- * Body:    { docId: string }   — e.g. "con-acu-004-25"
- * Headers: Authorization: Bearer <SYNC_SECRET>
- *
- * Response: { success, mode, message?, report?, stats? }
+ * Body: { docId: string, filter?: "approved"|"all" }
+ * Response: { success, mode, stats?, report?, message?, error? }
  */
-
-const GITHUB_REPO = 'ccolombia-ui/reforma-ud';
-const WORKFLOW_FILE = 'sync-from-drive.yml';
-
 export async function POST(req: NextRequest) {
-  // Auth: sin user management por ahora — same-origin (portal propio).
-  // Agregar SYNC_SECRET cuando se implemente autenticación de usuarios.
-
-  // ── Validar body ─────────────────────────────────────────────────────────
   let docId: string;
-  let filter: string = 'approved';
+  let filter = 'approved';
   try {
     const body = await req.json();
     docId = String(body.docId ?? '').trim();
@@ -36,12 +27,12 @@ export async function POST(req: NextRequest) {
 
   if (!docId || !/^con-[a-z0-9-]+$/i.test(docId)) {
     return NextResponse.json(
-      { error: `docId inválido: "${docId}". Formato: con-<slug>.` },
+      { error: `docId inválido: "${docId}". Formato esperado: con-<slug>.` },
       { status: 400 },
     );
   }
 
-  // ── DEV: ejecutar script local ────────────────────────────────────────────
+  // ── DEV: script local (G: drive montada) ──────────────────────────────────
   if (process.env.NODE_ENV === 'development') {
     const scriptPath = path.resolve(process.cwd(), 'scripts/sync-glosario.mjs');
     return new Promise<NextResponse>((resolve) => {
@@ -63,10 +54,7 @@ export async function POST(req: NextRequest) {
           const unch = parseInt(stdout.match(/= Sin cambios\s*:\s*(\d+)/)?.[1] ?? '0');
           const ign = parseInt(stdout.match(/⏭ Ignorados\s*:\s*(\d+)/)?.[1] ?? '0');
           resolve(NextResponse.json({
-            success: true,
-            mode: 'local',
-            docId,
-            report,
+            success: true, mode: 'local', docId, report,
             stats: { new: newCount, updated: upd, unchanged: unch, ignored: ign },
           }));
         },
@@ -74,46 +62,35 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  // ── PROD: disparar GitHub Actions workflow_dispatch ───────────────────────
-  const pat = process.env.GITHUB_PAT;
-  if (!pat) {
+  // ── PROD: Google Apps Script Web App ─────────────────────────────────────
+  const gasUrl    = process.env.GAS_SYNC_URL;
+  const deployKey = process.env.GAS_DEPLOY_KEY;
+
+  if (!gasUrl) {
     return NextResponse.json(
-      { error: 'GITHUB_PAT no configurado en Vercel env vars.' },
+      { error: 'GAS_SYNC_URL no configurado en Vercel. Ver cloud-functions/sync-glosario-gas/SETUP.md' },
       { status: 503 },
     );
   }
 
-  const dispatchUrl = `https://api.github.com/repos/${GITHUB_REPO}/actions/workflows/${WORKFLOW_FILE}/dispatches`;
-  const ghRes = await fetch(dispatchUrl, {
-    method: 'POST',
-    headers: {
-      Authorization: `token ${pat}`,
-      Accept: 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ref: 'main',
-      inputs: {
-        doc_slug: docId,
-        filter,
-      },
-    }),
-  });
-
-  if (!ghRes.ok) {
-    const errText = await ghRes.text();
+  let gasRes: Response;
+  try {
+    gasRes = await fetch(gasUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ docId, filter, ...(deployKey ? { key: deployKey } : {}) }),
+      // Apps Script puede tardar hasta 30s en sync completo
+      signal: AbortSignal.timeout(60_000),
+    });
+  } catch (e) {
     return NextResponse.json(
-      { success: false, mode: 'github-actions', error: `GitHub API ${ghRes.status}: ${errText}` },
-      { status: 502 },
+      { success: false, mode: 'gas', error: e instanceof Error ? e.message : 'Timeout o red' },
+      { status: 504 },
     );
   }
 
-  // GitHub retorna 204 No Content en dispatch exitoso
-  return NextResponse.json({
-    success: true,
-    mode: 'github-actions',
-    docId,
-    message: 'Workflow disparado. Vercel redesplegará automáticamente en ~2 min cuando el Action haga push.',
-    actionsUrl: `https://github.com/${GITHUB_REPO}/actions/workflows/${WORKFLOW_FILE}`,
-  });
+  // Apps Script siempre retorna 200 — el error va en el body JSON
+  const data = await gasRes.json().catch(() => ({ error: 'Respuesta no es JSON' }));
+
+  return NextResponse.json({ mode: 'gas', ...data });
 }
