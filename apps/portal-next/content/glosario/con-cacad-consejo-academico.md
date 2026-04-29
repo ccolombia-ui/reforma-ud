@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Consejo Académico UDFJC"
 
 skos_prefLabel: "Consejo Académico (CACAD)"
 skos_altLabel: ["CACAD UDFJC", "Consejo Académico UDFJC", "Academic Council"]
@@ -23,16 +25,84 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 30-32"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 30-32 (composición, funciones, sesiones)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza al CACAD como máxima autoridad académica complementaria al CSU"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 30-32"
+  normative_text: "[Texto literal Arts. 30-32]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "cacad"
+  ddd_aggregate_root: "ConsejoAcademico"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "Aggregate Root del subdominio académico dentro del BC Gobierno Académico. Encapsula decisiones académicas (currículos, programas, políticas docentes) sin invadir competencias del CSU sobre el Estatuto."
+  ddd_invariants:
+    - "El rector(a) preside el CACAD"
+    - "Las decisiones académicas son resoluciones numeradas y fechadas"
+    - "Las propuestas que requieran reforma estatutaria se elevan al CSU"
+    - "Los representantes docente y estudiantil tienen voto pleno"
+  ddd_ubiquitous_terms:
+    - "CACAD"
+    - "Resolución Académica"
+    - "Vicerrectores temáticos"
+    - "Política docente"
+    - "Aprobación de programa académico"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-arts-30-32-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-arts-30-32-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-csu-consejo-superior-universitario]]"
+  - "[[con-rectoria]]"
 
+applicable_domain: "Decisiones de sustancia académica UDFJC: currículos, programas, políticas docentes, calendarios académicos, criterios de admisión y graduación."
+assumptions:
+  - "La separación CSU (estatutaria) vs CACAD (académica) se respeta operativamente"
+breaks_at:
+  - "Si una decisión académica requiere reforma estatutaria sin elevarse al CSU"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-cacad-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-cacad-related-csu
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-csu-consejo-superior-universitario]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CSU autoridad estatutaria; CACAD autoridad académica; complementarios"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1

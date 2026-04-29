@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "SPADIES · Sistema Prevención Deserción Educación Superior"
 
 skos_prefLabel: "SPADIES · Sistema Prevención de la Deserción ES (MEN Colombia)"
 skos_altLabel: ["SPADIES", "Sistema Prevención Deserción", "MEN SPADIES"]
@@ -23,11 +25,40 @@ iso_standardized_by: "Ministerio de Educación Nacional Colombia + Universidad d
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "MEN Colombia + Universidad de los Andes CEDE SPADIES"
+  neon_alignment_confidence: 0.92
+
+applicable_domain: "Análisis deserción UDFJC + diseño intervenciones R5 + alimentación P1 framework M08"
+assumptions:
+  - "Los factores de riesgo identificados son aplicables UDFJC"
+breaks_at:
+  - "Si se confunde con OLE (post-egreso) o SNIES (matrícula activa)"
+
+valid_from: "2006-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-spadies-alimenta-fwk
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-framework-86-indicadores-s0-s5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "SPADIES alimenta P1 framework M08 con tasa deserción acumulada como métrica de eficiencia (categoría C3 del Marco P1)."
+  - rel_id: rel-spadies-mide-r5
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "SPADIES permite medir el impacto de R5 (Aprendizaje Experiencial: co-op + PBL) en reducción de deserción."
 
 cited_in: ["[[sec-MI12-11--datasets-men]]"]
 cited_count: 1

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Ecuación IUCA — Índice Universitario de Cumplimiento Misional Agregado"
 
 skos_prefLabel: "Ecuación IUCA (M08)"
 skos_altLabel: ["IUCA formula", "IUCA index formula", "Índice Cumplimiento Misional"]
@@ -13,8 +15,26 @@ skos_scopeNote: "El IUCA usa promedio simple (1/20) — pesos iguales a los 20 Q
 skos_example: "UDFJC S0: F1.C1 (egresados/cohorte) = 42% vs S5=70% → QI1 = (42/70)×100 = 60. F2.C1 (patentes) = 0 vs S5=10 → QI2 = 0. F3.C1 (spin-offs) = 0 vs S5=10 → QI3 = 0. F4.C1 (R# activas) = 0/6 vs S5=6/6 → QI4 = 0. Promedio ≈ 15+otros ≈ 8. Confirma IUCA(S0)≈8."
 skos_notation: "IUCA"
 
+concepto_formula_latex: |
+  \text{IUCA}(S_n) = \frac{1}{20} \sum_{i=1}^{20} \frac{\text{QI}_i^{S_n}}{\text{QI}_i^{S_5}} \times 100
 
+concepto_formula_variables:
+  - var: "\\text{IUCA}(S_n)"
+    desc: "Valor del Índice en el escenario S_n (escala 0-100)"
+  - var: "\\text{QI}_i^{S_n}"
+    desc: "Valor del i-ésimo indicador de Impacto Misional en el escenario S_n"
+  - var: "\\text{QI}_i^{S_5}"
+    desc: "Valor meta del i-ésimo indicador en S5 (referente N4)"
+  - var: "i \\in [1,20]"
+    desc: "Índice recorre los 20 QI de la matriz 4F × 5C (M08 §4.2-§4.3)"
+  - var: "\\frac{1}{20}"
+    desc: "Pesos uniformes (1/20 por QI) — el IUCA no pondera por función"
 
+concepto_prerequisitos:
+  - "[[con-iuca-ivc-ivo-indices]]"
+  - "[[con-framework-86-indicadores-s0-s5]]"
+  - "[[con-taxonomia-sub-n1-n4]]"
+  - "[[con-bmk-001-21-ies]]"
 
 iso_designation_type: term
 iso_definition_type: intensional
@@ -26,11 +46,42 @@ iso_standardized_by: "Madera Sepúlveda, C. C. (2026). M08 §4.5. *Capítulo MI-
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M08 §4.5 — elaboración propia"
+  neon_alignment_confidence: 0.90
+
+applicable_domain: "Diagnóstico institucional UDFJC + dashboard CSU + evaluación escenarios S0-S5"
+assumptions:
+  - "Los 20 QI tienen peso igual (1/20) — ajustable por reforma de ponderación"
+  - "S5 es el denominador normalizador (referente N4 alcanzable en horizonte 2034)"
+breaks_at:
+  - "Si algún QI_i^(S_5) = 0 (división por cero)"
+  - "Si se confunde con IUCA SNIES nacional"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-eq-iuca-define-indice
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-iuca-ivc-ivo-indices]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La ecuación IUCA es la formalización matemática del concepto IUCA definido en con-iuca-ivc-ivo-indices."
+  - rel_id: rel-eq-iuca-agrega-qi
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-framework-86-indicadores-s0-s5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "IUCA agrega los 20 QI (de los 86 indicadores del framework) de P1 en una métrica escalar."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]"]
 cited_count: 1

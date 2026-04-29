@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:consejo-escuela
 kd_title: "Consejo de Escuela UDFJC (Arts. 18f, 70 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Consejo de Escuela UDFJC"
+tupla_descripcion: "Órgano de gobierno colegiado de la Escuela UDFJC declarado en Art. 18f + Art. 70 · presidido por la Dirección de Escuela · deliberación académica de la Escuela como unidad básica de adscripción docente por campo del conocimiento-saber"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Consejo de Escuela"
 skos_altLabel: ["CE", "School Council"]
@@ -26,15 +28,111 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 18f + 70"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 18f + 70"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 declara Consejo de Escuela como órgano de gobierno + componente estructural de Escuela"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 18f + 70"
+  normative_text: "Órganos del Gobierno: f) Los Consejos de Escuela (Art. 18f). Estructura de Escuelas: Una dirección, Un consejo de escuela, Un claustro de profesores, CABAs, Una secretaría académica (Art. 70)."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "consejo_escuela"
+  ddd_term: "Consejo de Escuela"
+  ddd_aggregate_root: "ConsejoEscuela"
+  ddd_article_ref: "Arts. 18f + 70"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: AGGREGATE_ROOT
+  ddd_aggregate_root_flag: true
+  ddd_domain_type: Core
+  ddd_governed_by:
+    - "[[con-director-escuela]]"
+  ddd_invariants:
+    - "Cada Escuela UDFJC debe tener UN Consejo de Escuela (Art. 70)"
+    - "El Consejo de Escuela es presidido por la Dirección de Escuela"
+    - "Composición específica desarrollada en Estatuto Académico Art. 98 §1"
+    - "Articula CABAs específicas de la Escuela respectiva"
+    - "Decisiones que excedan competencias de Escuela se elevan al CACAD"
+  ddd_ubiquitous_terms:
+    - "Consejo de Escuela · CE"
+    - "Deliberación académica de Escuela"
+    - "Adscripción CABAs"
+    - "Coordinación docente por campo"
 
+concepto_definitional_anchors: ["[[def-norm-acu-004-25-art-70-ce-2025-05-05]]"]
+concepto_current_anchor: "[[def-norm-acu-004-25-art-70-ce-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-escuela]]"
+  - "[[con-director-escuela]]"
+  - "[[con-caba]]"
 
+applicable_domain: "Toda Escuela UDFJC desde 2025-05-06"
+assumptions: ["Composición específica desarrollada en Estatuto Académico Art. 98 §1"]
+breaks_at: ["Si una Escuela opera sin Consejo (incumple Art. 70)"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-ce-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Consejo de Escuela declarado Arts. 18f + 70"
+  - rel_id: rel-ce-presidido-direccion
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-director-escuela]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 70 · Consejo presidido por Dirección de Escuela"
+  - rel_id: rel-ce-componente-escuela
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-escuela]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 70 · Consejo es componente obligatorio de Escuela"
+  - rel_id: rel-ce-articula-cabas
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-caba]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 70 · CABAs forman parte de la estructura de Escuela articulada por Consejo"
+  - rel_id: rel-ce-eleva-cacad
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-cacad-consejo-academico]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Decisiones que excedan competencias de Escuela se elevan al CACAD"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1
@@ -43,7 +141,7 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, consejo-escuela, ar
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Consejo de Escuela
 
 > [!note]+ Órgano colegiado de Escuela · presidido por Dirección
 > El **Consejo de Escuela** delibera sobre asuntos académicos de la Escuela como unidad de adscripción docente por campo del conocimiento-saber. Articula CABAs y campos.
@@ -52,50 +150,35 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, consejo-escuela, ar
 
 ## §0 · 🎭 Vista por rol
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ## §1 · Definición
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Órgano de gobierno colegiado de la Escuela UDFJC declarado como **órgano del Gobierno Universitario** en el Art. 18f del ACU-004-25 y como componente obligatorio de la estructura de Escuela en el Art. 70. Presidido por la Dirección de Escuela, articula deliberación académica entre docentes adscritos (vía CABAs) + representación estudiantil + apoyo administrativo. Sus decisiones afectan la operación de la Escuela como **unidad académico-administrativa de adscripción docente por campo del conocimi
 
 ## §2 · Anclaje + cadena
 
-```dataviewjs
-const f = dv.current().concepto_facet_normative;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.table(["Campo", "Valor"], [["Origen", `${f.origin_type} · ${f.origin_force}`], ["Authority", f.normative_authority_level], ["Effective force", `**${f.effective_force_in_udfjc}**`]]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) { dv.header(4, `🔗 Cadena · ${chain.length}`); dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"], chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence])); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · DDD
 
-```dataviewjs
-const f = dv.current().concepto_facet_ddd;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.header(4, `DDD · ${f.ddd_id}`);
-  if ((f.ddd_invariants ?? []).length) { dv.header(5, "🔒 Invariantes"); dv.list(f.ddd_invariants); }
-  if ((f.ddd_ubiquitous_terms ?? []).length) { dv.header(5, "🗣️ Lenguaje ubicuo"); dv.paragraph(f.ddd_ubiquitous_terms.join(" · ")); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · Relaciones
 
-```dataviewjs
-const rels = dv.current().tupla__relations ?? [];
-const vocab = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocab?.relaciones ?? {};
-const hL = (n, d) => { const e = relMap[n]?.[d ?? "co"] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post; return e?.label ?? `\`${n}\``; };
-for (const r of rels) dv.paragraph(`**${hL(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §10 · Citado en
 
-```dataviewjs
-dv.list(dv.current().cited_in ?? []);
-dv.paragraph(`**Total**: ${dv.current().cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

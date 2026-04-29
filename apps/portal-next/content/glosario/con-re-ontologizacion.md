@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Re-ontologización UDFJC"
 
 skos_prefLabel: "Re-ontologización UDFJC"
 skos_altLabel: ["Refundación ontológica", "Cambio de organizador ontológico", "AS-IS → TO-BE estructural"]
@@ -23,11 +25,29 @@ iso_standardized_by: "Madera Sepúlveda (2026) — elaboración propia M01 §4.1
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Síntesis [[con-acu-004-25]] vs [[con-acu-003-97]] + filosofía organizacional"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Análisis comparativo estructura UDFJC pre/post reforma + diseño de transición operativa"
+assumptions: ["El cambio organizativo del ACU-004-25 es ontológico, no nominal"]
+breaks_at: ["Si la implementación se reduce a cambio de nombres sin transformar lógicas"]
+
+valid_from: "2025-05-06"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-reonto-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

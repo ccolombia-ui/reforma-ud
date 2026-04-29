@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "BSC-s (Balanced Scorecard sistémico)"
 
 skos_prefLabel: "BSC-s — Balanced Scorecard sistémico"
 skos_altLabel: ["Balanced Scorecard adaptado UDFJC", "BSC sistémico", "Sistema de gestión estratégica BSC"]
@@ -23,11 +25,74 @@ iso_standardized_by: "Kaplan & Norton (1996) BSC + Madera Sepúlveda (2026) adap
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[kaplan1996bsc]] + adaptación UDFJC Madera Sepúlveda 2026"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Gestión estratégica de Escuelas + Facultades + IES públicas en transformación"
+assumptions: ["Las 4 perspectivas son suficientes para capturar el desempeño universitario sistémico"]
+breaks_at: ["Si se aplica como métrica financiera tradicional sin considerar misión pública"]
+
+valid_from: "2026-04-26"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-bsc-complementa-rbm
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-rbm-gac]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BSC-s y RBM-GAC son marcos complementarios: BSC-s mide desempeño en 4 perspectivas P1-P4; RBM-GAC provee la metodología por resultados + estructura de gobernanza. Articulados en el framework prospectivo M08."
+  - rel_id: rel-bsc-articula-funciones-misionales
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-funciones-misionales]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Perspectiva P3 (Procesos Internos) del BSC-s se mapea directamente a la articulación de PM1 (Formación) + PM2 (Investigación) + PM3 (Extensión) — las funciones misionales del Art. 7 ACU-004-25."
+  - rel_id: rel-bsc-stakeholders-quintuple
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-quintuple-helix]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Perspectiva P2 (Cliente/Stakeholders) del BSC-s adopta el modelo Quintuple Helix: comunidades + estamentos + sector productivo + medio ambiente."
+  - rel_id: rel-bsc-aprendizaje-omt
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-omt]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Perspectiva P4 (Aprendizaje y Crecimiento) del BSC-s se materializa en el ciclo virtuoso ΩMT (M02): retroalimentaciones R1-R6 que aceleran capacidad transformativa."
+  - rel_id: rel-bsc-direccionalidad-frame3
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-frame-3]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "BSC-s implementa direccionalidad transformativa Frame 3 — sin ese marco conceptual, BSC degenera a métrica financiera tradicional."
+  - rel_id: rel-bsc-mitiga-rt5
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BSC-s es el instrumento institucional de mitigación de RT5 (Ausencia de sistema de seguimiento) identificado en M01 §5.2."
+  # — v1.1.0 cross-references M05 (Fase B audit refactor) ——————————
+  - rel_id: rel-bsc-detalla-p1
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-marco-p1-impacto-misional]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Marco P1 (4 funciones × 5 categorías = 20 QI) es la desagregación detallada de la perspectiva P1 del BSC-s, canonizado en M05 + M08."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-08--framework-bsc-rbm-crisp]]"]
 cited_count: 2

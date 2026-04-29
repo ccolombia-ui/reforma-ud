@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "EUR-ACE — European Accredited Engineer"
 
 skos_prefLabel: "EUR-ACE — European Accredited Engineer (ENAEE)"
 skos_altLabel: ["EUR-ACE Label", "ENAEE", "European Engineering Accreditation"]
@@ -23,11 +25,32 @@ iso_standardized_by: "ENAEE (European Network for Accreditation of Engineering E
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "ENAEE EUR-ACE Framework Standards & Guidelines"
+  neon_alignment_confidence: 0.92
+
+applicable_domain: "Programas Ingeniería UDFJC con pretensiones de movilidad europea Erasmus+"
+assumptions:
+  - "La movilidad europea es objetivo estratégico de algunos programas UDFJC"
+breaks_at: []
+
+valid_from: "2007-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-eurace-complementa-abet
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-abet-acreditacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "EUR-ACE (europeo) y ABET (norteamericano) son acreditaciones programáticas equivalentes en función — distintas en jurisdicción y reconocimiento profesional."
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]"]
 cited_count: 1

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.1.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Escuela UDFJC"
 
 skos_prefLabel: "Escuela UDFJC"
 skos_altLabel:
@@ -29,20 +31,148 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
+  - TYPE
 
 # ═══════════════════════════════════════════════════════════════════════════
 #  Facet TYPE — Capa 1 del patrón Type → Schema → Instance (v1.1.0)
 # ═══════════════════════════════════════════════════════════════════════════
+concepto_facet_type:
+  type_pattern_role: "Capa 1 (Type jurídico abstracto) del patrón 3-capas Type → Schema → Instance"
+  schema_layer: "[[con-escuela-generica-udfjc]] (Capa 2 · schema metodológico de instanciación)"
+  instances_count_mandatory: 7
+  instances_mandate: "Art. 105 ACU-004-25 — plazo 2025-05-05 → 2027-05-05"
+  instance_blocks:
+    ciencias_basicas: 4
+    ciencias_salud: 3
+  pilot_instance: "[[con-escuela-fisica]]"
+  type_invariants_inherited_by_all_instances:
+    - "Art. 69 — adscripción exclusiva a Vicerrectoría de Formación"
+    - "Art. 70 — estructura mínima (dirección + consejo + claustro + CABAs + secretaría)"
+    - "Art. 71 — proceso de creación CSU previo aval Consejo Académico"
+    - "Art. 71c — singularidad y no redundancia del campo conocimiento-saber"
+    - "Art. 72 — designación director por elección directa ponderada (4 años, sin reelección inmediata)"
+    - "Art. 73 — CABAs como estructura básica dinámica de las escuelas"
+    - "Art. 81 — no reelección inmediata de directores"
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 58-59 + 69-72 (Escuelas, Director, Consejo, ~25 Escuelas)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza Escuela como unidad académica básica · refundación estructural que sustituye Facultad-Departamento del ACU 003/1997"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 58-59 + 69-72 + 71 (~25 Escuelas por decreto CSU)"
+  normative_text: "[Texto literal Arts. 69-72 · Escuelas + Director + Consejo + creación]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates:
+    - "Estructura Facultad-Departamento del Acuerdo CSU 003/1997 (organizada por afinidad disciplinar amplia)"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "escuela"
+  ddd_aggregate_root: "Escuela"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "Aggregate Root del subdominio Estructura Académica Básica. Encapsula identidad institucional (id, nombre, campo del conocimiento-saber), agrupa docentes adscritos como Entities, mantiene invariantes de coherencia presupuestal y curricular. Coexiste con Facultad, Instituto, Centro como Aggregate Roots paralelos NO jerárquicos."
+  ddd_invariants:
+    - "Una Escuela debe declarar al menos un campo del conocimiento-saber"
+    - "Los docentes de planta tiempo completo están adscritos a una Escuela como anclaje primario"
+    - "El Director debe ser docente de planta tiempo completo"
+    - "El Director se elige por voto de los docentes de la Escuela; periodo 4 años; sin reelección inmediata"
+    - "El Consejo de Escuela tiene representación 70% docentes + 30% CV+entrevista (Art. 72)"
+    - "Una Escuela puede ser atravesada por N CABAs transversales (≥0)"
+    - "Una Escuela desarrolla simultáneamente PM1+PM2+PM3 (no compartimentada)"
+  ddd_ubiquitous_terms:
+    - "Escuela"
+    - "Director(a) de Escuela"
+    - "Consejo de Escuela"
+    - "Docente adscrito"
+    - "Campo del conocimiento-saber"
+    - "CABA (atraviesa Escuelas)"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-69-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-69-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-campo-conocimiento-saber]]"
+  - "[[con-vicerrectoria-formacion]]"
 
+applicable_domain: "UDFJC desde 2025-05-06; constitución progresiva de las ~25 Escuelas durante Período de Transición Art. 96 (4 años máximo)"
+assumptions:
+  - "El CSU expide los decretos creadores de las ~25 Escuelas según Art. 71"
+  - "Los docentes históricamente adscritos a Departamentos transitan a adscripción a Escuelas"
+breaks_at:
+  - "Una Escuela sin campo del conocimiento-saber declarado viola Art. 69"
+  - "Si retorna a estructura Facultad-Departamento (incumple ACU-004-25)"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-escuela-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-escuela-organizada-por-campo
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-campo-conocimiento-saber]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_strength: 1.0
+      skos_evidence: "Art. 69: Escuelas se organizan por campo del conocimiento-saber"
+  - rel_id: rel-escuela-atravesada-cabas
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Art. 73: CABAs son células transversales que atraviesan Escuelas"
+  - rel_id: rel-escuela-coexiste-facultad
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-facultad]]"
+    rel_frame: skos
+  # ── v1.1.0 · Patrón Type → Schema → Instance ─────────────────────────
+  - rel_id: rel-escuela-schema-generico
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-generica-udfjc]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Capa 2 · Escuela Genérica UDFJC es el schema metodológico que materializa este Type jurídico para análisis transversal e instanciación específica. Hereda todos los invariantes Art. 69-72 + añade cardinalidades operativas (~25 docentes, ~600-1.200 estudiantes, 2-4 CABAs)."
+  - rel_id: rel-escuela-instance-piloto-fisica
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-fisica]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Capa 3 · La Escuela de Física es la instancia piloto del patrón Type → Schema → Instance. Materializa este Type jurídico al campo conocimiento-saber Física en el bloque mandatorio de 4 escuelas de Ciencias Básicas (Art. 105 ACU-004-25)."
+  - rel_id: rel-escuela-mandato-art-105
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Art. 105 ACU-004-25 mandata la conformación de 7 escuelas (4 Ciencias Básicas + 3 Ciencias de la Salud) en plazo máximo de 2 años a partir del 2025-05-05 (deadline 2027-05-05). Cada escuela mandatoria es una instancia de este Type."
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-04--jtbd-comunidad]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-10--tdabc]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 8

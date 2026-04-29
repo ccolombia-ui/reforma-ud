@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:oficina-asesora-planeacion
 kd_title: "Oficina Asesora de Planeación UDFJC (Art. 33 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Oficina Asesora de Planeación UDFJC"
+tupla_descripcion: "Dependencia asesora adscrita a la Rectoría UDFJC declarada en el Art. 33 del ACU-004-25 — antecedente directo de la Dirección de Gestión Estratégica y de Planeación que la eleva con asiento en CGA"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Oficina Asesora de Planeación (OAP)"
 skos_altLabel:
@@ -28,16 +30,97 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 33"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 33 (dependencias de la Rectoría)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 mantiene la OAP como dependencia rectoral asesora · transición progresiva hacia DGEP"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 33"
+  normative_text: "Dependencias de la Rectoría: Secretaría General, Oficina de Planeación, Oficina de Control Interno, Oficina de Comunicaciones, y las demás que determine el CSU."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: "Coexistencia transitoria con DGEP (Art. 86c) · transición progresiva durante Período Transición Art. 96"
+  chain_status: BRANCHING
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "oficina_asesora_planeacion"
+  ddd_term: "Oficina Asesora de Planeación"
+  ddd_aggregate_root: "OficinaAsesoraPlaneacion"
+  ddd_article_ref: "Art. 33"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gestion-administrativa-udfjc]]"
+  ddd_role_in_context: ENTITY
+  ddd_aggregate_root_flag: false
+  ddd_domain_type: Supporting
+  ddd_governed_by:
+    - "[[con-rectoria]]"
+  ddd_invariants:
+    - "OAP es dependencia ASESORA · sin competencia ejecutiva propia"
+    - "OAP se adscribe directamente a la Rectoría · no al CGA"
+    - "Durante el Período de Transición, OAP coordina funciones con la DGEP en proceso de elevación"
+    - "Reportes técnicos producidos por OAP sirven a la Rectoría para decisiones inmediatas"
+  ddd_ubiquitous_terms:
+    - "OAP · Oficina Asesora de Planeación"
+    - "Asesoría rectoral"
+    - "Insumos técnicos de planeación"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-33-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-33-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-rectoria]]"
 
+applicable_domain: "Planeación institucional UDFJC en régimen transitorio · función asesora rectoral"
+assumptions:
+  - "OAP migra progresivamente sus funciones a DGEP durante el Período de Transición"
+breaks_at:
+  - "Si OAP y DGEP duplican funciones sin transición clara"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-oap-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "OAP declarada en Art. 33 del ACU-004-25 como dependencia rectoral asesora"
+  - rel_id: rel-oap-adscrita-rectoria
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-rectoria]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 33 · OAP adscrita directamente a la Rectoría"
+  - rel_id: rel-oap-transicion-dgep
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-direccion-gestion-estrategica-planeacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "OAP coexiste con DGEP en transición · funciones convergen progresivamente bajo la Dirección elevada"
 
 cited_in:
   - "[[sec-MI12-00--carta-constitucional-acu-004-25]]"
@@ -58,7 +141,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Oficina Asesora de Planeación (OAP)
 
 > [!note]+ Dependencia asesora rectoral · transición a DGEP
 > La **OAP** es la dependencia asesora rectoral de planeación declarada en el Art. 33 del ACU-004-25. Coexiste en transición con la **DGEP** (Art. 86c) que la eleva con asiento en CGA. Durante el Período de Transición, sus funciones convergen progresivamente bajo la Dirección elevada.
@@ -67,80 +150,41 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Dependencia asesora adscrita a la Rectoría UDFJC declarada en el Art. 33 del ACU-004-25 entre las dependencias rectorales (junto con Secretaría General, Oficina de Control Interno y Oficina de Comunicaciones). Su función es **asesorar técnicamente a la Rectoría en planeación institucional**: producción de Plan de Acción Anual, monitoreo de indicadores, articulación con MIPG nacional, soporte técnico al PED 2018-2030. **Coexiste en transición** con la Dirección de Gestión Estratégica y de Planeac
 
 | Sub-tipo | Pasteur | Effective force UDFJC |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) { dv.paragraph("(sin facet normative)"); }
-else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🧩 Estructura DDD · invariantes operativas
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_ddd;
-if (!f) { dv.paragraph("(sin facet DDD)"); }
-else {
-  dv.header(4, `DDD · ${f.ddd_id ?? "—"} · ${f.ddd_role_in_context ?? "—"}`);
-  if ((f.ddd_invariants ?? []).length) {
-    dv.header(5, "🔒 Invariantes operativas");
-    dv.list(f.ddd_invariants);
-  }
-  if ((f.ddd_ubiquitous_terms ?? []).length) {
-    dv.header(5, "🗣️ Lenguaje ubicuo");
-    dv.paragraph((f.ddd_ubiquitous_terms ?? []).join(" · "));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas
 
-```dataviewjs
-const rels = dv.current().tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-for (const r of rels) dv.paragraph(`**${humanLabel(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

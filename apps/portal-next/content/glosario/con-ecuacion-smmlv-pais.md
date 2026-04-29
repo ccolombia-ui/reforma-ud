@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Ecuaciones SMMLV-País — Normalización cross-IES"
 
 skos_prefLabel: "Ecuaciones SMMLV-País (M08-M09)"
 skos_altLabel: ["SMMLV-país normalización", "eficiencia cross-IES", "costo SMMLV equivalente"]
@@ -13,8 +15,28 @@ skos_scopeNote: "El SMMLV-país NO es idéntico para todos los países — varí
 skos_example: "Normalización: UDFJC (S0) costo/egresado ≈ 150M COP. C_SMMLV = 150.000.000 / 1.423.500 ≈ 105 SMMLV-meses. MIT costo/grad ≈ $300K USD, SMMLV Massachusetts = $2.595 USD/mes. C_SMMLV^MIT = 300.000 / 2.595 ≈ 116 SMMLV-meses. Ratio η = 105/116 ≈ 0.90 — UDFJC(S0) es ligeramente más eficiente que MIT en SMMLV-país, PERO sin producir los mismos outputs. UDFJC(S5) proyectado = 32 SMMLV → η(S5/MIT) = 32/116 = 0.28 → 4× más eficiente que MIT."
 skos_notation: "C_SMMLV = C_local/SMMLV; η_{i,j} = C_SMMLV^i/C_SMMLV^j"
 
+concepto_formula_latex: |
+  C_{\text{SMMLV}} = \frac{C_{\text{local}}}{\text{SMMLV}_{\text{país}}}
+  \quad\quad
+  \eta_{i,j} = \frac{C_{\text{SMMLV}}^{IES_i}}{C_{\text{SMMLV}}^{IES_j}}
 
+concepto_formula_variables:
+  - var: "C_{\\text{SMMLV}}"
+    desc: "Costo normalizado en unidades de salario mínimo mensual (adimensional)"
+  - var: "C_{\\text{local}}"
+    desc: "Costo en moneda nacional del país de la IES (COP, USD, EUR, etc.)"
+  - var: "\\text{SMMLV}_{\\text{país}}"
+    desc: "Salario mínimo mensual legal vigente en el país de la IES (misma moneda que C_local)"
+  - var: "\\eta_{i,j}"
+    desc: "Ratio de eficiencia entre IES_i e IES_j — ratio < 1 significa IES_i más eficiente"
+  - var: "\\eta < 1"
+    desc: "IES_i más eficiente en costo-por-egresado que IES_j (misma calidad supuesta)"
+  - var: "\\text{Colombia 2026}"
+    desc: "SMMLV = $1.423.500 COP/mes (Decreto 1571/2025)"
 
+concepto_prerequisitos:
+  - "[[con-bmk-001-21-ies]]"
+  - "[[con-ecuacion-ccr-tdabc]]"
 
 iso_designation_type: term
 iso_definition_type: intensional
@@ -26,11 +48,43 @@ iso_standardized_by: "Madera Sepúlveda, C. C. (2026). M08 §7.5 + M09 §6. *Cap
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M08 §7.5 + M09 §6 — elaboración propia"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Benchmarking cross-IES UDFJC con 21 IES internacionales de BMK-001"
+assumptions:
+  - "El SMMLV-país es un proxy razonable de la estructura de costos de vida del país"
+  - "Se compara 'costo por egresado' — implica que los egresados tienen calidad comparable (supuesto fuerte)"
+  - "Los SMMLV no-colombianos son proyecciones 2026 (tabla viva — actualizar trimestralmente)"
+breaks_at:
+  - "Si se usa para comparar países con hiperinflación o control de cambios (proxy colapsa)"
+  - "Si se equipara con PPP riguroso (es order-of-magnitude, no exacto)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-smmlv-habilita-bmk
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-bmk-001-21-ies]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La normalización SMMLV-país habilita la comparación cross-IES del BMK-001 (21 universidades de 12 países) sin distorsiones por diferencias monetarias."
+  - rel_id: rel-smmlv-aplica-ccr
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-ecuacion-ccr-tdabc]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El CCR UDFJC (COP/hora) se convierte a SMMLV-país para comparar eficiencia con IES extranjeras vía la ecuación de normalización."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-09--ds-presupuesto-nicsp]]"]
 cited_count: 2

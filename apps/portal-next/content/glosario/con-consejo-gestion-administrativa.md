@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:consejo-gestion-administrativa
 kd_title: "Consejo de Gestión Administrativa UDFJC (Art. 87 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Consejo de Gestión Administrativa UDFJC"
+tupla_descripcion: "Instancia colegiada de dirección y coordinación del Sistema de Gestión Administrativa UDFJC presidida por la Rectoría — articula vicerrectorías, secretaría general, dirección de planeación, gerencia administrativa y dirección de bienestar"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Consejo de Gestión Administrativa (CGA)"
 skos_altLabel:
@@ -32,17 +34,171 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 87 (composición + funciones) + Art. 86 (estructura)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza el CGA como instancia colegiada NUEVA · sin precedente en ACU 003/1997 · refleja transición de Vicerrectoría Administrativa unipersonal a órgano colegiado horizontal de coordinación"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 87 (composición de 6 cargos + reglamento propio)"
+  normative_text: "El Consejo de Gestión Administrativa actúa como la instancia de dirección y coordinación del Sistema de Gestión Administrativa. Composición: a) Rector(a), quien lo preside; b) Vicerrectores(as); c) Secretario(a) general; d) Director(a) de Gestión Estratégica y de Planeación; e) Gerente administrativo y financiero; f) Director(a) de Bienestar Universitario y Buen Vivir. PARÁGRAFO: El Consejo de Gestión Administrativa se da su propio reglamento."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates:
+    - "Concepto NUEVO en ACU-004-25 (no existía órgano colegiado de coordinación administrativa en ACU 003/1997)"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "consejo_gestion_administrativa"
+  ddd_term: "Consejo de Gestión Administrativa"
+  ddd_aggregate_root: "ConsejoGestionAdministrativa"
+  ddd_article_ref: "Art. 87"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gestion-administrativa-udfjc]]"
+  ddd_role_in_context: AGGREGATE_ROOT
+  ddd_aggregate_root_flag: true
+  ddd_domain_type: Core
+  ddd_lifecycle_states:
+    - SESIONANDO
+    - RECESO
+  ddd_governed_by:
+    - "[[con-rectoria]]"
+  ddd_invariants:
+    - "El CGA debe ser presidido por el Rector(a) — no por otro miembro"
+    - "El CGA debe tener exactamente 6 cargos titulares: 1 Rector + 3 Vicerrectores + 1 Secretario + 1 Director Planeación + 1 Gerente AdminFin + 1 Director Bienestar (algunos rangos pueden tener delegados)"
+    - "El CGA debe darse su propio reglamento operativo (PARÁGRAFO Art. 87)"
+    - "Los actos del CGA son orientativos-coordinativos, no ejecutivos directos · se ejecutan vía Resoluciones de Rectoría o actos de cada dependencia"
+    - "Toda priorización presupuestal anual debe pasar por el CGA antes de elevarse al CSU para aprobación final"
+  ddd_ubiquitous_terms:
+    - "Consejo de Gestión Administrativa · CGA"
+    - "Sistema de Gestión Administrativa · SGA"
+    - "Coordinación interdireccional"
+    - "3 subsistemas administrativos"
+    - "Reglamento operativo propio"
+    - "Acto deliberativo-coordinativo"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-87-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-87-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-rectoria]]"
+  - "[[con-vicerrectoria-formacion]]"
+  - "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+  - "[[con-vicerrectoria-contextos-extension]]"
+  - "[[con-secretaria-general-sisgral]]"
 
+applicable_domain: "Toda decisión de coordinación operativa entre dependencias administrativas y misionales UDFJC desde 2025-05-06 con plazo de instalación dentro del Período de Transición Art. 96"
+assumptions:
+  - "La coordinación colegiada entre 6 cargos directivos es operacionalizable institucionalmente"
+  - "El reglamento propio del CGA permite agilidad operativa sin sacrificar trazabilidad"
+  - "Los Directores de Gestión Estratégica + Gerencia Administrativa + Bienestar deben designarse antes de poder instalar el CGA"
+breaks_at:
+  - "Si el CGA sesiona sin presidencia rectoral (incumple Art. 87a)"
+  - "Si los 6 cargos no están completos por vacancia prolongada de alguno"
+  - "Si el CGA invade competencias del CSU (estatutarias) o CACAD (académicas) tomando decisiones que excedan su ámbito coordinativo"
+  - "Si el reglamento propio no se expide dentro del Período de Transición (riesgo de operación informal)"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
-"@context":
 
+tupla__relations:
+  - rel_id: rel-cga-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    bc_domain: gestion-administrativa-udfjc
+    rel_propiedades:
+      norm_evidence: "El CGA es creado por el Art. 87 del ACU-004-25 como instancia NUEVA"
+  - rel_id: rel-cga-presidido-rectoria
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-rectoria]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87a · El Rector(a) preside el CGA"
+  - rel_id: rel-cga-coordina-vicerrectorias
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-vicerrectoria-formacion]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87b · vicerrectores son miembros del CGA — articulación misional"
+  - rel_id: rel-cga-coordina-vri
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87b · vicerrector(a) de investigación-creación es miembro del CGA"
+  - rel_id: rel-cga-coordina-vce
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-vicerrectoria-contextos-extension]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87b · vicerrector(a) de contextos-extensión es miembro del CGA"
+  - rel_id: rel-cga-secretaria
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-secretaria-general-sisgral]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87c · secretario(a) general es miembro del CGA · soporte normativo-documental"
+  - rel_id: rel-cga-coordina-direccion-planeacion
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-direccion-gestion-estrategica-planeacion]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87d · director(a) de Gestión Estratégica y Planeación es miembro del CGA"
+  - rel_id: rel-cga-coordina-gerencia
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-gerencia-administrativa-financiera]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87e · gerente administrativo(a) y financiero(a) es miembro del CGA"
+  - rel_id: rel-cga-coordina-direccion-bienestar
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-direccion-bienestar-buen-vivir]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87f · director(a) de Bienestar Universitario y Buen Vivir es miembro del CGA"
+  - rel_id: rel-cga-related-csu
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-csu-consejo-superior-universitario]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El CGA opera bajo el marco general que el CSU define · sus decisiones se ejecutan respetando políticas del CSU/CACAD"
+  - rel_id: rel-cga-articula-sigud
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-resolucion-rectoria-207-2016-sigud]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "El CGA opera articulado con SIGUD (Res. Rectoría 207/2016) bajo principios ISO 9001/21001 + MIPG"
 
 cited_in:
   - "[[sec-MI12-00--carta-constitucional-acu-004-25]]"
@@ -65,7 +221,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Consejo de Gestión Administrativa (CGA)
 
 > [!important]+ ⚛️ Concepto NUEVO · órgano colegiado de coordinación administrativa
 > El **CGA** es la instancia colegiada **NUEVA** que crea el ACU-004-25 para coordinar el Sistema de Gestión Administrativa. Sin precedente en ACU 003/1997 — refleja la transición de Vicerrectoría Administrativa unipersonal a órgano colegiado horizontal. Presidido por la Rectoría, articula 6 cargos directivos con los 3 subsistemas administrativos.
@@ -74,199 +230,61 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica (cita literal Art. 87)
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Instancia colegiada UDFJC creada por el Art. 87 del ACU-004-25 que actúa como **dirección y coordinación del Sistema de Gestión Administrativa**. Articula la operación administrativa institucional bajo el liderazgo del Rector(a) que lo preside, sumando a vicerrectores misionales, secretario(a) general, director(a) de Gestión Estratégica y de Planeación, gerente administrativo(a) y financiero(a), y director(a) de Bienestar Universitario y Buen Vivir. Su función es **integrar los 3 subsistemas adm
 
 | Sub-tipo | Pasteur | Effective force UDFJC |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
+| DEFINITION | EDISON | — |
 
 > **Cita literal Art. 87**: "El Consejo de Gestión Administrativa actúa como la instancia de dirección y coordinación del Sistema de Gestión Administrativa. Composición: a) Rector(a), quien lo preside; b) Vicerrectores(as); c) Secretario(a) general; d) Director(a) de Gestión Estratégica y de Planeación; e) Gerente administrativo y financiero; f) Director(a) de Bienestar Universitario y Buen Vivir. PARÁGRAFO: El Consejo de Gestión Administrativa se da su propio reglamento."
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) {
-  dv.paragraph("(sin facet normative)");
-} else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🧩 Estructura DDD · invariantes operativas
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_ddd;
-if (!f) { dv.paragraph("(sin facet DDD)"); }
-else {
-  dv.header(4, `DDD · ${f.ddd_id ?? "—"} · ${f.ddd_role_in_context ?? "—"}`);
-  dv.table(["Atributo", "Valor"], [
-    ["Bounded Context", f.ddd_bc_ref ?? "—"],
-    ["Aggregate Root", f.ddd_aggregate_root ?? "—"],
-    ["Domain type", f.ddd_domain_type ?? "—"],
-    ["Lifecycle states", (f.ddd_lifecycle_states ?? []).join(" · ") || "—"],
-    ["Governed by", (f.ddd_governed_by ?? []).join(" · ") || "—"]
-  ]);
-  if ((f.ddd_invariants ?? []).length) {
-    dv.header(5, "🔒 Invariantes operativas");
-    dv.list(f.ddd_invariants);
-  }
-  if ((f.ddd_ubiquitous_terms ?? []).length) {
-    dv.header(5, "🗣️ Lenguaje ubicuo");
-    dv.paragraph((f.ddd_ubiquitous_terms ?? []).join(" · "));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §4 · 🔻 Pre-requisitos cognitivos
 
-```dataviewjs
-const prereq = dv.current().concepto_prerequisitos ?? [];
-if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");
-else dv.list(prereq);
-```
+
+<div class="dv-block" data-dv="prereqs"></div>
+
 
 ## §5 · 🔺 Conceptos que declaran este como pre-requisito
 
-```dataviewjs
-const me = dv.current();
-const here = me.file.name;
-const folder = me.file.folder;
-const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
-const matchHere = (target) => {
-  if (!target) return false;
-  if (typeof target === "object" && target.path !== undefined) return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
-  const s = String(target);
-  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
-  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
-  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
-};
-const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
-dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito`);
-if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");
-else dv.list(habilitados.map(p => p.file.link));
-```
+
+<div class="dv-block" data-dv="habilita"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
-  const byRel = {};
-  for (const r of rs) {
-    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
-    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
-    byRel[key].items.push(r);
-  }
-  for (const grp of Object.values(byRel)) {
-    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
-    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
-    dv.table(["→ Target", "Evidencia"],
-      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="relations"></div>
+
 
 ## §8 · 🎭 Vista por rol seleccionado
 
-```dataviewjs
-const me = dv.current();
-const rol = me.rol_seleccionado ?? "estudiante-soberano";
-const vistas = {
-  "estudiante-soberano": {
-    titulo: "🎓 Para el Estudiante Soberano",
-    contenido: [
-      "**Tu interfaz con la administración**: el CGA es el órgano que **coordina** todas las decisiones operativas que afectan tu trayectoria académica (matrículas, becas, cupos, infraestructura, bienestar).",
-      "- Si una demanda estudiantil cruza varias dependencias (e.g., financiera + bienestar + planeación), su resolución coordinada pasa por el CGA.",
-      "**Acción concreta**: en demandas estudiantiles complejas, exige que se eleven al CGA para coordinación · evita la pelota institucional entre dependencias."
-    ]
-  },
-  "docente-disenador": {
-    titulo: "🎨 Para el Docente Diseñador",
-    contenido: [
-      "**Tu currículo necesita coordinación administrativa**: aulas, plataformas, materiales, presupuesto pasan por el CGA cuando son decisiones cross-vicerrectoría.",
-      "**Acción concreta**: cuando tu Paquete CCA requiere recursos compartidos entre vicerrectorías, identifica al miembro CGA correspondiente y articula la solicitud."
-    ]
-  },
-  "docente-formador": {
-    titulo: "🎤 Para el Docente Formador",
-    contenido: [
-      "**Tu práctica de aula** está soportada por decisiones del CGA: infraestructura, sistemas, bienestar estudiantil.",
-      "**Acción concreta**: si tu Escuela tiene barreras administrativas recurrentes, propón al Director(a) de Escuela elevar el tema vía CACAD/CGA."
-    ]
-  },
-  "docente-investigador-pasteur": {
-    titulo: "🔬 Para el Investigador Pasteur",
-    contenido: [
-      "**Tu PM2 cruza administración**: convenios, presupuesto, infraestructura, contratación de auxiliares — pasan por la Vicerrectoría I+C+I como miembro del CGA.",
-      "**Acción concreta**: cuando tu proyecto cruce dependencias (Gerencia financiera + Planeación + Bienestar), solicita ruta CGA para evitar fragmentación operativa."
-    ]
-  },
-  "docente-emprendedor-coop": {
-    titulo: "🤝 Para el Emprendedor/Coop",
-    contenido: [
-      "**Tus convenios PM3 requieren coordinación administrativa**: jurídica + financiera + planeación + extensión.",
-      "**Acción concreta**: en convenios institucionales complejos, valida que la Vicerrectoría de Contextos eleve la coordinación necesaria al CGA antes de firma."
-    ]
-  },
-  "docente-director": {
-    titulo: "🏛️ Para el Docente Director",
-    contenido: [
-      "**Tu gobernanza dialoga con el CGA**: decisiones de tu Escuela/Instituto/Centro que requieran coordinación administrativa cross-dependencia escalan al CGA via la Vicerrectoría correspondiente.",
-      "- Verifica que el reglamento operativo del CGA esté expedido (PARÁGRAFO Art. 87 · pendiente al 2026-04-27).",
-      "**Acción concreta**: solicita en CACAD reporte trimestral de actuación del CGA · trazabilidad de decisiones coordinativas."
-    ]
-  }
-};
-const v = vistas[rol] ?? vistas["estudiante-soberano"];
-dv.header(3, v.titulo);
-for (const linea of v.contenido) dv.paragraph(linea);
-```
+
+<div class="dv-block" data-dv="vista-por-rol"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

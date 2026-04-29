@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Procesos Misionales PM1-PM2-PM3"
 
 skos_prefLabel: "Procesos Misionales PM1 (Formación) · PM2 (Investigación) · PM3 (Extensión)"
 skos_altLabel: ["PM1-PM2-PM3", "Procesos Misionales UDFJC", "Tres procesos misionales", "Triada misional UDFJC"]
@@ -26,16 +28,119 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 7 + Arts. 61-63"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza triada PM1-PM2-PM3 en 3 vicerrectorías separadas y simétricas · invariante anti-departamentalización"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 7 + Arts. 61-63"
+  normative_text: "[Texto literal Art. 7 funciones misionales + Arts. 61-63 vicerrectorías]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "procesos_misionales"
+  ddd_aggregate_root: "ProcesosMisionales"
+  ddd_bc_ref: "[[bc-arquitectura-misional-udfjc]]"
+  ddd_role_in_context: "Aggregate Root del subdominio Arquitectura Misional. Encapsula PM1, PM2, PM3 como Entities con identidad propia + retroalimentaciones R1-R6 como Value Objects que conectan los procesos. Las Vicerrectorías son los Aggregate Coordinators."
+  ddd_invariants:
+    - "Toda función misional UDFJC debe asignarse a UNO Y SOLO UNO de PM1, PM2 o PM3 (sin solapamiento de propiedad)"
+    - "Los 3 procesos son simétricos en jerarquía institucional (no hay PM 'principal')"
+    - "Las retroalimentaciones R1-R6 conectan los 3 procesos bidireccionalmente"
+    - "NO se puede agregar PM4 (la innovación es propiedad emergente, no proceso)"
+    - "PM1, PM2, PM3 son orientados por ΩMT como meta-telos compartido"
+  ddd_ubiquitous_terms:
+    - "PM1 · PM2 · PM3"
+    - "Procesos misionales"
+    - "Tres vicerrectorías"
+    - "Triada misional"
+    - "Funciones misionales"
+    - "Retroalimentaciones R1-R6"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-7-pm-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-7-pm-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-funciones-misionales]]"
+  - "[[con-vicerrectoria-formacion]]"
+  - "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+  - "[[con-vicerrectoria-contextos-extension]]"
 
+applicable_domain: "Diseño organizacional UDFJC + asignación de funciones a vicerrectorías + arquitectura curricular Escuelas/Institutos/Centros"
+assumptions:
+  - "La distribución tripartita captura la totalidad de funciones misionales (sin necesidad de 4to proceso)"
+  - "Los 3 procesos pueden retroalimentarse efectivamente con mecanismos institucionales adecuados"
+breaks_at:
+  - "Si se agrega un 4to proceso paralelo (anti-patrón de departamentalización)"
+  - "Si los procesos operan en silos sin retroalimentación R1-R6"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-disenador
 
-"@context":
 
+tupla__relations:
+  - rel_id: rel-pm-defined-by-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Art. 7 ACU-004-25 establece las 3 funciones misionales; Arts. 61-63 las institucionalizan en 3 vicerrectorías separadas y simétricas."
+  - rel_id: rel-pm-equivale-funciones
+    rel_nombre: skos_closeMatch
+    rel_direccion: co
+    rel_target: "[[con-funciones-misionales]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "PM1-PM2-PM3 (M02 nomenclatura) ≅ Funciones Misionales (M00 nomenclatura). Mismo referente conceptual con dos etiquetados distintos según contexto del paper."
+  - rel_id: rel-pm-orientado-por-omt
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-omt]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ΩMT (System 5 VSM) orienta a PM1-PM2-PM3 (Systems 1-3 VSM) sin ser un cuarto proceso. ΩMT es meta-telos, no nivel operativo."
+  - rel_id: rel-pm-conectados-r1r6
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las 6 retroalimentaciones R1-R6 son los bucles bidireccionales que conectan PM1-PM2-PM3 entre sí; sin R1-R6 los 3 procesos operan en silos."
+  - rel_id: rel-pm-implementa-piiom
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-cinco-misiones-piiom]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Cada función misional debe trazarse a las 5 misiones PIIOM nacionales (Art. 6 Ley 30 + CONPES 4069); PM2 (Investigación) tiene la articulación más directa, pero PM1 y PM3 también deben mapearse."
+  - rel_id: rel-pm-articulan-cca
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-cca]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los Paquetes CCA (M06 BMK-002) son la operacionalización curricular concreta que articula PM1∧PM2∧PM3 en una sola unidad indivisible (V1 Comprensiva ∧ V2 Experimental ∧ V3 Transformativa)."
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 5

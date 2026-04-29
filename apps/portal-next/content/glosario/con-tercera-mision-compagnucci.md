@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Tercera Misión Universitaria (Compagnucci & Spigarelli 2020)"
 
 skos_prefLabel: "Tercera Misión Universitaria (Compagnucci & Spigarelli 2020)"
 skos_altLabel: ["Third Mission", "Tercera misión IES", "TM Compagnucci"]
@@ -23,11 +25,40 @@ iso_standardized_by: "Compagnucci, L., & Spigarelli, F. (2020). The Third Missio
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Compagnucci & Spigarelli (2020) systematic review"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño PM3 UDFJC + monitoreo de extensión + articulación con sector productivo + reforma curricular"
+assumptions:
+  - "La TM es genuinamente multidimensional (no reducible a TTO)"
+breaks_at:
+  - "Si se reduce a Frame 1 / Mode 1 puro (TTO + patentes)"
+
+valid_from: "2020-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-tm-pm3-extension
+    rel_nombre: skos_closeMatch
+    rel_direccion: co
+    rel_target: "[[con-procesos-misionales-pm1-pm2-pm3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "TM (Compagnucci & Spigarelli 2020) ≅ PM3 Extensión-Contextos en acepción ampliada (no reducida a TTO)."
+  - rel_id: rel-tm-anti-patron
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-anti-patron-departamentalizacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La revisión Compagnucci 2020 documenta que la evidencia NO soporta una 4ta misión separada — soporta un principio organizador (ΩMT) que articula las 3 existentes."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 1

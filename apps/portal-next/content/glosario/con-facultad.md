@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Facultad UDFJC"
 
 skos_prefLabel: "Facultad UDFJC (post-ACU-004-25)"
 skos_altLabel:
@@ -29,16 +31,99 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 64-67 (Facultad reformada · Decano · elección ponderada 70-20-10 · Consejo de Facultad)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 reforma Facultad como unidad académico-administrativa del campo de Formación · supersede el modelo Facultad-Departamento jerárquico del ACU 003/1997"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 64-67"
+  normative_text: "[Texto literal Arts. 64-67 · Facultad reformada coexistente con Escuelas]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates:
+    - "Facultad del Acuerdo CSU 003/1997 (estructura jerárquica con Departamentos hijos) — supersede por modelo Escuelas-CABAs Art. 69+"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "facultad"
+  ddd_aggregate_root: "Facultad"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "Aggregate Root del subdominio Coordinación de Formación. Coexiste con Escuelas como Aggregate Roots paralelos (no jerárquicos)."
+  ddd_invariants:
+    - "Una Facultad coordina al menos un campo de Formación"
+    - "El Decano debe ser docente de planta tiempo completo"
+    - "El Decano se elige por ponderación: docentes 30% + estudiantes 30% + egresados 10% + CV 20% + entrevista 10%"
+    - "El Decano dura 4 años, sin reelección inmediata"
+    - "El Consejo de Facultad incluye representantes de los estamentos"
+  ddd_ubiquitous_terms:
+    - "Facultad"
+    - "Decano(a)"
+    - "Consejo de Facultad"
+    - "Elección ponderada multi-estamento"
+    - "Coordinación de Programas"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-64-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-64-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-vicerrectoria-formacion]]"
+  - "[[con-funciones-misionales]]"
 
+applicable_domain: "UDFJC desde 2025-05-06; transición progresiva durante Período de Transición Art. 96 (4 años máximo)"
+assumptions:
+  - "Las Facultades históricas se transforman gradualmente al nuevo modelo conservando algunos elementos"
+  - "Coexisten con Escuelas en lógica complementaria (no jerárquica)"
+breaks_at:
+  - "Si una Facultad opera con estructura jerárquica Facultad-Departamento como en Acuerdo 003/1997 (incumple ACU-004-25)"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-facultad-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-facultad-coord-vrf
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-vicerrectoria-formacion]]"
+    rel_frame: skos
+  - rel_id: rel-facultad-related-escuela
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-escuela]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Facultades coordinan Formación; Escuelas adscriben docentes por campo del conocimiento-saber. Coexistencia complementaria post-ACU-004-25"
+  - rel_id: rel-facultad-supersedes-facultad-003-97
+    rel_nombre: norm_supersedes
+    rel_direccion: post
+    rel_target: "Facultad-Departamentos modelo Acuerdo CSU 03/1997 (modelo institucional derogado — referencia externa)"
+    rel_frame: bibliografico
+    rel_propiedades:
+      norm_evidence: "Modelo Facultad-Departamentos sustituido por modelo coexistente Facultad-Escuela-CABA"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 3

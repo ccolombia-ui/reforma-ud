@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:udl-3
 kd_title: "UDL 3.0 — Universal Design for Learning (CAST 2024) · vinculante UDFJC vía Decreto 1421/2017"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v2.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "UDL 3.0 — Universal Design for Learning"
+tupla_descripcion: "Marco pedagógico CAST 2024 (voluntario en su origen) adoptado en Colombia por el Decreto 1421/2017 para todas las IES, vinculante para UDFJC"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "UDL 3.0 — Universal Design for Learning (CAST 2024)"
 skos_altLabel:
@@ -33,17 +35,116 @@ align_dbpedia: "http://dbpedia.org/resource/Universal_Design_for_Learning"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - NEON
 
+concepto_facet_normative:
+  origin_type: INTERNATIONAL_VOLUNTARY
+  origin_source: "[[cita-cast-udl-guidelines-3-0-2024]]"
+  origin_force: VOLUNTARY
+  adoption_chain:
+    - adopter: "[[con-decreto-1421-2017]]"
+      adopter_locator: "Decreto MEN 1421/2017 · 11 artículos · adopción explícita DUA/UDL"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2017-08-29"
+      adoption_evidence: "Decreto 1421/2017 incorpora normativamente el Diseño Universal del Aprendizaje (DUA/UDL) como obligatorio para todas las instituciones educativas colombianas (incluyendo IES) · modifica Art. 2.5.3.2.2.1 Decreto 1075/2015"
+    - adopter: "[[con-decreto-1330-2019]]"
+      adopter_locator: "Decreto 1330/2019 · principios de equidad, diversidad, inclusión, sostenibilidad"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2019-07-25"
+      adoption_evidence: "Decreto 1330/2019 incorpora UDL implícitamente como condición institucional de calidad para registro calificado IES — articulado con Decreto 1421/2017"
+    - adopter: "[[con-acuerdo-csu-011-2018-pui]]"
+      adopter_locator: "PUI · misión-visión-valores · principio de inclusión y diversidad"
+      adopter_authority_level: INSTITUCIONAL
+      adopted_at: "2018-05-17"
+      adoption_evidence: "PUI UDFJC 2018 declara principio de inclusión compatible con UDL · adopción institucional implícita"
+  effective_force_in_udfjc: BINDING_BY_ADOPTION
+  effective_authority_level: REGLAMENTARIO
 
+  normative_source: "[[cita-decreto-1421-2017-men]]"
+  normative_locator: "Decreto MEN 1421/2017 · adopción nacional"
+  normative_text: "[Texto literal CAST UDL Guidelines 3.0 + adopción Decreto 1421/2017]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_neon:
+  neon_imports:
+    - "[[con-cast-udl-original]]"
+  neon_aligns_with:
+    - "[[con-oecd-learning-compass-2030]]"
+    - "[[con-decreto-1421-2017]]"
+  neon_scenario_origin: "S3"
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "CAST (2024) UDL Guidelines 3.0"
+  neon_alignment_confidence: 0.97
 
+concepto_definitional_anchors:
+  - "[[def-norm-cast-udl-3-0-2024]]"
+  - "[[def-norm-decreto-1421-2017-2017-08-29]]"
+concepto_current_anchor: "[[def-norm-decreto-1421-2017-2017-08-29]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-decreto-1421-2017]]"
+  - "[[con-ley-1618-2013]]"
 
+applicable_domain: "Diseño curricular UDFJC + cumplimiento Decreto 1421/2017 + condiciones de calidad Decreto 1330/2019"
+assumptions:
+  - "La variabilidad neurocognitiva es norma estadística, no excepción"
+  - "Diseñar para todos desde el inicio es viable y deseable"
+  - "El Decreto 1421/2017 es vinculante para IES públicas colombianas"
+breaks_at:
+  - "Si se reduce a 'accesibilidad para discapacidad' (es marco universal)"
+  - "Si se aplica como adaptación post-hoc (es diseño desde el inicio)"
+  - "Si se descontextualiza del marco normativo nacional Decreto 1421/2017"
 
+valid_from: "2024-01-01"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
-"@context":
 
+tupla__relations:
+  - rel_id: rel-udl-vinculante-dec1421
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-decreto-1421-2017]]"
+    rel_frame: normativo
+    bc_domain: educacion-inclusiva
+    rel_propiedades:
+      norm_evidence: "UDL es vinculante para IES colombianas POR ADOPCIÓN del Decreto 1421/2017 — sin este acto, sería solo voluntario CAST"
+  - rel_id: rel-udl-articula-dec1330
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-decreto-1330-2019]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Decreto 1330/2019 incorpora principios de inclusión articulados con UDL como condición de calidad institucional"
+  - rel_id: rel-udl-converge-oecd
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-oecd-learning-compass-2030]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "UDL 3.0 (pedagogía) y OECD Learning Compass 2030 (competencias) son ambos de capa aspiracional convergente · articulan student agency (OECD) con múltiples medios de implicación (UDL)"
+  - rel_id: rel-udl-equidad-comunidad
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-comunidad-universitaria]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "UDL 3.0 enfatiza equidad sistémica entre los 4 estamentos de la Comunidad Universitaria · converge con principios refundacionales del ACU-004-25"
+  - rel_id: rel-udl-fundamento-acu
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "ACU-004-25 debe operar respetando UDL/Decreto 1421 · UDL es restricción de diseño curricular institucional"
 
 cited_in:
   - "[[sec-MI12-03--estandares-internacionales]]"
@@ -64,7 +165,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# UDL 3.0 — Universal Design for Learning (CAST 2024)
 
 > [!quote]+ ⚖️ Marco pedagógico vinculante por adopción nacional
 > UDL 3.0 (CAST 2024) es marco pedagógico **voluntario en su origen internacional** pero **vinculante en Colombia** por adopción del **Decreto 1421/2017** del MEN — que lo incorpora como obligatorio para todas las IES (modifica Decreto 1075/2015). Articulado con **Decreto 1330/2019** (condiciones de calidad para registro calificado) y con la misión institucional ACU-004-25.
@@ -73,180 +174,55 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Marco pedagógico desarrollado por **CAST (Center for Applied Special Technology)** en su versión **3.0 publicada en 2024** que aplica los principios del Diseño Universal a la educación: diseñar **para todos los aprendices desde el inicio**, en lugar de adaptar después para minorías. Estructurado en tres principios fundamentales: (i) **Múltiples medios de representación** — el 'qué' del aprendizaje (visual, auditivo, kinestésico, simbólico); (ii) **Múltiples medios de acción y expresión** — el 'c
 
 | Sub-tipo | Pasteur | Effective force UDFJC |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
+| DEFINITION | PASTEUR | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) {
-  dv.paragraph("(sin facet normative)");
-} else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · fuerza original: ${f.origin_force ?? "—"}`],
-    ["**Fuente original**", f.origin_source ?? "—"],
-    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
-    ["**Authority level resultante**", f.normative_authority_level ?? "—"],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es) · cómo se vuelve vinculante para UDFJC`);
-    dv.table(["Adoptante (acto)", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 > 💡 **Interpretación**: el origen es voluntario (CAST 2024) pero los actos en `adoption_chain` lo vuelven vinculante para UDFJC. Sin esos actos, UDL sería solo referente aspiracional.
 
 ## §3 · 🔻 Pre-requisitos cognitivos
 
-```dataviewjs
-const prereq = dv.current().concepto_prerequisitos ?? [];
-if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");
-else dv.list(prereq);
-```
+
+<div class="dv-block" data-dv="prereqs"></div>
+
 
 ## §4 · 🔺 Conceptos que declaran este como pre-requisito
 
-```dataviewjs
-const me = dv.current();
-const here = me.file.name;
-const folder = me.file.folder;
-const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
-const matchHere = (target) => {
-  if (!target) return false;
-  if (typeof target === "object" && target.path !== undefined) return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
-  const s = String(target);
-  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
-  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
-  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
-};
-const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
-dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito`);
-if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");
-else dv.list(habilitados.map(p => p.file.link));
-```
+
+<div class="dv-block" data-dv="habilita"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
 
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
+<div class="dv-block" data-dv="relations"></div>
 
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
-  const byRel = {};
-  for (const r of rs) {
-    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
-    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
-    byRel[key].items.push(r);
-  }
-  for (const grp of Object.values(byRel)) {
-    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
-    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
-    dv.table(["→ Target", "Evidencia"],
-      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));
-  }
-}
-```
 
 ## §8 · 🎭 Vista por rol seleccionado
 
-```dataviewjs
-const me = dv.current();
-const rol = me.rol_seleccionado ?? "estudiante-soberano";
-const vistas = {
-  "estudiante-soberano": {
-    titulo: "🎓 Para el Estudiante Soberano",
-    contenido: [
-      "**Tu derecho garantizado**: UDL es marco vinculante en Colombia · puedes exigir múltiples medios de representación, expresión e implicación.",
-      "- Si tu currículo solo ofrece una vía (e.g. solo lectura + escrito), eso viola Decreto 1421/2017.",
-      "- UDL respalda tu agencia transformadora: tú eliges cómo demostrar el aprendizaje.",
-      "**Acción concreta**: identifica barreras en tu trayectoria y exige UDL ante CABA + Comité de Currículo invocando Decreto 1421/2017."
-    ]
-  },
-  "docente-disenador": {
-    titulo: "🎨 Para el Docente Diseñador",
-    contenido: [
-      "**Tu obligación**: UDL es vinculante por Decreto 1421/2017 · debes diseñar Paquetes CCA con los 3 principios desde el inicio.",
-      "- Múltiples medios de **representación** (qué): visual + auditivo + kinestésico + simbólico.",
-      "- Múltiples medios de **acción/expresión** (cómo): escrito + oral + gráfico + performativo.",
-      "- Múltiples medios de **implicación** (porqué): autonomía + relevancia + comunidad + persistencia.",
-      "**Acción concreta**: cada Paquete CCA debe tener checklist UDL 3 principios x 9 pautas."
-    ]
-  },
-  "docente-formador": {
-    titulo: "🎤 Para el Docente Formador",
-    contenido: [
-      "**Tu práctica de aula**: UDL aplica en cada sesión · entregas, materiales, evaluaciones con múltiples vías.",
-      "- El PIAR (Plan Individual de Ajustes Razonables) lo elaboras tú como docente de aula.",
-      "**Acción concreta**: incluye en tu syllabus las múltiples vías + documenta ajustes razonables aplicados."
-    ]
-  },
-  "docente-investigador-pasteur": {
-    titulo: "🔬 Para el Investigador Pasteur",
-    contenido: [
-      "**Tu investigación territorial** debe ser UDL-compatible: instrumentos accesibles, comunicación de hallazgos en múltiples formatos.",
-      "**Acción concreta**: documenta en tu PM2 cómo UDL aplica a tu metodología investigativa territorial."
-    ]
-  },
-  "docente-emprendedor-coop": {
-    titulo: "🤝 Para el Emprendedor/Coop",
-    contenido: [
-      "**Tus convenios** universidad-territorio-sector productivo deben respetar UDL: accesibilidad espacios, materiales, lenguaje claro.",
-      "**Acción concreta**: incluye cláusula UDL en convenios PM3 + verifica accesibilidad en eventos territoriales."
-    ]
-  },
-  "docente-director": {
-    titulo: "🏛️ Para el Docente Director",
-    contenido: [
-      "**Tu obligación de gobernanza**: UDL es vinculante por Decreto 1421/2017 + condición de registro calificado por Decreto 1330/2019.",
-      "**Acción concreta**: exigir reporte anual de cumplimiento UDL ante CACAD + verificar PEI documenta UDL."
-    ]
-  }
-};
-const v = vistas[rol] ?? vistas["estudiante-soberano"];
-dv.header(3, v.titulo);
-for (const linea of v.contenido) dv.paragraph(linea);
-```
+
+<div class="dv-block" data-dv="vista-por-rol"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

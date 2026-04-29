@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:area-formacion
 kd_title: "Área de Formación UDFJC (Art. 65 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Área de Formación UDFJC"
+tupla_descripcion: "Sub-unidad estructural de las Facultades UDFJC (Art. 65) que agrupa programas de pregrado y posgrado por afinidad temática del campo de Formación · célula curricular básica del campo PM1"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Área de Formación"
 skos_altLabel:
@@ -29,16 +31,128 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 65"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 65 (estructura de Facultades · Áreas de formación con programas pregrado y posgrado)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 Art. 65 institucionaliza Áreas de Formación como componente obligatorio de la estructura de Facultades · primera vez articuladas explícitamente con programas pregrado-posgrado"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 65 (estructura de Facultades)"
+  normative_text: "Estructura de Facultades: Una Decanatura, Un Consejo de Facultad, Áreas de formación con programas de pregrado y posgrado, Unidades de apoyo a la gestión curricular, Una secretaría académica."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "area_formacion"
+  ddd_term: "Área de Formación"
+  ddd_aggregate_root: "AreaFormacion"
+  ddd_article_ref: "Art. 65"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-arquitectura-misional-udfjc]]"
+  ddd_role_in_context: AGGREGATE_ROOT
+  ddd_aggregate_root_flag: true
+  ddd_domain_type: Core
+  ddd_governed_by:
+    - "[[con-decanatura]]"
+  ddd_invariants:
+    - "Toda Área de Formación está adscrita a UNA Facultad (no puede ser cross-facultad simultáneamente)"
+    - "Una Facultad debe tener al menos UNA Área de Formación (Art. 65 obligatorio)"
+    - "Los Programas Académicos de pregrado y posgrado están adscritos a un Área de Formación específica"
+    - "Áreas de Formación se rigen por lógica del campo de Formación (PM1) · NO por campo de conocimiento-saber (que organiza CABAs)"
+    - "Áreas son transversales con CABAs · un Programa de un Área puede ser servido por docentes de múltiples CABAs"
+    - "La articulación pregrado-posgrado dentro del Área es invariante de coherencia curricular"
+  ddd_ubiquitous_terms:
+    - "Área de Formación · AF"
+    - "Programas pregrado y posgrado"
+    - "Eje temático curricular"
+    - "Campo de Formación PM1"
+    - "Transversalidad CABA × Área"
+    - "Articulación pregrado-posgrado"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-65-area-formacion-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-65-area-formacion-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-facultad]]"
+  - "[[con-funciones-misionales]]"
+  - "[[con-campo-conocimiento-saber]]"
 
+applicable_domain: "Toda Facultad UDFJC desde 2025-05-06 · estructura curricular obligatoria"
+assumptions:
+  - "La agrupación temática de programas en Áreas optimiza coordinación curricular"
+  - "La transversalidad CABA × Área es operacionalizable institucionalmente"
+breaks_at:
+  - "Si un Área de Formación es monoprograma (degrada a sinónimo de programa)"
+  - "Si las Áreas se confunden con CABAs (violación de la separación ontológica Formación vs Conocimiento-Saber)"
+  - "Si los programas pregrado-posgrado no tienen articulación curricular dentro del Área"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-disenador
 
 
+tupla__relations:
+  - rel_id: rel-af-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Áreas de Formación declaradas en Art. 65 del ACU-004-25 como componente estructural de Facultades"
+  - rel_id: rel-af-parte-facultad
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-facultad]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 65 · Áreas de Formación son sub-unidades estructurales de las Facultades"
+  - rel_id: rel-af-contiene-programas
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-programa-academico]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 65 · cada Área de Formación contiene programas de pregrado y posgrado"
+  - rel_id: rel-af-articula-funciones
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-funciones-misionales]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Áreas de Formación operan en campo PM1 (Formación-Docencia · Art. 7a)"
+  - rel_id: rel-af-transversal-caba
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Áreas de Formación organizan PROGRAMAS desde campo Formación · CABAs organizan DOCENTES desde campo Conocimiento-Saber · transversalidad ortogonal"
+  - rel_id: rel-af-coordinada-decanatura
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-decanatura]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Áreas de Formación operan bajo dirección de la Decanatura de la Facultad respectiva"
 
 cited_in:
   - "[[sec-MI12-00--carta-constitucional-acu-004-25]]"
@@ -61,7 +175,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Área de Formación
 
 > [!important]+ ⚛️ Sub-unidad estructural facultativa · transversal con CABAs
 > Las **Áreas de Formación** agrupan programas pregrado y posgrado por afinidad temática del campo de Formación. Operan **transversalmente con CABAs**: Áreas organizan **programas** (campo Formación), CABAs organizan **docentes** (campo Conocimiento-Saber). La transversalidad ortogonal es la riqueza estructural del modelo post-reforma.
@@ -70,144 +184,49 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica (cita literal Art. 65)
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Sub-unidad estructural interna de las Facultades UDFJC declarada en el **Art. 65 del ACU-004-25** como uno de los componentes obligatorios de la estructura facultativa. Las Áreas de Formación **agrupan programas académicos de pregrado y posgrado por afinidad temática del campo de Formación** (PM1 · Art. 7a). Cada Área articula los Programas Académicos (Art. 68) bajo un eje temático coherente, facilitando coordinación curricular, articulación pregrado-posgrado, definición de líneas pedagógicas co
 
 > **Cita literal Art. 65 (estructura de Facultades)**: "Una Decanatura, Un Consejo de Facultad, **Áreas de formación con programas de pregrado y posgrado**, Unidades de apoyo a la gestión curricular, Una secretaría académica."
 
 | Sub-tipo | Pasteur | Effective force UDFJC |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
+| DEFINITION | PASTEUR | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) { dv.paragraph("(sin facet normative)"); }
-else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🧩 Estructura DDD · invariantes operativas
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_ddd;
-if (!f) { dv.paragraph("(sin facet DDD)"); }
-else {
-  dv.header(4, `DDD · ${f.ddd_id ?? "—"} · ${f.ddd_role_in_context ?? "—"}`);
-  dv.table(["Atributo", "Valor"], [
-    ["Bounded Context", f.ddd_bc_ref ?? "—"],
-    ["Aggregate Root", f.ddd_aggregate_root ?? "—"],
-    ["Domain type", f.ddd_domain_type ?? "—"],
-    ["Governed by", (f.ddd_governed_by ?? []).join(" · ") || "—"]
-  ]);
-  if ((f.ddd_invariants ?? []).length) {
-    dv.header(5, "🔒 Invariantes operativas");
-    dv.list(f.ddd_invariants);
-  }
-  if ((f.ddd_ubiquitous_terms ?? []).length) {
-    dv.header(5, "🗣️ Lenguaje ubicuo");
-    dv.paragraph((f.ddd_ubiquitous_terms ?? []).join(" · "));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas
 
-```dataviewjs
-const rels = dv.current().tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-for (const r of rels) dv.paragraph(`**${humanLabel(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target} _(${r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"})_`);
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §8 · 🎭 Vista por rol seleccionado
 
-```dataviewjs
-const me = dv.current();
-const rol = me.rol_seleccionado ?? "estudiante-soberano";
-const vistas = {
-  "estudiante-soberano": {
-    titulo: "🎓 Para el Estudiante Soberano",
-    contenido: [
-      "**Tu trayectoria académica vive en un Área de Formación**: tu programa de pregrado o posgrado pertenece a un Área específica que coordina la coherencia curricular.",
-      "- Si quieres profundizar en un eje temático, busca otros programas del mismo Área (compatibilidad pregrado-posgrado).",
-      "**Acción concreta**: identifica tu Área · dialoga con coordinadores para integrar tu trayectoria pregrado→posgrado coherentemente."
-    ]
-  },
-  "docente-disenador": {
-    titulo: "🎨 Para el Docente Diseñador",
-    contenido: [
-      "**Tu Paquete CCA dialoga con el Área de Formación**: el eje temático del Área debe ser visible en tu diseño curricular.",
-      "- La articulación pregrado-posgrado es invariante de tu diseño · evita Paquetes que no respeten la coherencia del Área.",
-      "**Acción concreta**: cuando diseñes Paquete CCA, mapea contra el eje temático del Área · valida con coordinador."
-    ]
-  },
-  "docente-formador": {
-    titulo: "🎤 Para el Docente Formador",
-    contenido: [
-      "**Tu aula sirve a programas del Área**: los estudiantes que recibes pertenecen al Área y tienen trayectorias coherentes.",
-      "**Acción concreta**: en tu syllabus invoca explícitamente el eje temático del Área · facilita transferencia entre asignaturas."
-    ]
-  },
-  "docente-investigador-pasteur": {
-    titulo: "🔬 Para el Investigador Pasteur",
-    contenido: [
-      "**Tu CABA puede atravesar varias Áreas de Formación**: una CABA en transversalidad ortogonal con Áreas amplía tu impacto curricular.",
-      "**Acción concreta**: documenta cómo tu PM2 sirve a múltiples Áreas · maximiza conexiones intra-CABA × inter-Área."
-    ]
-  },
-  "docente-emprendedor-coop": {
-    titulo: "🤝 Para el Emprendedor/Coop",
-    contenido: [
-      "**Tus convenios PM3 pueden articularse con Áreas específicas**: convenios temáticos coherentes con eje del Área son más sólidos.",
-      "**Acción concreta**: identifica Áreas afines a tu territorio · busca interlocutor coordinador del Área para alianzas."
-    ]
-  },
-  "docente-director": {
-    titulo: "🏛️ Para el Docente Director",
-    contenido: [
-      "**Tu Escuela es atravesada por Áreas de múltiples Facultades**: docentes de tu Escuela enseñan en Programas de Áreas distintas.",
-      "**Acción concreta**: en tu plan de adscripción CABA, mapea cómo tus docentes sirven a Áreas de Formación · base de coordinación inter-facultativa."
-    ]
-  }
-};
-const v = vistas[rol] ?? vistas["estudiante-soberano"];
-dv.header(3, v.titulo);
-for (const linea of v.contenido) dv.paragraph(linea);
-```
+
+<div class="dv-block" data-dv="vista-por-rol"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.1.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Escuela Genérica UDFJC"
 
 skos_prefLabel: "Escuela Genérica UDFJC (unidad de análisis abstracta post-reforma)"
 skos_altLabel: ["Escuela Genérica", "Generic Escuela UDFJC", "Unidad análisis Escuela"]
@@ -23,15 +25,171 @@ iso_standardized_by: "Madera Sepúlveda (2026) M04 §1.3 — elaboración propia
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+  - SCHEMA
 
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M04 §1.3 + ACU-004-25 Arts. 69-72"
+  neon_alignment_confidence: 0.85
 
 # ═══════════════════════════════════════════════════════════════════════════
 #  Facet SCHEMA — Capa 2 del patrón Type → Schema → Instance
 # ═══════════════════════════════════════════════════════════════════════════
+concepto_facet_schema:
+  schema_type: "Schema metodológico para instanciación de Escuelas UDFJC"
+  inherits_from: "[[con-escuela]]"
+  pattern_role: "Capa 2 (Schema) del patrón 3-capas Type → Schema → Instance"
+  invariant_cardinalities:
+    docentes_tipicos: "~25 (distribuidos en 5 roles JTBD: Diseñador + Facilitador + Pasteur + Coop + Director)"
+    estudiantes_tipicos: "~600-1.200 (pregrado + posgrado)"
+    cabas_tipicas: "2-4 nichos transformativos"
+    campo_conocimiento_saber: "1 único (Art. 59)"
+    presupuesto: "Art. 88-90 ACU-004-25"
+  instance_pattern_specifics_required:
+    - "campo_conocimiento_saber (string · ej. Física, Química, Medicina)"
+    - "ambito_disciplinar (CB · Ciencias Básicas / CS · Ciencias de la Salud / otro)"
+    - "vicerrectoria_adscripcion (siempre Vicerrectoría de Formación, Art. 69)"
+    - "facultad_articulacion_principal + secundarias"
+    - "cabas_proyectadas (lista nominal con líneas de I+C+I)"
+    - "scenario_bindings S0-S5 (con BPAs activadas, R1-R6 estado, métricas)"
+  mandatory_instances_art_105:
+    deadline: "2027-05-05"
+    bloque_ciencias_basicas: 4
+    bloque_ciencias_salud: 3
+    total: 7
+    instances_modeled:
+      - kd_id: "[[con-escuela-fisica]]"
+        bloque: CB
+        status: PROPUESTA
+        roadmap_years: 8
+        target_s5: "2034-12-31"
+        notes: "Piloto del patrón Capa 3 (instanciación) · 4 CABAs: Astrofísica · Cuántica · Biofísica · Energía-Sostenibilidad"
+      - kd_id: "[[con-escuela-matematicas]]"
+        bloque: CB
+        status: PROPUESTA
+        roadmap_years: 8
+        target_s5: "2034-12-31"
+        notes: "4 CABAs: Aplicada · Estadística-Datos · Educativa · Computacional · transversalidad formativa universal"
+      - kd_id: "[[con-escuela-quimica]]"
+        bloque: CB
+        status: PROPUESTA
+        roadmap_years: 8
+        target_s5: "2034-12-31"
+        notes: "4 CABAs: Verde · Analítica Territorial · Educativa · Materiales · vocación verde-territorial CONPES 4069+3934"
+      - kd_id: "[[con-escuela-biologia]]"
+        bloque: CB
+        status: PROPUESTA
+        roadmap_years: 8
+        target_s5: "2034-12-31"
+        notes: "4 CABAs: Ecología-Conservación · Biotecnología · Educativa · Bioinformática · vocación bioeconomía-biodiversidad CORE PIIOM-M1"
+      - kd_id: "[[con-escuela-salud-publica]]"
+        bloque: CS
+        status: PROPUESTA
+        emergent_field: true
+        roadmap_years: 10
+        target_s5: "2035-12-31"
+        notes: "CAMPO EMERGENTE · 4 CABAs: Determinantes Sociales · Epidemiología Territorial · Promoción-Prevención · Sistemas-Políticas · alianzas SDS+MinSalud+hospitales"
+      - kd_id: "[[con-escuela-enfermeria]]"
+        bloque: CS
+        status: PROPUESTA
+        emergent_field: true
+        roadmap_years: 10
+        target_s5: "2035-12-31"
+        notes: "CAMPO EMERGENTE · 4 CABAs: Cuidado Comunitario · Salud Mental · Materno-Infantil · Familiar-Crónicos · convenios docente-asistenciales críticos · APS-R"
+      - kd_id: "[[con-escuela-nutricion-dietetica]]"
+        bloque: CS
+        status: PROPUESTA
+        emergent_field: true
+        roadmap_years: 10
+        target_s5: "2035-12-31"
+        notes: "CAMPO EMERGENTE · 4 CABAs: Soberanía Alimentaria★ · Comunitaria · Clínica · Educativa · TRIPLE vocación PIIOM M1+M4+M5 · CABA cruzada con Esc. Biología"
+
+applicable_domain: "Análisis transversal cap-MI12 + diseño metodológico universitario + abstracción de Escuelas reales"
+assumptions:
+  - "Las Escuelas reales son instanciaciones legítimas del modelo genérico"
+breaks_at:
+  - "Si se confunde con una Escuela específica real"
+  - "Si se confunde con `con-escuela` (definición jurídica del Art. 69)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
+tupla__relations:
+  - rel_id: rel-escgen-instancia-escuela
+    rel_nombre: skos_narrower
+    rel_direccion: pre
+    rel_target: "[[con-escuela]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Escuela Genérica es abstracción metodológica (Capa 2 · Schema) de la entidad jurídica `con-escuela` (Capa 1 · Type, Arts. 69-72 ACU-004-25) para análisis transversal del cap-MI12 e instanciación específica en cada una de las 7 escuelas mandatorias."
+  - rel_id: rel-escgen-contenedor-cabas
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La Escuela Genérica contiene 2-4 CABAs activas como nichos transformativos."
+  # ── v1.1.0 · Capa 3 instances ──────────────────────────────────────────
+  - rel_id: rel-escgen-genera-fisica
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-fisica]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Instancia piloto Capa 3 · campo Física · bloque CB · Astrofísica+Cuántica+Biofísica+Energía"
+  - rel_id: rel-escgen-genera-matematicas
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-matematicas]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Instancia Capa 3 · campo Matemáticas · bloque CB · transversalidad formativa universal"
+  - rel_id: rel-escgen-genera-quimica
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-quimica]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Instancia Capa 3 · campo Química · bloque CB · vocación verde-territorial CONPES 4069+3934"
+  - rel_id: rel-escgen-genera-biologia
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-biologia]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Instancia Capa 3 · campo Biología · bloque CB · vocación bioeconomía-biodiversidad CORE PIIOM-M1 · Quintuple Helix paradigmática"
+  - rel_id: rel-escgen-genera-salud-publica
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-salud-publica]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Instancia Capa 3 · campo Salud Pública · bloque CS · CAMPO EMERGENTE · 10 años roadmap"
+  - rel_id: rel-escgen-genera-enfermeria
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-enfermeria]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Instancia Capa 3 · campo Enfermería · bloque CS · CAMPO EMERGENTE · convenios docente-asistenciales · APS-R"
+  - rel_id: rel-escgen-genera-nutricion
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela-nutricion-dietetica]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Instancia Capa 3 · campo Nutrición · bloque CS · CAMPO EMERGENTE · TRIPLE vocación PIIOM M1+M4+M5 · CABA cruzada con Escuela Biología"
+  - rel_id: rel-escgen-mandato-art-105
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "El Art. 105 ACU-004-25 mandata la conformación de 7 escuelas (4 CB + 3 CS) en plazo máximo de 2 años (deadline 2027-05-05). El schema Escuela Genérica es la herramienta metodológica para diseñar las 7 instancias de manera coherente. 7/7 instancias modeladas en Capa 3."
 
 cited_in: ["[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 1

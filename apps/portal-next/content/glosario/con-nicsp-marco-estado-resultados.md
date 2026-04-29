@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "NICSP · Normas Internacionales Contabilidad Sector Público"
 
 skos_prefLabel: "NICSP · Normas Internacionales de Contabilidad del Sector Público (IPSAS)"
 skos_altLabel: ["NICSP", "IPSAS", "International Public Sector Accounting Standards", "Normas Contabilidad Sector Público"]
@@ -23,15 +25,77 @@ iso_standardized_by: "IPSASB-IFAC + Contaduría General de la Nación Colombia (
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - NEON
 
+concepto_facet_normative:
+  origin_type: INTERNATIONAL_VOLUNTARY
+  origin_source: "[[cita-ipsasb-ipsas-international]]"
+  origin_force: VOLUNTARY
+  adoption_chain:
+    - adopter: "[[con-resolucion-cgn-533-2015]]"
+      adopter_locator: "Resolución CGN 533/2015 · adopción nacional"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2015-10-08"
+      adoption_evidence: "Contaduría General de la Nación adopta IPSAS como NICSP vinculantes para sector público colombiano"
+    - adopter: "[[con-resolucion-cgn-116-2017]]"
+      adopter_locator: "Resolución CGN 116/2017 · actualización"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2017-04-26"
+      adoption_evidence: "CGN actualiza marco NICSP · vigente desde 2018-01-01"
+  effective_force_in_udfjc: BINDING_BY_ADOPTION
+  effective_authority_level: REGLAMENTARIO
+  normative_source: "[[cita-cgn-resolucion-533-2015]]"
+  normative_locator: "Resoluciones CGN 533/2015 + 116/2017 + 18 NICSP críticas (1, 3, 5, 9, 11, 12, 17, 19, 21, 23, 24, 26, 27, 31, 32, 33, 36, 38)"
+  normative_text: "[Marco IPSAS internacional + adopción nacional CGN · vinculante IES públicas]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "IPSASB IPSAS + CGN Colombia"
+  neon_alignment_confidence: 0.97
 
+concepto_definitional_anchors:
+  - "[[def-norm-cgn-resolucion-533-2015]]"
+  - "[[def-norm-cgn-resolucion-116-2017]]"
+concepto_current_anchor: "[[def-norm-cgn-resolucion-116-2017]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos: []
 
+applicable_domain: "Reporte financiero UDFJC + cálculo CCR + benchmark BMK-001 financiero"
+assumptions:
+  - "Las 18 NICSP cubren mayoría de transacciones UDFJC"
+breaks_at:
+  - "Si se confunde con NIIF (sector privado)"
 
+valid_from: "2018-01-01"
+valid_to: ""
 rol_seleccionado: docente-emprendedor-coop
 
 
+tupla__relations:
+  - rel_id: rel-nicsp-alimenta-ccr
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-ccr-capacity-cost-rate]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "NICSP 17 (PPE) + NICSP 24 (presupuesto) son insumos críticos para el cálculo CCR (TDABC) — sin reportes NICSP, no hay datos para TDABC."
+  - rel_id: rel-nicsp-fuente-presupuesto-udfjc
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-ccp-clasificacion-presupuestal]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CCP (Catálogo de Clasificación Presupuestal MHCP) opera dentro del marco NICSP — son complementarios."
 
 cited_in: ["[[sec-MI12-09--ds-presupuesto-nicsp]]"]
 cited_count: 1

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Misión de Sabios 2019"
 
 skos_prefLabel: "Misión de Sabios Colombia 2019"
 skos_altLabel: ["Misión Internacional de Sabios", "Sabios 2019", "Mission of Wise Colombia"]
@@ -23,11 +25,31 @@ iso_standardized_by: "Gobierno de Colombia / Misión Internacional de Sabios 201
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Misión Internacional de Sabios (2019) — informe final 8 focos"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Política CTI Colombia + insumo técnico para CONPES 4069"
+assumptions: ["Los 8 focos siguen siendo referencia de política CTI hasta 2030"]
+breaks_at: []
+
+valid_from: "2019-12-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-sabios-input-conpes4069
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los 8 focos Misión Sabios 2019 son insumo técnico del CONPES 4069/2021"
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

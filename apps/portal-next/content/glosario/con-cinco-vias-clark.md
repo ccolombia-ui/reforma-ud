@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Cinco Vías de Clark (R-1..R-5)"
 
 skos_prefLabel: "Cinco Vías de Clark — universidad emprendedora"
 skos_altLabel: ["5 Vías Clark", "Pathways to Entrepreneurial University", "R-1..R-5 Clark"]
@@ -23,11 +25,51 @@ iso_standardized_by: "Clark, B. R. (1998). *Creating Entrepreneurial Universitie
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[clark1998entrepreneurial]] — Clark, B. R. (1998). *Creating Entrepreneurial Universities*. Pergamon."
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño de reforma universitaria + análisis comparativo IES + planificación de sostenibilidad financiera"
+assumptions: ["Las 5 vías son condiciones empíricas (no teorema deductivo)"]
+breaks_at: ["Si se aplican mecánicamente sin contexto institucional (Clark las identificó en universidades europeas; aplicación CO requiere adaptación)"]
+
+valid_from: "1998-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-clark-fuente
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "Clark, B. R. (1998). Creating Entrepreneurial Universities: Organizational Pathways of Transformation. IAU Press / Pergamon (referencia bibliográfica externa, sin nodo en corpus)"
+    rel_frame: bibliografico
+  # — v1.1.0 cross-references M02 (Fase B audit refactor) ——————————
+  - rel_id: rel-clark-rechaza-anti-patron
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-anti-patron-departamentalizacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Clark 1998 documenta que las 5 universidades europeas exitosas NO crearon oficinas de innovación: la cultura emprendedora (R-5 Clark) es propiedad cultural transversal, no departamento. Es fundamento empírico del anti-patrón de departamentalización."
+  - rel_id: rel-clark-converge-segunda-rev
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-segunda-revolucion-academica-etzkowitz]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Clark 1998 (cinco vías de transformación) y Etzkowitz 2003 (entrepreneurial university) son los dos pilares teóricos convergentes de la 'universidad emprendedora' moderna."
+  - rel_id: rel-clark-articula-r1r6
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las 5 vías Clark y las 6 R son marcos complementarios: R-1..R-5 describen CÓMO transformar institucionalmente; R1-R6 describen QUÉ conexiones activar entre PM."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

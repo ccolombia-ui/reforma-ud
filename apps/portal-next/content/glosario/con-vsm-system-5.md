@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "VSM System 5"
 
 skos_prefLabel: "VSM System 5 (Beer 1979)"
 skos_altLabel: ["System 5", "Sistema 5 Viable Systems Model", "Identity & Ethos VSM"]
@@ -26,11 +28,34 @@ align_wikidata: "https://www.wikidata.org/wiki/Q1762523"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[beer1979heart]] — Beer, S. (1979). *The Heart of Enterprise*. Wiley."
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño organizacional sistémico / Cibernética de segundo orden / Universidades como sistemas viables"
+assumptions: ["Una organización viable requiere los 5 subsistemas operando coherentemente"]
+breaks_at: ["Si se aplica reduccionistamente sin entender el resto del VSM"]
+
+valid_from: "1979-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-vsm-s5-fuente-beer
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[beer1979heart]]"
+    rel_frame: bibliografico
+  - rel_id: rel-vsm-s5-aplicado-omt
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-omt]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

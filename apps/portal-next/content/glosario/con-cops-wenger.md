@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Comunidades de Práctica (CoPs - Wenger 1998)"
 
 skos_prefLabel: "CoPs — Comunidades de Práctica (Wenger 1998)"
 skos_altLabel: ["Communities of Practice", "CoPs", "Comunidades-Práctica Wenger"]
@@ -25,11 +27,43 @@ align_dbpedia: "http://dbpedia.org/resource/Community_of_practice"
 align_wikidata: "https://www.wikidata.org/wiki/Q1078117"
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Wenger (1998) Communities of Practice"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño de CABAs + análisis de aprendizaje organizacional + cultivo de comunidades académicas"
+assumptions:
+  - "El aprendizaje organizacional ocurre primariamente en comunidades, no en individuos ni organizaciones formales"
+  - "Las CoPs pueden cultivarse pero no fabricarse top-down"
+breaks_at:
+  - "Si se confunde con equipos de proyecto formales"
+  - "Si se intenta administración top-down (anti-patrón)"
+
+valid_from: "1998-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-cops-fundamenta-caba
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las CABAs (Art. 73 ACU-004-25) son super-CoPs institucionales que articulan múltiples CoPs disciplinares en torno a un dominio transversal."
+  # — v1.1.0 cross-references M04 (Fase B audit refactor) ——————————
+  - rel_id: rel-cops-extendido-trayner
+    rel_nombre: skos_narrower
+    rel_direccion: post
+    rel_target: "[[con-wenger-trayner-landscapes]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Wenger-Trayner 2015 (Landscapes of Practice) extiende Wenger 1998 al nivel de gobernanza de múltiples CoPs interconectadas — aplicable a la red institucional UDFJC."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 1

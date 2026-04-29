@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "MIT UROP — Undergraduate Research Opportunities Program"
 
 skos_prefLabel: "MIT UROP — Undergraduate Research Opportunities Program"
 skos_altLabel: ["MIT UROP", "Undergraduate Research", "UROP", "Research-based learning paradigm"]
@@ -25,11 +27,40 @@ align_dbpedia: ""
 align_wikidata: ""
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "MIT UROP Office (institucional) + Boyer (1990) + Healey (2005)"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño de R1 (Semilleros) en ciclo virtuoso UDFJC + reforma curricular pregrado"
+assumptions:
+  - "Es viable creditizar investigación de pregrado en una IES pública"
+breaks_at:
+  - "Si se confunde con semilleros voluntarios sin creditización (es la diferencia clave)"
+
+valid_from: "1969-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-urop-realiza-pasteur
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-cuadrante-pasteur-stokes]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "UROP es la realización empírica más rigurosa del Cuadrante Pasteur a nivel curricular de pregrado: integra búsqueda fundamental Y uso desde el inicio."
+  - rel_id: rel-urop-fundamenta-r1
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "UROP es el referente paradigmático de R1 (Semilleros: PM1→PM2) del ciclo virtuoso ΩMT — la AS-IS UDFJC <5% creditizado debe migrar a TO-BE ≥70%."
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

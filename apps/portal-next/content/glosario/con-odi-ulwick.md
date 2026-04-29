@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "ODI — Outcome-Driven Innovation"
 
 skos_prefLabel: "ODI — Outcome-Driven Innovation"
 skos_altLabel: ["Innovación dirigida por outcomes", "Ulwick ODI", "Outcome-Driven Innovation Methodology"]
@@ -23,11 +25,31 @@ iso_standardized_by: "Ulwick, A. W. (2002, 2016). *What Customers Want*. McGraw-
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[ulwick2016jobs]] + Strategyn metodología"
+  neon_alignment_confidence: 0.9
+
+applicable_domain: "Análisis cuantitativo de prioridades de innovación + diseño de roadmap UDFJC"
+assumptions: ["Los outcomes son medibles cuantitativamente"]
+breaks_at: ["Si se aplican métricas sin entender el job subyacente"]
+
+valid_from: "2002-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-odi-extends-jtbd
+    rel_nombre: skos_narrower
+    rel_direccion: pre
+    rel_target: "[[con-jtbd-christensen]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ODI operacionaliza JTBD añadiendo medición cuantitativa Importance × Satisfaction"
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 2

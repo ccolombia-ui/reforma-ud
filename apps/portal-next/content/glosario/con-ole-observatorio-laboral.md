@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "OLE · Observatorio Laboral para la Educación"
 
 skos_prefLabel: "OLE · Observatorio Laboral para la Educación (MEN Colombia)"
 skos_altLabel: ["OLE", "Observatorio Laboral", "MEN OLE"]
@@ -23,11 +25,40 @@ iso_standardized_by: "Ministerio de Educación Nacional - República de Colombia
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "MEN Colombia OLE"
+  neon_alignment_confidence: 0.93
+
+applicable_domain: "Análisis empleabilidad UDFJC + alimentación P1 M08 + diagnóstico R6 egresados"
+assumptions:
+  - "El empleo formal con PILA es proxy razonable de empleabilidad"
+breaks_at:
+  - "Si se subestima informalidad y emprendimiento (ambos invisibles a OLE)"
+
+valid_from: "2007-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-ole-mide-r6
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "OLE mide empíricamente R6 (Egresados Agentes) del ciclo virtuoso ΩMT — empleabilidad + sectorización + movilidad geográfica son indicadores."
+  - rel_id: rel-ole-complementa-snies
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-snies-dataset-men]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "OLE complementa SNIES: SNIES da matrícula y graduación; OLE da trayectoria laboral post-egreso."
 
 cited_in: ["[[sec-MI12-11--datasets-men]]"]
 cited_count: 1

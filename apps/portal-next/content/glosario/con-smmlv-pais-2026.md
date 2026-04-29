@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "SMMLV-país-2026 · normalización cross-país"
 
 skos_prefLabel: "SMMLV-país-2026 · normalización cross-país de costos"
 skos_altLabel: ["SMMLV-país", "Tabla SMMLV cross-country", "Normalización salario mínimo país"]
@@ -23,11 +25,40 @@ iso_standardized_by: "Madera Sepúlveda (2026) M08 + M09 §6 — elaboración pr
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M08 + M09 §6 — elaboración propia"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Benchmark BMK-001 cross-IES + análisis CAPEX/OPEX por escenario M08 + decisión inversión"
+assumptions:
+  - "El SMMLV nacional es proxy razonable de poder adquisitivo trabajador mínimo"
+breaks_at:
+  - "Si se confunde con PPP o Big Mac Index"
+
+valid_from: "2026-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-smmlv-normaliza-bmk001
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-bmk-001-21-ies]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "SMMLV-país-2026 normaliza los costos cross-IES en BMK-001, evitando distorsiones por inflación + tipo de cambio."
+  - rel_id: rel-smmlv-articula-fwk
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-framework-86-indicadores-s0-s5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El framework M08 usa SMMLV-país-2026 para CAPEX/OPEX en cada escenario S0-S5."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-09--ds-presupuesto-nicsp]]"]
 cited_count: 2

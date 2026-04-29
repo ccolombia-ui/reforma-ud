@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Omega-Meta-Telos (ΩMT)"
 
 skos_prefLabel: "Omega-Meta-Telos (ΩMT)"
 skos_altLabel: ["ΩMT", "Meta-propósito institucional", "Omega Meta Telos", "Telos universitario integrado"]
@@ -23,11 +25,65 @@ iso_standardized_by: "Madera Sepúlveda (2026) — elaboración propia con base 
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[beer1979heart]] (System 5 VSM) + [[mcu2020]] (autonomía positiva) + ACU-004-25 Art. 5 (10 principios)"
+  neon_alignment_confidence: 0.85
+  neon_methodological_notes: "Fusión NeOn S5 de cibernética organizacional (Beer VSM) + responsabilidad universitaria contemporánea (MCU 2020) + principios constitutivos UDFJC (ACU-004-25). Constructo propietario."
+
+applicable_domain: "Diseño de Plan de Desarrollo UDFJC reformado + criterio de coherencia direccional para PM1-PM2-PM3"
+assumptions:
+  - "Una universidad sin meta-propósito explícito carece de coherencia direccional"
+breaks_at: ["Si se confunde con visión estratégica o con objetivos del Plan de Desarrollo"]
+
+valid_from: "2026-04-26"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-omt-derived-from-vsm
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-vsm-system-5]]"
+    rel_frame: skos
+  - rel_id: rel-omt-derived-from-mcu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-mcu-2020]]"
+    rel_frame: skos
+  # — v1.2.0 cross-references M02 (Fase B audit refactor) ——————————
+  - rel_id: rel-omt-materializa-r1r6
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las 6 retroalimentaciones R1-R6 son la materialización operativa del ciclo virtuoso ΩMT — sin las 6 simultáneas, ΩMT es retórica vacía."
+  - rel_id: rel-omt-produce-e1e3
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-resultados-emergentes-e1-e3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los 3 resultados emergentes E1-E3 son los outcomes que emergen del ciclo virtuoso ΩMT cuando las 6 R están en 🟢 simultáneas."
+  - rel_id: rel-omt-orienta-pm
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-procesos-misionales-pm1-pm2-pm3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ΩMT (System 5 VSM) orienta a PM1-PM2-PM3 (Systems 1-3 VSM) sin ser un cuarto proceso. Es meta-telos, no nivel operativo."
+  - rel_id: rel-omt-rechaza-anti-patron
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-anti-patron-departamentalizacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ΩMT es la alternativa correcta al anti-patrón de departamentalización: meta-telos transversal vs. unidad operativa separada."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 3

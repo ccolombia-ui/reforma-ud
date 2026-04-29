@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Plan de Implementación UDFJC"
 
 skos_prefLabel: "Plan de Implementación de la Reforma"
 skos_altLabel: ["Plan de Implementación", "Implementation Plan"]
@@ -23,14 +25,60 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 98"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 98 (Plan de Implementación + 7 estatutos derivados)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 Art. 98 mandata Plan de Implementación con plazo 45 días desde publicación · vencido 2025-06-19 (riesgo institucional verificado)"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 98"
+  normative_text: "[Texto literal Art. 98 · CSU presenta Plan dentro de 45 días + 7 estatutos derivados]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
+  conflict_evidence: "Plazo legal vencido 2025-06-19 sin verificación pública de aprobación del Plan en SISGRAL"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-98-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-98-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-csu-consejo-superior-universitario]]"
+  - "[[con-comision-implementacion-art-100]]"
 
+applicable_domain: "UDFJC desde 2025-05-06; ejecución durante Período de Transición"
+assumptions:
+  - "El Plan se elabora con participación de CSU + Rectoría + Vicerrectorías + estamentos"
+breaks_at:
+  - "Si no se expide en plazo legal (vencido 2025-06-19)"
+  - "Si carece de cronograma verificable y rendición de cuentas"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-pi-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 3

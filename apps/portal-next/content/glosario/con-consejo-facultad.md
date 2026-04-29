@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:consejo-facultad
 kd_title: "Consejo de Facultad UDFJC (Arts. 18d, 65 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Consejo de Facultad UDFJC"
+tupla_descripcion: "Órgano de gobierno colegiado de la Facultad UDFJC declarado en Art. 18d + Art. 65 · presidido por la Decanatura · deliberación académica facultativa"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Consejo de Facultad"
 skos_altLabel: ["CF UDFJC", "Faculty Council"]
@@ -26,15 +28,103 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 18d + 65"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 18d + 65"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 declara Consejo de Facultad como órgano de gobierno + componente estructural de Facultad"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 18d + 65"
+  normative_text: "Órganos del Gobierno: d) Los Consejos de Facultad (Art. 18d). Estructura de Facultad: Una Decanatura, Un Consejo de Facultad, Áreas de formación... (Art. 65)."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "consejo_facultad"
+  ddd_term: "Consejo de Facultad"
+  ddd_aggregate_root: "ConsejoFacultad"
+  ddd_article_ref: "Arts. 18d + 65"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: AGGREGATE_ROOT
+  ddd_aggregate_root_flag: true
+  ddd_domain_type: Core
+  ddd_governed_by:
+    - "[[con-decanatura]]"
+  ddd_invariants:
+    - "Cada Facultad UDFJC debe tener UN Consejo de Facultad (Art. 65)"
+    - "El Consejo de Facultad es presidido por la Decanatura"
+    - "Composición específica desarrollada en Estatuto Académico Art. 98 §1 (vencido 2025-11-05)"
+    - "Decisiones que excedan competencias facultativas se elevan al CACAD"
+  ddd_ubiquitous_terms:
+    - "Consejo de Facultad · CF"
+    - "Deliberación académica facultativa"
+    - "Representación multi-estamento"
+    - "Coordinación curricular"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-65-cf-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-65-cf-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-facultad]]"
+  - "[[con-decanatura]]"
 
+applicable_domain: "Toda Facultad UDFJC desde 2025-05-06"
+assumptions: ["Composición se desarrollará en Estatuto Académico nuevo Art. 98 §1"]
+breaks_at: ["Si una Facultad opera sin Consejo (incumple Art. 65)"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-cf-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Consejo de Facultad declarado Arts. 18d + 65"
+  - rel_id: rel-cf-presidido-decanatura
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-decanatura]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 65 · Consejo de Facultad presidido por Decanatura"
+  - rel_id: rel-cf-componente-facultad
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-facultad]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 65 · Consejo de Facultad es componente obligatorio de la estructura facultativa"
+  - rel_id: rel-cf-eleva-cacad
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-cacad-consejo-academico]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Decisiones que excedan competencias facultativas se elevan al CACAD"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1
@@ -54,7 +144,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Consejo de Facultad
 
 > [!note]+ Órgano colegiado facultativo · presidido por Decanatura
 > El **Consejo de Facultad** es el órgano deliberativo de gobierno facultativo. Presidido por la Decanatura · representación multi-estamento · coordinación curricular de Áreas.
@@ -63,50 +153,35 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Órgano de gobierno colegiado de la Facultad UDFJC declarado como **órgano del Gobierno Universitario** en el Art. 18d del ACU-004-25 y como componente obligatorio de la estructura de Facultad en el Art. 65. Es el espacio deliberativo de discusión académica facultativa que articula representación de docentes, estudiantes, egresados y administración facultativa. Presidido por la Decanatura, propone políticas curriculares de la Facultad, evalúa programas académicos y articula las Áreas de Formación
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current(); const f = me.concepto_facet_normative;
-if (!f) dv.paragraph("(sin facet normative)"); else {
-  dv.table(["Campo", "Valor"], [["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`], ["**Authority**", f.normative_authority_level ?? "—"], ["**Effective force**", `**${f.effective_force_in_udfjc ?? "—"}**`]]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) { dv.header(4, `🔗 Cadena · ${chain.length} eslabón(es)`); dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"], chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence])); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🧩 Estructura DDD
 
-```dataviewjs
-const f = dv.current().concepto_facet_ddd;
-if (!f) dv.paragraph("(sin facet DDD)"); else {
-  dv.header(4, `DDD · ${f.ddd_id ?? "—"}`);
-  if ((f.ddd_invariants ?? []).length) { dv.header(5, "🔒 Invariantes"); dv.list(f.ddd_invariants); }
-  if ((f.ddd_ubiquitous_terms ?? []).length) { dv.header(5, "🗣️ Lenguaje ubicuo"); dv.paragraph(f.ddd_ubiquitous_terms.join(" · ")); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas
 
-```dataviewjs
-const rels = dv.current().tupla__relations ?? [];
-const vocab = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocab?.relaciones ?? {};
-const humanLabel = (n, d) => { const e = relMap[n]?.[d ?? "co"] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post; return e?.label ?? `\`${n}\``; };
-for (const r of rels) dv.paragraph(`**${humanLabel(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-dv.list(dv.current().cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${dv.current().cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

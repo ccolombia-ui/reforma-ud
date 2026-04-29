@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:direccion-gestion-estrategica-planeacion
 kd_title: "Dirección de Gestión Estratégica y de Planeación UDFJC (Art. 86c ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Dirección de Gestión Estratégica y de Planeación UDFJC"
+tupla_descripcion: "Dependencia institucional UDFJC responsable del Subsistema 1 del Sistema de Gestión Administrativa — define líneas de acción institucional, optimización de recursos, evaluación de procesos, mejoramiento continuo y aseguramiento de la calidad"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Dirección de Gestión Estratégica y de Planeación (DGEP)"
 skos_altLabel:
@@ -30,17 +32,179 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 86c + Art. 87d + Art. 85 §
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 86c (instancia) + Art. 87d (miembro CGA) + Art. 85 §1 (subsistema)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza la DGEP elevando la antigua Oficina Asesora de Planeación a Dirección con asiento en el CGA · concepto MUTADO desde régimen 1997"
+    - adopter: "[[con-acuerdo-csu-009-2018-ped]]"
+      adopter_locator: "PED 2018-2030 · horizonte estratégico institucional"
+      adopter_authority_level: INSTITUCIONAL
+      adopted_at: "2018-05-17"
+      adoption_evidence: "La DGEP opera bajo el horizonte del PED 2018-2030 · su función técnica de planeación articula horizonte estratégico ya adoptado"
+    - adopter: "[[con-mipg-funcion-publica]]"
+      adopter_locator: "MIPG · Dimensión 2 Direccionamiento Estratégico y Planeación"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2015-05-26"
+      adoption_evidence: "DGEP es interface técnica entre UDFJC y MIPG nacional · debe reportar a FURAG bajo lineamientos Función Pública"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 86c + Art. 87d + Art. 85 §1"
+  normative_text: "El Sistema de Gestión Administrativa está integrado por las siguientes instancias: c) Dirección de Gestión Estratégica y de Planeación. (Art. 86c). El (la) director (a) de Gestión Estratégica y de Planeación es miembro del Consejo de Gestión Administrativa (Art. 87d)."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates:
+    - "Oficina Asesora de Planeación del régimen ACU 003/1997 (transformada en Dirección con jerarquía elevada)"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "direccion_gestion_estrategica_planeacion"
+  ddd_term: "Dirección de Gestión Estratégica y de Planeación"
+  ddd_aggregate_root: "DireccionGestionEstrategicaPlaneacion"
+  ddd_article_ref: "Art. 86c + Art. 87d + Art. 85 §1"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gestion-administrativa-udfjc]]"
+  ddd_role_in_context: AGGREGATE_ROOT
+  ddd_aggregate_root_flag: true
+  ddd_domain_type: Core
+  ddd_lifecycle_states:
+    - PLANIFICANDO
+    - EJECUTANDO
+    - EVALUANDO
+    - MEJORANDO
+  ddd_governed_by:
+    - "[[con-rectoria]]"
+    - "[[con-consejo-gestion-administrativa]]"
+  ddd_invariants:
+    - "El(la) Director(a) de DGEP es miembro titular del CGA (Art. 87d) · no puede delegarlo permanentemente"
+    - "DGEP debe articular el PED 2018-2030 (ACU CSU 009/2018) con planes operativos anuales · sin discontinuidad"
+    - "DGEP es responsable técnico del reporte FURAG-MIPG anual"
+    - "Las metas e indicadores institucionales son producidas por DGEP en articulación con vicerrectorías y validadas por CGA"
+    - "DGEP NO ejecuta políticas misionales (competencia de vicerrectorías) · su rol es PLANIFICAR + EVALUAR + MEJORAR"
+  ddd_ubiquitous_terms:
+    - "Dirección de Gestión Estratégica y de Planeación · DGEP"
+    - "Subsistema 1 · Gestión Estratégica y de Planeación"
+    - "Plan Estratégico de Desarrollo · PED"
+    - "Plan de Acción Anual"
+    - "FURAG · CHIP · SUE · SNIES"
+    - "Aseguramiento de la calidad"
+    - "Mejoramiento continuo"
 
+concepto_facet_neon:
+  neon_imports:
+    - "[[con-pdca-shewhart-deming]]"
+  neon_aligns_with:
+    - "[[con-bsc-s]]"
+    - "[[con-rbm-gac]]"
+    - "[[con-mipg-funcion-publica]]"
+  neon_scenario_origin: "S3"
+  neon_alignment_strategy: DERIVED_FROM
+  neon_in_scheme: "frame-gestion-estrategica"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-86c-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-86c-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-rectoria]]"
+  - "[[con-consejo-gestion-administrativa]]"
+  - "[[con-acuerdo-csu-009-2018-ped]]"
+  - "[[con-mipg-funcion-publica]]"
 
+applicable_domain: "Toda actuación institucional UDFJC que requiera planeación estratégica, monitoreo de indicadores institucionales, reporte FURAG, articulación con MIPG y aseguramiento de la calidad"
+assumptions:
+  - "La elevación de Oficina Asesora a Dirección permite mayor capacidad técnica y representación en CGA"
+  - "El Director(a) de DGEP tiene capacidad de articular técnicamente con vicerrectorías y SIGUD"
+breaks_at:
+  - "Si DGEP opera como Oficina Asesora subordinada (incumple Art. 86c y degrada su rol)"
+  - "Si DGEP ejecuta políticas misionales invadiendo competencias de vicerrectorías"
+  - "Si el reporte FURAG-MIPG no se produce anualmente (incumplimiento Función Pública)"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-dgep-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    bc_domain: gestion-administrativa-udfjc
+    rel_propiedades:
+      norm_evidence: "DGEP creada por Art. 86c del ACU-004-25 como instancia del Sistema de Gestión Administrativa"
+  - rel_id: rel-dgep-miembro-cga
+    rel_nombre: ddd_part_of
+    rel_direccion: post
+    rel_target: "[[con-consejo-gestion-administrativa]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 87d · Director(a) de DGEP es miembro titular del CGA"
+  - rel_id: rel-dgep-lidera-subsistema-1
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-subsistema-gestion-estrategica]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "DGEP es la instancia ejecutiva del Subsistema 1 (Art. 85 §1)"
+  - rel_id: rel-dgep-deroga-oficina-1997
+    rel_nombre: norm_supersedes
+    rel_direccion: post
+    rel_target: "Oficina Asesora de Planeación del ACU 003/1997 (referencia externa)"
+    rel_frame: bibliografico
+    rel_propiedades:
+      norm_evidence: "ACU-004-25 eleva la Oficina Asesora de Planeación a Dirección con asiento en CGA"
+  - rel_id: rel-dgep-articula-ped
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acuerdo-csu-009-2018-ped]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "DGEP opera bajo el horizonte estratégico PED 2018-2030 · articula horizonte con planes operativos"
+  - rel_id: rel-dgep-articula-mipg
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-mipg-funcion-publica]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "DGEP es interface técnica con MIPG nacional · responsable de reporte FURAG anual"
+  - rel_id: rel-dgep-articula-bsc
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "DGEP usa BSC-s como instrumento de monitoreo institucional · 4 perspectivas estratégicas"
+  - rel_id: rel-dgep-articula-rbm
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-rbm-gac]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "DGEP usa RBM-GAC como marco de gestión por resultados · L0-L3 madurez"
+  - rel_id: rel-dgep-articula-sigud
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-resolucion-rectoria-207-2016-sigud]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "DGEP opera articulada con SIGUD · cláusulas 6 (planificación) + 9 (evaluación) + 10 (mejora) ISO 21001"
 
 cited_in:
   - "[[sec-MI12-00--carta-constitucional-acu-004-25]]"
@@ -63,7 +227,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Dirección de Gestión Estratégica y de Planeación (DGEP)
 
 > [!important]+ ⚛️ Dependencia ejecutiva del Subsistema 1 · CoP fundacional
 > La **DGEP** es la dependencia institucional UDFJC que lidera el **Subsistema 1 (Gestión Estratégica y Planeación)** y tiene asiento titular en el **CGA**. Eleva la antigua Oficina Asesora de Planeación a Dirección con representación directa. Es la **interface técnica** entre UDFJC y MIPG nacional + PED + SIGUD.
@@ -72,195 +236,59 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Dependencia institucional UDFJC creada por el Art. 86c del ACU-004-25 como **instancia ejecutiva del Subsistema 1 (Gestión Estratégica y de Planeación)** del Sistema de Gestión Administrativa. Su titular —el(la) **Director(a) de Gestión Estratégica y de Planeación**— es miembro del Consejo de Gestión Administrativa (Art. 87d). Responsable de **definir las líneas de acción institucional** para optimizar recursos, asegurar la eficacia de los planes, evaluar continuamente los procesos, gestionar el
 
 | Sub-tipo | Pasteur | Effective force UDFJC |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) { dv.paragraph("(sin facet normative)"); }
-else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🧩 Estructura DDD · invariantes operativas
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_ddd;
-if (!f) { dv.paragraph("(sin facet DDD)"); }
-else {
-  dv.header(4, `DDD · ${f.ddd_id ?? "—"} · ${f.ddd_role_in_context ?? "—"}`);
-  dv.table(["Atributo", "Valor"], [
-    ["Bounded Context", f.ddd_bc_ref ?? "—"],
-    ["Aggregate Root", f.ddd_aggregate_root ?? "—"],
-    ["Domain type", f.ddd_domain_type ?? "—"],
-    ["Lifecycle states", (f.ddd_lifecycle_states ?? []).join(" · ") || "—"],
-    ["Governed by", (f.ddd_governed_by ?? []).join(" · ") || "—"]
-  ]);
-  if ((f.ddd_invariants ?? []).length) {
-    dv.header(5, "🔒 Invariantes operativas");
-    dv.list(f.ddd_invariants);
-  }
-  if ((f.ddd_ubiquitous_terms ?? []).length) {
-    dv.header(5, "🗣️ Lenguaje ubicuo");
-    dv.paragraph((f.ddd_ubiquitous_terms ?? []).join(" · "));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §4 · 🔻 Pre-requisitos cognitivos
 
-```dataviewjs
-const prereq = dv.current().concepto_prerequisitos ?? [];
-if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");
-else dv.list(prereq);
-```
+
+<div class="dv-block" data-dv="prereqs"></div>
+
 
 ## §5 · 🔺 Conceptos que declaran este como pre-requisito
 
-```dataviewjs
-const me = dv.current();
-const here = me.file.name;
-const folder = me.file.folder;
-const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
-const matchHere = (target) => {
-  if (!target) return false;
-  if (typeof target === "object" && target.path !== undefined) return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
-  const s = String(target);
-  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
-  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
-  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
-};
-const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
-dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito`);
-if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");
-else dv.list(habilitados.map(p => p.file.link));
-```
+
+<div class="dv-block" data-dv="habilita"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
-  const byRel = {};
-  for (const r of rs) {
-    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
-    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
-    byRel[key].items.push(r);
-  }
-  for (const grp of Object.values(byRel)) {
-    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
-    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
-    dv.table(["→ Target", "Evidencia"],
-      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="relations"></div>
+
 
 ## §8 · 🎭 Vista por rol seleccionado
 
-```dataviewjs
-const me = dv.current();
-const rol = me.rol_seleccionado ?? "estudiante-soberano";
-const vistas = {
-  "estudiante-soberano": {
-    titulo: "🎓 Para el Estudiante Soberano",
-    contenido: [
-      "**La DGEP cuida tus indicadores**: tasa de graduación, deserción, satisfacción, infraestructura · todo lo que afecta tu trayectoria es monitoreado por DGEP.",
-      "**Acción concreta**: si percibes barreras estructurales en tu Escuela, propón vía Consejo Estudiantil que DGEP las incluya como indicadores · trazabilidad institucional."
-    ]
-  },
-  "docente-disenador": {
-    titulo: "🎨 Para el Docente Diseñador",
-    contenido: [
-      "**Tu currículo dialoga con el PED 2018-2030**: la DGEP define los lineamientos estratégicos que tu Paquete CCA debe alinear.",
-      "**Acción concreta**: consulta el Plan de Acción Anual de DGEP · ahí encuentras prioridades estratégicas para anclar tu diseño curricular."
-    ]
-  },
-  "docente-formador": {
-    titulo: "🎤 Para el Docente Formador",
-    contenido: [
-      "**Tu evaluación de aula** alimenta los indicadores institucionales que DGEP reporta a FURAG-MIPG.",
-      "**Acción concreta**: documenta evidencias de calidad pedagógica · DGEP las consolida en aseguramiento de calidad institucional."
-    ]
-  },
-  "docente-investigador-pasteur": {
-    titulo: "🔬 Para el Investigador Pasteur",
-    contenido: [
-      "**Tu PM2 alimenta los indicadores SNCTI**: DGEP consolida productividad investigativa para reportes Minciencias + MEN.",
-      "**Acción concreta**: registra tus productos de investigación en sistemas institucionales · DGEP los reporta agregadamente."
-    ]
-  },
-  "docente-emprendedor-coop": {
-    titulo: "🤝 Para el Emprendedor/Coop",
-    contenido: [
-      "**Tus convenios PM3 son insumos del PED**: DGEP los consolida como evidencia de impacto territorial.",
-      "**Acción concreta**: cuando firmes convenio, registralo formalmente · DGEP lo agrega a su reporte de impacto."
-    ]
-  },
-  "docente-director": {
-    titulo: "🏛️ Para el Docente Director",
-    contenido: [
-      "**Tu reporte de gestión** es consolidado por DGEP que lo eleva al CGA y CSU.",
-      "- Verificación: ¿tu Escuela/Instituto/Centro reporta indicadores trimestrales a DGEP?",
-      "**Acción concreta**: institucionaliza ritmo de reporte trimestral con DGEP · base de tu rendición de cuentas ante CACAD."
-    ]
-  }
-};
-const v = vistas[rol] ?? vistas["estudiante-soberano"];
-dv.header(3, v.titulo);
-for (const linea of v.contenido) dv.paragraph(linea);
-```
+
+<div class="dv-block" data-dv="vista-por-rol"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

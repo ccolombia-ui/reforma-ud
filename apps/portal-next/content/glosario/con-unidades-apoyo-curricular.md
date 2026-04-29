@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:unidades-apoyo-curricular
 kd_title: "Unidades de Apoyo a la Gestión Curricular UDFJC (Art. 65 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Unidades de Apoyo a la Gestión Curricular UDFJC"
+tupla_descripcion: "Sub-unidades operativas internas de Facultad UDFJC que apoyan la gestión curricular de programas y áreas · soporte pedagógico, evaluación y articulación curricular"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Unidades de Apoyo a la Gestión Curricular"
 skos_altLabel: ["Unidades de Apoyo Curricular", "UAC", "Curricular Management Support Units"]
@@ -26,15 +28,97 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 65"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 65"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 declara UAC como componente obligatorio de estructura facultativa"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 65"
+  normative_text: "Estructura de Facultades: ... Unidades de apoyo a la gestión curricular ..."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "unidades_apoyo_curricular"
+  ddd_term: "Unidades de Apoyo a la Gestión Curricular"
+  ddd_aggregate_root: "UnidadesApoyoCurricular"
+  ddd_article_ref: "Art. 65"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-arquitectura-misional-udfjc]]"
+  ddd_role_in_context: DOMAIN_SERVICE
+  ddd_aggregate_root_flag: false
+  ddd_domain_type: Supporting
+  ddd_governed_by:
+    - "[[con-decanatura]]"
+    - "[[con-consejo-facultad]]"
+  ddd_invariants:
+    - "Cada Facultad debe tener UAC (Art. 65) · número y composición específica varía"
+    - "UAC son sub-unidades operativas · NO órganos de gobierno"
+    - "Composición y funciones se desarrollan en Estatuto Académico Art. 98 §1"
+    - "Articuladas con Áreas de Formación + Programas Académicos · soporte transversal"
+  ddd_ubiquitous_terms:
+    - "UAC"
+    - "Comité Curricular"
+    - "Coordinación de Prácticas"
+    - "Comité de Autoevaluación"
+    - "Soporte pedagógico facultativo"
 
+concepto_definitional_anchors: ["[[def-norm-acu-004-25-art-65-uac-2025-05-05]]"]
+concepto_current_anchor: "[[def-norm-acu-004-25-art-65-uac-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-facultad]]"
+  - "[[con-area-formacion]]"
 
+applicable_domain: "Toda Facultad UDFJC para soporte técnico-pedagógico curricular"
+assumptions: ["Composición se desarrollará en Estatuto Académico"]
+breaks_at: ["Si una Facultad opera sin UAC"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-disenador
 
 
+tupla__relations:
+  - rel_id: rel-uac-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "UAC declaradas Art. 65 ACU-004-25"
+  - rel_id: rel-uac-componente-facultad
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-facultad]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Componente obligatorio estructura facultativa"
+  - rel_id: rel-uac-soporta-areas
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-area-formacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "UAC apoyan transversalmente la gestión curricular de Áreas de Formación"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1
@@ -43,7 +127,7 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, unidades-apoyo-curr
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Unidades de Apoyo a la Gestión Curricular
 
 > [!note]+ Soporte técnico-pedagógico facultativo
 > Las **UAC** son sub-unidades operativas de Facultad que apoyan la gestión curricular · Comité Curricular, Coordinación de Prácticas, Comité de Autoevaluación, etc.
@@ -52,50 +136,35 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, unidades-apoyo-curr
 
 ## §0 · 🎭 Vista por rol
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ## §1 · Definición
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Sub-unidades operativas internas de las Facultades UDFJC declaradas en el **Art. 65 del ACU-004-25** como componente obligatorio de la estructura facultativa. Apoyan la **gestión curricular** de los Programas Académicos y Áreas de Formación: diseño curricular, evaluación pedagógica, prácticas profesionales, movilidad académica, articulación pregrado-posgrado, evaluación docente, certificación y acreditación de programas. Su composición específica se desarrolla en el Estatuto Académico nuevo (Art
 
 ## §2 · Anclaje + cadena
 
-```dataviewjs
-const f = dv.current().concepto_facet_normative;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.table(["Campo", "Valor"], [["Origen", `${f.origin_type} · ${f.origin_force}`], ["Authority", f.normative_authority_level], ["Effective force", `**${f.effective_force_in_udfjc}**`]]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) { dv.header(4, `🔗 Cadena · ${chain.length}`); dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"], chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence])); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · DDD invariantes
 
-```dataviewjs
-const f = dv.current().concepto_facet_ddd;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.header(4, `DDD · ${f.ddd_id}`);
-  if ((f.ddd_invariants ?? []).length) { dv.header(5, "🔒 Invariantes"); dv.list(f.ddd_invariants); }
-  if ((f.ddd_ubiquitous_terms ?? []).length) { dv.header(5, "🗣️ Lenguaje ubicuo"); dv.paragraph(f.ddd_ubiquitous_terms.join(" · ")); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · Relaciones tipadas
 
-```dataviewjs
-const rels = dv.current().tupla__relations ?? [];
-const vocab = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocab?.relaciones ?? {};
-const hL = (n, d) => { const e = relMap[n]?.[d ?? "co"] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post; return e?.label ?? `\`${n}\``; };
-for (const r of rels) dv.paragraph(`**${hL(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §10 · Citado en
 
-```dataviewjs
-dv.list(dv.current().cited_in ?? []);
-dv.paragraph(`**Total**: ${dv.current().cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

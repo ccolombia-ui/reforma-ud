@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:secretaria-academica-facultad
 kd_title: "Secretaría Académica de Facultad UDFJC (Art. 65 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Secretaría Académica de Facultad UDFJC"
+tupla_descripcion: "Dependencia administrativa interna de cada Facultad UDFJC declarada en Art. 65 · soporte técnico-documental al Decanato y Consejo de Facultad"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Secretaría Académica de Facultad"
 skos_altLabel: ["SAF", "Faculty Academic Secretariat"]
@@ -26,15 +28,93 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 65"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 65"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 declara Secretaría Académica como componente obligatorio de Facultad"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 65"
+  normative_text: "Estructura de Facultades: ... Una secretaría académica."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "secretaria_academica_facultad"
+  ddd_term: "Secretaría Académica de Facultad"
+  ddd_aggregate_root: "SecretariaAcademicaFacultad"
+  ddd_article_ref: "Art. 65"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: ENTITY
+  ddd_aggregate_root_flag: false
+  ddd_domain_type: Supporting
+  ddd_governed_by:
+    - "[[con-decanatura]]"
+  ddd_invariants:
+    - "Cada Facultad debe tener UNA Secretaría Académica (Art. 65)"
+    - "Soporta documental + jurídicamente al Decanato y Consejo de Facultad"
+    - "Articulada con Secretaría General SISGRAL nacional para fe pública institucional"
+  ddd_ubiquitous_terms:
+    - "Secretaría Académica · SAF"
+    - "Soporte técnico-documental"
+    - "Articulación con SISGRAL"
 
+concepto_definitional_anchors: ["[[def-norm-acu-004-25-art-65-saf-2025-05-05]]"]
+concepto_current_anchor: "[[def-norm-acu-004-25-art-65-saf-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-facultad]]"
+  - "[[con-decanatura]]"
 
+applicable_domain: "Toda Facultad UDFJC"
+assumptions: ["Estatuto Académico Art. 98 §1 desarrollará funciones específicas"]
+breaks_at: ["Si una Facultad opera sin Secretaría Académica"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-saf-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "SAF declarada Art. 65 ACU-004-25"
+  - rel_id: rel-saf-componente-facultad
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-facultad]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Componente obligatorio estructura facultativa"
+  - rel_id: rel-saf-articula-sisgral
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-secretaria-general-sisgral]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Articulación documental con SISGRAL central para fe pública"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1
@@ -43,7 +123,7 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, secretaria-academic
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Secretaría Académica de Facultad
 
 > [!note]+ Soporte técnico-documental facultativo
 > Cada Facultad UDFJC tiene su Secretaría Académica · soporte al Decanato y Consejo de Facultad · articulada con SISGRAL central.
@@ -52,50 +132,35 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, secretaria-academic
 
 ## §0 · 🎭 Vista por rol
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ## §1 · Definición
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Dependencia administrativa interna obligatoria de cada Facultad UDFJC declarada en el **Art. 65 del ACU-004-25** como componente estructural facultativo. Es el **soporte técnico-documental** del Decanato y del Consejo de Facultad: gestiona expedientes académicos, certificaciones, actas del Consejo de Facultad, registros de programas, articulación con SISGRAL central. Su titular —el(la) Secretario(a) Académico(a) de Facultad— actúa como secretario(a) del Consejo de Facultad. Articulada con la Sec
 
 ## §2 · Anclaje + cadena de adopción
 
-```dataviewjs
-const me = dv.current(); const f = me.concepto_facet_normative;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.table(["Campo", "Valor"], [["Origen", `${f.origin_type} · ${f.origin_force}`], ["Authority", f.normative_authority_level], ["Effective force", `**${f.effective_force_in_udfjc}**`]]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) { dv.header(4, `🔗 Cadena · ${chain.length}`); dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"], chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence])); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · DDD invariantes
 
-```dataviewjs
-const f = dv.current().concepto_facet_ddd;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.header(4, `DDD · ${f.ddd_id}`);
-  if ((f.ddd_invariants ?? []).length) { dv.header(5, "🔒 Invariantes"); dv.list(f.ddd_invariants); }
-  if ((f.ddd_ubiquitous_terms ?? []).length) { dv.header(5, "🗣️ Lenguaje ubicuo"); dv.paragraph(f.ddd_ubiquitous_terms.join(" · ")); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · Relaciones tipadas
 
-```dataviewjs
-const rels = dv.current().tupla__relations ?? [];
-const vocab = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocab?.relaciones ?? {};
-const hL = (n, d) => { const e = relMap[n]?.[d ?? "co"] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post; return e?.label ?? `\`${n}\``; };
-for (const r of rels) dv.paragraph(`**${hL(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §10 · Citado en
 
-```dataviewjs
-dv.list(dv.current().cited_in ?? []);
-dv.paragraph(`**Total**: ${dv.current().cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Frame 1 — R&D"
 
 skos_prefLabel: "Frame 1 — R&D / Investigación y Desarrollo"
 skos_altLabel: ["Modelo lineal de innovación", "R&D Frame", "Política CTI Frame 1"]
@@ -23,13 +25,41 @@ iso_standardized_by: "Schot & Steinmueller (2018) Research Policy 47(9)"
 
 pasteur_quadrant: BOHR
 
+concepto_capabilities:
+  - NEON
 
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[schot2018frame3]] + Bush (1945) Science: The Endless Frontier"
+  neon_alignment_confidence: 0.95
+  neon_imports:
+    - "[[con-frame-2]]"
+    - "[[con-frame-3]]"
 
+concepto_prerequisitos: []
 
+applicable_domain: "Análisis histórico de política CTI; complementario a Frame 3"
+assumptions: ["La producción científica genera bienestar vía spillovers automáticos"]
+breaks_at: ["Empíricamente refutado: décadas de R&D no eliminan desafíos sociales sistémicos"]
 
+valid_from: "1945-01-01"
+valid_to: ""
 rol_seleccionado: docente-investigador-pasteur
+concepto_anchor_chain_status: LINEAR
 
 
+tupla__relations:
+  - rel_id: rel-frame1-precedes-frame2
+    rel_nombre: skos_narrower
+    rel_direccion: pre
+    rel_target: "[[con-frame-2]]"
+    rel_frame: skos
+  - rel_id: rel-frame1-fuente-schot
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[schot2018frame3]]"
+    rel_frame: bibliografico
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

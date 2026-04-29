@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Plataforma Comunitaria UDFJC · 9 Módulos"
 
 skos_prefLabel: "Plataforma Comunitaria UDFJC · 9 Módulos (M04 §4.3)"
 skos_altLabel: ["Plataforma 9 módulos", "PCU 9", "Plataforma comunitaria UDFJC"]
@@ -23,11 +25,49 @@ iso_standardized_by: "Madera Sepúlveda (2026) M04 §4.3 — elaboración propia
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M04 §4.3 — elaboración propia"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Diseño + implementación de infraestructura de participación democrática UDFJC"
+assumptions:
+  - "Es viable construir plataforma soberana con presupuesto institucional + alianzas"
+  - "Los 9 módulos son exhaustivos para participación informada"
+breaks_at:
+  - "Si se implementa con plataformas privadas dependientes (viola E2)"
+  - "Si se implementan solo algunos módulos (interdependencia exige completitud)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-plataforma-materializa-e2
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-resultados-emergentes-e1-e3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La plataforma es la infraestructura material concreta de E2 (Aprendizaje Soberano) — sin plataforma soberana, E2 es retórica."
+  - rel_id: rel-plataforma-soporta-roles
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-seis-roles-jtbd-comunidad-udfjc]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Cada uno de los 9 módulos soporta JTBD diferenciados de los 6 roles JTBD (M04): wiki para Investigador Pasteur, foros para Estudiante Soberano + Director, etc."
+  - rel_id: rel-plataforma-mitiga-rt5-rt6
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Módulos M3 (Dashboard) y M9 (Trazabilidad) mitigan RT5 (sistema de seguimiento); M8 (Gamificación) y M2 (Foros) mitigan RT6 (resistencia al cambio)."
 
 cited_in: ["[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 1

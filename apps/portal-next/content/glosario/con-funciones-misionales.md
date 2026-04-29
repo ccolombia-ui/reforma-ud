@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Funciones Misionales UDFJC"
 
 skos_prefLabel: "Funciones Misionales (PM1, PM2, PM3)"
 skos_altLabel:
@@ -30,15 +32,126 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-ley-30-1992-art-6]]"
+      adopter_locator: "Ley 30/1992 Art. 6 · objetivos misionales IES vinculantes"
+      adopter_authority_level: LEGAL
+      adopted_at: "1992-12-28"
+      adoption_evidence: "Ley 30/1992 establece el deber misional vinculante para IES colombianas · base legal del Art. 7 ACU-004-25"
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 7 (literales a, b, c)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 declara 3 funciones misionales · supersede denominaciones del ACU 003/1997 incorporando 'investigación-creación-innovación' y 'contextos'"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 7 (a, b, c)"
+  normative_text: "[Texto literal Art. 7 · 3 funciones misionales: PM1 Formación + PM2 Investigación-Creación-Innovación + PM3 Contextos-Extensión-Proyección Social]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: ["Funciones declaradas en Acuerdo CSU 003/1997 (denominaciones distintas)"]
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "funciones_misionales"
+  ddd_aggregate_root: "FuncionesMisionales"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "ValueObject inmutable que agrupa las 3 funciones como unidad indivisible institucional. Cada Escuela/Instituto/Centro la implementa concretamente."
+  ddd_invariants:
+    - "Las 3 funciones siempre deben coexistir institucionalmente (ninguna puede eliminarse)"
+    - "Toda Escuela debe desarrollar PM1 al menos como anchor de su existencia"
+    - "Toda Vicerrectoría temática (Formación, Investigaciones, Contextos) coordina su función misional respectiva"
+    - "Las tres funciones se enriquecen mutuamente (no son estancas)"
+  ddd_ubiquitous_terms:
+    - "Funciones Misionales"
+    - "PM1 Formación-Docencia"
+    - "PM2 Investigación-Creación-Innovación"
+    - "PM3 Contextos-Extensión-Proyección Social"
+    - "Vicerrectoría temática"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-7-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-7-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-ley-30-1992-art-6]]"
 
+applicable_domain: "UDFJC, vigente desde 2025-05-06; criterio de validez de cualquier programa o proyecto institucional."
+assumptions:
+  - "La integración de las 3 funciones es operacionalizable institucionalmente"
+  - "Las Vicerrectorías temáticas coordinan eficazmente sus funciones respectivas"
+breaks_at:
+  - "Si una Escuela elimina alguna de las 3 funciones (violación del Art. 7)"
+  - "Si las Vicerrectorías compiten en lugar de coordinar (riesgo de fragmentación)"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-disenador
 
 
+tupla__relations:
+  - rel_id: rel-funciones-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-funciones-pm1-coord-vrf
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-vicerrectoria-formacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      ddd_evidence: "Vicerrectoría de Formación coordina PM1"
+  - rel_id: rel-funciones-pm2-coord-vri
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      ddd_evidence: "Vicerrectoría de Investigación-Creación-Innovación coordina PM2"
+  - rel_id: rel-funciones-pm3-coord-vrc
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-vicerrectoria-contextos-extension]]"
+    rel_frame: skos
+    rel_propiedades:
+      ddd_evidence: "Vicerrectoría de Contextos-Extensión-Proyección Social coordina PM3"
+  # — v1.1.0 cross-references M01 (Fase B audit refactor) ——————————
+  - rel_id: rel-funciones-aligned-piiom
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-cinco-misiones-piiom]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Cada PM debe alinearse con al menos una misión PIIOM; M01 §4.6 establece esta trazabilidad como condición de cumplimiento Art. 6 Ley 30"
+  - rel_id: rel-funciones-frame3-direccionalidad
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-frame-3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las 3 funciones operan bajo Frame 3 (direccionalidad transformativa) — no basta producir o conectar, deben transformar"
+  # — v1.2.0 cross-references M02 (Fase B audit refactor) ——————————
+  - rel_id: rel-funciones-equivale-pm
+    rel_nombre: skos_closeMatch
+    rel_direccion: co
+    rel_target: "[[con-procesos-misionales-pm1-pm2-pm3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Funciones Misionales (M00 Art. 7) ≅ Procesos Misionales PM1-PM2-PM3 (M02). Mismo referente conceptual con dos etiquetados distintos según contexto del paper."
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-04--jtbd-comunidad]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 5

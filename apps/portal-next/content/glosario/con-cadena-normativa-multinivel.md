@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Cadena Normativa Multinivel"
 
 skos_prefLabel: "Cadena Normativa Multinivel UDFJC"
 skos_altLabel: ["Multilevel Normative Chain", "Cascada normativa reforma UDFJC", "Cadena vinculante M01"]
@@ -23,15 +25,122 @@ iso_standardized_by: "Madera Sepúlveda (2026) — elaboración propia M01"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - NEON
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-madera-sepulveda-m01-2026]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-mcu-2020]]"
+      adopter_locator: "MCU 2020 · referente internacional"
+      adopter_authority_level: DOCTRINAL
+      adopted_at: "2020-09-16"
+      adoption_evidence: "Eslabón 1 · referente internacional aspiracional"
+    - adopter: "[[con-frame-3]]"
+      adopter_locator: "Frame 3 Schot-Steinmueller 2018"
+      adopter_authority_level: DOCTRINAL
+      adopted_at: "2018-01-01"
+      adoption_evidence: "Eslabón 2 · marco teórico transformativo"
+    - adopter: "[[con-constitucion-1991-art-69]]"
+      adopter_locator: "Const. 1991 Art. 69"
+      adopter_authority_level: CONSTITUCIONAL
+      adopted_at: "1991-07-04"
+      adoption_evidence: "Eslabón 4 · norma constitucional"
+    - adopter: "[[con-ley-30-1992-art-6]]"
+      adopter_locator: "Ley 30/1992 Art. 6 · ESLABÓN VINCULANTE CRÍTICO"
+      adopter_authority_level: LEGAL
+      adopted_at: "1992-12-28"
+      adoption_evidence: "Eslabón 5 · convierte la cadena en obligación legal vinculante via 'solucionar las necesidades del país'"
+    - adopter: "[[con-conpes-4069]]"
+      adopter_locator: "CONPES 4069/2021 + CONPES 3934/2018 + PIIOM 2022-2026"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2021-12-21"
+      adoption_evidence: "Eslabón 6 · política nacional + operacionalización"
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 · norma institucional UDFJC"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "Eslabón 7 · operacionalización al interior UDFJC · cierre de la cadena"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-madera-sepulveda-m01-2026]]"
+  normative_locator: "Síntesis M01 §4.1-§4.7"
+  normative_text: "[Síntesis articulada · 7 eslabones encadenados desde MCU 2020 hasta ACU-004-25]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Síntesis propietaria de [[con-mcu-2020]] + [[con-frame-3]] + [[con-constitucion-1991-art-69]] + [[con-ley-30-1992-art-6]] + [[con-conpes-4069]] + [[con-conpes-3934]] + [[con-piiom]] + [[con-acu-004-25]]"
+  neon_alignment_confidence: 0.9
+  neon_methodological_notes: "Cadena documentada en M01 §4.1-§4.7; base argumentativa de toda la reforma vinculante UDFJC."
 
+concepto_definitional_anchors:
+  - "[[def-norm-cadena-normativa-multinivel-2026-m01]]"
+concepto_current_anchor: "[[def-norm-cadena-normativa-multinivel-2026-m01]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-mcu-2020]]"
+  - "[[con-frame-3]]"
+  - "[[con-constitucion-1991-art-69]]"
+  - "[[con-ley-30-1992-art-6]]"
+  - "[[con-conpes-4069]]"
+  - "[[con-acu-004-25]]"
 
+applicable_domain: "Argumentación jurídica + interpretativa de reforma UDFJC"
+assumptions: ["Los eslabones de la cadena permanecen vigentes (vencen escalonadamente: PIIOM 2026, MCU permanente, Const indefinido)"]
+breaks_at: ["Si se reforma Ley 30/1992 Art. 6 (proyecto en discusión 2024-2026)"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-cadena-implements-mcu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-mcu-2020]]"
+    rel_frame: skos
+  - rel_id: rel-cadena-implements-frame3
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-frame-3]]"
+    rel_frame: skos
+  - rel_id: rel-cadena-implements-art69
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-constitucion-1991-art-69]]"
+    rel_frame: normativo
+  - rel_id: rel-cadena-implements-art6
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-ley-30-1992-art-6]]"
+    rel_frame: normativo
+  - rel_id: rel-cadena-implements-conpes4069
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: normativo
+  - rel_id: rel-cadena-implements-piiom
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-piiom]]"
+    rel_frame: normativo
+  - rel_id: rel-cadena-converge-acu
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 3

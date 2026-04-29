@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Frame 3 — Cambio Transformativo"
 
 skos_prefLabel: "Frame 3 — Cambio Transformativo"
 skos_altLabel:
@@ -29,11 +31,79 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_external_ontology_uri: ""
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[schot2018frame3]] — Schot, J. & Steinmueller, W. E. (2018). Three frames for innovation policy: R&D, systems of innovation and transformative change. *Research Policy*, 47(9), 1554-1567"
+  neon_alignment_confidence: 0.95
+  neon_methodological_notes: "Reuso S3 (ontología externa) de literatura especializada en sustainability transitions. Adopción colombiana vía CONPES 4069/2021 hace que el concepto pase de marco teórico académico a paradigma normativo vinculante para SNCTI."
+
+applicable_domain: "Política de innovación + diseño de programas de investigación-creación-innovación + extensión territorial UDFJC"
+assumptions:
+  - "La direccionalidad transformativa es operacionalizable mediante misiones (PIIOM 5 misiones)"
+  - "Frame 3 NO niega Frames 1-2; los integra y reorienta"
+breaks_at:
+  - "Si se aplica sin métricas verificables de transformación (riesgo de retórica vacía)"
+  - "Si se confunde direccionalidad con dirigismo central planificado"
+
+valid_from: "2018-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-frame3-supersedes-frame2
+    rel_nombre: skos_broader
+    rel_direccion: post
+    rel_target: "[[con-frame-2]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Frame 3 integra y reorienta Frame 2 (sistemas de innovación) añadiendo direccionalidad"
+  - rel_id: rel-frame3-supersedes-frame1
+    rel_nombre: skos_broader
+    rel_direccion: post
+    rel_target: "[[con-frame-1]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Frame 3 integra Frame 1 (R&D) con direccionalidad explícita"
+  - rel_id: rel-frame3-adopted-conpes-4069
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CONPES 4069/2021 adopta Frame 3 como paradigma rector de la Política Nacional CTI 2022-2031"
+  - rel_id: rel-frame3-fuente-schot
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "Schot, J., & Steinmueller, W. E. (2018). Three frames for innovation policy. Research Policy 47(9): 1554-1567 (referencia bibliográfica externa, sin nodo en corpus)"
+    rel_frame: bibliografico
+  # — v1.1.0 cross-references M02 (Fase B audit refactor) ——————————
+  - rel_id: rel-frame3-converge-mode3
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-mode-1-2-3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Frame 3 (política, Schot & Steinmueller 2018) y Mode 3 (epistémico, Carayannis & Campbell 2006) convergen: ambos exigen direccionalidad transformativa y rechazan la producción descontextualizada."
+  - rel_id: rel-frame3-articula-pasteur
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-cuadrante-pasteur-stokes]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Frame 3 articula con Cuadrante Pasteur: investigación uso-inspirada (Pasteur) es el modo epistémico preferente bajo Frame 3 transformativo."
+  # — v1.2.0 cross-references M03 (Fase B audit refactor) ——————————
+  - rel_id: rel-frame3-implementa-oecd
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-oecd-learning-compass-2030]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "OECD Learning Compass 2030 implementa Frame 3 (direccionalidad transformativa) en política educativa: las 3 Transformative Competencies son operacionalización curricular de Frame 3."
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 5

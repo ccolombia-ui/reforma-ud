@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Frame 2 — Sistemas de Innovación"
 
 skos_prefLabel: "Frame 2 — Sistemas de Innovación"
 skos_altLabel: ["Innovation Systems Approach", "NIS", "Triple Helix Frame", "Política CTI Frame 2"]
@@ -23,11 +25,43 @@ iso_standardized_by: "Schot & Steinmueller (2018); Etzkowitz & Leydesdorff (1995
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[schot2018frame3]] + [[etzkowitz1995triplehelix]] + Lundvall 1992 + Freeman 1987"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Análisis de ecosistemas de innovación / clústeres regionales / política CTI 1980s-2010s"
+assumptions:
+  - "El crecimiento económico es deseable per se"
+  - "Mejorar conexiones produce externalidades positivas automáticas"
+breaks_at:
+  - "No cuestiona la dirección del crecimiento (sostenible vs extractivo)"
+  - "Crisis ecológica + desigualdad sistémica refutan la suficiencia de Frame 2"
+
+valid_from: "1985-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-frame2-extends-frame1
+    rel_nombre: skos_broader
+    rel_direccion: post
+    rel_target: "[[con-frame-1]]"
+    rel_frame: skos
+  - rel_id: rel-frame2-precedes-frame3
+    rel_nombre: skos_narrower
+    rel_direccion: pre
+    rel_target: "[[con-frame-3]]"
+    rel_frame: skos
+  - rel_id: rel-frame2-related-quintuple-helix
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-quintuple-helix]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

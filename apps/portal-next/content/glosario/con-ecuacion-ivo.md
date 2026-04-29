@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Ecuación IVO — Índice de Viabilidad Organizacional ponderado"
 
 skos_prefLabel: "Ecuación IVO (M08)"
 skos_altLabel: ["IVO formula", "Índice Viabilidad Organizacional", "IVO ponderado"]
@@ -13,8 +15,24 @@ skos_scopeNote: "IVO(S5)≈90 (no 100) porque la dimensión identidad (S5=VSM) p
 skos_example: "S0: IVO-VSM1 (operaciones: Escuelas con 1/3 funciones) ≈ 0.08; IVO-VSM2 (CABA: 0 CCA integradas) = 0.00; resto ≈ 0.06. Total IVO(S0) = 0.30×0.08 + 0.25×0.00 + 0.20×0.06 + 0.15×0.02 + 0.10×0.05 ≈ 0.10 → 10. Coincide con IVO(S0)≈10."
 skos_notation: "IVO"
 
+concepto_formula_latex: |
+  \text{IVO}(S_n) = \sum_{S=1}^{5} w_S \cdot \overline{\text{QO}_S}(S_n)
+  \quad \text{con} \quad \sum_{S=1}^{5} w_S = 1
 
+concepto_formula_variables:
+  - var: "\\text{IVO}(S_n)"
+    desc: "Valor del Índice de Viabilidad Organizacional en el escenario S_n (escala 0-100)"
+  - var: "w_S"
+    desc: "Peso del sistema VSM-S (S1=0.30, S2=0.25, S3=0.20, S4=0.15, S5=0.10)"
+  - var: "\\overline{\\text{QO}_S}(S_n)"
+    desc: "Promedio simple de los QO del sistema VSM-S en el escenario S_n (fracción 0-1)"
+  - var: "S \\in [1,5]"
+    desc: "Índice de sistemas VSM Beer: S1=Operaciones, S2=Coordinación, S3=Control, S4=Inteligencia, S5=Identidad"
 
+concepto_prerequisitos:
+  - "[[con-iuca-ivc-ivo-indices]]"
+  - "[[con-framework-86-indicadores-s0-s5]]"
+  - "[[con-vsm-system-5]]"
 
 iso_designation_type: term
 iso_definition_type: intensional
@@ -26,11 +44,42 @@ iso_standardized_by: "Madera Sepúlveda, C. C. (2026). M08 §6.3. *Capítulo MI-
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M08 §6.3 — elaboración propia sobre Beer (1979)"
+  neon_alignment_confidence: 0.87
+
+applicable_domain: "Diagnóstico de viabilidad organizacional + dashboard VSM × escenarios"
+assumptions:
+  - "Los 5 sistemas VSM Beer son los adecuados para IES pública colombiana"
+  - "S2 (CABA) es el diferenciador: mayor peso que S3-S5"
+  - "IVO(S5)≈90, no 100 — la identidad institucional plena toma más de 8 años"
+breaks_at:
+  - "Si CABA no existe (IVO quedaría artificialmente bajo sin que el resto falle)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-eq-ivo-define-indice
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-iuca-ivc-ivo-indices]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La ecuación IVO es la formalización matemática del índice IVO del sistema M08."
+  - rel_id: rel-eq-ivo-usa-vsm
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-vsm-system-5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los pesos w_S del IVO están estructurados sobre los 5 sistemas del Viable System Model (Beer 1979): S1=Operaciones, S2=Coordinación, S3=Control, S4=Inteligencia, S5=Identidad."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]"]
 cited_count: 1

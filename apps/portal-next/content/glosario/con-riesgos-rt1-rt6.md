@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "6 Riesgos de Transición RT1-RT6"
 
 skos_prefLabel: "6 Riesgos de Transición RT1-RT6"
 skos_altLabel: ["RT1-RT6", "6 riesgos transición reforma", "Anti-patrones reforma UDFJC"]
@@ -23,11 +25,73 @@ iso_standardized_by: "Madera Sepúlveda (2026) — elaboración propia M01 §5.2
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Análisis crítico Madera Sepúlveda 2026 + literatura gestión del cambio"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Gestión de riesgos de implementación reforma UDFJC + diseño de monitoreo institucional"
+assumptions: ["Los 6 riesgos son exhaustivos para el contexto UDFJC"]
+breaks_at: ["Si surge nuevo riesgo crítico no contemplado"]
+
+valid_from: "2026-04-26"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-rt-amenaza-acu00425
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RT1-RT6 son los riesgos sistémicos que amenazan la implementación efectiva del ACU-004-25 (M01 §5.2). El glosario universal M00 mismo es la mitigación de RT1 (marco interpretativo único)."
+  - rel_id: rel-rt6-afecta-comunidad
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-comunidad-universitaria]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RT6 (resistencia al cambio no gestionada) afecta directamente la apropiación de la reforma por los estamentos. Mitigación crítica: comunicación + capacitación dirigidas a Comunidad Universitaria."
+  - rel_id: rel-rt-deliberacion-asamblea
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-asamblea-universitaria]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La Asamblea Universitaria es el espacio deliberativo legítimo para tematizar los RT1-RT6 con la Comunidad Universitaria; su no-constitución agrava RT6 (resistencia)."
+  - rel_id: rel-rt5-mitigado-bsc
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Mitigación RT5 (ausencia de sistema de seguimiento): Balanced Scorecard sectorial (BSC-s) como instrumento de monitoreo institucional con indicadores verificables."
+  - rel_id: rel-rt5-mitigado-rbm
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-rbm-gac]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Mitigación RT5 complementaria: Results-Based Management + Gestión por Áreas Críticas (RBM-GAC) como marco de gestión orientada a resultados."
+  - rel_id: rel-rt3-mitigado-piiom
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-cinco-misiones-piiom]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Mitigación RT3 (desalineación PIIOM): matriz de trazabilidad — cada iniciativa declara explícitamente a qué misión PIIOM-M1..M5 contribuye."
+  - rel_id: rel-rt5-monitorea-plan
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-plan-implementacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RT5 (ausencia de sistema de seguimiento) se materializa en el incumplimiento del Plan de Implementación Art. 98 (vencido 2025-06-19); el sistema de seguimiento que mitiga RT5 debe partir de un Plan formalmente aprobado."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

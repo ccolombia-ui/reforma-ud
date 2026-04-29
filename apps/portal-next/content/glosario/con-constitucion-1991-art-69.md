@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Constitución 1991 Art. 69 (Autonomía Universitaria)"
 
 skos_prefLabel: "Constitución Política 1991 — Art. 69"
 skos_altLabel: ["Art. 69 CP", "Autonomía universitaria constitucional", "Const 1991 Art 69"]
@@ -26,14 +28,58 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-constitucion-1991-asamblea-constituyente]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-asamblea-nacional-constituyente-1991]]"
+      adopter_locator: "Constitución Política Colombia 1991 · Asamblea Nacional Constituyente"
+      adopter_authority_level: CONSTITUCIONAL
+      adopted_at: "1991-07-04"
+      adoption_evidence: "Constitución 1991 Art. 69 garantiza autonomía universitaria como principio del Estado social de derecho · máxima jerarquía normativa colombiana"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: CONSTITUCIONAL
+  normative_source: "[[cita-constitucion-1991-asamblea-constituyente]]"
+  normative_locator: "Const. 1991 Art. 69"
+  normative_text: "Se garantiza la autonomía universitaria. Las universidades podrán darse sus directivas y regirse por sus propios estatutos, de acuerdo con la ley. La ley establecerá un régimen especial para las universidades del Estado."
+  normative_authority_level: CONSTITUCIONAL
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-const-1991-art-69-1991-07-04]]"
+concepto_current_anchor: "[[def-norm-const-1991-art-69-1991-07-04]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos: []
 
+applicable_domain: "Toda actuación universitaria en Colombia; supremacía constitucional"
+assumptions: ["El bloque de constitucionalidad colombiano sigue vigente"]
+breaks_at: ["Reforma constitucional vía Acto Legislativo (improbable a corto plazo)"]
 
+valid_from: "1991-07-04"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-art69-fuente-constitucion
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[colombia1991constitucion]]"
+    rel_frame: bibliografico
+  - rel_id: rel-art69-desarrollado-ley30
+    rel_nombre: norm_mandates
+    rel_direccion: post
+    rel_target: "[[con-ley-30-1992-art-6]]"
+    rel_frame: normativo
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 2

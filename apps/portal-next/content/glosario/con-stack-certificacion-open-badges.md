@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Stack Certificación · Open Badges + xAPI + CLR"
 
 skos_prefLabel: "Stack de Certificación Verificable · Open Badges + xAPI + CLR"
 skos_altLabel: ["Open Badges xAPI CLR", "Stack certificación CCA", "Verifiable credentials stack"]
@@ -23,11 +25,47 @@ iso_standardized_by: "IMS Global Learning Consortium (Open Badges v3.0) + ADL (x
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "IMS Open Badges v3.0 + ADL xAPI 1.0.3 + AACRAO CLR 2.0"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Implementación técnica del modelo CCA UDFJC + plataforma comunitaria 9 módulos (M9 Trazabilidad)"
+assumptions:
+  - "Los 3 estándares son técnicamente compatibles entre sí"
+breaks_at:
+  - "Si se implementa con plataformas privadas dependientes (viola E2 soberanía)"
+
+valid_from: "2023-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-stack-certifica-cca
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-cca]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El stack OB+xAPI+CLR es la infraestructura técnica que materializa la certificación de cada Paquete CCA con verificabilidad criptográfica."
+  - rel_id: rel-stack-soberania
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-soberania-cognitiva]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El stack es soberano cognitivamente — los 3 estándares son abiertos, sin lock-in. Materializa Soberanía Cognitiva (Art. 5g) en infraestructura técnica."
+  - rel_id: rel-stack-plataforma9
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-plataforma-comunitaria-9-modulos]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Módulo M9 (Trazabilidad deliberación-decisión) de la plataforma 9 módulos M04 incorpora xAPI + CLR como infraestructura técnica."
 
 cited_in: ["[[sec-MI12-06--bmk-creditos-cca]]"]
 cited_count: 1

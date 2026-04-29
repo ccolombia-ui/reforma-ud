@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Quintuple Helix Model"
 
 skos_prefLabel: "Quintuple Helix Model"
 skos_altLabel: ["Quíntuple Hélice", "Modelo Q5", "5-Helix Innovation"]
@@ -26,11 +28,40 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[carayannis2012quintuple]] + Etzkowitz & Leydesdorff (1995) Triple Helix + Carayannis-Campbell (2009) Quadruple Helix"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño de proyectos de investigación-creación-innovación + extensión territorial UDFJC + Política Nacional CTI"
+assumptions:
+  - "El medio ambiente puede modelarse como agente co-creador, no solo recurso"
+breaks_at: ["Si se aplica como mero check-list de actores sin co-creación real"]
+
+valid_from: "2012-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-q5-supersedes-triple
+    rel_nombre: skos_broader
+    rel_direccion: post
+    rel_target: "Triple Helix Model (Etzkowitz & Leydesdorff 1995 — referencia académica, sin nodo en corpus)"
+    rel_frame: bibliografico
+  - rel_id: rel-q5-adopted-conpes-4069
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: skos
+  - rel_id: rel-q5-fuente-carayannis
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[carayannis2012quintuple]]"
+    rel_frame: bibliografico
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

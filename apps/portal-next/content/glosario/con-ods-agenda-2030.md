@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "ODS — Objetivos de Desarrollo Sostenible"
 
 skos_prefLabel: "ODS — Objetivos de Desarrollo Sostenible (Agenda 2030)"
 skos_altLabel: ["SDGs", "Sustainable Development Goals", "Agenda 2030 ONU", "17 ODS"]
@@ -26,11 +28,30 @@ align_wikidata: "https://www.wikidata.org/wiki/Q7649586"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[un2015ods]] — Resolución A/RES/70/1 ONU"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño de proyectos transformativos UDFJC + reportes de impacto institucional"
+assumptions: ["Los ODS siguen siendo marco global referencial hasta 2030"]
+breaks_at: ["Si Agenda post-2030 reemplaza estructura de los 17 ODS"]
+
+valid_from: "2015-09-25"
+valid_to: "2030-12-31"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-ods-fuente
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[un2015ods]]"
+    rel_frame: bibliografico
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

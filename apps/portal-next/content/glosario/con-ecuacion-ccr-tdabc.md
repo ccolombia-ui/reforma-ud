@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Ecuación CCR — Capacity Cost Rate para IES pública"
 
 skos_prefLabel: "Ecuación CCR TDABC (M09-M10)"
 skos_altLabel: ["CCR formula", "Capacity Cost Rate formula", "Costo por hora docente"]
@@ -13,8 +15,24 @@ skos_scopeNote: "La 'capacidad práctica' NO es la capacidad teórica (52×40h=2
 skos_example: "TE-D-02 (clase magistral 75 min): Costo = CCR_planta × t = 694 COP/min × 75 min = 52.050 COP/clase. Si el docente dicta 16 clases/semestre × 4 cursos = 64 clases → solo en magistral = 64 × 52.050 ≈ 3,3M COP/semestre/docente. Con DVE: 28.500/3.600 = 7.9 COP/s × 75×60 s = 35.625 COP/clase → 2,3M COP/semestre. Ahorro DVE vs planta en solo magistral: ~1M COP/sem/docente."
 skos_notation: "CCR"
 
+concepto_formula_latex: |
+  \text{CCR} = \frac{\text{Costo total del recurso en el período}}{\text{Capacidad práctica del recurso (horas)}}
 
+concepto_formula_variables:
+  - var: "\\text{CCR}"
+    desc: "Capacity Cost Rate — costo por hora del recurso (COP/hora)"
+  - var: "\\text{Costo total}"
+    desc: "Suma de salarios + prestaciones + aportes + costos indirectos del recurso en el período (COP/año)"
+  - var: "\\text{Capacidad práctica}"
+    desc: "Horas disponibles descontando vacaciones, festivos, formación (horas/año)"
+  - var: "\\text{UDFJC planta}"
+    desc: "CCR ≈ 95.000.000 ÷ 1.760 ≈ 54.000 COP/hora ≈ 900 COP/min"
+  - var: "\\text{UDFJC DVE}"
+    desc: "CCR ≈ 28.500 COP/hora ≈ 475 COP/min (13.715 contratos 2020-2025)"
 
+concepto_prerequisitos:
+  - "[[con-ccr-capacity-cost-rate]]"
+  - "[[con-tdabc-lite-12-time-equations]]"
 
 iso_designation_type: term
 iso_definition_type: intensional
@@ -26,11 +44,43 @@ iso_standardized_by: "Kaplan, R. S., & Anderson, S. R. (2004). Time-driven activ
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: ADAPTED_FROM
+  neon_reuse_source: "Kaplan & Anderson (2004) TDABC + calibración UDFJC M09 2026"
+  neon_alignment_confidence: 0.92
+
+applicable_domain: "Costeo de actividades académicas UDFJC + calibración Time Equations + P4 del framework M08"
+assumptions:
+  - "Capacidad práctica planta = 1.760 h/año (descontando vacaciones+festivos+formación)"
+  - "CCR DVE calibrado con 13.715 contratos 2020-2025 — muestra representativa"
+  - "Costos totales planta ≈ 95M COP/año (promedio histórico base)"
+breaks_at:
+  - "Si hay cambios de legislación salarial significativos (recalibrar anualmente)"
+  - "Si la capacidad práctica real difiere por ≥15% del estimado (actualizar con SIGUD)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-eq-ccr-formaliza-concepto
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-ccr-capacity-cost-rate]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La ecuación CCR es la formalización matemática del concepto CCR definido en con-ccr-capacity-cost-rate."
+  - rel_id: rel-eq-ccr-alimenta-te
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-ecuacion-time-equation-tdabc]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CCR × t(X) = Costo_actividad. El CCR es el multiplicador del tiempo estimado por la Time Equation."
 
 cited_in: ["[[sec-MI12-09--ds-presupuesto-nicsp]]", "[[sec-MI12-10--tdabc]]"]
 cited_count: 2

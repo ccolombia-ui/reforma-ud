@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "10 Principios Generales UDFJC"
 
 skos_prefLabel: "10 Principios Generales (UDFJC)"
 skos_altLabel:
@@ -29,14 +31,75 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 5 literales a-j"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 declara los 10 principios constitutivos como criterios vinculantes para toda acción institucional · supersede los principios menos articulados del ACU 003/1997"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 5 (a-j)"
+  normative_text: "[10 principios: Defensa de lo Público + Autonomía + Libertades + Democracia + Equidad + Conocimiento Bien Común + Soberanía Cognitiva + Transparencia + Cuidado Ambiental + Excelencia]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: ["Principios declarados en Acuerdo CSU 003/1997 (versión previa con menos principios y sin Buen Vivir/Soberanía Cognitiva)"]
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-5-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-5-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
 
+applicable_domain: "Toda actuación institucional UDFJC desde 2025-05-06; criterio de validez para auditoría jurídico-administrativa de actos posteriores."
+assumptions:
+  - "Los principios son interpretables progresivamente (jurisprudencia institucional)"
+  - "La aparente tensión entre principios (ej. autonomía vs democracia) se resuelve por ponderación, no por jerarquía absoluta"
+breaks_at:
+  - "Si se reforma el Art. 5 vía nuevo Acuerdo CSU"
+  - "Si se demuestra contradicción interna entre dos principios sin posibilidad de ponderación"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-10ppios-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    bc_domain: derecho-universitario
+  - rel_id: rel-10ppios-contiene-buen-vivir
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-buen-vivir]]"
+    rel_frame: skos
+    bc_domain: filosofia-institucional
+    rel_propiedades:
+      ddd_evidence: "Buen Vivir es transversal pero está enraizado en Art. 5a"
+  - rel_id: rel-10ppios-contiene-soberania-cognitiva
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-soberania-cognitiva]]"
+    rel_frame: skos
+    bc_domain: epistemologia-institucional
+    rel_propiedades:
+      ddd_evidence: "Pluralidad y Diversidad de Saberes es el principio Art. 5g; coincide con Soberanía Cognitiva"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 3

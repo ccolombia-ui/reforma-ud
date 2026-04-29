@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:subsistema-talento-financiero-infraestructura
 kd_title: "Subsistema 2 · Talento Humano, Gestión Financiera e Infraestructura UDFJC (Art. 85 §2 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Subsistema 2 · Talento Humano + Financiera + Infraestructura UDFJC"
+tupla_descripcion: "Segundo de los 3 subsistemas del Sistema de Gestión Administrativa UDFJC · garantiza disposición de infraestructura física-tecnológica + recursos financieros + talento humano"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Subsistema 2 · Talento Humano, Gestión Financiera e Infraestructura"
 skos_altLabel:
@@ -29,15 +31,125 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 85 §2"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 85 §2"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 declara el Subsistema 2 como uno de los 3 subsistemas estructurales del SGA"
+    - adopter: "[[con-mipg-funcion-publica]]"
+      adopter_locator: "MIPG · Dimensión 1 (Talento Humano) + Dimensión 5 (Gestión Financiera)"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2015-05-26"
+      adoption_evidence: "Subsistema 2 materializa MIPG D1 + D5 en operación UDFJC"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 85 §2"
+  normative_text: "Subsistema 2: Talento Humano, Gestión Financiera e Infraestructura · Garantiza la disposición de infraestructura física y tecnológica, recursos financieros y talento humano para el óptimo desarrollo de las funciones universitarias."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "subsistema_talento_financiero_infraestructura"
+  ddd_term: "Subsistema 2 · Talento + Financiera + Infraestructura"
+  ddd_aggregate_root: "SubsistemaTalentoFinancieroInfraestructura"
+  ddd_article_ref: "Art. 85 §2"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gestion-administrativa-udfjc]]"
+  ddd_role_in_context: DOMAIN_SERVICE
+  ddd_aggregate_root_flag: false
+  ddd_domain_type: Supporting
+  ddd_invariants:
+    - "El Subsistema 2 debe ser ejecutado por una dependencia institucional explícita (GAF) · no puede operar sin gerencia"
+    - "Las 3 funciones canónicas son Talento Humano + Gestión Financiera + Infraestructura · ninguna puede ausentarse"
+    - "Los recursos provisionados por S2 deben respetar prioridades planificadas por S1"
+    - "Los actos de S2 deben respetar marco normativo público (NICSP, CCP, MIPG, Estatuto Tributario, Ley 80/Contratación)"
+    - "Las funciones misionales NO pueden ser suspendidas por fallas operacionales del S2 (invariante de continuidad)"
+  ddd_ubiquitous_terms:
+    - "Subsistema 2 · S2-SGA"
+    - "Talento humano docente y administrativo"
+    - "Gestión financiera pública"
+    - "Infraestructura física-tecnológica"
+    - "NICSP · CCP · MIPG · Ley 80"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-85-s2-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-85-s2-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-gerencia-administrativa-financiera]]"
+  - "[[con-mipg-funcion-publica]]"
 
+applicable_domain: "Toda función operacional UDFJC que requiera disposición de talento + recursos financieros + infraestructura"
+assumptions:
+  - "La integración de los 3 macroprocesos permite continuidad operativa institucional"
+breaks_at:
+  - "Si los 3 macroprocesos operan en silos sin coordinación interna del Subsistema"
+  - "Si las funciones misionales se suspenden por fallas de S2"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-s2-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Subsistema 2 declarado en Art. 85 §2"
+  - rel_id: rel-s2-ejecutado-gaf
+    rel_nombre: ddd_part_of
+    rel_direccion: post
+    rel_target: "[[con-gerencia-administrativa-financiera]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 86d · GAF es la instancia ejecutiva del Subsistema 2"
+  - rel_id: rel-s2-articula-mipg
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-mipg-funcion-publica]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Subsistema 2 materializa MIPG D1+D5 a nivel UDFJC"
+  - rel_id: rel-s2-aplica-nicsp
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-nicsp-marco-estado-resultados]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Función Financiera del S2 aplica NICSP obligatorias para sector público colombiano"
+  - rel_id: rel-s2-coordina-s1
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-subsistema-gestion-estrategica]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "S2 provisiona recursos planificados por S1 · upstream"
+  - rel_id: rel-s2-coordina-s3
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-subsistema-gestion-normativa-documental]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "S2 ejecuta actos · S3 da soporte jurídico-documental a esos actos"
 
 cited_in:
   - "[[sec-MI12-00--carta-constitucional-acu-004-25]]"
@@ -61,7 +173,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Subsistema 2 · Talento Humano, Gestión Financiera e Infraestructura
 
 > [!note]+ Subsistema funcional del SGA · ejecutado por GAF
 > Segundo de los 3 subsistemas del SGA. Garantiza la **disposición de infraestructura física-tecnológica + recursos financieros + talento humano** para el óptimo desarrollo de las funciones universitarias. Ejecutado por la **GAF** · materializa MIPG D1+D5 en operación UDFJC.
@@ -70,87 +182,41 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Segundo de los **tres subsistemas estructurales** del Sistema de Gestión Administrativa UDFJC declarado en el Art. 85 §2 del ACU-004-25. Su función canónica es **garantizar la disposición de infraestructura física y tecnológica, recursos financieros y talento humano para el óptimo desarrollo de las funciones universitarias**. Operacionalmente liderado por la Gerencia Administrativa y Financiera (Art. 86d). Articula tres macroprocesos críticos: (i) **Talento Humano** (selección, vinculación, desa
 
 | Sub-tipo | Pasteur | Effective force UDFJC |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) { dv.paragraph("(sin facet normative)"); }
-else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🧩 Estructura DDD · invariantes operativas
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_ddd;
-if (!f) { dv.paragraph("(sin facet DDD)"); }
-else {
-  dv.header(4, `DDD · ${f.ddd_id ?? "—"} · ${f.ddd_role_in_context ?? "—"}`);
-  dv.table(["Atributo", "Valor"], [
-    ["Bounded Context", f.ddd_bc_ref ?? "—"],
-    ["Domain type", f.ddd_domain_type ?? "—"]
-  ]);
-  if ((f.ddd_invariants ?? []).length) {
-    dv.header(5, "🔒 Invariantes operativas");
-    dv.list(f.ddd_invariants);
-  }
-  if ((f.ddd_ubiquitous_terms ?? []).length) {
-    dv.header(5, "🗣️ Lenguaje ubicuo");
-    dv.paragraph((f.ddd_ubiquitous_terms ?? []).join(" · "));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-for (const r of rels) {
-  dv.paragraph(`**${humanLabel(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Mode 1 / Mode 2 / Mode 3"
 
 skos_prefLabel: "Mode 1 / Mode 2 / Mode 3 — modos de producción del conocimiento"
 skos_altLabel: ["Modos producción conocimiento", "Mode 1-2-3", "Knowledge production modes"]
@@ -23,11 +25,48 @@ iso_standardized_by: "Gibbons et al. (1994) New Production of Knowledge + Nowotn
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Gibbons et al. (1994) + Nowotny et al. (2003) + Carayannis & Campbell (2006)"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Análisis epistémico de actividad universitaria + diseño curricular Mode 3 + articulación con Quintuple Helix"
+assumptions:
+  - "Los 3 modos coexisten en cualquier IES contemporánea"
+  - "Mode 3 es condición epistémica de ΩMT como propiedad emergente"
+breaks_at:
+  - "Si se interpretan como etapas evolutivas obligatorias (no lo son)"
+
+valid_from: "1994-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-mode3-fundamenta-omt
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-omt]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Mode 3 (Carayannis & Campbell 2006) fundamenta epistémicamente ΩMT: la innovación como propiedad emergente del ecosistema FREIE, no como cuarto proceso departamental."
+  - rel_id: rel-mode-precede-quintuple
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-quintuple-helix]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Mode 3 + Quintuple Helix son del mismo autor (Carayannis): Mode 3 es la dimensión epistémica, Quintuple Helix es la dimensión actor-ecosistémica."
+  - rel_id: rel-mode-frame3-converge
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-frame-3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Mode 3 (epistémico) y Frame 3 (política) convergen: ambos exigen direccionalidad transformativa en lugar de producción descontextualizada."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 1

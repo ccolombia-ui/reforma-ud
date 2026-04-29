@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Culture Lag · Desfase Estructural-Cultural"
 
 skos_prefLabel: "Culture Lag · fórmula del desfase estructural-cultural"
 skos_altLabel: ["Desfase Estructural-Cultural", "Culture Lag UDFJC", "N - G_equivalente"]
@@ -23,11 +25,49 @@ iso_standardized_by: "Madera Sepúlveda (2026) M05 §3.2 — elaboración propia
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M05 §3.2 (síntesis original) + Ogburn (1922) Cultural Lag (referente histórico)"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Diagnóstico transición UDFJC + planificación intervenciones culturales + monitoreo Comisión Art. 100"
+assumptions:
+  - "El nivel cultural G es observable cualitativamente"
+  - "El cambio normativo precede al cultural en reformas top-down"
+breaks_at:
+  - "Si se confunde con Ogburn 1922 directamente (es inversión)"
+  - "Si G no es observable o se asume = N (anula la métrica)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-clag-aplica-taxonomia
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-taxonomia-sub-n1-n4]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "culture_lag opera sobre la taxonomía Sub-N1 → N4: N es nivel decretado, G_equivalente es nivel observable, ambos en la misma escala."
+  - rel_id: rel-clag-justifica-salto
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-salto-cuantico-sub-n1-n4]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Un culture_lag ≥ 2 justifica el salto cuántico vía nichos (CABAs) en lugar de reforma lineal: cuanto mayor el lag, más necesaria la estrategia de nichos protegidos."
+  - rel_id: rel-clag-mide-rt6
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "culture_lag es métrica observable de RT6 (Resistencia al cambio no gestionada): cultura no migra al ritmo de la norma."
 
 cited_in: ["[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

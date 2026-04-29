@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Consejo Superior Universitario UDFJC"
 
 skos_prefLabel: "Consejo Superior Universitario (CSU)"
 skos_altLabel: ["CSU UDFJC", "Consejo Superior", "University Council UDFJC"]
@@ -26,16 +28,109 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-ley-30-1992-art-6]]"
+      adopter_locator: "Ley 30/1992 Arts. 64-65 (Consejos Superiores Universitarios)"
+      adopter_authority_level: LEGAL
+      adopted_at: "1992-12-28"
+      adoption_evidence: "Ley 30/1992 establece la figura del CSU como máxima autoridad de las IES públicas — base legal del CSU UDFJC"
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 22-29 (composición, funciones, sesiones)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 actualiza la composición y funciones del CSU dentro del marco Ley 30/1992"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 22-29 + Ley 30/1992 Arts. 64-65"
+  normative_text: "[Texto literal Arts. 22-29 ACU-004-25]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "csu"
+  ddd_aggregate_root: "ConsejoSuperiorUniversitario"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "Aggregate Root del bounded context Gobierno Académico — máxima autoridad. Encapsula identidad institucional (composición), agrega Sesiones como Entities, mantiene invariantes de quórum, mayorías y procedimiento de Acuerdos."
+  ddd_invariants:
+    - "El CSU debe sesionar con quórum reglamentario para que sus actos sean válidos"
+    - "Los Acuerdos CSU son numerados y fechados para trazabilidad"
+    - "El rector tiene voz pero NO voto en el CSU"
+    - "La presidencia natural es del alcalde(sa) de Bogotá D.C. o su delegado(a)"
+    - "Los Acuerdos del CSU son la fuente normativa interna de mayor jerarquía"
+  ddd_ubiquitous_terms:
+    - "CSU"
+    - "Acuerdo CSU"
+    - "Quórum"
+    - "Composición mixta"
+    - "Presidencia (alcalde/delegado)"
+    - "Acto administrativo institucional"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-arts-22-29-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-arts-22-29-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-ley-30-1992-art-6]]"
 
+applicable_domain: "Toda actuación institucional UDFJC que requiera fuente normativa interna de máxima jerarquía."
+assumptions:
+  - "La composición mixta funciona como balance entre autonomía universitaria y rectoría política pública"
+  - "Los actos del CSU respetan marco Const. + Ley 30 + jurisprudencia"
+breaks_at:
+  - "Si Ley 30 se reforma con composición distinta de Consejos Superiores"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-csu-fuente-acu00425
+    rel_nombre: norm_mandates
+    rel_direccion: post
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "El CSU expidió el ACU-004-25 mismo el 2025-05-05"
+  - rel_id: rel-csu-related-cacad
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-cacad-consejo-academico]]"
+    rel_frame: skos
+    bc_domain: gobernanza
+    rel_propiedades:
+      skos_evidence: "CSU = autoridad de dirección y gobierno; CACAD = máxima autoridad académica; complementarios sin jerarquía"
+  # — v1.1.0 cross-references M01 (Fase B audit refactor) ——————————
+  - rel_id: rel-csu-mandates-comision-art100
+    rel_nombre: norm_mandates
+    rel_direccion: post
+    rel_target: "[[con-comision-implementacion-art-100]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "CSU debe conformar Comisión de Implementación según Art. 100 ACU-004-25 (M01 §5.1 brecha verificada: PENDIENTE a 2026-04-26)"
+  - rel_id: rel-csu-mandates-plan-implementacion
+    rel_nombre: norm_mandates
+    rel_direccion: post
+    rel_target: "[[con-plan-implementacion]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "CSU debe aprobar Plan de Implementación dentro de 45 días según Art. 98 (M01 §4.7: VENCIDO 2025-06-19)"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 2

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Vicerrectoría de Contextos · Extensión y Proyección Social"
 
 skos_prefLabel: "Vicerrectoría de Contextos · Extensión y Proyección Social"
 skos_altLabel: ["VRC", "Vicerrectoría de Contextos", "Vice-Rectorate of Contexts and Outreach"]
@@ -23,15 +25,82 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 63"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 63 (VRC)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 reforma Vicerrectoría de Extensión 1997 incorporando 'Contextos' como componente central · invierte la jerarquía implícita extensión > contextos hacia diálogo simétrico"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 63"
+  normative_text: "[Texto literal Art. 63 · VRC coordina Centros · campo Contextos-Extensión-Proyección Social]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: ["Vicerrectoría de Extensión del Acuerdo 003/1997 (sin componente 'Contextos' explícito)"]
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "vicerrectoria_contextos"
+  ddd_aggregate_root: "VicerrectoriaContextosExtension"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "Aggregate Root subdominio PM3 Contextos-Extensión. Coordina Centros."
+  ddd_invariants:
+    - "Su titular es miembro del CACAD"
+    - "Coordina Centros (no los dirige operativamente)"
+    - "Privilegia diálogo simétrico con contextos territoriales"
+  ddd_ubiquitous_terms:
+    - "VRC"
+    - "Contextos · Extensión · Proyección Social"
+    - "Coordinación de Centros"
+    - "Diálogo universidad-territorio"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-63-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-63-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-rectoria]]"
+  - "[[con-funciones-misionales]]"
 
+applicable_domain: "UDFJC desde 2025-05-06; campo PM3"
+assumptions: ["El diálogo simétrico universidad-territorio es operacionalizable institucionalmente"]
+breaks_at: ["Si la VRC opera como transferencia unidireccional · incumple principio de Contextos"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-emprendedor-coop
 
 
+tupla__relations:
+  - rel_id: rel-vrc-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-vrc-coordina-centros
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-centro]]"
+    rel_frame: skos
+  - rel_id: rel-vrc-pm3
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-funciones-misionales]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1

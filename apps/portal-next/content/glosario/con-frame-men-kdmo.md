@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Frame MEN KDMO · arquitectura ingesta semántica"
 
 skos_prefLabel: "Frame MEN KDMO · arquitectura de ingesta semántica datasets MEN"
 skos_altLabel: ["frame-men", "Frame MEN KDMO", "Arquitectura ingesta MEN"]
@@ -23,11 +25,47 @@ iso_standardized_by: "Madera Sepúlveda (2026) M11 §4 — diseño propio sobre 
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M11 + patrón frame-nicsp vault-builder UDFJC"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Ingesta semántica datasets MEN al corpus UDFJC + queries cross-dataset trazables"
+assumptions:
+  - "El patrón KDMO frame+profile+entidades es transferible a SNIES/OLE/SPADIES"
+breaks_at:
+  - "Si los datasets MEN cambian su estructura sin actualizar el frame"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-frame-men-integra-snies
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-snies-dataset-men]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "frame-men incluye profile-snies como uno de los 3 perfiles que ingestan datasets MEN."
+  - rel_id: rel-frame-men-integra-ole
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-ole-observatorio-laboral]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "frame-men incluye profile-ole para ingesta del Observatorio Laboral."
+  - rel_id: rel-frame-men-integra-spadies
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-spadies-snies-dataset-men]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "frame-men incluye profile-spadies para ingesta de SPADIES."
 
 cited_in: ["[[sec-MI12-11--datasets-men]]"]
 cited_count: 1

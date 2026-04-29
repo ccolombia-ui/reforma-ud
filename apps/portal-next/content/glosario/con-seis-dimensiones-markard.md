@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "6 Dimensiones de Gestión de Transiciones (Markard et al. 2012)"
 
 skos_prefLabel: "Seis Dimensiones de Gestión de Transiciones Sociotécnicas (Markard et al. 2012)"
 skos_altLabel: ["6 dimensiones Markard", "Markard transitions framework", "Sustainability transitions agenda"]
@@ -23,11 +25,41 @@ iso_standardized_by: "Markard, J., Raven, R., & Truffer, B. (2012). Sustainabili
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Markard, Raven & Truffer (2012) + Köhler et al. (2019)"
+  neon_alignment_confidence: 0.9
+
+applicable_domain: "Gestión de la reforma UDFJC + monitoreo Comisión Art. 100 + planificación estratégica"
+assumptions:
+  - "Las 6 dimensiones son exhaustivas para gestión de transiciones complejas"
+  - "La interdependencia exige gestión simultánea (no secuencial)"
+breaks_at:
+  - "Si se aplica como receta secuencial en lugar de checklist simultánea"
+
+valid_from: "2012-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-markard-extiende-mlp
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-mlp-geels]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Markard et al. 2012 extiende la MLP de Geels hacia el plano de gestión: si MLP explica la mecánica de transición, las 6 dimensiones explican QUÉ gestionar."
+  - rel_id: rel-markard-comision-art100
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-comision-implementacion-art-100]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las 6 dimensiones son la checklist de gestión que la Comisión Art. 100 debe monitorear continuamente para que la reforma UDFJC no pierda alguna dimensión."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 1

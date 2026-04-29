@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Triple Helix (Etzkowitz & Leydesdorff 1995)"
 
 skos_prefLabel: "Triple Helix — Universidad-Industria-Gobierno (Etzkowitz & Leydesdorff 1995)"
 skos_altLabel: ["Triple Helix Model", "Modelo de la Triple Hélice", "U-I-G Model"]
@@ -25,11 +27,33 @@ align_dbpedia: "http://dbpedia.org/resource/Triple_helix_model_of_innovation"
 align_wikidata: "https://www.wikidata.org/wiki/Q3526378"
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Etzkowitz & Leydesdorff (1995) Triple Helix"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Análisis genealógico de modelos de innovación + diagnóstico Frame 2 + contraste con Quintuple Helix"
+assumptions:
+  - "Las 3 esferas son institucionalmente distinguibles"
+breaks_at:
+  - "Si se aplica como modelo suficiente para Frame 3 (omite sociedad civil + ambiente)"
+
+valid_from: "1995-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-triple-precede-quintuple
+    rel_nombre: skos_broader
+    rel_direccion: post
+    rel_target: "[[con-quintuple-helix]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Triple Helix (1995) es ancestro conceptual de Quadruple Helix (2009) y Quintuple Helix (2012). El Quintuple Helix es la extensión vigente que CONPES 4069 adopta."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 1

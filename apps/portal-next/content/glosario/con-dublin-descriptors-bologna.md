@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Dublin Descriptors (Bologna Process EHEA)"
 
 skos_prefLabel: "Dublin Descriptors (Bologna Process EHEA, 2004)"
 skos_altLabel: ["Dublin Descriptors", "Descriptores de Dublín", "EHEA descriptors", "Bologna descriptors"]
@@ -23,11 +25,39 @@ iso_standardized_by: "Joint Quality Initiative (2004). *Shared 'Dublin' descript
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Joint Quality Initiative (2004) Dublin Descriptors"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño curricular UDFJC + descripción de programas + articulación con TUNING-AL"
+assumptions:
+  - "Los descriptores genéricos son aplicables transversalmente a disciplinas"
+breaks_at: []
+
+valid_from: "2004-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-dublin-fundamenta-cca
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-cca]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Dublin Descriptors fundamentan los V1∧V2∧V3 del modelo CCA: V1 Comprensiva mapea a categorías (i)+(ii); V2 Experimental a (iii)+(v); V3 Transformativa a (iv)+aplicación."
+  - rel_id: rel-dublin-articula-tuning
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-tuning-america-latina]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Dublin Descriptors (genéricos EHEA) y TUNING-AL (específicos LatAm) son complementarios: Dublin provee marco genérico, TUNING aterrizaje disciplinar."
 
 cited_in: ["[[sec-MI12-06--bmk-creditos-cca]]"]
 cited_count: 1

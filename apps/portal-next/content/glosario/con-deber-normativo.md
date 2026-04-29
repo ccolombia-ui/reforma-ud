@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Deber Normativo"
 
 skos_prefLabel: "Deber Normativo (vs opción)"
 skos_altLabel: ["Mandato vinculante", "Obligación legal IES", "Compulsión normativa"]
@@ -23,13 +25,35 @@ iso_standardized_by: "Madera Sepúlveda (2026) — elaboración propia M01 §0, 
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
 
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Síntesis de [[con-cadena-normativa-multinivel]] + tradición jurídica deber/aspiración + ACU-004-25"
+  neon_alignment_confidence: 0.85
 
+concepto_prerequisitos:
+  - "[[con-cadena-normativa-multinivel]]"
+  - "[[con-ley-30-1992-art-6]]"
 
+applicable_domain: "Análisis crítico de cumplimiento institucional UDFJC + argumentación jurídica reforma"
+assumptions: ["La cadena normativa multinivel produce deberes vinculantes verificables"]
+breaks_at: ["Si la cadena se rompe (ej. reforma Ley 30)"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-director
+concepto_anchor_chain_status: LINEAR
 
 
+tupla__relations:
+  - rel_id: rel-deber-related-cadena
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-cadena-normativa-multinivel]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

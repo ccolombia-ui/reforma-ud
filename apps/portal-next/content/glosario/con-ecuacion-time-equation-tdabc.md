@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Time Equation TDABC — Forma canónica"
 
 skos_prefLabel: "Time Equation TDABC (M10)"
 skos_altLabel: ["TE TDABC", "time equation canónica", "t = t0 + Σβi·Xi"]
@@ -13,8 +15,26 @@ skos_scopeNote: "La forma lineal de la Time Equation es una simplificación eleg
 skos_example: "TE-D-02 (Clase magistral): t = 60 + 0.5 × num_estudiantes. Para grupo de 30: t = 60 + 0.5×30 = 75 min. Interpretación: 60 min de clase más 0.5 min por estudiante (atención, preguntas, adaptación). Costo = CCR_DVE × 75 min = (28.500/60) × 75 = 35.625 COP/clase. TE-D-04 (Tutoría): t = 20 × num_estudiantes → 20 min/estudiante = 100% driver, sin base fija (β₀=0)."
 skos_notation: "TE: t = t₀ + Σβᵢ·Xᵢ"
 
+concepto_formula_latex: |
+  t(X) = t_0 + \sum_{i=1}^{n} \beta_i \cdot X_i
 
+concepto_formula_variables:
+  - var: "t(X)"
+    desc: "Tiempo total demandado por la actividad (minutos)"
+  - var: "t_0"
+    desc: "Tiempo base fijo (overhead, setup — independiente de los drivers)"
+  - var: "\\beta_i"
+    desc: "Coeficiente de tiempo del driver i (minutos por unidad del driver Xᵢ)"
+  - var: "X_i"
+    desc: "Valor observado del driver i (ej: num_estudiantes, num_visitas, min_tutoria)"
+  - var: "n"
+    desc: "Número de drivers activos en la Time Equation"
+  - var: "\\text{Costo} = \\text{CCR} \\times t(X)"
+    desc: "Encadenamiento: el tiempo se multiplica por CCR para obtener costo en COP"
 
+concepto_prerequisitos:
+  - "[[con-ecuacion-ccr-tdabc]]"
+  - "[[con-tdabc-lite-12-time-equations]]"
 
 iso_designation_type: term
 iso_definition_type: intensional
@@ -26,11 +46,43 @@ iso_standardized_by: "Kaplan, R. S., & Anderson, S. R. (2004). Time-driven activ
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: ADAPTED_FROM
+  neon_reuse_source: "Kaplan & Anderson (2004) + adaptación UDFJC Lite M10"
+  neon_alignment_confidence: 0.90
+
+applicable_domain: "Estimación de tiempo por actividad académica + cálculo de costo TDABC UDFJC"
+assumptions:
+  - "La relación tiempo-driver es lineal (supuesto simplificador de TDABC)"
+  - "Los β_i se calibran desde SIGUD + DARUMA; precisión ±15-20% en variante Lite"
+  - "t_0 ≥ 0 (puede ser 0 si toda la demanda es proporcional al driver)"
+breaks_at:
+  - "Si los drivers cambian de naturaleza (ej: estudiantes online vs presenciales tienen β distintos)"
+  - "Si se requiere precisión ±5% (usar TDABC Completo con BPMN+BIM-7D)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-te-usa-ccr
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-ecuacion-ccr-tdabc]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Costo_actividad = CCR × t(X). La Time Equation produce el tiempo; el CCR lo convierte a costo COP."
+  - rel_id: rel-te-parte-tdabc
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-tdabc-lite-12-time-equations]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Cada una de las 12 Time Equations del TDABC Lite UDFJC es una instancia de esta forma canónica."
 
 cited_in: ["[[sec-MI12-10--tdabc]]"]
 cited_count: 1

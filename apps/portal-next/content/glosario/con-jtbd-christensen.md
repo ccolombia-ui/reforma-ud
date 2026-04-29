@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "JTBD — Jobs To Be Done"
 
 skos_prefLabel: "JTBD — Jobs To Be Done"
 skos_altLabel: ["Jobs Theory", "Trabajos por hacer", "Christensen JTBD"]
@@ -26,11 +28,66 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[christensen2016jobs]] + literatura JTBD contemporánea"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño curricular + análisis de roles institucionales + extensión territorial"
+assumptions: ["Los actores tienen jobs identificables y verbalizables"]
+breaks_at: ["Si se aplica como segmentación demográfica tradicional"]
+
+valid_from: "1997-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-jtbd-extends-odi
+    rel_nombre: skos_broader
+    rel_direccion: post
+    rel_target: "[[con-odi-ulwick]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "JTBD (Christensen) es el marco general; ODI (Ulwick) es la metodología operativa que cuantifica los outcomes que cada job desea optimizar. JTBD broader → ODI narrower."
+  - rel_id: rel-jtbd-mapea-comunidad
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-comunidad-universitaria]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "JTBD aplicado al M04: mapea los jobs (funcional + emocional + social) que cada estamento de la Comunidad Universitaria 'contrata' a la UDFJC. Provee la lente metodológica para análisis JTBD de los 4 estamentos."
+  - rel_id: rel-jtbd-mapea-funciones
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-funciones-misionales]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "JTBD reconceptualiza las funciones misionales PM1-PM2-PM3 desde la perspectiva del actor: ¿qué job contrata el estudiante en PM1? ¿el sector productivo en PM3? ¿la comunidad científica en PM2?"
+  - rel_id: rel-jtbd-discovery-crisp
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-crisp-dm]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "JTBD provee el método de descubrimiento en la fase 1 Business Understanding de CRISP-DM aplicado al cap-MI12."
+  - rel_id: rel-jtbd-canonico-roles-m04
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-seis-roles-jtbd-comunidad-udfjc]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los 6 roles JTBD UDFJC (M04 §3) son la aplicación canónica del marco JTBD-Christensen al contexto institucional: cada rol tiene jobs functional + emotional + social específicos."
+  - rel_id: rel-jtbd-articula-quintuple
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-quintuple-helix]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "JTBD complementa Quintuple Helix: la helix identifica QUIÉNES son los actores (universidad + industria + gobierno + sociedad civil + ambiente); JTBD identifica QUÉ trabajos contrata cada uno a la universidad."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 2

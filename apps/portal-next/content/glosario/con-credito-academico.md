@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: EQUATION
+tupla_concepto: "Crédito Académico (Colombia)"
 
 skos_prefLabel: "Crédito Académico"
 skos_altLabel: ["Crédito SNIES", "Unidad de trabajo académico", "Academic credit (Colombia)"]
@@ -26,15 +28,88 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - EQUATION
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-decreto-1330-2019-men]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-decreto-1330-2019]]"
+      adopter_locator: "Decreto MEN 1330/2019 Art. 11 (definición) + Art. 12 (composición horas)"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2019-07-25"
+      adoption_evidence: "Decreto 1330/2019 establece la fórmula vinculante h_total = 48 × n_cr para todas las IES colombianas"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: REGLAMENTARIO
+  normative_source: "[[cita-decreto-1330-2019-men]]"
+  normative_locator: "Decreto MEN 1330/2019 Arts. 11-12"
+  normative_text: "[Texto literal Art. 11 definición + Art. 12 composición horas]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates:
+    - "Decreto MEN 1295/2010 Art. 11 (definición previa con rango sin fórmula vinculante)"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_equation:
+  eq_latex_canonical: "h_{total} = 48 \\cdot n_{cr} \\quad ; \\quad h_{total} = h_{doc} + h_{ind}"
+  eq_dimensions_si: "[h] = h (hora-reloj 60 min); [n_cr] = adimensional"
+  eq_qudt_quantity_kind: "http://qudt.org/vocab/quantitykind/Time"
+  eq_ucum_unit: "h"
+  eq_variables:
+    - "h_total — horas totales de trabajo académico por período"
+    - "n_cr — número de créditos académicos del curso/programa"
+    - "h_doc — horas de acompañamiento docente directo"
+    - "h_ind — horas de trabajo independiente del estudiante"
 
+concepto_definitional_anchors:
+  - "[[def-norm-decreto-1330-2019-art-11-2019-07-25]]"
+concepto_current_anchor: "[[def-norm-decreto-1330-2019-art-11-2019-07-25]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-decreto-1330-2019]]"
+  - "[[con-programa-academico]]"
 
+applicable_domain: "Programas Académicos IES colombianas registradas en SNIES, vigentes desde 2019-07-25"
+assumptions:
+  - "Período académico de 16 semanas efectivas (estándar UDFJC y mayoría IES)"
+  - "Hora-reloj 60 min (Decreto define hora-reloj, no 50-min)"
+  - "Modalidad presencial: ratio típico 1:2 (1 hora docente : 2 horas independiente)"
+breaks_at:
+  - "Si MEN reforma con definición distinta de crédito"
+  - "Programas internacionales con créditos ECTS requieren conversión 1 cr SNIES ≈ 1.6-1.8 ECTS"
+  - "SENA niveles 1-2 NO se mide en créditos académicos sino en competencias laborales"
 
+valid_from: "2019-07-25"
+valid_to: ""
 rol_seleccionado: docente-disenador
 
 
+tupla__relations:
+  - rel_id: rel-credito-defined-by-decreto1330
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[decreto1330_2019]]"
+    rel_frame: normativo
+  - rel_id: rel-credito-mide-programa
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-programa-academico]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Programas Académicos miden su tamaño en créditos académicos"
+  - rel_id: rel-credito-base-cca
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-cca]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CCA son Paquetes que se miden en créditos académicos (M06 BMK-002)"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-07--21-bpa-especificadas]]", "[[sec-MI12-10--tdabc]]", "[[sec-MI12-11--datasets-men]]"]
 cited_count: 5

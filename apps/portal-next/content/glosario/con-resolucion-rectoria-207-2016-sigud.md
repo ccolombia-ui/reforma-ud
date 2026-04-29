@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:resolucion-rectoria-207-2016-sigud
 kd_title: "Resolución de Rectoría 207 de 2016 — SIGUD (Sistema Integrado de Gestión UDFJC)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Resolución Rectoría 207/2016 — SIGUD"
+tupla_descripcion: "Resolución que adopta y conforma el SIGUD (Sistema Integrado de Gestión UDFJC) — acto institucional que vuelve vinculantes ISO 9001 y otros estándares de gestión de calidad para UDFJC"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Resolución de Rectoría 207 de 2016 · SIGUD"
 skos_altLabel:
@@ -29,15 +31,102 @@ iso_standardized_by: "Rectoría Universidad Distrital Francisco José de Caldas 
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-resolucion-rectoria-207-2016-udfjc]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-iso-9001]]"
+      adopter_locator: "ISO 9001:2015 · principios y estructura Annex SL"
+      adopter_authority_level: DOCTRINAL
+      adopted_at: "2016-04-29"
+      adoption_evidence: "SIGUD adopta principios ISO 9001 (gestión por procesos, mejora continua, satisfacción cliente/aprendiz) sin necesariamente buscar certificación externa"
+    - adopter: "[[con-iso-21001]]"
+      adopter_locator: "ISO 21001:2018 · cláusulas 4-10 EOMS"
+      adopter_authority_level: DOCTRINAL
+      adopted_at: "2018-05-01"
+      adoption_evidence: "Tras publicación ISO 21001:2018, SIGUD opera implícitamente bajo el marco EOMS (lenguaje sector educativo + partes interesadas ampliadas)"
+    - adopter: "[[con-mipg-funcion-publica]]"
+      adopter_locator: "Decreto 1083/2015 modificado por Ley 1753/2015 Art. 133 · MIPG"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2015-05-26"
+      adoption_evidence: "SIGUD se articula con el Modelo Integrado de Planeación y Gestión (MIPG) que es vinculante para entidades públicas colombianas — UDFJC como ente universitario autónomo"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: INSTITUCIONAL
 
+  normative_source: "[[cita-resolucion-rectoria-207-2016-udfjc]]"
+  normative_locator: "Resolución 207 de 2016 · niveles Directivo/Técnico/Operativo/Evaluador"
+  normative_text: "[Texto literal · ver atomics en 0-normatividad/2--normas-institucionales/resolucion-rectoria-207-2016/]"
+  normative_authority_level: INSTITUCIONAL
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-resolucion-rectoria-207-2016-2016-04-29]]"
+concepto_current_anchor: "[[def-norm-resolucion-rectoria-207-2016-2016-04-29]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-iso-9001]]"
+  - "[[con-iso-21001]]"
 
+applicable_domain: "Toda la operación institucional UDFJC desde 2016; aplicable a los 4 macroprocesos y 22 procesos del Modelo Operativo"
+assumptions:
+  - "Los principios ISO son operacionalizables sin certificación externa"
+  - "MIPG es el marco articulador con la institucionalidad pública nacional"
+breaks_at:
+  - "Si nueva resolución rectoral derogara o modificara SIGUD"
+  - "Si reforma estatutaria (ACU-004-25) demanda re-arquitectar SIGUD"
 
+valid_from: "2016-04-29"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-res207-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    bc_domain: gobernanza-udfjc
+    rel_propiedades:
+      norm_evidence: "SIGUD opera bajo el marco estatutario UDFJC; tras ACU-004-25 (2025) deberá ajustarse a la nueva arquitectura misional (3 vicerrectorías + CABAs)"
+  - rel_id: rel-res207-adopts-iso9001
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-iso-9001]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "SIGUD adopta principios ISO 9001 (gestión por procesos · mejora continua) como marco operativo interno"
+  - rel_id: rel-res207-adopts-iso21001
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-iso-21001]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "SIGUD adopta principios ISO 21001 (EOMS) tras 2018 · partes interesadas ampliadas + lenguaje sector educativo"
+  - rel_id: rel-res207-articula-mipg
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-mipg-funcion-publica]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "SIGUD se articula con MIPG nacional (Decreto 1083/2015) como entidad pública"
+  - rel_id: rel-res207-articula-acu-009
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-acuerdo-csu-009-2018-ped]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "SIGUD opera bajo el horizonte estratégico del PED 2018-2030 (Acuerdo CSU 009/2018)"
 
 cited_in:
   - "[[sec-MI12-03--estandares-internacionales]]"
@@ -57,7 +146,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Resolución de Rectoría 207 de 2016 · SIGUD
 
 > [!quote]+ 🏛️ Acto institucional · adopción ISO en UDFJC
 > Resolución de Rectoría 207 de 2016 que **adopta y conforma SIGUD** (Sistema Integrado de Gestión UDFJC). Es el acto institucional que vuelve vinculantes los principios de **ISO 9001 + ISO 21001** a nivel interno UDFJC, articulado con MIPG nacional. Sin este acto, ISO sería solo referente voluntario externo.
@@ -66,121 +155,47 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Resolución expedida por la Rectoría de la Universidad Distrital Francisco José de Caldas el **29 de abril de 2016**, mediante la cual se **ajusta y conforma el Sistema Integrado de Gestión de la Universidad Distrital Francisco José de Caldas (SIGUD)** y se establecen las funciones para los equipos del SIGUD a niveles Directivo, Técnico, Operativo y Evaluador. SIGUD se define como el conjunto de políticas, normas, procesos, recursos, información e instancias cuyo objetivo es garantizar un desempe
 
 | Sub-tipo | Pasteur | Authority level |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.normative_authority_level]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) {
-  dv.paragraph("(sin facet normative)");
-} else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", f.effective_force_in_udfjc ?? "—"],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante (lo que SIGUD adopta)", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🔻 Pre-requisitos cognitivos
 
-```dataviewjs
-const prereq = dv.current().concepto_prerequisitos ?? [];
-if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");
-else dv.list(prereq);
-```
+
+<div class="dv-block" data-dv="prereqs"></div>
+
 
 ## §4 · 🔺 Conceptos que declaran este como pre-requisito
 
-```dataviewjs
-const me = dv.current();
-const here = me.file.name;
-const folder = me.file.folder;
-const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
 
-const matchHere = (target) => {
-  if (!target) return false;
-  if (typeof target === "object" && target.path !== undefined) {
-    return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
-  }
-  const s = String(target);
-  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
-  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
-  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
-};
-const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
-dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito directo`);
-if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");
-else dv.list(habilitados.map(p => p.file.link));
-```
+<div class="dv-block" data-dv="habilita"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
 
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
+<div class="dv-block" data-dv="relations"></div>
 
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
-  const byRel = {};
-  for (const r of rs) {
-    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
-    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
-    byRel[key].items.push(r);
-  }
-  for (const grp of Object.values(byRel)) {
-    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
-    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
-    dv.table(["→ Target", "Evidencia"],
-      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));
-  }
-}
-```
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

@@ -91,8 +91,39 @@ function validateFile(path) {
   // Heurística adicional: detectar líneas con 2 espacios + letra al inicio
   // sin parent key inmediatamente arriba (suelen ser bugs de indentación).
   const lines = fm.split(/\r?\n/);
+  let inMultilineString = false; // tracking unclosed single-quoted YAML scalars
+  let inBlockScalar = false;    // tracking block scalars (| or >)
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+
+    // Track block scalars (| or >) — all indented lines are valid continuations
+    if (inBlockScalar) {
+      if (line.trim() === '' || /^\s/.test(line)) continue; // continuation
+      inBlockScalar = false; // back to top level
+    }
+
+    // Track multi-line single-quoted strings (valid YAML, look like orphans)
+    if (inMultilineString) {
+      const quoteCount = (line.replace(/''/g, '').match(/'/g) ?? []).length;
+      if (quoteCount % 2 === 1) inMultilineString = false;
+      continue; // continuation line — not an orphan
+    }
+
+    // Check if this line opens a block scalar (key: | or key: >)
+    if (/^[A-Za-z_][\w-]*\s*:\s*[|>][+-]?\s*$/.test(line.trim())) {
+      inBlockScalar = true;
+    }
+
+    // Check if this line opens a multi-line single-quoted value
+    const colonIdx = line.indexOf(':');
+    if (colonIdx > 0) {
+      const val = line.slice(colonIdx + 1).trim();
+      if (val.startsWith("'")) {
+        const quoteCount = (val.replace(/''/g, '').match(/'/g) ?? []).length;
+        if (quoteCount % 2 === 1) inMultilineString = true;
+      }
+    }
+
     if (/^  [a-zA-Z@"]/.test(line)) {
       // Look-back: la línea anterior no-vacía debe terminar en `:` (parent)
       let prev = '';

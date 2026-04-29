@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Salto Cuántico Sub-N1 → N4 vía Nichos Protegidos"
 
 skos_prefLabel: "Salto Cuántico Sub-N1 → N4 (transición no-lineal vía nichos)"
 skos_altLabel: ["Salto cuántico universitario", "Reconfiguración vía nichos", "Sub-N1 to N4 leap", "Quantum leap institucional"]
@@ -23,13 +25,84 @@ iso_standardized_by: "Madera Sepúlveda (2026) M02 §4.4.2 — derivación propi
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+  - DDD
+
+concepto_facet_ddd:
+  ddd_id: "salto_cuantico_sub_n1_n4"
+  ddd_aggregate_root: "TransicionInstitucionalUDFJC"
+  ddd_bc_ref: "[[bc-arquitectura-misional-udfjc]]"
+  ddd_role_in_context: "Domain Service que orquesta la transición Sub-N1 → N4. Coordina los Aggregates CABA (nichos), Régimen (universidad-departamento) y Paisaje (ACU-004-25). Implementa el patrón Reconfiguración (Geels & Schot 2007)."
+  ddd_invariants:
+    - "El salto exige diagnóstico Sub-N1 honesto previo (no aplicar N4 sin diagnóstico)"
+    - "Las CABAs deben tener mecanismos formales de protección (autonomía + presupuesto + créditos)"
+    - "La irradiación es GRADUAL (Reconfiguración), no big bang (Sustitución)"
+    - "El régimen sub-N1 dominante coexiste durante la transición"
+  ddd_ubiquitous_terms:
+    - "Salto cuántico"
+    - "Diagnóstico Sub-N1 honesto"
+    - "Nicho protegido"
+    - "Reconfiguración Geels-Schot"
+    - "Coexistencia régimen-nicho"
+    - "Irradiación gradual"
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M02 §4.4.2 — derivación sobre Geels & Schot 2007 (Reconfiguración) + Clark 1998 (5 vías simultáneas)"
+  neon_alignment_confidence: 0.8
+
+applicable_domain: "Reforma UDFJC 2025-2034 + cualquier IES en condición Sub-N1 que planifique transición sistémica"
+assumptions:
+  - "Las IES en condición Sub-N1 NO pueden reformarse linealmente en plazos razonables"
+  - "Los nichos protegidos pueden saltar directamente a N4 en su dominio específico"
+  - "El régimen sub-N1 puede coexistir con nichos N4 sin colapsar (período de transición)"
+breaks_at:
+  - "Si los nichos no tienen protección formal (son absorbidos por régimen)"
+  - "Si se aplica como big bang/Sustitución (genera resistencia paralizante RT6)"
+  - "Si se omite el diagnóstico Sub-N1 honesto previo"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
-"@context":
-
+tupla__relations:
+  - rel_id: rel-salto-aplica-taxonomia
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-taxonomia-sub-n1-n4]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El salto cuántico opera sobre la taxonomía Sub-N1 → N4 desarrollada en M05 BMK-001. Sin la taxonomía, no hay diagnóstico honesto del estadio actual."
+  - rel_id: rel-salto-derivado-mlp
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-mlp-geels]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El salto cuántico es la aplicación específica del patrón Reconfiguración (P3 de Geels & Schot 2007) al contexto UDFJC: nichos protegidos (CABAs) reconfiguran el régimen sin colapso."
+  - rel_id: rel-salto-vehiculo-caba
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las CABAs (Art. 73 ACU-004-25) son el vehículo institucional del salto cuántico — los nichos protegidos que saltan directamente a N4 en su dominio."
+  - rel_id: rel-salto-protegido-acu
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      skos_evidence: "El ACU-004-25 provee la perturbación de paisaje + el marco legal de protección que las CABAs requieren para saltar Sub-N1 → N4 sin ser absorbidas por el régimen."
+  - rel_id: rel-salto-mitiga-rt
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El salto cuántico es la estrategia que mitiga RT1 (fragmentación) y RT6 (resistencia al cambio) — al activar nichos puntuales en lugar de big bang, reduce resistencia paralizante."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 3

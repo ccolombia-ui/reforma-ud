@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Estructura Administrativa de Soporte UDFJC"
 
 skos_prefLabel: "Estructura Administrativa de Soporte"
 skos_altLabel: ["Estructura administrativa UDFJC", "Administrative Support Structure"]
@@ -23,11 +25,31 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 84-87 (marco general); pen
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities: [NORMATIVE]
+
+concepto_facet_normative:
+  norm_legal_ref: "[[con-acu-004-25]]"
+  norm_article: "Arts. 84-87 (marco general); pendiente Estatuto Personal Administrativo Art. 98 §6"
+  norm_jurisdiction: "Acuerdo Superior UDFJC"
+  norm_effective_date: "2025-05-06"
+  norm_legal_force: BINDING
+  norm_compliance_scope: "Toda dependencia administrativa UDFJC en transición"
+  norm_supersedes: "Vicerrectoría Administrativa y Financiera del Acuerdo 003/1997"
+
+applicable_domain: "UDFJC desde 2025-05-06"
+assumptions: ["El Estatuto de Personal Administrativo Art. 98 §6 se expedirá en plazo legal 2027-05-05"]
+breaks_at: ["Si las funciones administrativas se duplican o quedan vacantes durante la transición"]
+
+valid_from: "2025-05-06"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-eas-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1

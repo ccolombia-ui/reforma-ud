@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "ABET — Accreditation Board for Engineering and Technology"
 
 skos_prefLabel: "ABET — Accreditation Board for Engineering and Technology (EAC/CAC/ETAC/ANSAC)"
 skos_altLabel: ["ABET", "ABET Accreditation", "ABET EAC", "ABET CAC", "Acreditación ABET"]
@@ -25,11 +27,47 @@ align_dbpedia: "http://dbpedia.org/resource/ABET"
 align_wikidata: "https://www.wikidata.org/wiki/Q4663906"
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "ABET (2024) Accreditation Criteria"
+  neon_alignment_confidence: 0.97
+
+applicable_domain: "Acreditación programática UDFJC programas Ingeniería + Computación + análisis de gaps de calidad"
+assumptions:
+  - "La acreditación voluntaria internacional aporta valor más allá del registro calificado MEN"
+breaks_at:
+  - "Si se confunde con acreditación institucional (CNA) o registro calificado (MEN)"
+
+valid_from: "2024-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-abet-articula-decreto-1330
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-decreto-1330-2019]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ABET (acreditación voluntaria internacional) y Decreto 1330/2019 (registro calificado MEN obligatorio) son capas complementarias del sistema de calidad — no sustitutos."
+  - rel_id: rel-abet-articula-cdio
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-cdio-syllabus]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CDIO Syllabus opera como framework de implementación de student outcomes ABET — programas que adoptan CDIO típicamente facilitan acreditación ABET posterior."
+  - rel_id: rel-abet-pasteur
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-cuadrante-pasteur-stokes]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ABET adopta Cuadrante Pasteur como eje de calidad investigativa: criterio 2 student outcomes incluye 'capacidad de investigación uso-inspirada'."
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

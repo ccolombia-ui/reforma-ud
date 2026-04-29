@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Espiral SECI y Ba (Nonaka & Takeuchi 1995)"
 
 skos_prefLabel: "Espiral SECI y *Ba* (Nonaka & Takeuchi 1995)"
 skos_altLabel: ["SECI Model", "Espiral del conocimiento", "Knowledge Creating Company", "Nonaka SECI"]
@@ -25,11 +27,42 @@ align_dbpedia: ""
 align_wikidata: "https://www.wikidata.org/wiki/Q1989930"
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Nonaka & Takeuchi (1995) The Knowledge-Creating Company"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño de CABAs como Ba institucional + diagnóstico de bloqueos en R1-R6 + gestión de conocimiento universitario"
+assumptions:
+  - "El conocimiento tácito y explícito coexisten como dimensiones independientes"
+  - "La espiral SECI requiere contextos compartidos (Ba) operativos"
+breaks_at:
+  - "Si se aplica como modelo lineal en lugar de espiral"
+  - "Si se aísla la innovación rompiendo la Internalización"
+
+valid_from: "1995-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-seci-caba-ba
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las CABAs (Art. 73 ACU-004-25) operan como *Ba* institucional — contextos compartidos donde la espiral SECI se mantiene viva al integrar PM1-PM2-PM3."
+  - rel_id: rel-seci-r1r6
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Cada R1-R6 corresponde a una conversión SECI: R2 (currículo vivo) = Internalización; R1 (semilleros) = Socialización; R3 (transferencia) = Externalización; R4 (problemas reales) = Combinación."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 1

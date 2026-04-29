@@ -1,30 +1,33 @@
 /**
  * glosario-transform.mjs · pure functions para limpiar markdown del vault
+ * v2.0.0 · 2026-04-28 · CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda
+ *
+ * v2.0 — DataviewJS portability (v8 S5):
+ *   cleanBody() reemplaza ```dataviewjs blocks con sentinels HTML <div data-dv="...">
+ *   en lugar de eliminarlos. MetaBind readonly → valor estático del frontmatter.
  *
  * Funciones idempotentes sin side effects — testeables en aislamiento.
- * Importadas por:
- *   - scripts/sync-glosario.mjs       (sync local Node)
- *   - cloud-functions/sync-glosario-gas/sync-glosario.gs  (port manual a Apps Script)
- *
- * Si modificas estas funciones, asegúrate de actualizar la versión .gs también.
  * Tests: src/lib/glosario-transform.test.ts (vitest)
  */
 
 // ── Frontmatter parsing ───────────────────────────────────────────────────
 
 export function splitFrontmatter(raw) {
-  if (!raw.startsWith('---')) return { frontmatterBlock: '', body: raw };
-  const end = raw.indexOf('\n---', 4);
+  // Normalize CRLF → LF for consistent parsing (vault files on Windows)
+  const normalized = raw.replace(/\r\n/g, '\n');
+  if (!normalized.startsWith('---')) return { frontmatterBlock: '', body: raw };
+  const end = normalized.indexOf('\n---', 4);
   if (end === -1) return { frontmatterBlock: '', body: raw };
   return {
-    frontmatterBlock: raw.slice(0, end + 4).trimEnd(),
-    body: raw.slice(end + 4),
+    frontmatterBlock: normalized.slice(0, end + 4).trimEnd(),
+    body: normalized.slice(end + 4),
   };
 }
 
 export function parseYamlKeys(block) {
   const keys = {};
-  const lines = block.replace(/^---\n/, '').replace(/\n---$/, '').split('\n');
+  // Normalize CRLF → LF before splitting
+  const lines = block.replace(/\r\n/g, '\n').replace(/^---\n/, '').replace(/\n---$/, '').split('\n');
   let i = 0;
   while (i < lines.length) {
     const line = lines[i];
@@ -50,18 +53,7 @@ export function parseYamlKeys(block) {
 }
 
 // ── Frontmatter cleanup ───────────────────────────────────────────────────
-//
 // v8 S1: campos TPL v2.0 ya NO se strippean — velite los preserva en su schema.
-// Removidos del strip:
-//   - /^tupla_/         (tupla__relations consumido por DvRelations/DvMandatos)
-//   - /^concepto_/      (concepto_prerequisitos, concepto_definitional_anchors,
-//                        concepto_capabilities, concepto_current_anchor, etc.)
-//   - /^concepto_facet_/ (concepto_facet_normative consumido por DvFacetNormative)
-//   - /^applicable_domain/, /^assumptions/, /^breaks_at/  (régimen epistémico)
-//   - /^valid_from/, /^valid_to/                           (evolución temporal)
-//
-// Lo que SÍ se strippea: campos legacy/internos que velite no necesita y que
-// ensucian el frontmatter del portal sin valor agregado.
 
 export const STRIP_KEY_PATTERNS = [
   /^pasteur_axis_/, /^neon_/, /^extends_to/, /^recorded_at/,
@@ -111,20 +103,91 @@ export function cleanFrontmatter(block) {
   return out.join('\n');
 }
 
-// ── Body cleanup (Obsidian-only artifacts) ────────────────────────────────
+// ── DV block pattern matching ─────────────────────────────────────────────
+// Ordered by specificity — first match wins.
 
-export function cleanBody(body) {
+const DV_PATTERNS = [
+  { name: 'facet-normative',    test: c => c.includes('concepto_facet_normative') && c.includes('normative_source') },
+  { name: 'prereqs',            test: c => c.includes('concepto_prerequisitos') && c.includes('dv.list') && !c.includes('dv.pages') },
+  { name: 'habilita',           test: c => c.includes('concepto_prerequisitos') && (c.includes('some(matchHere)') || c.includes('habilitados.length')) },
+  { name: 'mandatos',           test: c => c.includes('tupla__relations') && c.includes('norm_mandates') && !c.includes('rel_frame') && !c.includes('renderChart') },
+  { name: 'evolucion',          test: c => c.includes('concepto_definitional_anchors') },
+  { name: 'relations',          test: c => c.includes('tupla__relations') && c.includes('rel_frame') && c.includes('humanLabel') },
+  { name: 'vista-por-rol',      test: c => c.includes('vistas[rol]') && c.includes('rol_seleccionado') },
+  { name: 'recursos-kdmo',      test: c => c.includes('concepto_diagram_ref') || c.includes('concepto_qhu_refs') },
+  { name: 'cited-in',           test: c => c.includes('cited_in') && c.includes('cited_count') && c.includes('dv.list') },
+  { name: 'kpi-grid',           test: c => c.includes('inDeg') && c.includes('outDeg') && c.includes('kpi-grid') },
+  { name: 'charts',             test: c => c.includes('window.renderChart') },
+  { name: 'comunidades',        test: c => c.includes('directos.size') || (c.includes('comunidades') && c.includes('indirectos')) },
+  { name: 'regimen-epistemico', test: c => c.includes('applicable_domain') && c.includes('breaks_at') },
+];
+
+function matchDvPattern(code) {
+  for (const pat of DV_PATTERNS) {
+    if (pat.test(code)) return pat.name;
+  }
+  return 'obsidian-only';
+}
+
+// ── MetaBind resolution ───────────────────────────────────────────────────
+
+function resolveField(fieldPath, keys) {
+  if (!keys || !fieldPath) return null;
+  if (!fieldPath.includes('.')) {
+    const val = keys[fieldPath];
+    return val != null ? val : null;
+  }
+  // Dot notation: only first level (nested objects not parsed by parseYamlKeys)
+  return null;
+}
+
+function transformMetabind(spec, keys) {
+  const colonIdx = spec.lastIndexOf(':');
+  if (colonIdx < 0) return '';
+  const fieldPath = spec.slice(colonIdx + 1).trim();
+  const isReadonly = spec.includes('meta-bind-readonly');
+  const isInlineSelect = spec.trimStart().startsWith('inlineSelect');
+
+  if (isInlineSelect && fieldPath === 'rol_seleccionado') {
+    return '<span class="dv-block" data-dv="selector-rol"></span>';
+  }
+  if (isReadonly) {
+    const val = resolveField(fieldPath, keys);
+    if (val == null || val === '') return '—';
+    if (Array.isArray(val)) return val.join(', ');
+    return String(val).slice(0, 500);
+  }
+  return '—';
+}
+
+// ── Body cleanup (Obsidian-only artifacts → portal-compatible HTML) ───────
+//
+// v8 S5: DataviewJS blocks → <div data-dv="pattern-name"> sentinels.
+//        MetaBind readonly widgets → static value from frontmatter keys.
+//        cleanBody(body, keys?) — keys optional, resolves MetaBind values.
+//
+// Idempotent: cleanBody(cleanBody(x, k)) === cleanBody(x, k)
+// Pure: no side effects, same input → same output
+
+export function cleanBody(body, keys = null) {
   return body
     // Wikilinks: extract final path component (strip relative ../../ prefixes)
     .replace(/!\[\[(?:[^\]|]*\/)([^\]|/]+?)(\|[^\]]+)?\]\]/g, '![[$1$2]]')
     .replace(/\[\[(?:[^\]|]*\/)([^\]|/]+?)(\|[^\]]+)?\]\]/g, '[[$1$2]]')
-    // Strip Obsidian Dataview/DataviewJS blocks (can't execute in portal)
-    .replace(/```dataviewjs[\s\S]*?```/gi, '')
+    // DataviewJS blocks → semantic sentinel HTML (consumed by ConceptoBodyClient)
+    // \r?\n handles both LF and CRLF line endings from vault files on Windows
+    .replace(/```dataviewjs\r?\n([\s\S]*?)```/gi, (_match, code) => {
+      const name = matchDvPattern(code);
+      return `\n<div class="dv-block" data-dv="${name}"></div>\n`;
+    })
+    // Plain dataview (DQL, non-JS) → strip
     .replace(/```dataview[\s\S]*?```/gi, '')
-    // Strip Obsidian Meta Bind directives (INPUT[...]:field syntax)
-    .replace(/`?INPUT\[[^\]]*\][^\n`]*/g, '')
-    // Strip Obsidian `VIEW[...]` / `BUTTON[...]` inline commands
+    // MetaBind INPUT widgets → static value or selector sentinel
+    .replace(/`INPUT\[([^\]]+)\]`/g, (_match, spec) => transformMetabind(spec, keys))
+    // Orphaned INPUT[ without backticks → strip
+    .replace(/INPUT\[([^\]]+)\](?::[a-zA-Z_][a-zA-Z0-9_.]*)?/g, '')
+    // Strip VIEW[...] / BUTTON[...] inline commands
     .replace(/`?(VIEW|BUTTON)\[[^\]]*\][^\n`]*/g, '')
-    // Clean up triple+ blank lines left after block removal
+    // Clean up excess blank lines
     .replace(/\n{4,}/g, '\n\n\n');
 }

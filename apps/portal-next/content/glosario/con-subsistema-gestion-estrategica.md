@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:subsistema-gestion-estrategica
 kd_title: "Subsistema 1 · Gestión Estratégica y de Planeación UDFJC (Art. 85 §1 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Subsistema 1 · Gestión Estratégica y de Planeación UDFJC"
+tupla_descripcion: "Primero de los 3 subsistemas del Sistema de Gestión Administrativa UDFJC · define líneas de acción institucional, optimización de recursos, evaluación continua de procesos, mejoramiento continuo y aseguramiento de la calidad"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Subsistema 1 · Gestión Estratégica y de Planeación"
 skos_altLabel:
@@ -29,16 +31,120 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 85 §1"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 85 §1 (subsistema 1)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 declara el Subsistema 1 como uno de los 3 subsistemas estructurales del Sistema de Gestión Administrativa"
+    - adopter: "[[con-mipg-funcion-publica]]"
+      adopter_locator: "MIPG · Dimensión 2 Direccionamiento Estratégico y Planeación"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2015-05-26"
+      adoption_evidence: "El Subsistema 1 materializa la Dimensión 2 de MIPG en la operación UDFJC"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 85 §1"
+  normative_text: "Subsistema 1: Gestión Estratégica y de Planeación · Define líneas de acción institucional para la optimización de recursos, eficacia de los planes, evaluación continua de procesos, mejoramiento continuo y aseguramiento de la calidad."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "subsistema_gestion_estrategica"
+  ddd_term: "Subsistema 1 · Gestión Estratégica y de Planeación"
+  ddd_aggregate_root: "SubsistemaGestionEstrategica"
+  ddd_article_ref: "Art. 85 §1"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gestion-administrativa-udfjc]]"
+  ddd_role_in_context: DOMAIN_SERVICE
+  ddd_aggregate_root_flag: false
+  ddd_domain_type: Core
+  ddd_invariants:
+    - "El Subsistema 1 debe ser ejecutado por una dependencia institucional explícita (DGEP) · no puede operar sin dirección"
+    - "Las 5 funciones canónicas del Subsistema 1 son: (i) líneas de acción, (ii) optimización de recursos, (iii) evaluación de procesos, (iv) mejoramiento continuo, (v) aseguramiento de calidad"
+    - "El Subsistema 1 articula el horizonte estratégico (PED) con planes operativos anuales"
+    - "Los indicadores institucionales son responsabilidad estructural del Subsistema 1"
+    - "El reporte FURAG-MIPG anual es producto obligatorio del Subsistema 1"
+  ddd_ubiquitous_terms:
+    - "Subsistema 1 · S1-SGA"
+    - "Líneas de acción institucional"
+    - "Optimización de recursos"
+    - "Evaluación continua de procesos"
+    - "Mejoramiento continuo"
+    - "Aseguramiento de la calidad"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-85-s1-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-85-s1-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-direccion-gestion-estrategica-planeacion]]"
+  - "[[con-mipg-funcion-publica]]"
 
+applicable_domain: "Toda función de planeación estratégica + evaluación + mejoramiento continuo + aseguramiento de calidad UDFJC"
+assumptions:
+  - "La separación funcional Subsistema 1 vs DGEP permite trazabilidad institucional clara"
+breaks_at:
+  - "Si las 5 funciones canónicas se distribuyen sin coordinación entre dependencias"
+  - "Si DGEP no puede operar el subsistema por falta de capacidad técnica"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-s1-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Subsistema 1 declarado en Art. 85 §1 del ACU-004-25"
+  - rel_id: rel-s1-ejecutado-dgep
+    rel_nombre: ddd_part_of
+    rel_direccion: post
+    rel_target: "[[con-direccion-gestion-estrategica-planeacion]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 86c · DGEP es la instancia ejecutiva del Subsistema 1"
+  - rel_id: rel-s1-articula-mipg
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-mipg-funcion-publica]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Subsistema 1 materializa MIPG D2 (Direccionamiento Estratégico y Planeación) a nivel UDFJC"
+  - rel_id: rel-s1-coordina-s2
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-subsistema-talento-financiero-infraestructura]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "S1 planifica · S2 provisiona los recursos planificados"
+  - rel_id: rel-s1-coordina-s3
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-subsistema-gestion-normativa-documental]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "S1 planifica · S3 da soporte jurídico-documental a planes y actos"
 
 cited_in:
   - "[[sec-MI12-00--carta-constitucional-acu-004-25]]"
@@ -60,7 +166,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Subsistema 1 · Gestión Estratégica y de Planeación
 
 > [!note]+ Subsistema funcional del SGA · ejecutado por DGEP
 > Primero de los 3 subsistemas del Sistema de Gestión Administrativa. Define líneas de acción institucional, optimización de recursos, evaluación continua de procesos, mejoramiento continuo y aseguramiento de la calidad. Ejecutado por la **DGEP** · materializa MIPG D2 en operación UDFJC.
@@ -69,100 +175,41 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Primero de los **tres subsistemas estructurales** del Sistema de Gestión Administrativa UDFJC declarado en el Art. 85 del ACU-004-25. Su función canónica es **definir las líneas de acción institucional para la optimización de recursos, eficacia de los planes, evaluación continua de procesos, mejoramiento continuo y aseguramiento de la calidad**. Operacionalmente liderado por la Dirección de Gestión Estratégica y de Planeación (Art. 86c). Articula horizonte estratégico (PED 2018-2030 · ACU CSU 00
 
 | Sub-tipo | Pasteur | Effective force UDFJC |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) { dv.paragraph("(sin facet normative)"); }
-else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🧩 Estructura DDD · invariantes operativas
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_ddd;
-if (!f) { dv.paragraph("(sin facet DDD)"); }
-else {
-  dv.header(4, `DDD · ${f.ddd_id ?? "—"} · ${f.ddd_role_in_context ?? "—"}`);
-  dv.table(["Atributo", "Valor"], [
-    ["Bounded Context", f.ddd_bc_ref ?? "—"],
-    ["Aggregate Root", f.ddd_aggregate_root ?? "—"],
-    ["Domain type", f.ddd_domain_type ?? "—"]
-  ]);
-  if ((f.ddd_invariants ?? []).length) {
-    dv.header(5, "🔒 Invariantes operativas");
-    dv.list(f.ddd_invariants);
-  }
-  if ((f.ddd_ubiquitous_terms ?? []).length) {
-    dv.header(5, "🗣️ Lenguaje ubicuo");
-    dv.paragraph((f.ddd_ubiquitous_terms ?? []).join(" · "));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)`);
-  for (const r of rs) {
-    dv.paragraph(`**${humanLabel(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-  }
-}
-```
+
+<div class="dv-block" data-dv="relations"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

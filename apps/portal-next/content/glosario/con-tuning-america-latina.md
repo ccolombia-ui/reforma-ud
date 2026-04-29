@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "TUNING América Latina (Beneitone et al. 2007)"
 
 skos_prefLabel: "TUNING América Latina (Beneitone et al. 2007)"
 skos_altLabel: ["TUNING-AL", "Proyecto TUNING ALFA", "Tuning Latin America", "TUNING-LatAm"]
@@ -23,11 +25,40 @@ iso_standardized_by: "Beneitone, P., Esquetini, C., González, J., Marty Maletá
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Beneitone et al. (2007) Proyecto Tuning América Latina"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño curricular UDFJC programas no-ingenieriles + adopción regional + articulación con CNA"
+assumptions:
+  - "Las 27 competencias genéricas son transversales a contextos LatAm"
+breaks_at:
+  - "Si se aplica como acreditación (es metodología, no acreditación)"
+
+valid_from: "2007-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-tuning-converge-cna
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-decreto-1330-2019]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "TUNING-AL converge con los Lineamientos CNA (acreditación de programas) y con el Decreto 1330/2019 — comparten enfoque por competencias."
+  - rel_id: rel-tuning-aplica-cca
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-cca]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las competencias TUNING se mapean a Paquetes CCA UDFJC (M06): cada CCA articula competencias específicas + genéricas en V1∧V2∧V3 simultáneo."
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

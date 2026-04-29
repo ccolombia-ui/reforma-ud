@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:iso-9001
 kd_title: "ISO 9001:2015 — Sistema de Gestión de Calidad (QMS · Annex SL)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "ISO 9001:2015"
+tupla_descripcion: "Norma ISO base de Sistema de Gestión de Calidad (QMS) — voluntaria en su origen pero adoptada por UDFJC vía SIGUD (Resolución Rectoría 207/2016)"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "ISO 9001:2015 — Sistema de Gestión de Calidad (Quality Management System)"
 skos_altLabel:
@@ -30,16 +32,90 @@ iso_standardized_by: "ISO (2015). *ISO 9001:2015 — Quality management systems 
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - NEON
 
+concepto_facet_normative:
+  origin_type: INTERNATIONAL_VOLUNTARY
+  origin_source: "[[cita-iso-9001-2015]]"
+  origin_force: VOLUNTARY
+  adoption_chain:
+    - adopter: "[[con-resolucion-rectoria-207-2016-sigud]]"
+      adopter_locator: "Resolución 207/2016 · SIGUD · Modelo Operativo por Procesos"
+      adopter_authority_level: INSTITUCIONAL
+      adopted_at: "2016-04-29"
+      adoption_evidence: "SIGUD adopta los 7 principios y la estructura procesal Annex SL de ISO 9001:2015 como marco operativo interno (sin certificación externa)"
+    - adopter: "[[con-mipg-funcion-publica]]"
+      adopter_locator: "Decreto 1083/2015 · Ley 1753/2015 Art. 133"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2015-05-26"
+      adoption_evidence: "MIPG nacional incorpora principios ISO 9001 en su Modelo Integrado de Planeación y Gestión vinculante para entidades públicas"
+  effective_force_in_udfjc: BINDING_BY_ADOPTION
+  effective_authority_level: INSTITUCIONAL
 
+  normative_source: "[[cita-resolucion-rectoria-207-2016-udfjc]]"
+  normative_locator: "Resolución Rectoría 207/2016 · adopción institucional"
+  normative_text: "[Adopción institucional vía SIGUD; texto canónico de ISO 9001:2015 en standard ISO]"
+  normative_authority_level: INSTITUCIONAL
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_neon:
+  neon_imports:
+    - "[[con-pdca-shewhart-deming]]"
+  neon_aligns_with:
+    - "[[con-iso-21001]]"
+    - "[[con-mipg-funcion-publica]]"
+  neon_scenario_origin: "S3"
+  neon_in_scheme: "frame-gestion-calidad"
 
+concepto_definitional_anchors:
+  - "[[def-norm-iso-9001-2015-2015-09-15]]"
+concepto_current_anchor: "[[def-norm-iso-9001-2015-2015-09-15]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-pdca-shewhart-deming]]"
 
+applicable_domain: "Toda organización que busque sistematizar gestión de calidad; aplicable UDFJC vía SIGUD desde 2016"
+assumptions:
+  - "Los 7 principios son universales y aplicables a cualquier organización"
+  - "El enfoque a procesos es operacionalizable en universidades públicas"
+breaks_at:
+  - "Si nueva versión ISO 9001 supersede 2015 (en monitoreo continuo)"
+  - "Si UDFJC opta por adoptar exclusivamente ISO 21001 sin ISO 9001"
 
+valid_from: "2015-09-15"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-iso9001-base-iso21001
+    rel_nombre: skos_broader
+    rel_direccion: pre
+    rel_target: "[[con-iso-21001]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ISO 9001 es la norma base genérica de la cual ISO 21001 (educación) deriva especializaciones sectoriales bajo la misma estructura Annex SL"
+  - rel_id: rel-iso9001-adopted-sigud
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-resolucion-rectoria-207-2016-sigud]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "ISO 9001 se vuelve vinculante para UDFJC vía adopción institucional por Resolución de Rectoría 207/2016 que conforma SIGUD"
+  - rel_id: rel-iso9001-articula-mipg
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-mipg-funcion-publica]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "MIPG nacional incorpora principios ISO 9001 en su Modelo Integrado · convergencia entre estándar internacional y marco nacional"
 
 cited_in:
   - "[[sec-MI12-03--estandares-internacionales]]"
@@ -60,7 +136,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# ISO 9001:2015 — Sistema de Gestión de Calidad (Quality Management System)
 
 > [!quote]+ 📋 Norma base de gestión de calidad
 > ISO 9001:2015 es la norma ISO base para Sistemas de Gestión de Calidad (QMS) — **voluntaria en su origen** pero **adoptada institucionalmente** por UDFJC vía SIGUD (Resolución de Rectoría 207/2016). Bajo estructura Annex SL (10 cláusulas) y 7 principios (cliente · liderazgo · personal · procesos · mejora · evidencia · relaciones). Norma base de la cual deriva ISO 21001 (educación).
@@ -69,119 +145,47 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Norma internacional ISO publicada en septiembre de 2015 (revisión vigente al 2026) que **especifica los requisitos para un Sistema de Gestión de Calidad (Quality Management System — QMS)** que una organización puede implementar para demostrar su capacidad de proveer consistentemente productos y servicios que satisfacen requisitos del cliente y reglamentarios. Estructurada bajo el marco común **Annex SL** de las normas ISO de sistema de gestión: 10 cláusulas (1-3 introductorias, 4-10 requisitos):
 
 | Sub-tipo | Pasteur | Authority level |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.normative_authority_level]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) {
-  dv.paragraph("(sin facet normative)");
-} else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", f.effective_force_in_udfjc ?? "—"],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🔻 Pre-requisitos cognitivos
 
-```dataviewjs
-const prereq = dv.current().concepto_prerequisitos ?? [];
-if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");
-else dv.list(prereq);
-```
+
+<div class="dv-block" data-dv="prereqs"></div>
+
 
 ## §4 · 🔺 Conceptos que declaran este como pre-requisito
 
-```dataviewjs
-const me = dv.current();
-const here = me.file.name;
-const folder = me.file.folder;
-const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
-const matchHere = (target) => {
-  if (!target) return false;
-  if (typeof target === "object" && target.path !== undefined) {
-    return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
-  }
-  const s = String(target);
-  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
-  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
-  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
-};
-const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
-dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito`);
-if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");
-else dv.list(habilitados.map(p => p.file.link));
-```
+
+<div class="dv-block" data-dv="habilita"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
 
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
+<div class="dv-block" data-dv="relations"></div>
 
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
-  const byRel = {};
-  for (const r of rs) {
-    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
-    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
-    byRel[key].items.push(r);
-  }
-  for (const grp of Object.values(byRel)) {
-    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
-    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
-    dv.table(["→ Target", "Evidencia"],
-      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));
-  }
-}
-```
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

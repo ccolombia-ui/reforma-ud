@@ -1,16 +1,16 @@
 {
-  "capturedAt": "2026-04-29T02:44:46.210Z",
-  "totalConcepts": 163,
+  "capturedAt": "2026-04-29T04:52:29.807Z",
+  "totalConcepts": 183,
   "snapshots": [
     {
       "id": "con-acu-004-25",
       "filename": "con-acu-004-25.html",
-      "bytes": 55971,
-      "checksum": "179c185316f72d69",
+      "bytes": 12530,
+      "checksum": "ed857d7c4ef8784b",
       "kd_status": "APPROVED",
       "kd_version": "v2.0.0",
       "hasDvBlock": false,
-      "hasMetabind": true
+      "hasMetabind": false
     },
     {
       "id": "con-cca",
@@ -25,32 +25,32 @@
     {
       "id": "con-iso-21001",
       "filename": "con-iso-21001.html",
-      "bytes": 13736,
-      "checksum": "959048c11ac9b4aa",
+      "bytes": 6026,
+      "checksum": "97b4de8db2cb852c",
       "kd_status": "APPROVED",
       "kd_version": "v2.0.0",
       "hasDvBlock": false,
-      "hasMetabind": true
+      "hasMetabind": false
     },
     {
       "id": "con-mipg-funcion-publica",
       "filename": "con-mipg-funcion-publica.html",
-      "bytes": 11840,
-      "checksum": "0bd970b2135b32f5",
+      "bytes": 4323,
+      "checksum": "d51b1fc6e1d13d5f",
       "kd_status": "APPROVED",
       "kd_version": "v1.0.0",
       "hasDvBlock": false,
-      "hasMetabind": true
+      "hasMetabind": false
     },
     {
       "id": "con-decreto-1421-2017",
       "filename": "con-decreto-1421-2017.html",
-      "bytes": 20104,
-      "checksum": "ac49da38f9c90e2a",
+      "bytes": 5071,
+      "checksum": "6d3b3927985bd399",
       "kd_status": "APPROVED",
       "kd_version": "v1.0.0",
       "hasDvBlock": false,
-      "hasMetabind": true
+      "hasMetabind": false
     }
   ]
 }

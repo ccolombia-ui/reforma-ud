@@ -108,7 +108,7 @@ function runSync({ vaultGlosario, portalDest, filter, dryRun, singleFile = null 
             stats.errors++;
             continue;
         }
-        const cleanedBody = cleanBody(body);
+        const cleanedBody = cleanBody(body, keys);
         const outContent = `${cleanedFm}\n${cleanedBody.startsWith('\n') ? '' : '\n'}${cleanedBody}`;
 
         const destPath = path.join(portalDest, slug + '.md');

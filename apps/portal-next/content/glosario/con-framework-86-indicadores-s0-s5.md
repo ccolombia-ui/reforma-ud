@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Framework 86 Indicadores × 6 Escenarios S0-S5"
 
 skos_prefLabel: "Framework 86 Preguntas-Indicador × 6 Escenarios S0-S5 (M08)"
 skos_altLabel: ["Framework M08", "86 indicadores", "S0-S5 escenarios", "BSC-s × RBM-GAC × CRISP-DM"]
@@ -23,11 +25,70 @@ iso_standardized_by: "Madera Sepúlveda, C. C. (2026). M08 v2.0.0 — Framework 
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+  - DDD
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M08 v2.0.0 — síntesis original"
+  neon_alignment_confidence: 0.9
+
+applicable_domain: "Decisión estratégica UDFJC + planificación trianual + evaluación inversión + Comisión Art. 100"
+assumptions:
+  - "Los 86 indicadores son exhaustivos para decisión estratégica"
+  - "La cadena causal P4→P1 es invariante en transformaciones universitarias"
+breaks_at:
+  - "Si se usa para reporte operativo cotidiano (es estratégico)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-fwk-integra-bsc
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las 4 perspectivas P1-P4 del framework son las 4 perspectivas del BSC-s desagregadas en 86 indicadores."
+  - rel_id: rel-fwk-integra-rbm
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-rbm-gac]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RBM-GAC provee la cadena causal objetivos → outputs → outcomes → impactos que estructura cada uno de los 86 indicadores."
+  - rel_id: rel-fwk-integra-crisp
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-crisp-dm]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CRISP-DM provee las 6 fases iterativas para la decisión basada en evidencia: el framework opera dentro del ciclo CRISP-DM aplicado al cap-MI12."
+  - rel_id: rel-fwk-incluye-marco-p1
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-marco-p1-impacto-misional]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las 20 QI son exactamente el Marco P1 (4×5) de M05 incorporado al framework integral M08."
+  - rel_id: rel-fwk-incluye-bpas
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-bpa-001-21-buenas-practicas]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las 21 BPAs (M07) constituyen P4 del framework, con CAPEX/OPEX calculado vía CCR."
+  - rel_id: rel-fwk-usa-ccr
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-ccr-capacity-cost-rate]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El framework usa CCR (TDABC) para costear cada BPA × escenario; la tabla SMMLV-país-2026 normaliza para benchmark."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

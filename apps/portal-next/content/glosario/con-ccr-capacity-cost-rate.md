@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "CCR · Capacity Cost Rate"
 
 skos_prefLabel: "CCR · Capacity Cost Rate (TDABC)"
 skos_altLabel: ["CCR", "Tasa de Costo de Capacidad", "Time-Driven Activity-Based Costing rate"]
@@ -23,11 +25,41 @@ iso_standardized_by: "Kaplan, R. S., & Anderson, S. R. (2007). *Time-Driven Acti
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Kaplan & Anderson (2007) TDABC"
+  neon_alignment_confidence: 0.97
+
+applicable_domain: "Costeo BPAs UDFJC + framework M08 + análisis CAPEX/OPEX por escenario"
+assumptions:
+  - "La capacidad práctica es observable y estimable"
+  - "El tiempo es proxy razonable de consumo de recursos"
+breaks_at:
+  - "Si se usa capacidad nominal en lugar de práctica (anti-patrón ABC)"
+
+valid_from: "2007-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-ccr-costea-bpas
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-bpa-001-21-buenas-practicas]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CCR es el insumo técnico para costear cada una de las 21 BPAs (CAPEX/OPEX) y normalizar a SMMLV-país-2026."
+  - rel_id: rel-ccr-articula-rbm
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-rbm-gac]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CCR provee la dimensión costo-tiempo a la cadena RBM (objetivos → outputs → outcomes → impactos): permite saber cuánto cuesta cada output y outcome."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-10--tdabc]]"]
 cited_count: 2

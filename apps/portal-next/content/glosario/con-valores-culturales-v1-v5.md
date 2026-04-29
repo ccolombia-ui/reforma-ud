@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Valores Culturales V1-V5 UDFJC"
 
 skos_prefLabel: "Valores Culturales V1-V5 UDFJC (Soberanía · Emprendimiento · Participación · Ética · Austeridad)"
 skos_altLabel: ["V1-V5 culturales", "5 valores institucionales UDFJC", "Cultura V1-V5"]
@@ -23,12 +25,71 @@ iso_standardized_by: "Madera Sepúlveda (2026) M04 §4.2 + sprint BPA-003 — el
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+  - DDD
+
+concepto_facet_ddd:
+  ddd_id: "valores_culturales_v1_v5"
+  ddd_aggregate_root: "CulturaInstitucionalUDFJC"
+  ddd_bc_ref: "[[bc-cultura-organizacional-udfjc]]"
+  ddd_role_in_context: "Value Objects que representan dimensiones culturales del Aggregate Cultura Institucional. Cada V tiene: definición, arquetipos de madurez (escala cualitativa), indicadores observacionales, mecanismos de migración."
+  ddd_invariants:
+    - "Los 5 valores son inseparables — sin alguno la cultura institucional es incompleta"
+    - "Los arquetipos de madurez son cualitativos, no cuantitativos"
+    - "La migración requiere intervenciones culturales (no solo normativas)"
+  ddd_ubiquitous_terms:
+    - "V1 Soberanía · V2 Emprendimiento · V3 Participación · V4 Ética · V5 Austeridad"
+    - "Arquetipo de madurez"
+    - "Cultura institucional"
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M04 §4.2 + sprint BPA-003 + ACU-004-25 Arts. 5a-g"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Diagnóstico cultural Escuelas UDFJC + diseño de intervenciones culturales + monitoreo transición Sub-N1 → N4"
+assumptions:
+  - "Los 5 valores son exhaustivos para capturar la cultura institucional UDFJC"
+  - "Los arquetipos de madurez son operacionalizables con observación cualitativa estructurada"
+breaks_at:
+  - "Si se confunden con los V1-V3 CCA curriculares (homonimia parcial)"
+  - "Si se reducen a métricas cuantitativas simplistas"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
-
+tupla__relations:
+  - rel_id: rel-v1v5-deriva-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los V1-V5 culturales operacionalizan los principios refundacionales del Art. 5 ACU-004-25: V1 Soberanía ⊃ Art. 5g Soberanía Cognitiva; V3 Participación ⊃ Art. 5d Democracia Representativa-Participativa; V4 Ética ⊃ principios refundacionales generales."
+  - rel_id: rel-v1-soberania-converge
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-soberania-cognitiva]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "V1 Soberanía cultural converge con Soberanía Cognitiva refundacional (Art. 5g) — el primero es dimensión cultural del segundo."
+  - rel_id: rel-v1v5-aplica-roles
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-seis-roles-jtbd-comunidad-udfjc]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los V1-V5 culturales se mapean diferencialmente a los 6 roles JTBD (M04): cada rol tiene arquetipos específicos de madurez en cada V."
+  - rel_id: rel-v1v5-rt6
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RT6 (Resistencia al cambio no gestionada) se diagnostica y mitiga mediante el sistema V1-V5: la resistencia es síntoma de inmadurez en V3 (Participación) o V4 (Ética)."
 
 cited_in: ["[[sec-MI12-04--jtbd-comunidad]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

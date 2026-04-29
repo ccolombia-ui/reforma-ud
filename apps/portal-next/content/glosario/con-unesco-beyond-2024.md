@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "UNESCO Beyond Limits 2024"
 
 skos_prefLabel: "UNESCO — Beyond Limits: New Ways to Reinvent Higher Education (2024)"
 skos_altLabel: ["UNESCO Beyond Limits", "Reinventing Higher Education 2024"]
@@ -23,11 +25,59 @@ iso_standardized_by: "UNESCO (2024)"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[unesco2024beyond]] — UNESCO (2024) Beyond Limits"
+  neon_alignment_confidence: 0.9
+
+applicable_domain: "Política educativa superior global + interpretación de reforma UDFJC"
+assumptions: []
+breaks_at: []
+
+valid_from: "2024-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-unesco24-extiende-unesco21
+    rel_nombre: skos_broader
+    rel_direccion: pre
+    rel_target: "[[con-unesco-reimagining-2021]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Beyond Limits 2024 es el sucesor especializado en IES del reporte general Reimagining 2021. Hereda el marco del 'nuevo contrato social educativo' y lo aterriza al sector universitario."
+  - rel_id: rel-unesco24-converge-acu
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El concepto Beyond Limits de 'reinventar IES para sostenibilidad' converge con la 'refundación' del ACU-004-25 — referente internacional contemporáneo."
+  - rel_id: rel-unesco24-buen-vivir
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-buen-vivir]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Beyond Limits 2024 articula la reinvención IES con sostenibilidad y articulación universidad-comunidad-territorio — coherente con el principio refundacional de Buen Vivir del Art. 5a ACU-004-25."
+  - rel_id: rel-unesco24-soberania-cognitiva
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-soberania-cognitiva]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La 'integración digital responsable' Beyond Limits 2024 converge con Soberanía Cognitiva (Art. 5g ACU-004-25) — autonomía cognitiva frente a colonización tecnológica."
+  - rel_id: rel-unesco24-frame3
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-frame-3]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Beyond Limits 2024 implementa direccionalidad transformativa Frame 3 al sector universitario: las IES como motores de transformación sociotécnica + sostenibilidad."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

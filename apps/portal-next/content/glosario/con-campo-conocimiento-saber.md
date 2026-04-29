@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Campo de Conocimiento-Saber"
 
 skos_prefLabel: "Campo de Conocimiento-Saber"
 skos_altLabel:
@@ -30,15 +32,84 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - NEON
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 59 (Noción de Campo) + Art. 69 (Escuelas se organizan por campo)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza Campo de Conocimiento-Saber como concepto refundacional ontológico · NUEVO sin precedente en ACU 003/1997 · operacionaliza Soberanía Cognitiva Art. 5g"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 59 + Art. 69"
+  normative_text: "Es un escenario social, de interacción y comunicación, que promueve la conformación e integración de comunidades académicas alrededor de intereses comunes, para generar, desarrollar, difundir y apropiar, conocimientos y saberes. (Art. 59)"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates:
+    - "Concepto NUEVO en ACU-004-25 (sin precedente exacto en ACU 003/1997 — supersede 'afinidad disciplinar amplia')"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Bourdieu (1971-1990) 'campo' como espacio social estructurado + Foucault (1969) 'episteme' + de Sousa Santos (2009) 'ecología de saberes' + tradiciones de pueblos originarios + ACU-004-25"
+  neon_alignment_confidence: 0.85
+  neon_methodological_notes: "Fusión NeOn S5 de tres corrientes: (a) sociología del campo (Bourdieu) que aporta la noción de espacio social estructurado de relaciones de poder y capital simbólico; (b) ecología de saberes (de Sousa Santos) que aporta el reconocimiento simétrico de conocimientos y saberes; (c) cosmovisiones de pueblos originarios que aportan el par 'conocimiento-saber' como sustantivo conjunto. La adopción institucional UDFJC es propietaria — adaptada a contexto universitario público colombiano."
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-59-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-59-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-soberania-cognitiva]]"
+  - "[[con-buen-vivir]]"
 
+applicable_domain: "Estructura académica UDFJC desde 2025-05-06; criterio de validez para creación de Escuelas, definición de Programas Académicos y articulación con CABAs"
+assumptions:
+  - "El reconocimiento simétrico conocimientos-saberes es operacionalizable curricularmente"
+  - "Los Claustros de Escuela son espacios para definir colectivamente el campo específico"
+breaks_at:
+  - "Si una Escuela se organiza por afinidad administrativa (no por campo) viola Art. 59"
+  - "Si se interpreta solo 'conocimientos' omitiendo 'saberes' (incumple pluralidad epistémica)"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-investigador-pasteur
 
 
+tupla__relations:
+  - rel_id: rel-campo-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-campo-operacionaliza-soberania-cognitiva
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-soberania-cognitiva]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_strength: 0.95
+      skos_evidence: "El par 'conocimiento-saber' materializa estructuralmente la pluralidad epistémica del Art. 5g"
+  - rel_id: rel-campo-organiza-escuelas
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-escuela]]"
+    rel_frame: skos
+    rel_propiedades:
+      ddd_evidence: "Art. 69: las Escuelas se organizan por campo del conocimiento-saber"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 4

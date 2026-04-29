@@ -45,11 +45,21 @@ for (const file of files) {
   // Si la línea es `KEY:`, abre mapping (esperamos `  child:` después).
   // Si la línea es `KEY:\n  - item`, abre lista.
   let lastOpensMapping = false;
+  let inMultilineString = false; // inside an unclosed single-quoted YAML scalar
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const indented = /^( {2,}|\t)\S/.test(line);
     const isBlank = line.trim() === '';
+
+    // If inside a multi-line single-quoted string, all lines are continuations
+    if (inMultilineString) {
+      cleaned.push(line);
+      // Check if this line closes the string (odd number of unescaped quotes)
+      const quoteCount = (line.replace(/''/g, '').match(/'/g) ?? []).length;
+      if (quoteCount % 2 === 1) inMultilineString = false;
+      continue;
+    }
 
     if (isBlank) {
       cleaned.push(line);
@@ -71,9 +81,23 @@ for (const file of files) {
     // Línea top-level
     cleaned.push(line);
 
-    // ¿Abre mapping? `KEY:` (sin valor a la derecha) o `KEY: |` o `KEY: >`
     const trimmed = line.trim();
-    // Detecta: `key:` (nada después), o `key: |` / `key: >` (block scalar), o `key: # comment`
+    // ¿El valor es un string con comilla simple sin cerrar? (multi-línea YAML)
+    const colonIdx = trimmed.indexOf(':');
+    if (colonIdx > 0) {
+      const val = trimmed.slice(colonIdx + 1).trim();
+      if (val.startsWith("'")) {
+        const quoteCount = (val.replace(/''/g, '').match(/'/g) ?? []).length;
+        if (quoteCount % 2 === 1) {
+          // Comilla abierta sin cerrar — las siguientes líneas son continuación
+          inMultilineString = true;
+          lastOpensMapping = true;
+          continue;
+        }
+      }
+    }
+
+    // ¿Abre mapping? `KEY:` (sin valor a la derecha) o `KEY: |` o `KEY: >`
     if (/^[A-Za-z_][\w-]*\s*:\s*(\|[+-]?|>[+-]?)?\s*(#.*)?$/.test(trimmed)) {
       lastOpensMapping = true;
     } else {

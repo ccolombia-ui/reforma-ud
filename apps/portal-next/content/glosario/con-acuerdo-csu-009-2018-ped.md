@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:acuerdo-csu-009-2018-ped
 kd_title: "Acuerdo CSU 009 de 2018 — Plan Estratégico de Desarrollo 2018-2030 (PED)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Acuerdo CSU 009/2018 · PED 2018-2030"
+tupla_descripcion: "Acuerdo del CSU UDFJC que adopta el Plan Estratégico de Desarrollo 2018-2030 — articula horizonte estratégico institucional con marcos internacionales de calidad y sostenibilidad"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Acuerdo CSU 009 de 2018 · Plan Estratégico de Desarrollo 2018-2030"
 skos_altLabel:
@@ -29,15 +31,97 @@ iso_standardized_by: "Consejo Superior Universitario, Universidad Distrital Fran
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acuerdo-csu-009-2018-udfjc]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acuerdo-csu-011-2018-pui]]"
+      adopter_locator: "Acuerdo 011/2018 · PUI · Misión-Visión-Valores"
+      adopter_authority_level: ESTATUTARIO_INSTITUCIONAL
+      adopted_at: "2018-05-17"
+      adoption_evidence: "PED 009/2018 opera como instrumento operacional del PUI (Acuerdo CSU 011/2018 mismo día) — cadena: PUI define horizonte → PED operacionaliza"
+    - adopter: "[[con-ods-agenda-2030]]"
+      adopter_locator: "Agenda 2030 ONU · 17 ODS"
+      adopter_authority_level: INTERNATIONAL_TREATY
+      adopted_at: "2015-09-25"
+      adoption_evidence: "PED 2018-2030 alinea sus objetivos estratégicos con los ODS de la Agenda 2030 (sostenibilidad, calidad educativa ODS-4, inclusión)"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: INSTITUCIONAL
 
+  normative_source: "[[cita-acuerdo-csu-009-2018-udfjc]]"
+  normative_locator: "Acuerdo CSU 009 de 2018 · PED 2018-2030"
+  normative_text: "[Texto literal · ver atomics en 0-normatividad/2--normas-institucionales/csu-acu-009-2018/]"
+  normative_authority_level: INSTITUCIONAL
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: BRANCHING
+  conflicts_with: []
+  conflict_evidence: "Tras ACU-004-25 (2025), el PED 2018-2030 debe re-articularse con la nueva arquitectura misional · pendiente"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acuerdo-csu-009-2018-2018-05-17]]"
+concepto_current_anchor: "[[def-norm-acuerdo-csu-009-2018-2018-05-17]]"
+concepto_anchor_chain_status: BRANCHING
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-acuerdo-csu-011-2018-pui]]"
 
+applicable_domain: "Planeación estratégica institucional UDFJC desde 2018; vigente hasta 2030 con re-articulación pendiente post-ACU-004-25"
+assumptions:
+  - "Un horizonte estratégico de 12 años es operacionalizable con revisiones intermedias"
+  - "La articulación con marcos internacionales aporta coherencia a la planeación"
+breaks_at:
+  - "Si CSU expide nuevo PED tras ACU-004-25 que reemplaza este (en evaluación)"
+  - "Si los indicadores quedan desactualizados sin proceso de revisión institucional"
 
+valid_from: "2018-05-17"
+valid_to: "2030-12-31"
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-acu009-implements-acu004
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    bc_domain: gobernanza-udfjc
+    rel_propiedades:
+      norm_evidence: "Tras ACU-004-25 (2025), el PED 2018-2030 debe re-articularse bajo la nueva arquitectura misional · pendiente al 2026"
+  - rel_id: rel-acu009-derives-from-pui
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acuerdo-csu-011-2018-pui]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "PED operacionaliza al PUI (mismo día CSU · ambos del 2018-05-17)"
+  - rel_id: rel-acu009-articula-ods
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-ods-agenda-2030]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "PED 2018-2030 alinea objetivos con ODS Agenda 2030 (sostenibilidad + calidad ODS-4 + inclusión)"
+  - rel_id: rel-acu009-articula-iso21001
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-iso-21001]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "PED articula marcos de gestión de calidad incluyendo ISO 21001 (vía SIGUD)"
+  - rel_id: rel-acu009-articula-oecd
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-oecd-learning-compass-2030]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Horizonte 2030 del PED converge cronológicamente y filosóficamente con OECD Learning Compass 2030 (ambos a 2030)"
 
 cited_in:
   - "[[sec-MI12-03--estandares-internacionales]]"
@@ -58,7 +142,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Acuerdo CSU 009 de 2018 · Plan Estratégico de Desarrollo 2018-2030
 
 > [!quote]+ 🎯 Plan Estratégico Desarrollo 2018-2030 · horizonte institucional
 > Acuerdo CSU 009/2018 que **adopta el PED 2018-2030** — instrumento de planeación de largo plazo que articula el horizonte estratégico UDFJC con marcos internacionales de calidad (ISO), inclusión (UDL/Decreto 1421), sostenibilidad (ODS) y direccionalidad transformativa (OECD 2030). **Re-articulación pendiente** post-ACU-004-25.
@@ -67,117 +151,47 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Acuerdo expedido por el Consejo Superior Universitario de la Universidad Distrital Francisco José de Caldas el **17 de mayo de 2018** mediante el cual **se adopta el Plan Estratégico de Desarrollo 2018-2030 (PED)** de la Universidad Distrital. El PED es el instrumento de planeación de largo plazo que **articula el horizonte estratégico institucional con marcos internacionales de calidad** (ISO 9001/21001), **inclusión** (UDL/Decreto 1421-2017), **sostenibilidad** (ODS Agenda 2030), y **direccion
 
 | Sub-tipo | Pasteur | Authority level |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.normative_authority_level]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) {
-  dv.paragraph("(sin facet normative)");
-} else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],
-    ["**Authority level**", f.normative_authority_level ?? "—"],
-    ["**Effective force en UDFJC**", f.effective_force_in_udfjc ?? "—"],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🔻 Pre-requisitos cognitivos
 
-```dataviewjs
-const prereq = dv.current().concepto_prerequisitos ?? [];
-if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");
-else dv.list(prereq);
-```
+
+<div class="dv-block" data-dv="prereqs"></div>
+
 
 ## §4 · 🔺 Conceptos que declaran este como pre-requisito
 
-```dataviewjs
-const me = dv.current();
-const here = me.file.name;
-const folder = me.file.folder;
-const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
-const matchHere = (target) => {
-  if (!target) return false;
-  if (typeof target === "object" && target.path !== undefined) return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
-  const s = String(target);
-  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
-  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
-  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
-};
-const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
-dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito`);
-if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");
-else dv.list(habilitados.map(p => p.file.link));
-```
+
+<div class="dv-block" data-dv="habilita"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
 
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
+<div class="dv-block" data-dv="relations"></div>
 
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
-  const byRel = {};
-  for (const r of rs) {
-    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
-    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
-    byRel[key].items.push(r);
-  }
-  for (const grp of Object.values(byRel)) {
-    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
-    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
-    dv.table(["→ Target", "Evidencia"],
-      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));
-  }
-}
-```
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

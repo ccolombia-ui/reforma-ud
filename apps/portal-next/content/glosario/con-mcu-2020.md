@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Magna Charta Universitatum 2020"
 
 skos_prefLabel: "Magna Charta Universitatum 2020"
 skos_altLabel: ["MCU 2020", "Magna Charta Bolonia 2020", "Bologna Charter 2020"]
@@ -26,13 +28,41 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
 
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_external_ontology_uri: "https://www.magna-charta.org/magna-charta-universitatum/mcu-2020"
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[mcu2020]] — MCU Observatory (2020) Magna Charta Universitatum 2020"
+  neon_alignment_confidence: 0.95
 
+concepto_prerequisitos: []
 
+applicable_domain: "Política universitaria internacional + interpretación del espíritu del mandato de reforma UDFJC"
+assumptions: ["Las declaraciones internacionales informan la interpretación de normas nacionales aunque no sean vinculantes directas"]
+breaks_at: ["Si se invoca como vinculante en lugar de como referente"]
 
+valid_from: "2020-09-16"
+valid_to: ""
 rol_seleccionado: docente-director
+concepto_anchor_chain_status: LINEAR
 
 
+tupla__relations:
+  - rel_id: rel-mcu2020-precede-mcu1988
+    rel_nombre: norm_amends
+    rel_direccion: post
+    rel_target: "Magna Charta Universitatum 1988 (declaración original Bolonia, 388 universidades signatarias — referencia externa, sin nodo en corpus)"
+    rel_frame: bibliografico
+    rel_propiedades:
+      norm_evidence: "MCU 2020 actualiza MCU 1988 sin derogarla — extiende los principios a 950+ signatarias e introduce 'autonomía positiva' y 'responsabilidad social'"
+  - rel_id: rel-mcu2020-introduce-autonomia-positiva
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-autonomia-positiva]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

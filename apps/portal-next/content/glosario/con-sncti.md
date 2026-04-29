@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "SNCTI"
 
 skos_prefLabel: "SNCTI — Sistema Nacional de Ciencia, Tecnología e Innovación"
 skos_altLabel: ["Sistema Nacional CTI", "SNCTeI", "National Innovation System CO"]
@@ -23,14 +25,58 @@ iso_standardized_by: "Ley 1286/2009 — Congreso de Colombia"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-ley-1286-2009-congreso-co]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-ley-1286-2009]]"
+      adopter_locator: "Ley 1286/2009 · creación del SNCTI · modificatoria Ley 29/1990"
+      adopter_authority_level: LEGAL
+      adopted_at: "2009-01-23"
+      adoption_evidence: "Congreso crea SNCTI como sistema institucional articulador de actores CTI · vinculante para IES públicas + centros investigativos"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: LEGAL
+  normative_source: "[[cita-ley-1286-2009-congreso-co]]"
+  normative_locator: "Ley 1286/2009 · articulado completo"
+  normative_text: "[Texto literal Ley 1286/2009 · MinCiencias cabeza sistema + IES + centros + sector productivo + sociedad civil]"
+  normative_authority_level: LEGAL
+  derogated_by: ""
+  derogates: ["Ley 29/1990 (modificada por Ley 1286/2009)"]
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-ley-1286-2009-2009-01-23]]"
+concepto_current_anchor: "[[def-norm-ley-1286-2009-2009-01-23]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos: []
 
+applicable_domain: "Sistema CTI Colombia desde 2009"
+assumptions: ["Ley 1286/2009 sigue vigente sin reforma sustancial"]
+breaks_at: ["Si Congreso reforma Ley 1286"]
 
+valid_from: "2009-01-23"
+valid_to: ""
 rol_seleccionado: docente-investigador-pasteur
 
 
+tupla__relations:
+  - rel_id: rel-sncti-fuente-ley1286
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "Ley 1286/2009"
+    rel_frame: bibliografico
+  - rel_id: rel-sncti-mandated-conpes
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "CRISP-DM"
 
 skos_prefLabel: "CRISP-DM — Cross-Industry Standard Process for Data Mining"
 skos_altLabel: ["Cross Industry Standard Process Data Mining", "CRISP-DM 1.0", "CRISP-DM Methodology"]
@@ -26,11 +28,59 @@ align_wikidata: "https://www.wikidata.org/wiki/Q1142891"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Chapman et al. (2000) CRISP-DM 1.0 + literatura data science contemporánea"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Estructura metodológica del cap-MI12 + cualquier proyecto analítico-transformativo"
+assumptions: ["Las 6 fases son aplicables a transformaciones organizacionales no solo a ML"]
+breaks_at: ["Si se aplica rígidamente como cascada lineal (debería ser iterativo)"]
+
+valid_from: "2000-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-crisp-articula-bsc
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CRISP-DM articula con BSC-s en el framework prospectivo M08: las 6 fases CRISP-DM proveen el ciclo iterativo de proyecto; BSC-s provee el marco multinivel de medición (P1-P4)."
+  - rel_id: rel-crisp-articula-rbm
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-rbm-gac]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CRISP-DM se complementa con RBM-GAC: las fases 5-6 (Evaluation + Deployment) operan sobre cadenas RBM (objetivos → outputs → outcomes → impactos) y dentro de gobernanza GAC."
+  - rel_id: rel-crisp-estructura-cap-mi12
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El cap-MI12 (12 papers M01-M12) está estructurado como proyecto CRISP-DM aplicado a la implementación del ACU-004-25: M01 = Business Understanding, M02-M07 = Data + Preparation, M08-M11 = Modeling + Evaluation, M12 = Deployment."
+  - rel_id: rel-crisp-direccionalidad-frame3
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-frame-3]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "CRISP-DM aplicado a transformación universitaria adopta direccionalidad Frame 3: la fase 1 Business Understanding parte del mandato transformativo, no de una pregunta neutral de mercado."
+  - rel_id: rel-crisp-jtbd-discovery
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-jtbd-christensen]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "En la fase 1 (Business Understanding) de CRISP-DM, JTBD provee el método para identificar los 'jobs' que diferentes actores contratan a la universidad — alimentando la formulación del problema."
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 4

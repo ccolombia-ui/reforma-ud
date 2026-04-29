@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "SIGUD + DARUMA · Sistemas operacionales UDFJC"
 
 skos_prefLabel: "SIGUD + DARUMA · Sistemas operacionales UDFJC con 45 procedimientos PHVA"
 skos_altLabel: ["SIGUD", "DARUMA", "Sistemas operacionales UDFJC"]
@@ -23,11 +25,34 @@ iso_standardized_by: "Universidad Distrital Francisco José de Caldas — sistem
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "UDFJC sistemas institucionales existentes"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Implementación TDABC Lite UDFJC + cálculo CCR + monitoreo procesos misionales"
+assumptions:
+  - "Los datos SIGUD son confiables y actualizados"
+  - "Los 45 procedimientos PHVA cubren mayoría de actividades académicas"
+breaks_at:
+  - "Si se asume que SIGUD + DARUMA son BPMN integral (no lo son)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-sigud-alimenta-tdabc
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-tdabc-lite-12-time-equations]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "SIGUD + DARUMA son los insumos empíricos del TDABC Lite — sin estos sistemas, la implementación 'Lite' no sería viable en 2-3 semanas."
 
 cited_in: ["[[sec-MI12-10--tdabc]]"]
 cited_count: 1

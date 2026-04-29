@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Core Competencies (Prahalad & Hamel 1990)"
 
 skos_prefLabel: "Core Competencies — Competencias de Núcleo (Prahalad & Hamel 1990)"
 skos_altLabel: ["Competencias núcleo", "Core capabilities", "Competencias institucionales únicas"]
@@ -25,11 +27,40 @@ align_dbpedia: "http://dbpedia.org/resource/Core_competency"
 align_wikidata: "https://www.wikidata.org/wiki/Q1786060"
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Prahalad & Hamel (1990) The Core Competence of the Corporation"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Estrategia institucional UDFJC + diseño de Escuelas con competencias diferenciadas + comunicación con stakeholders"
+assumptions:
+  - "Las core competencies son operacionalizables aunque no medibles departamentalmente"
+breaks_at:
+  - "Si se aplica como sinónimo de fortalezas departamentales (es transversal y emergente)"
+
+valid_from: "1990-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-core-fundamenta-e1
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-resultados-emergentes-e1-e3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Core Competencies (Prahalad & Hamel 1990) fundamenta E1 (Competencias de Núcleo) — primer resultado emergente del ciclo virtuoso ΩMT."
+  - rel_id: rel-core-bsc-p4
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BSC-s P4 (Aprendizaje y Crecimiento) mide capacidad transformativa que produce core competencies; sin P4 robusto, no emergen E1."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 1

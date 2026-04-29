@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Iniciativas I0-I4 UDFJC"
 
 skos_prefLabel: "Iniciativas I0-I4 UDFJC"
 skos_altLabel: ["I0-I4", "5 Iniciativas estratégicas reforma", "Initiatives Framework UDFJC"]
@@ -23,11 +25,57 @@ iso_standardized_by: "Madera Sepúlveda (2026) — elaboración propia M01-M12"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Síntesis propietaria UDFJC sobre [[con-acu-004-25]] + [[con-cinco-misiones-piiom]] + [[con-conpes-3934]]"
+  neon_alignment_confidence: 0.8
+
+applicable_domain: "Plan de implementación reforma UDFJC + roadmap 2026-2034"
+assumptions: ["Las 5 iniciativas son palancas suficientes (sin solapamiento ni omisión)"]
+breaks_at: ["Si surge nueva palanca crítica no contemplada"]
+
+valid_from: "2026-04-26"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-i0-i4-related-acu
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: skos
+  - rel_id: rel-i0-i4-activa-omt
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-omt]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Las 5 iniciativas I0-I4 son los activadores institucionales del ciclo virtuoso ΩMT (M02): I0 condiciona R1, I1 R2, I2 R3+R4, I3 R5, I4 R6. Sin iniciativas concretas, las retroalimentaciones del ciclo virtuoso no se materializan."
+  - rel_id: rel-i0-i4-implementa-funciones-misionales
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-funciones-misionales]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "I1 (Reforma curricular) implementa PM1; I3 (Articulación PM2) implementa PM2; I4 (Campus Regenerativo) implementa PM3. I0 e I2 son iniciativas habilitadoras transversales de las 3 funciones misionales del Art. 7 ACU-004-25."
+  - rel_id: rel-i0-i4-aplica-piiom
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-cinco-misiones-piiom]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "I1 e I3 alinean malla curricular y PM2 con las 5 misiones nacionales PIIOM (mitigación RT3 desalineación)."
+  - rel_id: rel-i0-i4-bsc-rbm-tracking
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-rbm-gac]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Cada iniciativa I0-I4 se gestiona con cadenas RBM (objetivos → outputs → outcomes → impactos) en los 4 niveles L0-L3 del marco GAC."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

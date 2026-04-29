@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "CDIO Syllabus v3.0"
 
 skos_prefLabel: "CDIO Syllabus v3.0 (Crawley et al. 2014)"
 skos_altLabel: ["CDIO", "Conceive Design Implement Operate", "CDIO Initiative", "MIT CDIO"]
@@ -25,11 +27,40 @@ align_dbpedia: ""
 align_wikidata: ""
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Crawley et al. (2014) Rethinking Engineering Education + CDIO Initiative"
+  neon_alignment_confidence: 0.97
+
+applicable_domain: "Diseño curricular UDFJC programas Ingeniería + framework de implementación pre-ABET"
+assumptions:
+  - "El ciclo Conceive-Design-Implement-Operate captura el trabajo ingenieril contemporáneo"
+breaks_at:
+  - "Si se confunde con acreditación formal (es framework, no acreditación)"
+
+valid_from: "2014-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-cdio-articula-abet
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-abet-acreditacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CDIO opera como framework de implementación que facilita acreditación ABET posterior — complementarios, no sustitutos."
+  - rel_id: rel-cdio-pasteur
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-cuadrante-pasteur-stokes]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CDIO adopta Cuadrante Pasteur en su Syllabus: las competencias 'Designing' y 'Implementing' son use-inspired basic research aplicado a producto/sistema."
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

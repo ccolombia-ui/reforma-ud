@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Ley 30/1992 Art. 6 (Deber misional IES)"
 
 skos_prefLabel: "Ley 30/1992 — Art. 6"
 skos_altLabel: ["Art. 6 Ley 30", "Objetivos Educación Superior CO", "Deber misional IES"]
@@ -23,14 +25,69 @@ iso_standardized_by: "Ley 30 de 1992 (Congreso de Colombia)"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-ley-30-1992-congreso-co]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-constitucion-1991-art-69]]"
+      adopter_locator: "Const. 1991 Art. 69 ('de acuerdo con la ley') · obliga régimen legal especial IES"
+      adopter_authority_level: CONSTITUCIONAL
+      adopted_at: "1991-07-04"
+      adoption_evidence: "Art. 69 Const. obliga régimen especial para universidades del Estado · Ley 30/1992 desarrolla este mandato constitucional"
+    - adopter: "[[con-ley-30-1992]]"
+      adopter_locator: "Ley 30 de 1992 · Art. 6 (objetivos vinculantes IES)"
+      adopter_authority_level: LEGAL
+      adopted_at: "1992-12-28"
+      adoption_evidence: "Congreso desarrolla Art. 69 Const. estableciendo objetivos misionales VINCULANTES de las IES colombianas · Art. 6 obliga 'solucionar las necesidades del país'"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: LEGAL
+  normative_source: "[[cita-ley-30-1992-congreso-co]]"
+  normative_locator: "Ley 30/1992 Art. 6"
+  normative_text: "Trabajar por la creación, el desarrollo y la transmisión del conocimiento en todas sus formas y expresiones y, promover su utilización en todos los campos para solucionar las necesidades del país."
+  normative_authority_level: LEGAL
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-ley-30-1992-art-6-1993-01-01]]"
+concepto_current_anchor: "[[def-norm-ley-30-1992-art-6-1993-01-01]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-constitucion-1991-art-69]]"
 
+applicable_domain: "Toda actuación misional de IES colombianas"
+assumptions: ["La Ley 30/1992 sigue vigente sin reforma sustancial al Art. 6"]
+breaks_at: ["Si Congreso reforma Ley 30 (proyecto 2024-2026 en discusión, sin aprobar)"]
 
+valid_from: "1993-01-01"
+valid_to: ""
 rol_seleccionado: docente-director
 
 
+tupla__relations:
+  - rel_id: rel-art6-fuente-ley30
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[colombia1992ley30]]"
+    rel_frame: bibliografico
+  - rel_id: rel-art6-mandated-by-art69
+    rel_nombre: norm_mandated_by
+    rel_direccion: pre
+    rel_target: "[[con-constitucion-1991-art-69]]"
+    rel_frame: normativo
+  - rel_id: rel-art6-operationalized-by-conpes
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: normativo
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 2

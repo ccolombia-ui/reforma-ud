@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "CIDC UDFJC"
 
 skos_prefLabel: "CIDC — Centro de Investigaciones y Desarrollo Científico"
 skos_altLabel: ["Centro de Investigaciones UDFJC", "CIDC"]
@@ -23,14 +25,56 @@ iso_standardized_by: "UDFJC — estructura administrativa pre-ACU-004-25"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acuerdos-cidc-udfjc-pre-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 régimen transitorio · CIDC coexiste con VRICI durante 2025-2029"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 NO deroga el CIDC explícitamente · sus funciones se redistribuyen progresivamente a VRICI + Institutos durante el Período de Transición Art. 96"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: INSTITUCIONAL
+  normative_source: "[[cita-acuerdos-cidc-udfjc-pre-2025]]"
+  normative_locator: "Acuerdos previos UDFJC sobre estructura administrativa · transición a VRICI ACU-004-25"
+  normative_text: "[Estructura UDFJC pre-ACU-004-25 · CIDC en transición durante 2025-2029]"
+  normative_authority_level: INSTITUCIONAL
+  derogated_by: ""
+  derogates: []
+  modification_type: "Transición progresiva hacia VRICI + Institutos durante Período de Transición Art. 96"
+  chain_status: BRANCHING
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-cidc-udfjc-pre-2025]]"
+concepto_current_anchor: "[[def-norm-cidc-udfjc-pre-2025]]"
+concepto_anchor_chain_status: BRANCHING
 
+concepto_prerequisitos:
+  - "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
 
+applicable_domain: "UDFJC durante Período de Transición 2025-2029"
+assumptions: ["El CIDC continúa operando hasta consolidación de Institutos VRICI"]
+breaks_at: ["Cuando los Institutos asuman plenamente las funciones investigativas (2027-2029)"]
 
+valid_from: ""
+valid_to: ""
 rol_seleccionado: docente-investigador-pasteur
 
 
+tupla__relations:
+  - rel_id: rel-cidc-related-vrici
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Funciones CIDC se redistribuyen progresivamente a VRICI + Institutos durante transición"
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

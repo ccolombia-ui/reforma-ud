@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:decreto-1421-2017
 kd_title: "Decreto 1421 de 2017 — reglamenta atención educativa población con discapacidad (mandato UDL/DUA)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Decreto 1421 de 2017"
+tupla_descripcion: "Decreto MEN que adopta el Diseño Universal de Aprendizaje (DUA/UDL) como marco obligatorio para todas las instituciones educativas colombianas, incluyendo IES — modifica el Decreto 1075/2015"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Decreto 1421 de 2017 — atención educativa población con discapacidad"
 skos_altLabel:
@@ -32,17 +34,105 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-decreto-1421-2017-men]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-ley-1618-2013]]"
+      adopter_locator: "Ley 1618/2013 Art. 11"
+      adopter_authority_level: LEGAL
+      adopted_at: "2013-02-27"
+      adoption_evidence: "Ley 1618/2013 Art. 11 demanda al sector educativo reglamentar educación inclusiva personas con discapacidad — el Decreto 1421/2017 es la reglamentación operativa de esa ley estatutaria"
+    - adopter: "[[con-cast-udl-3-0]]"
+      adopter_locator: "CAST UDL Guidelines 2.0 (vigente al 2017) → 3.0 (2024)"
+      adopter_authority_level: DOCTRINAL
+      adopted_at: "2017-08-29"
+      adoption_evidence: "Decreto 1421/2017 incorpora explícitamente el DUA (CAST) como marco normativo obligatorio · Art. 'ajustes razonables' lo invoca como referente"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: REGLAMENTARIO
 
+  normative_source: "[[cita-decreto-1421-2017-men]]"
+  normative_locator: "Decreto 1421 de 2017 · 11 artículos + transitorios"
+  normative_text: "[Texto literal · ver atomics en 0-normatividad/1--normas-nacionales/decreto-men-1421-2017/]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: "Modifica Decreto 1075 de 2015 (Decreto Único Reglamentario Sector Educación)"
+  chain_status: LINEAR
+  conflicts_with: []
+  conflict_evidence: ""
 
+concepto_definitional_anchors:
+  - "[[def-norm-decreto-1421-2017-2017-08-29]]"
+concepto_current_anchor: "[[def-norm-decreto-1421-2017-2017-08-29]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-ley-1618-2013]]"
+  - "[[con-constitucion-1991-art-69]]"
 
+concepto_diagram_ref: ""
+concepto_alignment_table_ref: ""
+concepto_qhu_refs: []
+concepto_formula_refs: []
+concepto_imagen_ref: ""
 
+applicable_domain: "Todas las instituciones educativas colombianas (preescolar a IES); aplicable UDFJC desde 2017 con implementación progresiva 5 años"
+assumptions:
+  - "El DUA/UDL es operacionalizable en educación superior"
+  - "Las IES tienen capacidad institucional para implementar UDL en condiciones de calidad"
+breaks_at:
+  - "Si se reduce a 'accesibilidad para discapacidad' (es marco universal)"
+  - "Si nuevo decreto MEN lo deroga (no documentado al 2026-04-27)"
 
+valid_from: "2017-08-29"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
-"@context":
 
+tupla__relations:
+  - rel_id: rel-dec1421-implements-ley1618
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-ley-1618-2013]]"
+    rel_frame: normativo
+    bc_domain: derecho-educacion-inclusiva
+    rel_propiedades:
+      norm_evidence: "Decreto 1421/2017 reglamenta el Art. 11 de la Ley 1618/2013 que demanda al sector educativo regular educación inclusiva"
+  - rel_id: rel-dec1421-adopts-udl
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-udl-3]]"
+    rel_frame: normativo
+    bc_domain: educacion-superior
+    rel_propiedades:
+      norm_evidence: "Decreto 1421/2017 incorpora normativamente el DUA/UDL (CAST) como marco obligatorio · adopción nacional de marco internacional voluntario"
+  - rel_id: rel-dec1421-modifies-dec1075
+    rel_nombre: norm_amends
+    rel_direccion: post
+    rel_target: "[[con-decreto-1075-2015]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Decreto 1421/2017 modifica el Art. 2.5.3.2.2.1 del Decreto 1075/2015 (Decreto Único Reglamentario Sector Educación)"
+  - rel_id: rel-dec1421-articula-dec1330
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-decreto-1330-2019]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Decreto 1330/2019 (registro calificado IES) incorpora principios de inclusión articulados con UDL del Decreto 1421/2017"
+  - rel_id: rel-dec1421-binding-acu
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    bc_domain: derecho-universitario
+    rel_propiedades:
+      norm_evidence: "ACU-004-25 debe operar dentro del marco del Decreto 1421/2017 — UDL es obligatorio para UDFJC como IES colombiana"
 
 cited_in:
   - "[[sec-MI12-01--mandato-normativo]]"
@@ -63,7 +153,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Decreto 1421 de 2017 — atención educativa población con discapacidad
 
 > [!quote]+ ⚖️ Mandato nacional de UDL/DUA para IES colombianas
 > El **Decreto 1421/2017** es el acto normativo que convierte UDL/DUA de marco aspiracional voluntario (CAST) a **obligación jurídica vinculante** para todas las instituciones educativas en Colombia, incluyendo UDFJC. Modifica el Decreto 1075/2015 (Decreto Único Reglamentario Sector Educación). Vigente desde **2017-08-29** con implementación progresiva a 5 años. **Es el primer eslabón de la cadena de adopción que vuelve UDL vinculante para UDFJC.**
@@ -72,207 +162,59 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Decreto del Ministerio de Educación Nacional de Colombia, expedido el 29 de agosto de 2017 por la ministra Yaneth Giha, **'por el cual se reglamenta en el marco de la educación inclusiva la atención educativa de la población con discapacidad'**, modificando el Decreto 1075 de 2015 (Decreto Único Reglamentario del Sector Educación). El decreto **incorpora normativamente el Diseño Universal del Aprendizaje (DUA/UDL)** como marco obligatorio para las instituciones educativas colombianas, incluyendo
 
 | Sub-tipo | Pasteur | Authority level |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.normative_authority_level]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) {
-  dv.paragraph("(sin facet normative)");
-} else {
-  dv.table(
-    ["Campo", "Valor"],
-    [
-      ["**Origen**", `${f.origin_type ?? "—"} · fuerza original: ${f.origin_force ?? "—"}`],
-      ["**Fuente original**", f.origin_source ?? "—"],
-      ["**Authority level (resultante)**", f.normative_authority_level ?? "—"],
-      ["**Effective force en UDFJC**", f.effective_force_in_udfjc ?? "—"],
-      ["**Chain status**", f.chain_status ?? "—"],
-      ["**Modifica**", f.modification_type || "—"]
-    ]
-  );
 
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);
-    dv.table(
-      ["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence])
-    );
-  }
-}
-```
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · 🔻 Pre-requisitos cognitivos
 
-```dataviewjs
-const me = dv.current();
-const prereq = me.concepto_prerequisitos ?? [];
-if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales declarados.");
-else dv.list(prereq);
-```
+
+<div class="dv-block" data-dv="prereqs"></div>
+
 
 ## §4 · 🔺 Conceptos que declaran este como pre-requisito cognitivo
 
-```dataviewjs
-const me = dv.current();
-const here = me.file.name;
-const folder = me.file.folder;
-const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
 
-const matchHere = (target) => {
-  if (!target) return false;
-  if (typeof target === "object" && target.path !== undefined) {
-    return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
-  }
-  const s = String(target);
-  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
-  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
-  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
-};
+<div class="dv-block" data-dv="habilita"></div>
 
-const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
-dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito directo`);
-if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía. Para outgoing ver §7._");
-else dv.list(habilitados.map(p => p.file.link));
-```
 
 ## §6 · 🌳 Evolución longitudinal · provenance
 
-```dataviewjs
-const me = dv.current();
-const anchors = me.concepto_definitional_anchors ?? [];
-dv.paragraph(`**Chain status**: ${me.concepto_anchor_chain_status ?? "—"} · **Anchor ACTIVE**: ${me.concepto_current_anchor ?? "—"}`);
-dv.paragraph(`**Vigente desde**: ${me.valid_from ?? "—"} · **Hasta**: ${me.valid_to || "actualmente · ACTIVE"}`);
-if (anchors.length) {
-  dv.header(4, "Cadena de definitional anchors");
-  dv.list(anchors);
-}
-```
+
+<div class="dv-block" data-dv="evolucion"></div>
+
 
 ## §7 · 🤝 Relaciones semánticas tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
 
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
+<div class="dv-block" data-dv="relations"></div>
 
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
-  const byRel = {};
-  for (const r of rs) {
-    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
-    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
-    byRel[key].items.push(r);
-  }
-  for (const grp of Object.values(byRel)) {
-    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
-    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
-    dv.table(
-      ["→ Target", "Evidencia"],
-      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"])
-    );
-  }
-}
-```
 
 ## §8 · 🎭 Vista por rol seleccionado
 
-```dataviewjs
-const me = dv.current();
-const rol = me.rol_seleccionado ?? "estudiante-soberano";
-const vistas = {
-  "estudiante-soberano": {
-    titulo: "🎓 Para el Estudiante Soberano",
-    contenido: [
-      "**Tu derecho**: el Decreto 1421/2017 garantiza tu derecho a aprender sin barreras estructurales — no es 'accesibilidad', es **diseño universal desde el inicio**.",
-      "- Si encuentras barreras en tu currículo, puedes invocar este decreto como base jurídica para exigir ajustes razonables.",
-      "- UDL aplica a toda la población estudiantil, no solo a personas con discapacidad declarada.",
-      "**Acción concreta**: identifica barreras de tu trayectoria académica y conviértelas en demanda de UDL ante tu CABA y Comité de Currículo."
-    ]
-  },
-  "docente-disenador": {
-    titulo: "🎨 Para el Docente Diseñador",
-    contenido: [
-      "**Tu obligación legal**: el Decreto 1421/2017 te obliga a incorporar UDL **desde el diseño** del currículo — no como adaptación post-hoc.",
-      "- Los Paquetes CCA deben tener desde su origen múltiples medios de representación + acción/expresión + implicación.",
-      "- El PEI institucional debe documentar UDL en los procesos misionales.",
-      "**Acción concreta**: cada Paquete CCA debe tener checklist UDL 3 principios x 9 pautas y validarse contra el Decreto 1421."
-    ]
-  },
-  "docente-formador": {
-    titulo: "🎤 Para el Docente Formador",
-    contenido: [
-      "**Tu práctica de aula** debe operar bajo UDL: entregas, materiales, evaluaciones con múltiples vías.",
-      "- El PIAR (Plan Individual de Ajustes Razonables) lo elaboras tú como docente de aula, no un especialista externo.",
-      "**Acción concreta**: incluye en tu syllabus las múltiples vías de representación + acción + implicación; documenta los ajustes razonables que aplicas."
-    ]
-  },
-  "docente-investigador-pasteur": {
-    titulo: "🔬 Para el Investigador Pasteur",
-    contenido: [
-      "**Tu investigación territorial** debe ser UDL-compatible: instrumentos accesibles, comunicación de hallazgos en múltiples formatos, equipos diversos.",
-      "- Investigaciones sobre cultura de inclusión + DUA en IES tienen marco normativo en este decreto.",
-      "**Acción concreta**: documenta en tu PM2 cómo UDL aplica a tu metodología investigativa territorial."
-    ]
-  },
-  "docente-emprendedor-coop": {
-    titulo: "🤝 Para el Emprendedor/Coop",
-    contenido: [
-      "**Tus convenios** universidad-territorio-sector productivo deben respetar UDL: accesibilidad de espacios físicos, materiales accesibles, lenguaje claro.",
-      "**Acción concreta**: incluye cláusula UDL en convenios PM3 + verifica accesibilidad en eventos territoriales."
-    ]
-  },
-  "docente-director": {
-    titulo: "🏛️ Para el Docente Director",
-    contenido: [
-      "**Tu obligación de gobernanza**: implementar UDL en el PEI institucional + reportes SIMAT + condiciones de calidad para registro calificado (Decreto 1330/2019).",
-      "- Verificación: ¿el PEI UDFJC documenta UDL? ¿hay datos SIMAT actualizados?",
-      "**Acción concreta**: exigir a Vicerrectoría Académica reporte anual de cumplimiento Decreto 1421/2017 ante CACAD."
-    ]
-  }
-};
-const v = vistas[rol] ?? vistas["estudiante-soberano"];
-dv.header(3, v.titulo);
-for (const linea of v.contenido) dv.paragraph(linea);
-```
+
+<div class="dv-block" data-dv="vista-por-rol"></div>
+
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

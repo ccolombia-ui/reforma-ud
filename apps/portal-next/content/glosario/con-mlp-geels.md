@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Multi-Level Perspective (MLP) de Geels"
 
 skos_prefLabel: "MLP — Multi-Level Perspective (Geels 2002)"
 skos_altLabel: ["Perspectiva Multinivel", "MLP de Geels", "Multi-Level Perspective on Socio-Technical Transitions", "Geels MLP"]
@@ -26,12 +28,64 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[geels2002mlp]] + [[geels2007typology]] + literatura sustainability transitions contemporánea"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Análisis de transiciones sociotécnicas + reformas universitarias sistémicas + transformaciones institucionales con coexistencia régimen-nicho"
+assumptions:
+  - "Las transiciones requieren co-evolución de nichos maduros y desestabilización de régimen"
+  - "El paisaje opera como factor exógeno relativamente lento pero estructural"
+  - "Los nichos protegidos son condición necesaria (no suficiente) de transición exitosa"
+breaks_at:
+  - "Si se aplica como teoría predictiva determinista (es marco analítico)"
+  - "Si los nichos no tienen mecanismos formales de protección (los absorbe el régimen)"
+
+valid_from: "2002-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-"@context":
-
+tupla__relations:
+  - rel_id: rel-mlp-explica-transicion-acu
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El ACU-004-25 opera como perturbación de paisaje en términos MLP: legitima los nichos (CABAs), les da marco legal y los conecta con financiamiento PIIOM. Es la ventana de oportunidad que la MLP identifica como condición necesaria de transición."
+  - rel_id: rel-mlp-complementa-frame3
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-frame-3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "MLP y Frame 3 son marcos complementarios: MLP explica el CÓMO de las transiciones (mecánica multinivel); Frame 3 explica el POR QUÉ transformativo (direccionalidad hacia misiones)."
+  - rel_id: rel-mlp-fundamenta-salto-cuantico
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-salto-cuantico-sub-n1-n4]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El salto cuántico Sub-N1 → N4 vía CABAs es una aplicación directa del patrón Reconfiguración (P3 de Geels & Schot 2007): los nichos protegidos (CABAs) reconfiguran el régimen sin colapsarlo."
+  - rel_id: rel-mlp-fundamenta-nichos-emergentes
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-resultados-emergentes-e1-e3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "E3 (Nichos Transformativos) es un resultado emergente del modelo ΩMT directamente derivado de la MLP — los nichos son el dispositivo MLP por excelencia."
+  - rel_id: rel-mlp-articula-conpes
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El CONPES 4069 adopta direccionalidad Frame 3 (que MLP fundamenta): legitima nichos transformativos como dispositivos de política CTI nacional."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

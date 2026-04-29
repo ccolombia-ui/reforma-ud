@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "SNIES · Sistema Nacional Información Educación Superior"
 
 skos_prefLabel: "SNIES · Sistema Nacional de Información de la Educación Superior (MEN)"
 skos_altLabel: ["SNIES", "Sistema Nacional Información Educación Superior", "MEN SNIES"]
@@ -23,11 +25,39 @@ iso_standardized_by: "Ministerio de Educación Nacional - República de Colombia
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "MEN Colombia SNIES"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Reportes UDFJC al MEN + alimentación P1 framework M08 + benchmark BMK-001"
+assumptions:
+  - "Los datos SNIES son confiables (auditados por MEN)"
+breaks_at: []
+
+valid_from: "1992-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-snies-alimenta-fwk
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-framework-86-indicadores-s0-s5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "SNIES alimenta P1 (Impacto Misional) del framework M08 con tasa de graduación + matrícula + planta docente UDFJC."
+  - rel_id: rel-snies-articula-decreto1330
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-decreto-1330-2019]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los programas registrados en SNIES son los que tienen registro calificado vigente del Decreto 1330/2019."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-11--datasets-men]]"]
 cited_count: 2

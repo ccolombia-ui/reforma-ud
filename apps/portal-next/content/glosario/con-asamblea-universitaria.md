@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Asamblea Universitaria UDFJC"
 
 skos_prefLabel: "Asamblea Universitaria UDFJC"
 skos_altLabel: ["Asamblea UDFJC", "University Assembly", "AU UDFJC"]
@@ -23,16 +25,110 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 45-48"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 45-48 (composición 105 miembros, sesiones bianuales)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza la Asamblea Universitaria como concepto NUEVO sin precedente en ACU 003/1997 — máximo órgano deliberativo democrático con 105 miembros"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 45-48"
+  normative_text: "[Texto literal Arts. 45-48 · 105 miembros · sesiones bianuales]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates:
+    - "Concepto NUEVO en ACU-004-25 (sin precedente en ACU 003/1997)"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "asamblea_universitaria"
+  ddd_aggregate_root: "AsambleaUniversitaria"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "Aggregate Root del subdominio Participación Democrática. Encapsula composición 105 miembros con identidad por estamento + Sesiones como Entities con orden del día y conceptos emitidos."
+  ddd_invariants:
+    - "La AU debe tener exactamente 105 miembros (40 docentes + 40 estudiantes + 15 egresados + 10 administrativos)"
+    - "Todos los miembros tienen voto pleno (sin asimetrías)"
+    - "Las sesiones ordinarias son cada 2 años; las extraordinarias por convocatoria"
+    - "Sus conceptos son deliberativos-propositivos, no ejecutivos"
+    - "La AU NO sustituye al CSU; sus propuestas requieren tramitación posterior por CSU/CACAD"
+  ddd_ubiquitous_terms:
+    - "Asamblea Universitaria"
+    - "AU"
+    - "Sesión ordinaria bianual"
+    - "Sesión extraordinaria"
+    - "Concepto deliberativo"
+    - "Reforma estatutaria propuesta"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-arts-45-48-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-arts-45-48-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-comunidad-universitaria]]"
 
+applicable_domain: "UDFJC, vigente desde 2025-05-06; primera sesión ordinaria estimada antes de 2027-05-05."
+assumptions:
+  - "La distribución 40-40-15-10 refleja un balance equitativo entre estamentos"
+  - "Los procesos electorales internos de cada estamento producen representantes legítimos"
+breaks_at:
+  - "Si la primera AU no sesiona dentro de los 2 años posteriores a la promulgación del Estatuto"
+  - "Si se altera la composición sin reforma estatutaria"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-au-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-au-representa-comunidad
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-comunidad-universitaria]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "AU = representación deliberativa máxima de la Comunidad Universitaria"
+  - rel_id: rel-au-propone-csu
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-csu-consejo-superior-universitario]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las propuestas AU se elevan al CSU para tramitación"
+  # — v1.1.0 cross-references M01 (Fase B audit refactor) ——————————
+  - rel_id: rel-au-brecha-pendiente-m01
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "M01 §5.1 documenta brecha verificada: Asamblea Universitaria PENDIENTE de constituirse a 2026-04-26 — riesgo crítico para legitimidad democrática de la implementación"
+  - rel_id: rel-au-materializa-autonomia-positiva
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-autonomia-positiva]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "AU es dispositivo institucional para ejercer autonomía positiva (libertad PARA contribuir) mediante deliberación democrática vinculante"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Wenger-Trayner Landscapes of Practice (2015)"
 
 skos_prefLabel: "Landscapes of Practice (Wenger-Trayner 2015)"
 skos_altLabel: ["Wenger-Trayner Landscapes", "LoP", "Paisajes de Práctica", "Landscape of Practice"]
@@ -23,11 +25,40 @@ iso_standardized_by: "Wenger-Trayner, E., Fenton-O'Creevy, M., Hutchinson, S., K
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Wenger-Trayner et al. (2015) Landscapes of Practice"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Gobernanza de redes de CABAs UDFJC + diseño de plataforma comunitaria + análisis de boundaries"
+assumptions:
+  - "Las redes de CoPs se pueden gobernar sin centralización jerárquica"
+breaks_at:
+  - "Si se aplica para una CoP individual (es marco de redes)"
+
+valid_from: "2015-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-lop-extiende-wenger98
+    rel_nombre: skos_broader
+    rel_direccion: pre
+    rel_target: "[[con-cops-wenger]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Wenger-Trayner 2015 extiende Wenger 1998: del modelo de CoP individual al modelo de landscape de múltiples CoPs interconectadas."
+  - rel_id: rel-lop-gobernanza-cabas
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El landscape of practice provee el marco para gobernar la red de CABAs UDFJC sin centralización jerárquica — boundaries y brokering como mecanismos."
 
 cited_in: ["[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 1

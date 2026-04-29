@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "4 maneras de articular investigación con docencia (Boyer 1990 + Healey 2005)"
 
 skos_prefLabel: "Taxonomía Boyer-Healey · 4 maneras de articular investigación con docencia"
 skos_altLabel: ["Boyer Healey Taxonomy", "Research-Teaching Nexus", "4 modalidades research-teaching"]
@@ -23,11 +25,40 @@ iso_standardized_by: "Boyer, E. L. (1990). *Scholarship Reconsidered: Priorities
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Boyer (1990) + Healey (2005)"
+  neon_alignment_confidence: 0.92
+
+applicable_domain: "Diseño curricular UDFJC + decisión de modalidad por curso + diagnóstico balance institucional"
+assumptions:
+  - "Las 4 modalidades son exhaustivas para articular research-teaching"
+breaks_at:
+  - "Si se interpretan como jerárquicas (no lo son)"
+
+valid_from: "2005-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-boyer-fundamenta-urop
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-mit-urop]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "MIT UROP es la realización paradigmática de la modalidad 'research-based' (Boyer 1990 / Healey 2005). UROP no existe sin la categoría research-based como marco conceptual."
+  - rel_id: rel-boyer-fundamenta-r1
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "R1 (Semilleros: PM1→PM2) del ciclo virtuoso ΩMT depende de la modalidad research-based. Sin Boyer-Healey, no hay marco conceptual para la creditización formal de investigación de pregrado."
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]"]
 cited_count: 1

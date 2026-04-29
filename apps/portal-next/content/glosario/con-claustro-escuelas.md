@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Claustro de Escuelas UDFJC"
 
 skos_prefLabel: "Claustro de Escuelas"
 skos_altLabel: ["Claustros de Escuela", "School Cloister", "CdE UDFJC"]
@@ -23,15 +25,82 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Art. 55"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 55 (Claustros de Escuelas)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza Claustros de Escuelas como espacios deliberativos disciplinares por campo del conocimiento-saber"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 55"
+  normative_text: "[Texto literal Art. 55 · espacios disciplinar/interdisciplinar/transdisciplinar al nivel de Escuela]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "claustro_escuelas"
+  ddd_aggregate_root: "ClaustroDeEscuela"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "Aggregate Root del subdominio Gobernanza Local de Escuela. Cada Escuela tiene su propio Claustro."
+  ddd_invariants:
+    - "Cada Escuela tiene UN Claustro propio"
+    - "Reúne docentes-investigadores-estudiantes de la Escuela"
+    - "Delibera sobre el campo del conocimiento-saber específico"
+    - "Articula con CABAs transversales activas"
+  ddd_ubiquitous_terms:
+    - "Claustro de Escuela · CdE"
+    - "Campo del conocimiento-saber"
+    - "Articulación con CABAs"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-55-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-55-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-escuela]]"
+  - "[[con-campo-conocimiento-saber]]"
 
+applicable_domain: "Cada Escuela UDFJC desde 2025-05-06; los Claustros se constituyen progresivamente conforme se reorganizan las Escuelas (Período de Transición Art. 96)"
+assumptions: ["Las Escuelas se constituyen formalmente durante el Período de Transición"]
+breaks_at: ["Una Escuela sin Claustro propio incumple Art. 55"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-investigador-pasteur
 
 
+tupla__relations:
+  - rel_id: rel-cde-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-cde-part-of-escuela
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-escuela]]"
+    rel_frame: skos
+  - rel_id: rel-cde-articula-caba
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1

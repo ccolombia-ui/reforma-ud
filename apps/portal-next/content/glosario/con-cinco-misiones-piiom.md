@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "5 Misiones Transformativas PIIOM"
 
 skos_prefLabel: "5 Misiones Transformativas PIIOM"
 skos_altLabel: ["Misiones PIIOM M1-M5", "5 Misiones MinCiencias", "PIIOM Misiones 2022-2026"]
@@ -23,14 +25,61 @@ iso_standardized_by: "MinCiencias - PIIOM 2022-2026"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-minciencias-piiom-2022]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-conpes-4069]]"
+      adopter_locator: "CONPES 4069/2021 · 5 misiones nacionales CTI"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2021-12-21"
+      adoption_evidence: "CONPES 4069 establece 5 misiones nacionales · PIIOM las operacionaliza con direccionalidad transformativa Frame 3"
+    - adopter: "[[con-piiom]]"
+      adopter_locator: "PIIOM 2022-2026 · Las 5 Misiones Transformativas (M1-M5)"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2022-01-01"
+      adoption_evidence: "MinCiencias publica las 5 misiones operacionalizando CONPES 4069 · vinculantes para SNCTI 2022-2026"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: REGLAMENTARIO
+  normative_source: "[[cita-minciencias-piiom-2022]]"
+  normative_locator: "PIIOM 2022-2026 · M1-M5"
+  normative_text: "[5 misiones: Bioeconomía + Alimentaria + Energética + Sanitaria + Equitativa]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-piiom-5misiones-2022-01-01]]"
+concepto_current_anchor: "[[def-norm-piiom-5misiones-2022-01-01]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-piiom]]"
+  - "[[con-conpes-4069]]"
+  - "[[con-conpes-3934]]"
 
+applicable_domain: "Toda actividad de investigación-creación-innovación + extensión territorial UDFJC 2022-2026"
+assumptions: ["Las misiones se actualizarán en nuevo PIIOM 2027-2030"]
+breaks_at: ["2026-12-31 — vencimiento PIIOM 2022-2026"]
 
+valid_from: "2022-01-01"
+valid_to: "2026-12-31"
 rol_seleccionado: docente-investigador-pasteur
 
 
+tupla__relations:
+  - rel_id: rel-5misiones-part-piiom
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-piiom]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-07--21-bpa-especificadas]]"]
 cited_count: 3

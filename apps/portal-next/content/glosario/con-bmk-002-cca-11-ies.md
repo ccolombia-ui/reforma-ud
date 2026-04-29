@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "BMK-002 · Benchmark Créditos Académicos + Modelo CCA"
 
 skos_prefLabel: "BMK-002 · Benchmark Créditos Académicos en 11 IES + Modelo CCA (M06)"
 skos_altLabel: ["BMK-002", "Benchmark CCA", "Madera Sepúlveda 2026 BMK-002"]
@@ -23,11 +25,47 @@ iso_standardized_by: "Madera Sepúlveda, C. C. (2026). M06 BMK-002 — Modelo CC
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M06 BMK-002 — investigación propia"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diseño de creditización CCA UDFJC + roadmap transicional + adopción institucional"
+assumptions:
+  - "Las 11 IES son referentes válidos para diseño curricular comparativo"
+  - "El Decreto 1330/2019 admite reinterpretación sin reforma nacional"
+breaks_at: []
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-bmk002-disena-cca
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-cca]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-002 (M06) es el proyecto investigativo que diseña formalmente el modelo CCA — la creditización V1∧V2∧V3 simultánea es contribución original de BMK-002."
+  - rel_id: rel-bmk002-reinterpreta-decreto
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-decreto-1330-2019]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-002 demuestra viabilidad regulatoria del CCA mediante reinterpretación del Decreto MEN 1330/2019 (1 crédito = 48 h) sin requerir reforma nacional."
+  - rel_id: rel-bmk002-complementa-bmk001
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-bmk-001-21-ies]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-002 (TO-BE creditizable) complementa BMK-001 (AS-IS posicional Sub-N1). Juntos forman la base empírica completa del cap-MI12."
 
 cited_in: ["[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

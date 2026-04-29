@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:direccion-centro
 kd_title: "Dirección de Centro UDFJC (Arts. 18i, 79-80 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Dirección de Centro UDFJC"
+tupla_descripcion: "Autoridad ejecutiva unipersonal del Centro UDFJC declarada en Arts. 18i + 79-80 · designación por votación directa de docentes · 4 años · sin reelección inmediata"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Dirección de Centro"
 skos_altLabel: ["Director(a) de Centro", "Center Director"]
@@ -26,15 +28,102 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 18i + 79-80 + 83"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 18i + 79-80 + 83"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza Dirección de Centro · invariante de no reelección inmediata Art. 83"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 18i + 79-80 + 83"
+  normative_text: "Art. 80 - Director de Centro: Periodo 4 años · Mecanismo: Votación directa de docentes. Sin reelección inmediata (Art. 83)."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "direccion_centro"
+  ddd_term: "Dirección de Centro"
+  ddd_aggregate_root: "DireccionCentro"
+  ddd_article_ref: "Arts. 18i + 79-80 + 83"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: AGGREGATE_ROOT
+  ddd_aggregate_root_flag: true
+  ddd_domain_type: Core
+  ddd_governed_by:
+    - "[[con-vicerrectoria-contextos-extension]]"
+  ddd_invariants:
+    - "Dirección de Centro es autoridad UNIPERSONAL · un único titular en cada momento"
+    - "Periodo 4 años · sin reelección inmediata (Art. 83)"
+    - "Designación por votación directa de docentes adscritos al Centro"
+    - "Excepción transitoria Art. 107 · 2025-2027 designación rectoral"
+  ddd_ubiquitous_terms:
+    - "Dirección de Centro · DC"
+    - "Director(a) de Centro"
+    - "Votación directa de docentes"
+    - "Período 4 años · no reelección inmediata"
 
+concepto_definitional_anchors: ["[[def-norm-acu-004-25-art-80-2025-05-05]]"]
+concepto_current_anchor: "[[def-norm-acu-004-25-art-80-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-centro]]"
+  - "[[con-vicerrectoria-contextos-extension]]"
 
+applicable_domain: "Todo Centro UDFJC desde 2025-05-06 con régimen transitorio Art. 107"
+assumptions: ["Composición electoral solo docentes refleja naturaleza extensiva del Centro"]
+breaks_at: ["Si Director ejerce > 4 años continuos (Art. 83)", "Si designación post 2027-05-05 omite votación democrática"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-emprendedor-coop
 
 
+tupla__relations:
+  - rel_id: rel-dc-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Dirección de Centro declarada Arts. 18i + 79-80"
+  - rel_id: rel-dc-dirige-centro
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-centro]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Dirección de Centro es autoridad ejecutiva del Centro"
+  - rel_id: rel-dc-coordinada-vce
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-vicerrectoria-contextos-extension]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Direcciones de Centro coordinadas por Vicerrectoría Contextos-Extensión (Art. 63)"
+  - rel_id: rel-dc-miembro-cacad
+    rel_nombre: ddd_part_of
+    rel_direccion: post
+    rel_target: "[[con-cacad-consejo-academico]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 31j · Director de Centro representa al estamento en CACAD"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1
@@ -43,57 +132,42 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, direccion-centro, a
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Dirección de Centro
 
 > [!note]+ Autoridad ejecutiva de Centro · votación directa docente
 > La **Dirección de Centro** se elige por votación directa de docentes · 4 años · sin reelección inmediata. Coordina actividades de contextos-extensión y proyección social.
 
 ## §0 · 🎭 Vista por rol
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ## §1 · Definición
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Autoridad ejecutiva unipersonal del Centro UDFJC declarada como **órgano del Gobierno Universitario** en el Art. 18i del ACU-004-25 y como componente obligatorio de la estructura de Centro en el Art. 79. Su titular —el(la) **Director(a) de Centro**— es designado por **votación directa de docentes** del Centro (Art. 80) · período **4 años · sin reelección inmediata** (Art. 83). Dirige las actividades de **contextos-extensión y proyección social** del Centro. Adscrita a la Vicerrectoría de Context
 
 ## §2 · Anclaje
 
-```dataviewjs
-const f = dv.current().concepto_facet_normative;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.table(["Campo", "Valor"], [["Origen", `${f.origin_type} · ${f.origin_force}`], ["Authority", f.normative_authority_level], ["Effective force", `**${f.effective_force_in_udfjc}**`]]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) { dv.header(4, `🔗 Cadena · ${chain.length}`); dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"], chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence])); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · DDD
 
-```dataviewjs
-const f = dv.current().concepto_facet_ddd;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.header(4, `DDD · ${f.ddd_id}`);
-  if ((f.ddd_invariants ?? []).length) { dv.header(5, "🔒 Invariantes"); dv.list(f.ddd_invariants); }
-  if ((f.ddd_ubiquitous_terms ?? []).length) { dv.header(5, "🗣️ Lenguaje ubicuo"); dv.paragraph(f.ddd_ubiquitous_terms.join(" · ")); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · Relaciones
 
-```dataviewjs
-const rels = dv.current().tupla__relations ?? [];
-const vocab = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocab?.relaciones ?? {};
-const hL = (n, d) => { const e = relMap[n]?.[d ?? "co"] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post; return e?.label ?? `\`${n}\``; };
-for (const r of rels) dv.paragraph(`**${hL(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §10 · Citado en
 
-```dataviewjs
-dv.list(dv.current().cited_in ?? []);
-dv.paragraph(`**Total**: ${dv.current().cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

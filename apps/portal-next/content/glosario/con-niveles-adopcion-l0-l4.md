@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Niveles de Adopción L0-L4"
 
 skos_prefLabel: "Niveles de Adopción L0-L4 (escala de madurez de adopción de BPAs)"
 skos_altLabel: ["L0-L4", "Niveles adopción BPA", "Escala madurez adopción"]
@@ -23,11 +25,41 @@ iso_standardized_by: "Madera Sepúlveda (2026) M07 §4 — elaboración propia"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M07 §4 — elaboración propia"
+  neon_alignment_confidence: 0.9
+
+applicable_domain: "Diagnóstico de adopción BPA por unidad UDFJC + dashboard institucional + planning estratégico"
+assumptions:
+  - "Los niveles son acumulativos (no se salta etapas)"
+  - "L4 generativo es alcanzable por al menos algunas unidades en horizonte 5-10 años"
+breaks_at:
+  - "Si se confunde con la taxonomía Sub-N1 → N4 de BMK-001 (granularidad distinta)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-l0l4-mide-bpa
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-bpa-001-21-buenas-practicas]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "L0-L4 son los niveles de adopción de cada una de las 21 BPAs por cada unidad UDFJC."
+  - rel_id: rel-l0l4-mapea-taxonomia
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-taxonomia-sub-n1-n4]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "L0-L4 (granularidad BPA-unidad) mapea agregado a Sub-N1 → N4 (granularidad institucional). L0 ≈ Sub-N1, L4 ≈ N4."
 
 cited_in: ["[[sec-MI12-07--21-bpa-especificadas]]"]
 cited_count: 1

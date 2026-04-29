@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Marco P1 · Impacto Misional"
 
 skos_prefLabel: "Marco P1 · Impacto Misional (BSC-s P1 detallado en 4 funciones × 5 categorías)"
 skos_altLabel: ["P1 Impacto Misional", "Marco 4×5 BMK-001", "20 Preguntas Impacto"]
@@ -23,11 +25,56 @@ iso_standardized_by: "Madera Sepúlveda (2026) M05 + canonizado M08 — elaborac
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+  - DDD
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M05 + M08 — elaboración propia"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Evaluación de impacto misional UDFJC + benchmarking BMK-001 + monitoreo institucional"
+assumptions:
+  - "Las 20 QI son exhaustivas para capturar impacto misional"
+  - "F4 (Integración Living-Labs) es función misional legítima emergente"
+breaks_at:
+  - "Si se confunde con BSC-s completo (es subespacio P1)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-p1-detalla-bsc
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Marco P1 es desagregación detallada de la perspectiva P1 (Sostenibilidad financiera + Impacto misional) del BSC-s general."
+  - rel_id: rel-p1-aplica-funciones
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-procesos-misionales-pm1-pm2-pm3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "F1+F2+F3 del Marco P1 corresponden a PM1+PM2+PM3 (Procesos Misionales). F4 es función emergente añadida que mide integración (R1-R6)."
+  - rel_id: rel-p1-mide-r1r6
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "F4 (Integración Living-Labs) del Marco P1 mide la activación de las 6 retroalimentaciones R1-R6 simultáneamente — es la categoría emergente del ciclo virtuoso."
+  - rel_id: rel-p1-instrumento-bmk001
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-bmk-001-21-ies]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-001 (M05) usa el Marco P1 como matriz de evaluación de las 21 IES."
 
 cited_in: ["[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-08--framework-bsc-rbm-crisp]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 3

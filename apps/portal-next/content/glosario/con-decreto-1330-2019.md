@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Decreto MEN 1330/2019"
 
 skos_prefLabel: "Decreto MEN 1330 de 2019 — Registro Calificado IES"
 skos_altLabel: ["Decreto 1330", "Decreto Registro Calificado", "Decreto MEN 1330/2019"]
@@ -23,15 +25,97 @@ iso_standardized_by: "Ministerio de Educación Nacional - República de Colombia
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-decreto-1330-2019-men]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-ley-30-1992-art-6]]"
+      adopter_locator: "Ley 30/1992 + Ley 1188/2008 Art. 2 (registro calificado)"
+      adopter_authority_level: LEGAL
+      adopted_at: "1992-12-28"
+      adoption_evidence: "Decreto 1330/2019 reglamenta el registro calificado establecido por Ley 30/1992 + Ley 1188/2008 — base legal del aseguramiento de la calidad IES"
+    - adopter: "[[con-decreto-1421-2017]]"
+      adopter_locator: "Decreto 1421/2017 · educación inclusiva · UDL"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2017-08-29"
+      adoption_evidence: "Decreto 1330/2019 incorpora principios de inclusión articulados con UDL del Decreto 1421/2017 como condición institucional de calidad — accesibilidad y equidad sistémica"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: REGLAMENTARIO
 
+  normative_source: "[[cita-decreto-1330-2019-men]]"
+  normative_locator: "Decreto MEN 1330/2019 · Arts. 2-3 (programa); 11-12 (créditos); 35 (renovación)"
+  normative_text: "[Texto literal · ver atomics en 0-normatividad/1--normas-nacionales/decreto-1330-2019/]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates:
+    - "Decreto MEN 1295/2010 (sustituido en lo pertinente)"
+  modification_type: "Sustituye Capítulo 2 + suprime Capítulo 7 del Título 3 Parte 5 Libro 2 del Decreto 1075/2015"
+  chain_status: LINEAR
+  conflicts_with: []
+  conflict_evidence: ""
 
+concepto_definitional_anchors:
+  - "[[def-norm-decreto-1330-2019-2019-07-25]]"
+concepto_current_anchor: "[[def-norm-decreto-1330-2019-2019-07-25]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-ley-30-1992-art-6]]"
+  - "[[con-decreto-1421-2017]]"
 
+applicable_domain: "Programas Académicos UDFJC en cualquier nivel y modalidad"
+assumptions:
+  - "MEN no expide nuevo decreto sustancial antes de 2027"
+breaks_at:
+  - "Si se reforma Decreto 1330 con criterios distintos"
 
+valid_from: "2019-07-25"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-decreto1330-fuente
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "Ministerio de Educación Nacional - Decreto 1330 del 25 de julio de 2019 (referencia normativa externa, sin nodo en corpus)"
+    rel_frame: bibliografico
+  - rel_id: rel-decreto1330-mandates-credito
+    rel_nombre: norm_mandates
+    rel_direccion: post
+    rel_target: "[[con-credito-academico]]"
+    rel_frame: normativo
+  - rel_id: rel-decreto1330-mandates-programa
+    rel_nombre: norm_mandates
+    rel_direccion: post
+    rel_target: "[[con-programa-academico]]"
+    rel_frame: normativo
+  # — v1.1.0 cross-references M03 (Fase B audit refactor) ——————————
+  - rel_id: rel-decreto1330-articula-abet
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-abet-acreditacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Decreto 1330/2019 (registro calificado obligatorio MEN) y ABET (acreditación voluntaria internacional) son capas complementarias del sistema de calidad — no sustitutos."
+  - rel_id: rel-decreto1330-articula-tuning
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-tuning-america-latina]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Decreto 1330 y TUNING-AL convergen en enfoque por competencias para programas académicos — la metodología TUNING facilita cumplimiento del registro calificado."
+  - rel_id: rel-decreto1330-articula-udl
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-udl-3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "UDL 3.0 (CAST 2024) está implícitamente alineado con el Decreto 1421/2017 + Decreto 1330/2019 — accesibilidad y equidad sistémica como condiciones de calidad."
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-03--estandares-internacionales]]", "[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-11--datasets-men]]"]
 cited_count: 4

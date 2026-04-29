@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Anti-patrón de Departamentalización de la Innovación"
 
 skos_prefLabel: "Anti-patrón · Departamentalización de la Innovación"
 skos_altLabel: ["Anti-patrón departamental", "Encapsulamiento de innovación", "PM4 spurio", "Innovation departmentalization anti-pattern"]
@@ -26,12 +28,63 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M02 §4.1 — síntesis sobre Clark 1998 + Etzkowitz 2003 + Beer 1979 + Compagnucci & Spigarelli 2020"
+  neon_alignment_confidence: 0.9
+
+applicable_domain: "Diseño organizacional UDFJC + revisión crítica de propuestas de reforma + advocacy contra propuestas de 'PM4 Innovación'"
+assumptions:
+  - "El anti-patrón es estructuralmente recurrente (no caso aislado)"
+  - "La alternativa correcta (ΩMT como meta-telos) es operacionalizable mediante R1-R6 + CABAs"
+breaks_at:
+  - "Si se confunde con tener oficinas operativas de transferencia tecnológica (TTO) — son distintas cosas"
+  - "Si se aplica fuera del contexto universitario sin adaptación"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-"@context":
-
+tupla__relations:
+  - rel_id: rel-anti-evitado-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El ACU-004-25 implícitamente evita el anti-patrón: institucionaliza 3 vicerrectorías (PM1, PM2, PM3) sin agregar 'Vicerrectoría de Innovación'. La innovación queda como propiedad emergente, no como cuarta misión."
+  - rel_id: rel-anti-alternativa-omt
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-omt]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La alternativa correcta al anti-patrón es ΩMT operando como System 5 VSM (meta-telos) — no como cuarto proceso operativo. ΩMT orienta los 3 PM sin competir con ellos."
+  - rel_id: rel-anti-fundamento-vsm
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-vsm-system-5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "El error ontológico del anti-patrón es confundir System 5 VSM (identidad/propósito) con un System 1-3 (operativo). Beer demuestra que ninguna organización viable crea 'Departamento del Sistema 5'."
+  - rel_id: rel-anti-clark-evidencia
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-cinco-vias-clark]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Clark 1998 documenta que las 5 universidades europeas exitosas NO crearon oficinas de innovación: la cultura emprendedora (R-5 Clark) es propiedad cultural transversal, no departamento."
+  - rel_id: rel-anti-mitiga-rt1
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Documentar el anti-patrón es mitigación de RT1 (Fragmentación organizacional) — provee marco interpretativo único contra la tentación recurrente de departamentalizar."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

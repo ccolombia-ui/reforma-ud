@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Taxonomía Sub-N1 a N4"
 
 skos_prefLabel: "Taxonomía de Niveles Sub-N1 a N4"
 skos_altLabel: ["Niveles N1-N4", "Taxonomía transformativa", "Salto cuántico Sub-N1→N4"]
@@ -23,11 +25,59 @@ iso_standardized_by: "Madera Sepúlveda (2026) — elaboración propia"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Inspirada en MLP Geels 2002 (régimen-nicho-transición) + capability maturity models + síntesis UDFJC"
+  neon_alignment_confidence: 0.8
+
+applicable_domain: "Diagnóstico + roadmap de transformación de unidades organizativas UDFJC"
+assumptions: ["Los niveles son ordinales (no exactamente cuantitativos)"]
+breaks_at: ["Si se aplica como métrica cuantitativa rígida sin juicio cualitativo"]
+
+valid_from: "2026-04-26"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-taxonomia-related-caba
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+  # — v1.1.0 cross-references M02 (Fase B audit refactor) ——————————
+  - rel_id: rel-taxonomia-fundamenta-salto
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-salto-cuantico-sub-n1-n4]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La taxonomía Sub-N1 → N4 (M05 BMK-001) es el insumo del diagnóstico previo del salto cuántico (M02 §4.4.2). Sin la taxonomía, no hay diagnóstico honesto del estadio actual."
+  - rel_id: rel-taxonomia-mapea-mlp
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-mlp-geels]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Sub-N1 = régimen frágil; N4 = nuevo régimen reconfigurado. La taxonomía mapea los niveles institucionales en lenguaje MLP."
+  # — v1.2.0 cross-references M05 (Fase B audit refactor) ——————————
+  - rel_id: rel-taxonomia-fuente-bmk001
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-bmk-001-21-ies]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-001 (M05) es la fuente formal de la taxonomía Sub-N1 → N4: la taxonomía emerge del análisis empírico de las 21 IES."
+  - rel_id: rel-taxonomia-clag
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-culture-lag]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La taxonomía Sub-N1 → N4 es el dominio sobre el cual opera la métrica culture_lag = max(0, N - G_equivalente)."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

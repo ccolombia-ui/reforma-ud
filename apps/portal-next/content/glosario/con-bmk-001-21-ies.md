@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "BMK-001 · Benchmark Procesos Misionales 21 IES"
 
 skos_prefLabel: "BMK-001 · Benchmark de Procesos Misionales en 21 IES"
 skos_altLabel: ["BMK-001", "Benchmark 21 IES", "Madera Sepúlveda 2026 BMK-001"]
@@ -23,11 +25,55 @@ iso_standardized_by: "Madera Sepúlveda, C. C. (2026). M05 BMK-001 — Procesos 
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M05 BMK-001 — investigación propia"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diagnóstico AS-IS UDFJC + plan de mejora referenciado a benchmark global + comunicación con stakeholders"
+assumptions:
+  - "Las 21 IES seleccionadas son referentes válidos para LatAm"
+  - "Las 12 dimensiones × 9 métricas son exhaustivas para procesos misionales"
+breaks_at:
+  - "Si se interpreta como ranking en lugar de posicionamiento cualitativo"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-bmk001-genera-taxonomia
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-taxonomia-sub-n1-n4]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-001 es el proyecto investigativo que genera formalmente la taxonomía Sub-N1 → N4 de madurez universitaria (M05 §3.1)."
+  - rel_id: rel-bmk001-marco-p1
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-marco-p1-impacto-misional]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-001 organiza la evidencia empírica en torno al marco P1 (Impacto Misional) del modelo BSC-s × RBM-GAC × CRISP-DM."
+  - rel_id: rel-bmk001-evidencia-r1r6
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-001 documenta empíricamente que en UDFJC 5/6 retroalimentaciones R1-R6 están en estado Ausente, R4 en Reactivo. Sin BMK-001, el diagnóstico R1-R6 sería opinión."
+  - rel_id: rel-bmk001-aplica-mode3
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-mode-1-2-3]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "BMK-001 distingue las IES por el modo dominante: las N4 globales operan en Mode 3 (FREIE); UDFJC Sub-N1 opera en Mode 1 disciplinar."
 
 cited_in: ["[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

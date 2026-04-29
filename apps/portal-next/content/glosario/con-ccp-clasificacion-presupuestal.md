@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "CCP · Catálogo Clasificación Presupuestal"
 
 skos_prefLabel: "CCP · Catálogo de Clasificación Presupuestal MHCP"
 skos_altLabel: ["CCP", "Catálogo Clasificación Presupuestal", "MHCP CCP"]
@@ -23,15 +25,67 @@ iso_standardized_by: "Ministerio de Hacienda y Crédito Público de Colombia · 
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - NEON
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-mhcp-ccp-decreto-111-1996]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-decreto-111-1996-estatuto-presupuesto]]"
+      adopter_locator: "Decreto 111/1996 · Estatuto Orgánico de Presupuesto"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "1996-01-15"
+      adoption_evidence: "Decreto 111/1996 establece marco legal del CCP nacional"
+    - adopter: "[[con-mhcp-ccp-anual]]"
+      adopter_locator: "Catálogo CCP MHCP · actualización anual"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2018-01-01"
+      adoption_evidence: "MHCP actualiza CCP anualmente · vinculante para entidades públicas incluida UDFJC"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: REGLAMENTARIO
+  normative_source: "[[cita-mhcp-ccp-anual]]"
+  normative_locator: "Decreto 111/1996 + CCP MHCP anual · 8 niveles jerárquicos"
+  normative_text: "[Catálogo CCP · 8 niveles: Sección/Tipo/Cuenta/Subcuenta/Objeto/Subobjeto/Concepto/Subconcepto]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "MHCP Colombia CCP"
+  neon_alignment_confidence: 0.95
 
+concepto_definitional_anchors:
+  - "[[def-norm-mhcp-ccp-decreto-111-1996]]"
+concepto_current_anchor: "[[def-norm-mhcp-ccp-decreto-111-1996]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos: []
 
+applicable_domain: "Clasificación presupuestal UDFJC + trazabilidad PIIOM por rubro + benchmarking BMK-001"
+assumptions: ["MHCP actualiza CCP anualmente sin reformas estructurales"]
+breaks_at: ["Si se confunde con NICSP (clasificación presupuestal vs contable)"]
 
+valid_from: "1996-01-01"
+valid_to: ""
 rol_seleccionado: docente-emprendedor-coop
 
 
+tupla__relations:
+  - rel_id: rel-ccp-coexiste-nicsp
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-nicsp-marco-estado-resultados]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CCP (clasificación presupuestal ex-ante) y NICSP (contabilidad ex-post) son obligatorios complementarios."
 
 cited_in: ["[[sec-MI12-09--ds-presupuesto-nicsp]]"]
 cited_count: 1

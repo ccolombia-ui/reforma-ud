@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "IUCA · IVC · IVO (3 índices ponderados M08)"
 
 skos_prefLabel: "IUCA · IVC · IVO — 3 índices ponderados del framework M08"
 skos_altLabel: ["IUCA IVC IVO", "Índices ponderados M08", "Métricas escenario S0-S5"]
@@ -23,15 +25,58 @@ iso_standardized_by: "Madera Sepúlveda (2026) M08 — elaboración propia"
 
 pasteur_quadrant: PASTEUR
 
+concepto_formula_latex_iuca: |
+  \text{IUCA}(S_n) = \frac{1}{20} \sum_{i=1}^{20} \frac{\text{QI}_i^{S_n}}{\text{QI}_i^{S_5}} \times 100
+
+concepto_formula_latex_ivc: |
+  \text{IVC}(S_n) = \sum_{V=1}^{5} w_V \cdot \overline{\text{QV}_V}(S_n)
+  \quad w_{V3}=0.30,\; w_{V1}=0.25,\; w_{V2}=0.20,\; w_{V5}=0.15,\; w_{V4}=0.10
+
+concepto_formula_latex_ivo: |
+  \text{IVO}(S_n) = \sum_{S=1}^{5} w_S \cdot \overline{\text{QO}_S}(S_n)
+  \quad w_{S1}=0.30,\; w_{S2}=0.25,\; w_{S3}=0.20,\; w_{S4}=0.15,\; w_{S5}=0.10
+
+concepto_prerequisitos:
+  - "[[con-framework-86-indicadores-s0-s5]]"
+  - "[[con-bsc-s]]"
+  - "[[con-taxonomia-sub-n1-n4]]"
+  - "[[con-bmk-001-21-ies]]"
+
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M08 — elaboración propia"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Diagnóstico institucional UDFJC + comunicación con CSU + dashboard estratégico"
+assumptions:
+  - "Las ponderaciones son razonables para contexto UDFJC (calibrables)"
+  - "La causalidad temporal IUCA → IVO → IVC es válida"
+breaks_at:
+  - "Si se confunde con IUCA SNIES nacional"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
-
-
-
-
+tupla__relations:
+  - rel_id: rel-indices-sintetizan-fwk
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-framework-86-indicadores-s0-s5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "IUCA + IVC + IVO sintetizan los 86 indicadores del framework en 3 métricas agregadas comparables por escenario."
+  - rel_id: rel-indices-causalidad-p4-p1
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "IUCA mide P4 (capacidades), IVO mide P3 (organización), IVC mide P2 (cultura) — coherente con la cadena causal P4→P3→P2→P1 del BSC-s."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]"]
 cited_count: 1

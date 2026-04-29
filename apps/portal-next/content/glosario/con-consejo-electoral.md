@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Consejo Electoral UDFJC"
 
 skos_prefLabel: "Consejo Electoral UDFJC"
 skos_altLabel: ["CE UDFJC", "Electoral Council"]
@@ -23,14 +25,56 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 51-52"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 51-52 (Consejo Electoral)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza Consejo Electoral como órgano de garantía electoral · concepto NUEVO formalizando garantías democráticas"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 51-52"
+  normative_text: "[Texto literal Arts. 51-52 · imparcialidad + transparencia + oportunidad como principios]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: ["Concepto NUEVO en ACU-004-25 (formalización de garantías electorales)"]
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-arts-51-52-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-arts-51-52-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-comunidad-universitaria]]"
 
+applicable_domain: "Procesos electorales UDFJC (representantes a CSU, CACAD, AU, Directores, Decanos, etc.)"
+assumptions:
+  - "Existe reglamento electoral interno (cuya expedición es parte del Plan de Implementación Art. 98)"
+breaks_at: ["Si se demuestra vicio sustantivo en proceso electoral certificado por el CE"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-ce-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1

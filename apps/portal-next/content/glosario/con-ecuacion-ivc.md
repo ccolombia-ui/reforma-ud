@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Ecuación IVC — Índice de Viabilidad Cultural ponderado"
 
 skos_prefLabel: "Ecuación IVC (M08)"
 skos_altLabel: ["IVC formula", "Índice Viabilidad Cultural", "IVC ponderado"]
@@ -13,8 +15,23 @@ skos_scopeNote: "IVC NO llega a 100 en S5 (solo ~88) porque la cultura cambia m�
 skos_example: "Cálculo S1: QV-V3 promedio (4 roles) ≈ 0.13 → contribución V3 = 0.30 × 0.13 × 100 = 3.9. QV-V1 promedio ≈ 0.12 → 0.25 × 0.12 × 100 = 3.0. Total ≈ 25 (coincide con IVC(S1)≈25). El riesgo dominante es V3 bloqueante S2→S3: directivos que no ceden poder Decanatura→Escuela."
 skos_notation: "IVC"
 
+concepto_formula_latex: |
+  \text{IVC}(S_n) = \sum_{V=1}^{5} w_V \cdot \overline{\text{QV}_V}(S_n)
+  \quad \text{con} \quad \sum_{V=1}^{5} w_V = 1
 
+concepto_formula_variables:
+  - var: "\\text{IVC}(S_n)"
+    desc: "Valor del Índice de Viabilidad Cultural en el escenario S_n (escala 0-100)"
+  - var: "w_V"
+    desc: "Peso del valor cultural V (V3=0.30, V1=0.25, V2=0.20, V5=0.15, V4=0.10)"
+  - var: "\\overline{\\text{QV}_V}(S_n)"
+    desc: "Promedio simple de los 4 QV del valor V en S_n (roles EST, DOC, DIR, ADM)"
+  - var: "V \\in [1,5]"
+    desc: "Índice de valores culturales V1=Soberanía, V2=Emprendimiento, V3=Participación, V4=Ética, V5=Austeridad"
 
+concepto_prerequisitos:
+  - "[[con-iuca-ivc-ivo-indices]]"
+  - "[[con-framework-86-indicadores-s0-s5]]"
 
 iso_designation_type: term
 iso_definition_type: intensional
@@ -26,11 +43,42 @@ iso_standardized_by: "Madera Sepúlveda, C. C. (2026). M08 §5.5. *Capítulo MI-
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M08 §5.5 — elaboración propia"
+  neon_alignment_confidence: 0.88
+
+applicable_domain: "Diagnóstico de viabilidad cultural de la reforma + dashboard V1-V5 × estamentos"
+assumptions:
+  - "Los pesos w_V son razonables para contexto UDFJC (calibrables vía workshop)"
+  - "IVC(S5)≈88, no 100 — la cultura es la perspectiva más inercial del BSC-s"
+  - "Los 4 roles (EST/DOC/DIR/ADM) tienen igual peso dentro de cada valor"
+breaks_at:
+  - "Si los indicadores QV-V_j no están medidos para una unidad específica"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-eq-ivc-define-indice
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-iuca-ivc-ivo-indices]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "La ecuación IVC es la formalización matemática del índice IVC del sistema de 3 índices M08."
+  - rel_id: rel-eq-ivc-agrega-qv
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-framework-86-indicadores-s0-s5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "IVC agrega los 20 QV (P2 del framework 86×6) en una métrica escalar ponderada por V1-V5."
 
 cited_in: ["[[sec-MI12-08--framework-bsc-rbm-crisp]]"]
 cited_count: 1

@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Programa Académico"
 
 skos_prefLabel: "Programa Académico"
 skos_altLabel: ["Proyecto Curricular", "Oferta formativa registrada SNIES", "Academic program"]
@@ -26,16 +28,97 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-decreto-1330-2019-men]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-decreto-1330-2019]]"
+      adopter_locator: "Decreto MEN 1330/2019 Arts. 2-3 (definición programa) + Arts. 11-12 (créditos) + Art. 35 (renovación 7 años)"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2019-07-25"
+      adoption_evidence: "Decreto 1330/2019 reglamenta el registro calificado y la definición de Programa Académico para todas las IES colombianas"
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 68 (Programa Académico como unidad de Facultad)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 articula los Programas Académicos a la nueva estructura Facultad-Escuela reformada · adopción institucional del marco MEN"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: REGLAMENTARIO
 
+  normative_source: "[[cita-decreto-1330-2019-men]]"
+  normative_locator: "Decreto MEN 1330/2019 + ACU-004-25 Art. 68"
+  normative_text: "[Texto literal Decreto 1330 Arts. 2-3, 11-12, 35 + ACU Art. 68]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates:
+    - "Decreto MEN 1295/2010 (definición previa de programa)"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "programa_academico"
+  ddd_aggregate_root: "ProgramaAcademico"
+  ddd_bc_ref: "[[bc-programacion-academica-udfjc]]"
+  ddd_role_in_context: "Aggregate Root subdominio Programación Académica. Adscrito a Escuela; coordinado vía Facultad."
+  ddd_invariants:
+    - "Tiene registro calificado vigente para ofertarse"
+    - "Adscrito a UNA Escuela como anclaje primario"
+    - "Suma créditos según Decreto 1330: pregrado profesional ≥144 cr; tecnológico ≥96 cr; técnico profesional ≥60 cr"
+    - "Renovación de registro calificado cada 7 años (Decreto 1330 Art. 35)"
+    - "Reporta al SNIES, OLE, SPADIES"
+  ddd_ubiquitous_terms:
+    - "Programa Académico"
+    - "Proyecto Curricular"
+    - "Registro Calificado"
+    - "Crédito Académico"
+    - "Modalidad (presencial/virtual/dual)"
+    - "SACES · CONACES"
 
+concepto_definitional_anchors:
+  - "[[def-norm-decreto-1330-2019-2019-07-25]]"
+  - "[[def-norm-acu-004-25-art-68-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-68-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-decreto-1330-2019]]"
+  - "[[con-acu-004-25]]"
+  - "[[con-credito-academico]]"
+  - "[[con-area-formacion]]"
 
+applicable_domain: "Programas UDFJC vigentes desde 2019-07-25 (Decreto 1330) en transición a estructura ACU-004-25"
+assumptions: ["El Decreto MEN 1330 sigue vigente como marco de registro calificado"]
+breaks_at: ["Si MEN reforma con marco distinto (eventual nuevo Decreto)"]
 
+valid_from: "2019-07-25"
+valid_to: ""
 rol_seleccionado: docente-disenador
 
 
+tupla__relations:
+  - rel_id: rel-programa-defined-by-decreto1330
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[decreto1330_2019]]"
+    rel_frame: normativo
+  - rel_id: rel-programa-articulado-acu00425
+    rel_nombre: norm_complements
+    rel_direccion: co
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "ACU-004-25 articula Programas a Escuelas reformadas y Facultades reformadas"
+  - rel_id: rel-programa-adscrito-escuela
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-escuela]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-04--jtbd-comunidad]]", "[[sec-MI12-06--bmk-creditos-cca]]", "[[sec-MI12-11--datasets-men]]"]
 cited_count: 5

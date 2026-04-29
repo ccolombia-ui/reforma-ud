@@ -19,6 +19,25 @@ import {
  * El port a Apps Script se valida con QA manual (mismas inputs → outputs).
  */
 
+describe('splitFrontmatter · CRLF (Windows vault files)', () => {
+  it('normaliza CRLF → LF antes de parsear', () => {
+    const raw = '---\r\nkd_id: con-test\r\nkd_status: APPROVED\r\n---\r\n\r\n# Body';
+    const { frontmatterBlock, body } = splitFrontmatter(raw);
+    expect(frontmatterBlock).toContain('kd_id: con-test');
+    expect(frontmatterBlock).toContain('kd_status: APPROVED');
+    expect(body.trim()).toBe('# Body');
+  });
+});
+
+describe('parseYamlKeys · CRLF (Windows vault files)', () => {
+  it('extrae claves de bloque con CRLF', () => {
+    const block = '---\r\nkd_id: con-test\r\nkd_status: APPROVED\r\n---';
+    const keys = parseYamlKeys(block);
+    expect(keys.kd_id).toBe('con-test');
+    expect(keys.kd_status).toBe('APPROVED');
+  });
+});
+
 describe('splitFrontmatter', () => {
   it('separa frontmatter y body con --- delimiters', () => {
     const raw = '---\nkd_id: con-test\n---\n\n# Body content';
@@ -306,5 +325,113 @@ describe('STRIP_KEY_PATTERNS · v8 S1: cobertura legacy + exclusión TPL v2.0', 
       const matches = STRIP_KEY_PATTERNS.some((re: RegExp) => re.test(key));
       expect(matches, `${key} NO debe matchear ningún strip pattern (es TPL v2.0)`).toBe(false);
     }
+  });
+});
+
+// ── v8 S5: sentinel emission ──────────────────────────────────────────────
+// Tests ADITIVOS — los anteriores siguen pasando. Documentan el NUEVO
+// comportamiento: DV blocks → sentinels, MetaBind → valores estáticos.
+
+describe('cleanBody · v8 S5: DV blocks → sentinels HTML', () => {
+  it('dataviewjs con facet_normative → sentinel facet-normative', () => {
+    const body = [
+      '## §2 Anclaje',
+      '```dataviewjs',
+      'const f = me.concepto_facet_normative;',
+      'dv.table(["Campo"], [[f.normative_source ?? "—"]]);',
+      '```',
+    ].join('\n');
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('data-dv="facet-normative"');
+    expect(cleaned).not.toContain('dv.table');
+    expect(cleaned).toContain('## §2 Anclaje');
+  });
+
+  it('dataviewjs con concepto_prerequisitos + dv.list → sentinel prereqs', () => {
+    const body = '```dataviewjs\nconst prereq = me.concepto_prerequisitos ?? [];\ndv.list(prereq);\n```';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('data-dv="prereqs"');
+  });
+
+  it('dataviewjs con tupla__relations + norm_mandates → sentinel mandatos', () => {
+    const body = '```dataviewjs\nconst mandates = (me.tupla__relations ?? []).filter(r => r.rel_nombre === "norm_mandates");\ndv.table([], mandates);\n```';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('data-dv="mandatos"');
+  });
+
+  it('dataviewjs con concepto_definitional_anchors → sentinel evolucion', () => {
+    const body = '```dataviewjs\nconst anchors = me.concepto_definitional_anchors ?? [];\ndv.list(anchors);\n```';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('data-dv="evolucion"');
+  });
+
+  it('dataviewjs con applicable_domain + breaks_at → sentinel regimen-epistemico', () => {
+    const body = '```dataviewjs\ndv.paragraph(me.applicable_domain ?? "—");\ndv.list(me.breaks_at ?? []);\n```';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('data-dv="regimen-epistemico"');
+  });
+
+  it('dataviewjs no reconocido → sentinel obsidian-only (fallback)', () => {
+    const body = '```dataviewjs\nconst x = foo(); bar(x);\n```';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('data-dv="obsidian-only"');
+    expect(cleaned).not.toContain('foo()');
+  });
+
+  it('sentinel HTML no contiene código DV', () => {
+    const body = '```dataviewjs\nconst me = dv.current(); dv.table([], []);\n```';
+    const cleaned = cleanBody(body);
+    expect(cleaned).not.toContain('dv.current()');
+    expect(cleaned).not.toContain('dv.table');
+    expect(cleaned).not.toContain('```dataviewjs');
+    expect(cleaned).toContain('<div');
+    expect(cleaned).toContain('data-dv=');
+  });
+
+  it('texto rodeando DV blocks se preserva', () => {
+    const body = '# Heading\n\n```dataviewjs\nme.foo\n```\n\nTexto después.';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('# Heading');
+    expect(cleaned).toContain('Texto después.');
+    expect(cleaned).toContain('data-dv=');
+  });
+
+  it('CRLF (\\r\\n) — vault files en Windows', () => {
+    const body = '```dataviewjs\r\nconst prereq = me.concepto_prerequisitos ?? [];\r\ndv.list(prereq);\r\n```';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('data-dv="prereqs"');
+    expect(cleaned).not.toContain('dv.list');
+  });
+});
+
+describe('cleanBody · v8 S5: MetaBind readonly → valor estático', () => {
+  it('INPUT readonly con keys → valor del frontmatter', () => {
+    const body = 'Label: `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`';
+    const keys = { skos_prefLabel: 'ACU-004-25' };
+    const cleaned = cleanBody(body, keys);
+    expect(cleaned).toContain('ACU-004-25');
+    expect(cleaned).not.toContain('INPUT[');
+    expect(cleaned).not.toContain('meta-bind-readonly');
+  });
+
+  it('INPUT readonly sin keys → "—" (safe default)', () => {
+    const body = '`INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('—');
+    expect(cleaned).not.toContain('INPUT[');
+  });
+
+  it('INPUT readonly campo no encontrado en keys → "—"', () => {
+    const body = '`INPUT[text(class(meta-bind-readonly)):campo_inexistente]`';
+    const keys = { otro_campo: 'valor' };
+    const cleaned = cleanBody(body, keys);
+    expect(cleaned).toContain('—');
+  });
+
+  it('INPUT inlineSelect rol_seleccionado → sentinel selector-rol', () => {
+    const body = '`INPUT[inlineSelect(option(a,A)):rol_seleccionado]`';
+    const cleaned = cleanBody(body);
+    expect(cleaned).toContain('data-dv="selector-rol"');
+    expect(cleaned).not.toContain('INPUT[');
   });
 });

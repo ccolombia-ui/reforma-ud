@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Autonomía Positiva"
 
 skos_prefLabel: "Autonomía Positiva"
 skos_altLabel: ["Positive Autonomy", "Libertad para contribuir", "Autonomía con responsabilidad"]
@@ -26,13 +28,46 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
 
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "[[mcu2020]] (formulación contemporánea aplicada a universidades) + Berlin (1958) Two Concepts of Liberty (raíz filosófica)"
+  neon_alignment_confidence: 0.9
+  neon_methodological_notes: "Fusión NeOn S5 de filosofía política liberal (Berlin) + teoría universitaria contemporánea (MCU Observatory). La aplicación al contexto colombiano (UDFJC) hace doble interpretación: refuta la lectura defensiva de la autonomía y la convierte en palanca constructiva."
 
+concepto_prerequisitos:
+  - "[[con-mcu-2020]]"
+  - "[[con-constitucion-1991-art-69]]"
 
+applicable_domain: "Interpretación constitucional de la autonomía universitaria + diseño de políticas institucionales con responsabilidad social"
+assumptions:
+  - "La autonomía universitaria opera dentro del marco del Estado de Derecho"
+  - "La libertad positiva NO niega la libertad negativa; la complementa"
+breaks_at:
+  - "Si se reduce a retórica sin métricas de contribución verificable"
 
+valid_from: "2020-09-16"
+valid_to: ""
 rol_seleccionado: docente-director
+concepto_anchor_chain_status: LINEAR
 
 
+tupla__relations:
+  - rel_id: rel-autonomia-pos-introduced-mcu2020
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-mcu-2020]]"
+    rel_frame: skos
+  - rel_id: rel-autonomia-pos-related-funcional
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-autonomia-funcional-instrumental]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Autonomía positiva (MCU 2020) y autonomía funcional instrumental (Const+Ley 30) son complementarias: la primera es ético-política, la segunda es jurídico-institucional"
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

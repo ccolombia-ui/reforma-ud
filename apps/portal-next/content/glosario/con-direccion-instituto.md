@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:direccion-instituto
 kd_title: "Dirección de Instituto UDFJC (Arts. 18k, 75-76 ACU-004-25)"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "Dirección de Instituto UDFJC"
+tupla_descripcion: "Autoridad ejecutiva unipersonal del Instituto UDFJC declarada en Arts. 18k + 75-76 · designación por votación ponderada 50% docentes investigadores + 50% estudiantes · 4 años · sin reelección inmediata"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "Dirección de Instituto"
 skos_altLabel: ["Director(a) de Instituto", "Institute Director"]
@@ -26,15 +28,102 @@ iso_standardized_by: "Acuerdo CSU UDFJC 04/2025 Arts. 18k + 75-76 + 83"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 18k + 75-76 + 83"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza Dirección de Instituto con elección participativa estudiantil · invariante de no reelección Art. 83"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 18k + 75-76 + 83"
+  normative_text: "Art. 76 - Director de Instituto: Periodo 4 años · Mecanismo: Votación directa ponderada (50% docentes investigadores, 50% estudiantes). Sin reelección inmediata (Art. 83)."
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "direccion_instituto"
+  ddd_term: "Dirección de Instituto"
+  ddd_aggregate_root: "DireccionInstituto"
+  ddd_article_ref: "Arts. 18k + 75-76 + 83"
+  ddd_source_norm: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: AGGREGATE_ROOT
+  ddd_aggregate_root_flag: true
+  ddd_domain_type: Core
+  ddd_governed_by:
+    - "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+  ddd_invariants:
+    - "Dirección de Instituto es autoridad UNIPERSONAL · un único titular en cada momento"
+    - "Periodo 4 años · sin reelección inmediata (Art. 83)"
+    - "Designación por votación 50% docentes investigadores + 50% estudiantes (composición participativa estudiantil distintiva)"
+    - "Excepción transitoria Art. 107 · 2025-2027 designación rectoral"
+  ddd_ubiquitous_terms:
+    - "Dirección de Instituto · DI"
+    - "Votación 50%-50%"
+    - "Director(a) de Instituto"
+    - "Período 4 años · no reelección inmediata"
 
+concepto_definitional_anchors: ["[[def-norm-acu-004-25-art-76-2025-05-05]]"]
+concepto_current_anchor: "[[def-norm-acu-004-25-art-76-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
+  - "[[con-instituto]]"
+  - "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
 
+applicable_domain: "Todo Instituto UDFJC desde 2025-05-06 con régimen transitorio Art. 107"
+assumptions: ["Composición 50%-50% reconoce a estudiantes como co-investigadores"]
+breaks_at: ["Si Director ejerce > 4 años continuos (Art. 83)", "Si designación post 2027-05-05 omite votación democrática"]
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: docente-investigador-pasteur
 
 
+tupla__relations:
+  - rel_id: rel-di-implements-acu
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Dirección de Instituto declarada Arts. 18k + 75-76"
+  - rel_id: rel-di-dirige-instituto
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-instituto]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Dirección de Instituto es autoridad ejecutiva del Instituto"
+  - rel_id: rel-di-coordinada-vri
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-vicerrectoria-investigacion-creacion-innovacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Direcciones de Instituto coordinadas por Vicerrectoría I+C+I (Art. 62)"
+  - rel_id: rel-di-miembro-cacad
+    rel_nombre: ddd_part_of
+    rel_direccion: post
+    rel_target: "[[con-cacad-consejo-academico]]"
+    rel_frame: ddd
+    rel_propiedades:
+      norm_evidence: "Art. 31i · Director de Instituto representa al estamento en CACAD"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]"]
 cited_count: 1
@@ -43,7 +132,7 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, direccion-instituto
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# Dirección de Instituto
 
 > [!note]+ Autoridad ejecutiva de Instituto · elección 50%-50% participativa
 > La **Dirección de Instituto** se elige por votación 50% docentes investigadores + 50% estudiantes · 4 años · sin reelección inmediata. Composición participativa estudiantil distintiva (vs Escuelas).
@@ -52,50 +141,35 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, direccion-instituto
 
 ## §0 · 🎭 Vista por rol
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ## §1 · Definición
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Autoridad ejecutiva unipersonal del Instituto UDFJC declarada como **órgano del Gobierno Universitario** en el Art. 18k del ACU-004-25 y como componente obligatorio de estructura de Instituto en el Art. 75. Su titular —el(la) **Director(a) de Instituto**— es designado por **votación directa ponderada con composición distintiva**: 50% docentes investigadores + 50% estudiantes (Art. 76) · período **4 años · sin reelección inmediata** (Art. 83). Dirige las actividades de investigación-creación e in
 
 ## §2 · Anclaje
 
-```dataviewjs
-const f = dv.current().concepto_facet_normative;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.table(["Campo", "Valor"], [["Origen", `${f.origin_type} · ${f.origin_force}`], ["Authority", f.normative_authority_level], ["Effective force", `**${f.effective_force_in_udfjc}**`]]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) { dv.header(4, `🔗 Cadena · ${chain.length}`); dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"], chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence])); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §3 · DDD
 
-```dataviewjs
-const f = dv.current().concepto_facet_ddd;
-if (!f) dv.paragraph("(sin facet)"); else {
-  dv.header(4, `DDD · ${f.ddd_id}`);
-  if ((f.ddd_invariants ?? []).length) { dv.header(5, "🔒 Invariantes"); dv.list(f.ddd_invariants); }
-  if ((f.ddd_ubiquitous_terms ?? []).length) { dv.header(5, "🗣️ Lenguaje ubicuo"); dv.paragraph(f.ddd_ubiquitous_terms.join(" · ")); }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §7 · Relaciones
 
-```dataviewjs
-const rels = dv.current().tupla__relations ?? [];
-const vocab = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocab?.relaciones ?? {};
-const hL = (n, d) => { const e = relMap[n]?.[d ?? "co"] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post; return e?.label ?? `\`${n}\``; };
-for (const r of rels) dv.paragraph(`**${hL(r.rel_nombre, r.rel_direccion)}** → ${r.rel_target}`);
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ## §10 · Citado en
 
-```dataviewjs
-dv.list(dv.current().cited_in ?? []);
-dv.paragraph(`**Total**: ${dv.current().cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

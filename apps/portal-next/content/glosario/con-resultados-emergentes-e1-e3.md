@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "3 Resultados Emergentes E1-E3 del Ciclo Virtuoso ΩMT"
 
 skos_prefLabel: "Resultados Emergentes E1 (Competencias de Núcleo) · E2 (Aprendizaje Soberano) · E3 (Nichos Transformativos)"
 skos_altLabel: ["E1-E3", "Tres resultados emergentes", "Outcomes emergentes ΩMT", "Three emergent outcomes"]
@@ -26,13 +28,86 @@ align_wikidata: ""
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+  - DDD
+
+concepto_facet_ddd:
+  ddd_id: "resultados_emergentes_e1_e3"
+  ddd_aggregate_root: "CicloVirtuosoOMT"
+  ddd_bc_ref: "[[bc-arquitectura-misional-udfjc]]"
+  ddd_role_in_context: "Value Objects que representan outcomes sistémicos del Aggregate ΩMT. Cada E es un VO con: definición operativa, dimensiones de medición, indicadores AS-IS/TO-BE, mecanismo de emergencia."
+  ddd_invariants:
+    - "Los E1-E3 NO se producen en un proceso específico — emergen del sistema completo"
+    - "La medición es a nivel institucional, no departamental"
+    - "Los 3 outcomes son condición del éxito de ΩMT (sin E1-E3, ΩMT es retórica)"
+    - "Cada E tiene una literatura externa de respaldo (Prahalad/UNESCO/Geels)"
+  ddd_ubiquitous_terms:
+    - "E1 Competencias de Núcleo · E2 Aprendizaje Soberano · E3 Nichos Transformativos"
+    - "Outcome emergente · Resultado sistémico · Capacidad organizacional"
+    - "Soberanía cognitiva"
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M02 §4.3 — síntesis sobre Prahalad & Hamel 1990 + UNESCO 2021 + Geels 2002 + Schot 2018"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Estrategia institucional UDFJC + monitoreo de transformación + comunicación con stakeholders externos"
+assumptions:
+  - "Los 3 resultados son exhaustivos para capturar el éxito de ΩMT"
+  - "Los outcomes emergentes son medibles aunque no por outputs departamentales clásicos"
+breaks_at:
+  - "Si se reducen E1-E3 a métricas departamentales (anti-patrón)"
+  - "Si se mide solo uno de los 3 (los E1-E3 son inseparables)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
-"@context":
-
+tupla__relations:
+  - rel_id: rel-e1e3-resultado-omt
+    rel_nombre: ddd_part_of
+    rel_direccion: pre
+    rel_target: "[[con-omt]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los E1-E3 son los outcomes que emergen del ciclo virtuoso ΩMT cuando las 6 R están activas simultáneamente. Sin E1-E3 verificables, ΩMT es retórica."
+  - rel_id: rel-e1e3-emerge-r1r6
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los E1-E3 emergen específicamente de la activación simultánea de las 6 R: E1 emerge de R1+R2+R4 (capacidades transversales); E2 de R2+R6 (plataformas soberanas); E3 de R4+R5 (nichos territoriales)."
+  - rel_id: rel-e3-fundamentado-mlp
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-mlp-geels]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "E3 (Nichos Transformativos) es directamente derivado de la MLP de Geels: los nichos son el dispositivo de transición por excelencia."
+  - rel_id: rel-e2-converge-soberania
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-soberania-cognitiva]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "E2 (Aprendizaje Soberano) materializa el principio refundacional de Soberanía Cognitiva (Art. 5g ACU-004-25) en plataformas concretas no-dependientes de infraestructuras privadas."
+  - rel_id: rel-e2-converge-unesco21
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-unesco-reimagining-2021]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "E2 está conceptualmente alineado con el principio 'educación como bien común' del reporte UNESCO 2021 — plataformas soberanas son condición material del bien común educativo."
+  - rel_id: rel-e1-articula-funciones
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-funciones-misionales]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "E1 (Competencias de Núcleo) emerge cuando las 3 funciones misionales operan articuladamente — son capacidades institucionales únicas no atribuibles a una sola PM."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

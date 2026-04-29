@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "F4 Living-Labs (función misional emergente)"
 
 skos_prefLabel: "F4 · Living-Labs (función misional emergente)"
 skos_altLabel: ["F4 Integración Living-Labs", "Living Lab UDFJC", "Cuarta función misional"]
@@ -23,11 +25,49 @@ iso_standardized_by: "Madera Sepúlveda (2026) M05 — elaboración propia"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M05 + literatura Living Labs ENoLL + MLP Geels"
+  neon_alignment_confidence: 0.85
+
+applicable_domain: "Diseño de CABAs como Living Labs + diagnóstico BMK-001 + medición F4 en Marco P1"
+assumptions:
+  - "Los living labs son operacionalmente viables en contextos UDFJC"
+  - "F4 es medible como función emergente, no como output departamental"
+breaks_at:
+  - "Si se interpreta como 4to proceso (anti-patrón departamentalización)"
+  - "Si se mide cuantitativamente sin observar R1-R6"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-f4-evita-anti-patron
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-anti-patron-departamentalizacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "F4 es función emergente transversal — NO proceso paralelo. Su naturaleza evita el anti-patrón de departamentalización (sería 'Vicerrectoría de Living Labs')."
+  - rel_id: rel-f4-mide-r1r6
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-retroalimentaciones-r1-r6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "F4 es la medida observable de la activación simultánea de R1-R6 — sin las 6 retroalimentaciones operando, F4 = 0."
+  - rel_id: rel-f4-operacionaliza-caba
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-caba]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Las CABAs (Art. 73 ACU-004-25) se operacionalizan como living labs territoriales — F4 es la función misional que las CABAs encarnan."
 
 cited_in: ["[[sec-MI12-05--bmk-procesos-misionales]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

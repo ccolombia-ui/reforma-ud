@@ -1,12 +1,14 @@
 ---
-fileClass: fc-concepto-universal
 kd_id: urn:aleia:udfjc:reforma:cap-mi12:con:iso-21001
 kd_title: "ISO 21001:2018 — Educational Organizations Management Systems (EOMS) · vinculante UDFJC vía SIGUD"
 kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v2.0.0
-kd__up: "[[con-tipo-normativo]]"
 
+tupla_tipo: CONCEPT
+tupla_concepto: "ISO 21001:2018 — EOMS"
+tupla_descripcion: "Norma ISO de sistema de gestión para organizaciones educativas (voluntaria en su origen) adoptada institucionalmente por UDFJC vía SIGUD (Resolución Rectoría 207/2016) + ACU CSU 009-011/2018"
+tupla__container_jsonl: "00-glosoario-universal/conceptos-normativos.jsonl"
 
 skos_prefLabel: "ISO 21001:2018 — Educational Organizations Management Systems (EOMS)"
 skos_altLabel:
@@ -29,16 +31,127 @@ iso_standardized_by: "ISO (2018). *ISO 21001:2018 — Educational organizations 
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - NEON
 
+concepto_facet_normative:
+  origin_type: INTERNATIONAL_VOLUNTARY
+  origin_source: "[[cita-iso-21001-2018]]"
+  origin_force: VOLUNTARY
+  adoption_chain:
+    - adopter: "[[con-resolucion-rectoria-207-2016-sigud]]"
+      adopter_locator: "Resolución Rectoría 207/2016 · SIGUD · Modelo Operativo por Procesos"
+      adopter_authority_level: INSTITUCIONAL
+      adopted_at: "2018-05-01"
+      adoption_evidence: "Tras publicación ISO 21001:2018, SIGUD opera implícitamente bajo el marco EOMS · partes interesadas ampliadas + lenguaje sector educativo + estructura Annex SL"
+    - adopter: "[[con-acuerdo-csu-011-2018-pui]]"
+      adopter_locator: "PUI · misión-visión-valores · compromiso con calidad educativa"
+      adopter_authority_level: INSTITUCIONAL
+      adopted_at: "2018-05-17"
+      adoption_evidence: "PUI declara compromiso con calidad educativa coherente con principios EOMS · adopción institucional implícita"
+    - adopter: "[[con-acuerdo-csu-009-2018-ped]]"
+      adopter_locator: "PED 2018-2030 · horizonte estratégico de calidad y mejora continua"
+      adopter_authority_level: INSTITUCIONAL
+      adopted_at: "2018-05-17"
+      adoption_evidence: "PED articula horizonte de calidad y mejora continua compatible con cláusulas 9-10 ISO 21001"
+    - adopter: "[[con-mipg-funcion-publica]]"
+      adopter_locator: "MIPG · 7 dimensiones operativas · convergencia con Annex SL"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2015-05-26"
+      adoption_evidence: "MIPG nacional adopta principios ISO compatibles · UDFJC los aplica como entidad pública · convergencia institucional con normativa nacional"
+  effective_force_in_udfjc: BINDING_BY_ADOPTION
+  effective_authority_level: INSTITUCIONAL
 
+  normative_source: "[[cita-resolucion-rectoria-207-2016-udfjc]]"
+  normative_locator: "Resolución Rectoría 207/2016 · adopción institucional vía SIGUD"
+  normative_text: "[Norma ISO 21001:2018 + adopción SIGUD + PUI/PED 2018]"
+  normative_authority_level: INSTITUCIONAL
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_neon:
+  neon_imports:
+    - "[[con-iso-9001]]"
+  neon_aligns_with:
+    - "[[con-bsc-s]]"
+    - "[[con-rbm-gac]]"
+    - "[[con-mipg-funcion-publica]]"
+  neon_scenario_origin: "S3"
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "ISO (2018) ISO 21001:2018"
+  neon_alignment_confidence: 0.98
 
+concepto_definitional_anchors:
+  - "[[def-norm-iso-21001-2018-2018-05-01]]"
+  - "[[def-norm-resolucion-rectoria-207-2016-2016-04-29]]"
+concepto_current_anchor: "[[def-norm-resolucion-rectoria-207-2016-2016-04-29]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-resolucion-rectoria-207-2016-sigud]]"
+  - "[[con-iso-9001]]"
 
+applicable_domain: "Gestión institucional UDFJC (Vicerrectorías + Secretaría General + procesos misionales) + articulación con CNA + condiciones de calidad MEN"
+assumptions:
+  - "Los principios EOMS son operacionalizables sin certificación ISO externa"
+  - "SIGUD opera coherentemente con ISO 21001 desde 2018"
+breaks_at:
+  - "Si se aplica como acreditación equivalente a CNA (es sistema de gestión, no acreditación)"
+  - "Si nueva versión ISO 21001 supersede 2018 sin actualización SIGUD"
 
+valid_from: "2018-05-01"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-iso21001-vinculante-sigud
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-resolucion-rectoria-207-2016-sigud]]"
+    rel_frame: normativo
+    bc_domain: gestion-calidad-udfjc
+    rel_propiedades:
+      norm_evidence: "ISO 21001 es vinculante para UDFJC POR ADOPCIÓN del Resolución Rectoría 207/2016 que conforma SIGUD bajo principios ISO + PUI/PED 2018"
+  - rel_id: rel-iso21001-deriva-iso9001
+    rel_nombre: skos_narrower
+    rel_direccion: pre
+    rel_target: "[[con-iso-9001]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ISO 21001 es especialización sectorial (educación) de ISO 9001 (genérico) bajo misma estructura Annex SL"
+  - rel_id: rel-iso21001-articula-bsc
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ISO 21001 cláusula 9 (evaluación de desempeño) se articula con BSC-s (4 perspectivas) como instrumento de medición"
+  - rel_id: rel-iso21001-articula-rbm
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-rbm-gac]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ISO 21001 cláusula 10 (mejora continua) y RBM-GAC L0-L3 son ambos marcos de gestión por resultados — complementarios"
+  - rel_id: rel-iso21001-stakeholders-quintuple
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-quintuple-helix]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "ISO 21001 amplía las partes interesadas más allá del cliente (familias, sociedad, sector productivo) — congruente con Quintuple Helix"
+  - rel_id: rel-iso21001-articula-pui
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acuerdo-csu-011-2018-pui]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "PUI 2018 invoca compromiso con calidad educativa coherente con EOMS · adopción institucional explícita"
 
 cited_in:
   - "[[sec-MI12-03--estandares-internacionales]]"
@@ -59,7 +172,7 @@ tags:
 ---
 
 
-# `INPUT[text(class(meta-bind-readonly)):skos_prefLabel]`
+# ISO 21001:2018 — Educational Organizations Management Systems (EOMS)
 
 > [!quote]+ ⚖️ Norma ISO sectorial · vinculante por adopción institucional UDFJC
 > ISO 21001:2018 (EOMS) es **norma ISO voluntaria en su origen** pero **vinculante para UDFJC por adopción institucional** vía **SIGUD** (Resolución Rectoría 207/2016) + **PUI Acuerdo CSU 011/2018** + **PED Acuerdo CSU 009/2018**. Especialización sectorial educativa de ISO 9001. Bajo estructura Annex SL (10 cláusulas) con partes interesadas ampliadas (familias + sociedad + sector productivo).
@@ -68,41 +181,23 @@ tags:
 
 ## §0 · 🎭 Vista por rol institucional
 
-`INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]`
+<span class="dv-block" data-dv="selector-rol"></span>
 
 ---
 
 ## §1 · Definición canónica
 
-> `INPUT[textArea(class(meta-bind-readonly)):skos_definition]`
+> Norma internacional ISO publicada en mayo 2018 que **especifica los requisitos de un sistema de gestión para organizaciones educativas (Educational Organizations Management System — EOMS)** que demuestra capacidad de proveer y entregar consistentemente productos y servicios educativos que satisfacen las necesidades de aprendices y otros beneficiarios. Estructurada como las demás normas ISO de **Annex SL**: 10 cláusulas (1-3 introductorias, 4-10 requisitos): (4) contexto de la organización, (5) l
 
 | Sub-tipo | Pasteur | Effective force UDFJC |
 |---|:-:|:-:|
-| `INPUT[text(class(meta-bind-readonly)):concept_subtype]` | `INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]` | `INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.effective_force_in_udfjc]` |
+| DEFINITION | EDISON | — |
 
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
-```dataviewjs
-const me = dv.current();
-const f = me.concepto_facet_normative;
-if (!f) {
-  dv.paragraph("(sin facet normative)");
-} else {
-  dv.table(["Campo", "Valor"], [
-    ["**Origen**", `${f.origin_type ?? "—"} · fuerza original: ${f.origin_force ?? "—"}`],
-    ["**Fuente original**", f.origin_source ?? "—"],
-    ["**Effective force en UDFJC**", `**${f.effective_force_in_udfjc ?? "—"}**`],
-    ["**Authority level resultante**", f.normative_authority_level ?? "—"],
-    ["**Chain status**", f.chain_status ?? "—"]
-  ]);
-  const chain = f.adoption_chain ?? [];
-  if (chain.length) {
-    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es) · cómo se vuelve vinculante para UDFJC`);
-    dv.table(["Adoptante (acto)", "Locator", "Autoridad", "Fecha", "Evidencia"],
-      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));
-  }
-}
-```
+
+<div class="dv-block" data-dv="obsidian-only"></div>
+
 
 ### §2.1 · Estructura Annex SL · 10 cláusulas
 
@@ -119,80 +214,27 @@ if (!f) {
 
 ## §3 · 🔻 Pre-requisitos cognitivos
 
-```dataviewjs
-const prereq = dv.current().concepto_prerequisitos ?? [];
-if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");
-else dv.list(prereq);
-```
+
+<div class="dv-block" data-dv="prereqs"></div>
+
 
 ## §4 · 🔺 Conceptos que declaran este como pre-requisito
 
-```dataviewjs
-const me = dv.current();
-const here = me.file.name;
-const folder = me.file.folder;
-const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");
-const matchHere = (target) => {
-  if (!target) return false;
-  if (typeof target === "object" && target.path !== undefined) return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;
-  const s = String(target);
-  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);
-  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;
-  return s.split("/").pop().replace(/\.md$/, "").trim() === here;
-};
-const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();
-dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito`);
-if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");
-else dv.list(habilitados.map(p => p.file.link));
-```
+
+<div class="dv-block" data-dv="habilita"></div>
+
 
 ## §7 · 🤝 Relaciones tipadas (outgoing)
 
-```dataviewjs
-const me = dv.current();
-const rels = me.tupla__relations ?? [];
-const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");
-const relMap = vocabPage?.relaciones ?? {};
-const frameMap = vocabPage?.frames ?? {};
 
-const lookupRel = (n, d) => {
-  const dir = d ?? "co";
-  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;
-};
-const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;
-const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";
-const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;
+<div class="dv-block" data-dv="relations"></div>
 
-const groups = {};
-for (const r of rels) {
-  const k = r.rel_frame ?? "general";
-  groups[k] = groups[k] ?? [];
-  groups[k].push(r);
-}
-for (const [frame, rs] of Object.entries(groups)) {
-  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);
-  const byRel = {};
-  for (const r of rs) {
-    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;
-    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };
-    byRel[key].items.push(r);
-  }
-  for (const grp of Object.values(byRel)) {
-    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);
-    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);
-    dv.table(["→ Target", "Evidencia"],
-      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));
-  }
-}
-```
 
 ## §10 · 📜 Citado en
 
-```dataviewjs
-const me = dv.current();
-dv.list(me.cited_in ?? []);
-dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);
-```
+
+<div class="dv-block" data-dv="cited-in"></div>
+
 
 ---
 

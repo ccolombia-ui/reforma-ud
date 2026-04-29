@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Cognia DEPRECATED para educación superior"
 
 skos_prefLabel: "Cognia DEPRECATED · estándar K-12 mal aplicado a educación superior (anti-patrón)"
 skos_altLabel: ["Cognia", "ex-AdvancED", "Cognia accreditation"]
@@ -23,11 +25,33 @@ iso_standardized_by: "Madera Sepúlveda (2026) M03 §4.3 — documentación de a
 
 pasteur_quadrant: PETER
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Madera Sepúlveda 2026 M03 §4.3 — documentación de anti-patrón"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Advocacy contra mal uso de Cognia en debates de educación superior UDFJC"
+assumptions:
+  - "Documentar anti-patrones explícitamente previene su recurrencia"
+breaks_at:
+  - "Si se interpreta el DEPRECATED como descalificación general de Cognia (es solo para HE)"
+
+valid_from: "2026-04-27"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-cognia-anti-patron
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-anti-patron-departamentalizacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Cognia DEPRECATED es ejemplo del patrón general 'invocar marco fuera de scope' — análogo conceptual al anti-patrón de departamentalización de la innovación."
 
 cited_in: ["[[sec-MI12-03--estandares-internacionales]]"]
 cited_count: 1

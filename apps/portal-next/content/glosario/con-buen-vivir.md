@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Buen Vivir"
 
 skos_prefLabel: "Buen Vivir"
 skos_altLabel:
@@ -31,16 +33,95 @@ align_wikidata: "https://www.wikidata.org/wiki/Q4348854"
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NORMATIVE
+  - NEON
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Art. 5a (principio) + Art. 4 (misión) + Arts. 88-90 (Sistema de Bienestar)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza Buen Vivir como principio constitutivo refundacional · concepto NUEVO sin precedente en ACU 003/1997 · adopta cosmovisiones andinas (Sumak Kawsay quechua, Suma Qamaña aymara)"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Art. 5a + Art. 4 + Arts. 88-90"
+  normative_text: "Educación para la vida con dignidad y el buen vivir (Art. 5a)"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates:
+    - "Concepto NUEVO en ACU-004-25 (sin precedente en ACU 003/1997)"
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_external_ontology_uri: ""
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Cosmovisiones andinas (Sumak Kawsay quechua, Suma Qamaña aymara) + Constituciones de Ecuador 2008 y Bolivia 2009 (que las incorporaron formalmente) + literatura crítica (Acosta 2013, Gudynas 2011, Huanacuni 2010) + ACU-004-25"
+  neon_alignment_confidence: 0.85
+  neon_methodological_notes: "Fusión S5 NeOn de tres fuentes: (a) tradiciones de los pueblos originarios andinos (no son ontologías formales sino marcos de pensamiento ancestral); (b) marco constitucional ecuatoriano-boliviano que las codificó; (c) literatura académica latinoamericana crítica. La adopción por la UDFJC es propietaria (no copia textual de constituciones sudamericanas), adaptada a contexto colombiano y a propósitos universitarios."
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-art-5a-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-art-5a-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
 
+applicable_domain: "Toda la acción institucional UDFJC desde 2025-05-06; criterio para evaluar coherencia de programas, proyectos, contratos y políticas con los fines refundacionales."
+assumptions:
+  - "La incorporación del Buen Vivir en el ACU-004-25 es operacionalizable (no solo declarativa)"
+  - "Los Sistemas de Bienestar Universitario (Arts. 88-90) materializan el principio"
+breaks_at:
+  - "Si se interpreta como mera retórica decorativa (riesgo de uso ornamental)"
+  - "Si se aplica con literalidad colonialista a tradiciones culturalmente distintas"
 
+valid_from: "2025-05-06"
+valid_to: ""
 rol_seleccionado: estudiante-soberano
 
 
+tupla__relations:
+  - rel_id: rel-buenvivir-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+    bc_domain: filosofia-institucional
+  - rel_id: rel-buenvivir-componente-mision
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-mision-institucional-udfjc]]"
+    rel_frame: skos
+    bc_domain: filosofia-institucional
+    rel_propiedades:
+      skos_evidence: "Art. 4 cita 'buen vivir' como uno de los principios colectivos de la misión"
+  - rel_id: rel-buenvivir-operacionalizado-bienestar
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-sistema-bienestar-buen-vivir]]"
+    rel_frame: skos
+    bc_domain: bienestar-universitario
+    rel_propiedades:
+      skos_evidence: "Arts. 88-90 crean el Sistema de Bienestar y Buen Vivir como operacionalización institucional"
+  - rel_id: rel-buenvivir-related-soberania-cognitiva
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-soberania-cognitiva]]"
+    rel_frame: skos
+    bc_domain: filosofia-institucional
+    rel_propiedades:
+      skos_strength: 0.9
+      skos_evidence: "Ambos son principios refundacionales sin precedente en Acuerdo 003/1997; mutuamente reforzantes"
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-12--meta-paper-integrador]]"]
 cited_count: 2

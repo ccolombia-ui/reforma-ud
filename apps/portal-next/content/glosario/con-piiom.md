@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "PIIOM 2022-2026"
 
 skos_prefLabel: "PIIOM 2022-2026 — Programa Indicativo de Investigación y Orientación de Misiones"
 skos_altLabel: ["PIIOM", "Programa Indicativo MinCiencias 2022-2026", "PIIOM Misiones"]
@@ -23,14 +25,70 @@ iso_standardized_by: "MinCiencias - Colombia"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-minciencias-piiom-2022]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-conpes-4069]]"
+      adopter_locator: "CONPES 4069/2021 · Política Nacional CTI 2022-2031"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2021-12-21"
+      adoption_evidence: "CONPES 4069 mandata operacionalización vía PIIOM con 5 misiones transformativas"
+    - adopter: "[[con-piiom-minciencias]]"
+      adopter_locator: "PIIOM 2022-2026 · MinCiencias"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2022-01-01"
+      adoption_evidence: "MinCiencias publica PIIOM operacionalizando CONPES 4069 · 5 misiones vinculantes para SNCTI"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: REGLAMENTARIO
+  normative_source: "[[cita-minciencias-piiom-2022]]"
+  normative_locator: "Programa PIIOM 2022-2026"
+  normative_text: "[5 Misiones Transformativas: Bioeconomía + Alimentaria + Energética + Sanitaria + Equitativa]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates: ["Programas indicativos de Colciencias previos"]
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-piiom-2022-01-01]]"
+concepto_current_anchor: "[[def-norm-piiom-2022-01-01]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-conpes-4069]]"
+  - "[[con-ley-30-1992-art-6]]"
 
+applicable_domain: "SNCTI Colombia 2022-2026"
+assumptions: ["El PIIOM se actualiza periódicamente cada cuadrienio del PND"]
+breaks_at: ["2026-12-31 — vencimiento del programa actual; nuevo PIIOM 2027-2030 en preparación"]
 
+valid_from: "2022-01-01"
+valid_to: "2026-12-31"
 rol_seleccionado: docente-investigador-pasteur
 
 
+tupla__relations:
+  - rel_id: rel-piiom-fuente
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[minciencias2022piiom]]"
+    rel_frame: bibliografico
+  - rel_id: rel-piiom-mandated-by-conpes
+    rel_nombre: norm_mandated_by
+    rel_direccion: pre
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: normativo
+  - rel_id: rel-piiom-contains-5-misiones
+    rel_nombre: ddd_contains
+    rel_direccion: post
+    rel_target: "[[con-cinco-misiones-piiom]]"
+    rel_frame: skos
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 3

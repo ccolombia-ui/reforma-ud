@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "RBM-GAC"
 
 skos_prefLabel: "RBM-GAC — Results-Based Management + Governance Accountability Compliance"
 skos_altLabel: ["Results-Based Management", "Gestión por Resultados", "GAC", "Marco RBM"]
@@ -23,11 +25,66 @@ iso_standardized_by: "OECD-DAC (RBM) + Madera Sepúlveda (2026) adaptación GAC 
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S5
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "OECD-DAC RBM + literatura governance compliance + adaptación UDFJC L0-L3"
+  neon_alignment_confidence: 0.8
+
+applicable_domain: "Gestión universitaria pública por resultados + auditoría compliance"
+assumptions: ["RBM y GAC son complementarios; sus tradiciones se pueden integrar"]
+breaks_at: ["Si se confunde con métricas burocráticas sin direccionalidad transformativa"]
+
+valid_from: "2026-04-26"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-rbm-complementa-bsc
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-bsc-s]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RBM-GAC provee la metodología por resultados (RBM) + estructura de gobernanza (GAC) que da soporte operativo a las 4 perspectivas del BSC-s. Marcos hermanos en el framework M08."
+  - rel_id: rel-rbm-aplica-iniciativas
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-iniciativas-i0-i4]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "Las 5 iniciativas estratégicas I0-I4 se gestionan con cadenas RBM (objetivos → outputs → outcomes → impactos) en los 4 niveles L0-L3 del marco GAC."
+  - rel_id: rel-rbm-aplica-misiones-piiom
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-cinco-misiones-piiom]]"
+    rel_frame: normativo
+    rel_propiedades:
+      norm_evidence: "RBM-GAC aplicado a la trazabilidad PIIOM: cada iniciativa declara contribución a misión M1-M5 con cadena verificable (RT3 mitigado)."
+  - rel_id: rel-rbm-gobernanza-comision-art100
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-comision-implementacion-art-100]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "GAC (Governance + Accountability + Compliance) define el rol institucional de la Comisión Art. 100 como instancia de gobierno + rendición + cumplimiento del Plan de Implementación."
+  - rel_id: rel-rbm-monitorea-plan-implementacion
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-plan-implementacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RBM provee la metodología de seguimiento del Plan de Implementación Art. 98: cadena objetivos → outputs → outcomes → impactos con accountability semestral."
+  - rel_id: rel-rbm-mitiga-rt5
+    rel_nombre: skos_related
+    rel_direccion: pre
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RBM-GAC es el complemento metodológico al BSC-s para mitigación de RT5 (Ausencia de sistema de seguimiento)."
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]", "[[sec-MI12-08--framework-bsc-rbm-crisp]]"]
 cited_count: 2

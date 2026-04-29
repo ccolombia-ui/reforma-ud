@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Segunda Revolución Académica (Etzkowitz 2003)"
 
 skos_prefLabel: "Segunda Revolución Académica (Etzkowitz 2003)"
 skos_altLabel: ["Second Academic Revolution", "Entrepreneurial University", "Etzkowitz quasi-firms"]
@@ -23,11 +25,41 @@ iso_standardized_by: "Etzkowitz, H. (2003). Research groups as 'quasi-firms': th
 
 pasteur_quadrant: PASTEUR
 
+concepto_capabilities:
+  - NEON
+
+concepto_facet_neon:
+  neon_scenario: S3
+  neon_alignment_strategy: DERIVED_FROM
+  neon_reuse_source: "Etzkowitz (2003) Research groups as quasi-firms"
+  neon_alignment_confidence: 0.95
+
+applicable_domain: "Diagnóstico evolutivo IES + advocacy contra departamentalización + diseño organizacional UDFJC"
+assumptions:
+  - "Las universidades pueden integrar innovación sin perder identidad académica"
+  - "El proceso evolutivo es general (no exclusivo de USA/Europa)"
+breaks_at:
+  - "Si se aplica como receta universal sin adaptación contextual"
+
+valid_from: "2003-01-01"
+concepto_anchor_chain_status: LINEAR
 
 
-
-
-
+tupla__relations:
+  - rel_id: rel-segunda-rev-anti-patron
+    rel_nombre: norm_implements
+    rel_direccion: post
+    rel_target: "[[con-anti-patron-departamentalizacion]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Etzkowitz 2003 fundamenta el anti-patrón de departamentalización: la entrepreneurial university NO tiene departamento de innovación — SE convierte ella misma en organización innovadora."
+  - rel_id: rel-segunda-rev-cinco-vias
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-cinco-vias-clark]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Etzkowitz 2003 (entrepreneurial university) y Clark 1998 (cinco vías de transformación) son los dos pilares teóricos de la 'universidad emprendedora' moderna — convergentes y complementarios."
 
 cited_in: ["[[sec-MI12-02--ciclo-virtuoso]]"]
 cited_count: 1

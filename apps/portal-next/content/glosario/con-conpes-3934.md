@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "CONPES 3934/2018"
 
 skos_prefLabel: "CONPES 3934/2018 — Política Crecimiento Verde"
 skos_altLabel: ["CONPES 3934", "Política Nacional Crecimiento Verde 2018-2031", "Green Growth Policy CO"]
@@ -23,14 +25,60 @@ iso_standardized_by: "CONPES — DNP / Colombia"
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
 
+concepto_facet_normative:
+  origin_type: NATIONAL_BINDING
+  origin_source: "[[cita-conpes-3934-2018-dnp]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-conpes-3934-2018]]"
+      adopter_locator: "Documento CONPES 3934 · Política Crecimiento Verde 2018-2031"
+      adopter_authority_level: REGLAMENTARIO
+      adopted_at: "2018-07-10"
+      adoption_evidence: "CONPES 3934 establece política nacional crecimiento verde con 5 pilares · vinculante para SINA + entidades del Estado vía PND"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: REGLAMENTARIO
+  normative_source: "[[cita-conpes-3934-2018-dnp]]"
+  normative_locator: "Documento CONPES 3934/2018 · 5 pilares"
+  normative_text: "[5 pilares: Bioeconomía + Economía Circular + Negocios Verdes + Productividad Sostenible + Desarrollo Territorial]"
+  normative_authority_level: REGLAMENTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_definitional_anchors:
+  - "[[def-norm-conpes-3934-2018-07-10]]"
+concepto_current_anchor: "[[def-norm-conpes-3934-2018-07-10]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos: []
 
+applicable_domain: "Política económico-ambiental Colombia 2018-2031"
+assumptions: ["El PND incorpora CONPES 3934 como referente"]
+breaks_at: ["Si nuevo CONPES revisa la política ambiental antes de 2031"]
 
+valid_from: "2018-07-10"
+valid_to: "2031-12-31"
 rol_seleccionado: docente-emprendedor-coop
 
 
+tupla__relations:
+  - rel_id: rel-conpes3934-fuente
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[conpes2018crecverde]]"
+    rel_frame: bibliografico
+  - rel_id: rel-conpes3934-related-conpes4069
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-conpes-4069]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "CONPES 4069 (CTI) y CONPES 3934 (crecimiento verde) son complementarios: el primero da medios CTI, el segundo da destino económico-ambiental"
 
 cited_in: ["[[sec-MI12-01--mandato-normativo]]"]
 cited_count: 1

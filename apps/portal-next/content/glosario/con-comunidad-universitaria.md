@@ -5,6 +5,8 @@ kd_type: glosario-universal
 kd_status: APPROVED
 kd_version: v1.0.0
 
+tupla_tipo: DEFINITION
+tupla_concepto: "Comunidad Universitaria UDFJC"
 
 skos_prefLabel: "Comunidad Universitaria UDFJC"
 skos_altLabel: ["Comunidad UDFJC", "Universitarios UDFJC", "University Community"]
@@ -26,17 +28,108 @@ align_wikidata: ""
 
 pasteur_quadrant: EDISON
 
+concepto_capabilities:
+  - NORMATIVE
+  - DDD
 
+concepto_facet_normative:
+  origin_type: INSTITUTIONAL_BINDING
+  origin_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  origin_force: BINDING
+  adoption_chain:
+    - adopter: "[[con-acu-004-25]]"
+      adopter_locator: "ACU-004-25 Arts. 8-17 (estamentos, derechos, deberes)"
+      adopter_authority_level: ESTATUTARIO
+      adopted_at: "2025-05-05"
+      adoption_evidence: "ACU-004-25 institucionaliza la Comunidad Universitaria como sujeto colectivo con 4 estamentos primarios + sector productivo en espacios consultivos"
+  effective_force_in_udfjc: BINDING_DIRECT
+  effective_authority_level: ESTATUTARIO
 
+  normative_source: "[[cita-acu-004-25-csu-udfjc-2025]]"
+  normative_locator: "ACU-004-25 Arts. 8-17"
+  normative_text: "[Texto literal Arts. 8-17 · 4 estamentos · derechos y deberes correlativos]"
+  normative_authority_level: ESTATUTARIO
+  derogated_by: ""
+  derogates: []
+  modification_type: ""
+  chain_status: LINEAR
+  conflicts_with: []
 
+concepto_facet_ddd:
+  ddd_id: "comunidad_universitaria"
+  ddd_aggregate_root: "ComunidadUniversitaria"
+  ddd_bc_ref: "[[bc-gobierno-academico-udfjc]]"
+  ddd_role_in_context: "Aggregate Root del bounded context Gobierno Académico que agrupa Estamentos como Entities. Cada Estamento contiene Personas con identidad propia (Docente, Estudiante, Egresado, Administrativo)."
+  ddd_invariants:
+    - "Toda persona que pertenezca a la Comunidad Universitaria está adscrita a UN Estamento primario"
+    - "Cada Estamento tiene representación democrática garantizada en órganos de gobierno"
+    - "Los derechos y deberes son correlativos (no se pueden ejercer derechos sin asumir deberes)"
+    - "El sector productivo participa en espacios consultivos limitados (no es estamento primario)"
+  ddd_ubiquitous_terms:
+    - "Comunidad Universitaria"
+    - "Estamentos"
+    - "Docentes · Estudiantes · Egresados · Administrativos"
+    - "Sector productivo"
+    - "Representación democrática"
+    - "Derechos y deberes correlativos"
 
+concepto_definitional_anchors:
+  - "[[def-norm-acu-004-25-arts-8-17-2025-05-05]]"
+concepto_current_anchor: "[[def-norm-acu-004-25-arts-8-17-2025-05-05]]"
+concepto_anchor_chain_status: LINEAR
 
+concepto_prerequisitos:
+  - "[[con-acu-004-25]]"
 
 rol_seleccionado: estudiante-soberano
 
+applicable_domain: "Toda persona vinculada institucionalmente a la UDFJC bajo modalidades reconocidas (matrícula, nómina, contrato, calidad de egresado)."
+assumptions:
+  - "El reconocimiento de estamentos es operacionalizable vía registros institucionales (SNIES estudiantes, nómina docentes, base de egresados)"
+breaks_at:
+  - "Si la institución pierde su carácter público (improbable)"
+  - "Si se reforma vía nuevo Acuerdo CSU"
+
+valid_from: "2025-05-06"
 
 
-
+tupla__relations:
+  - rel_id: rel-comunidad-defined-by-acu00425
+    rel_nombre: norm_implements
+    rel_direccion: pre
+    rel_target: "[[con-acu-004-25]]"
+    rel_frame: normativo
+  - rel_id: rel-comunidad-representada-asamblea
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-asamblea-universitaria]]"
+    rel_frame: skos
+    bc_domain: gobernanza
+    rel_propiedades:
+      skos_evidence: "Asamblea Universitaria es la representación deliberativa máxima de la Comunidad Universitaria"
+  # — v1.1.0 cross-references M01 (Fase B audit refactor) ——————————
+  - rel_id: rel-comunidad-afectada-rt6
+    rel_nombre: skos_related
+    rel_direccion: co
+    rel_target: "[[con-riesgos-rt1-rt6]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "RT6 (resistencia al cambio no gestionada) afecta directamente la apropiación de la reforma por los estamentos. Mitigación crítica: comunicación + capacitación dirigidas a Comunidad Universitaria (M01 §5.2)"
+  # — v1.2.0 cross-references M04 (Fase B audit refactor) ——————————
+  - rel_id: rel-comunidad-desagregada-roles
+    rel_nombre: skos_narrower
+    rel_direccion: post
+    rel_target: "[[con-seis-roles-jtbd-comunidad-udfjc]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los 6 roles JTBD (M04) son la desagregación analítica de la Comunidad Universitaria (Arts. 8-17): 1 Estudiante Soberano + 5 roles docentes especializados (Diseñador, Facilitador, Pasteur, Coop, Director)."
+  - rel_id: rel-comunidad-cultura-v1v5
+    rel_nombre: skos_related
+    rel_direccion: post
+    rel_target: "[[con-valores-culturales-v1-v5]]"
+    rel_frame: skos
+    rel_propiedades:
+      skos_evidence: "Los V1-V5 culturales son la dimensión cultural de la Comunidad Universitaria: cada estamento tiene arquetipos diferenciados de madurez en los 5 valores."
 
 cited_in: ["[[sec-MI12-00--carta-constitucional-acu-004-25]]", "[[sec-MI12-04--jtbd-comunidad]]"]
 cited_count: 2
