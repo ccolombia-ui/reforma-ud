@@ -18,6 +18,7 @@ import { MisionesColectivas } from '@/components/comunidad/misiones-colectivas';
 import { type MisionCoP } from '@/components/comunidad/cop-mission-card';
 import { CoPMissionsPanel } from '@/components/comunidad/cop-missions-panel';
 import { CoPMissionPage } from '@/components/comunidad/cop-mission-page';
+import { CoPAccessPanel } from '@/components/comunidad/cop-access-panel';
 import { RolesGrid } from '@/components/comunidad/roles-grid';
 import { GlosarioComunidad } from '@/components/comunidad/glosario-comunidad';
 import { Discusiones } from '@/components/comunidad/discusiones';
@@ -358,6 +359,17 @@ export default async function CommunityPage({
           'discusiones',
         ]}
       />
+
+      {/* v8c — Panel de acceso a CoP (gates de inscripción) */}
+      <section className="scroll-mt-32 mb-8">
+        <CoPAccessPanel
+          comunidadNombre={c.shortName ?? c.name}
+          comunidadSlug={c.slug}
+          misionesCoP={misionesCoP}
+          roles={roles as Array<{ nivel: number; nombre: string; emoji?: string }>}
+          ccaRequeridos={['m01']}
+        />
+      </section>
 
       {/* Sección Inicio: dashboard + servicios */}
       <section id="inicio" className="scroll-mt-32">
