@@ -4,6 +4,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import { useRouter } from 'next/navigation';
 import { X, Pin, PinOff, BookMarked, FileText, Building2, ChevronLeft, ChevronRight, ChevronDown, SplitSquareHorizontal, ArrowLeft, ArrowRight } from 'lucide-react';
 import { usePanesState } from '@/lib/panes-state';
+import { useSplitMode } from '@/lib/ui-state';
 import {
   SortableContext,
   horizontalListSortingStrategy,
@@ -46,6 +47,7 @@ export function DocTabsBar() {
 function DocTabsBarInner() {
   const mounted = useMounted();
   const router = useRouter();
+  const { splitMode } = useSplitMode();
   const {
     tabs, activeTabId,
     activateTab, closeTab, closeOthers, closeToRight, togglePin,
@@ -120,14 +122,122 @@ function DocTabsBarInner() {
 
   const tabIds = useMemo(() => tabs.map((t) => t.id), [tabs]);
 
-  // v5.0j Gap 2 · Strip se muestra siempre que haya tabs (los botones
-  // Back/Forward son útiles incluso con 1 tab abierta).
   if (!mounted || tabs.length === 0) return null;
 
+  // Shared tab strip content (used in both single-pane and split-pane modes)
+  const tabStrip = (
+    <>
+      {overflowState.hasLeft && (
+        <button
+          type="button"
+          onClick={() => scrollBy('left')}
+          aria-label="Tabs anteriores"
+          className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground"
+        >
+          <ChevronLeft className="h-3.5 w-3.5" />
+        </button>
+      )}
+      <SortableContext items={tabIds} strategy={horizontalListSortingStrategy}>
+        <div
+          ref={stripRef}
+          className="flex flex-1 min-w-0 items-center gap-0.5 overflow-x-auto no-chrome-scroll"
+        >
+          {tabs.map((tab) => (
+            <SortableTabPill
+              key={tab.id}
+              tab={tab}
+              active={tab.id === activeTabId}
+              onActivate={() => activateTab(tab.id)}
+              onClose={() => closeTab(tab.id)}
+              onCloseOthers={() => closeOthers(tab.id)}
+              onCloseToRight={() => closeToRight(tab.id)}
+              onTogglePin={() => togglePin(tab.id)}
+            />
+          ))}
+        </div>
+      </SortableContext>
+      {overflowState.hasRight && (
+        <button
+          type="button"
+          onClick={() => scrollBy('right')}
+          aria-label="Tabs siguientes"
+          className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground"
+        >
+          <ChevronRight className="h-3.5 w-3.5" />
+        </button>
+      )}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            aria-label="Ver todas las pestañas"
+            title="Ver todas las pestañas"
+            className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground"
+          >
+            <ChevronDown className="h-3.5 w-3.5" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-72 max-h-80 overflow-y-auto">
+          <div className="px-2 py-1 text-[9px] uppercase tracking-wide text-muted-foreground">
+            {tabs.length} pestañas abiertas
+          </div>
+          {tabs.map((tab) => (
+            <DropdownMenuItem
+              key={tab.id}
+              onClick={() => activateTab(tab.id)}
+              className={cn('flex items-center gap-2', tab.id === activeTabId && 'bg-accent')}
+            >
+              {tab.pinned && <Pin className="h-3 w-3 text-primary shrink-0" />}
+              {tab.kind === 'paper' && tab.number !== undefined && (
+                <span className="font-mono text-[9px] text-muted-foreground shrink-0">
+                  M{String(tab.number).padStart(2, '0')}
+                </span>
+              )}
+              <span className="truncate flex-1">{tab.title}</span>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+
+  // v7.12 · SOTA Obsidian: en split mode, pane A usa el mismo estilo de barra
+  // que PaneShell (B/C/...). sticky top-0 porque el pane ya está debajo del
+  // header global; -mx-4 md:-mx-6 -mt-2 contrarestan el wrapper del pane A
+  // (px-4 md:px-6 py-2 en MultiPaneLayout).
+  if (splitMode) {
+    return (
+      <div className="no-print sticky top-0 z-10 bg-background/95 backdrop-blur border-b -mx-4 md:-mx-6 -mt-2 mb-3">
+        <div className="flex items-center gap-0.5 px-3 py-1.5">
+          <Badge variant="secondary" className="font-mono text-[9px] shrink-0 mr-1">A</Badge>
+          <button
+            type="button"
+            onClick={goBack}
+            aria-label="Atrás en pane A"
+            title="Doc anterior · Alt+←"
+            className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={goForward}
+            aria-label="Adelante en pane A"
+            title="Doc siguiente · Alt+→"
+            className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground mr-1"
+          >
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+          {tabStrip}
+        </div>
+      </div>
+    );
+  }
+
+  // Single-pane mode: full-bleed bar sticky below global header
   return (
     <div className="no-print sticky top-14 z-20 -mx-4 md:-mx-8 mb-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/75">
       <div className="mx-auto flex w-full max-w-7xl items-center gap-1 px-4 md:px-8 py-1.5">
-        {/* v5.0j Gap 2 · Botones Back/Forward (pane A · navegación browser) */}
         <button
           type="button"
           onClick={goBack}
@@ -146,89 +256,7 @@ function DocTabsBarInner() {
         >
           <ArrowRight className="h-3.5 w-3.5" />
         </button>
-
-        {/* Chevron izquierda · solo si overflow */}
-        {overflowState.hasLeft && (
-          <button
-            type="button"
-            onClick={() => scrollBy('left')}
-            aria-label="Tabs anteriores"
-            className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground"
-          >
-            <ChevronLeft className="h-3.5 w-3.5" />
-          </button>
-        )}
-
-        {/* SortableContext sin DndContext propio · v5.0b — el DndContext lo
-            provee WorkspaceShell para soportar drag cross-pane. En single-pane
-            (sin WorkspaceShell activo) el sortable usa el DndContext del shell
-            que siempre está montado. */}
-        <SortableContext items={tabIds} strategy={horizontalListSortingStrategy}>
-          <div
-            ref={stripRef}
-            className="flex flex-1 min-w-0 items-center gap-0.5 overflow-x-auto no-chrome-scroll"
-          >
-            {tabs.map((tab) => (
-              <SortableTabPill
-                key={tab.id}
-                tab={tab}
-                active={tab.id === activeTabId}
-                onActivate={() => activateTab(tab.id)}
-                onClose={() => closeTab(tab.id)}
-                onCloseOthers={() => closeOthers(tab.id)}
-                onCloseToRight={() => closeToRight(tab.id)}
-                onTogglePin={() => togglePin(tab.id)}
-              />
-            ))}
-          </div>
-        </SortableContext>
-
-        {/* Chevron derecha · solo si overflow */}
-        {overflowState.hasRight && (
-          <button
-            type="button"
-            onClick={() => scrollBy('right')}
-            aria-label="Tabs siguientes"
-            className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground"
-          >
-            <ChevronRight className="h-3.5 w-3.5" />
-          </button>
-        )}
-
-        {/* Dropdown "▾" — siempre visible, lista todas las tabs */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button
-              type="button"
-              aria-label="Ver todas las pestañas"
-              title="Ver todas las pestañas"
-              className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent text-muted-foreground hover:text-foreground"
-            >
-              <ChevronDown className="h-3.5 w-3.5" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-72 max-h-80 overflow-y-auto">
-            <div className="px-2 py-1 text-[9px] uppercase tracking-wide text-muted-foreground">
-              {tabs.length} pestañas abiertas
-            </div>
-            {tabs.map((tab) => (
-              <DropdownMenuItem
-                key={tab.id}
-                onClick={() => activateTab(tab.id)}
-                className={cn('flex items-center gap-2', tab.id === activeTabId && 'bg-accent')}
-              >
-                {tab.pinned && <Pin className="h-3 w-3 text-primary shrink-0" />}
-                {tab.kind === 'paper' && tab.number !== undefined && (
-                  <span className="font-mono text-[9px] text-muted-foreground shrink-0">
-                    M{String(tab.number).padStart(2, '0')}
-                  </span>
-                )}
-                <span className="truncate flex-1">{tab.title}</span>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
+        {tabStrip}
         <span className="ml-1 pl-2 hidden lg:inline-flex items-center gap-1 text-[10px] text-muted-foreground border-l">
           <kbd className="rounded border px-1 py-0.5 font-mono text-[9px]">Ctrl+Tab</kbd>
         </span>

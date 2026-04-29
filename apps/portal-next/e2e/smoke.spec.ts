@@ -208,6 +208,34 @@ test('smoke · header permanece sticky al scrollear hacia abajo', async ({ page 
   expect(bbox?.y, 'header.top debe estar cerca de 0 (sticky)').toBeLessThan(10);
 });
 
+/**
+ * G-PANE-01 regresión · v7.12
+ * En split mode ambos panes deben tener la misma barra de navegación.
+ * Pane A debe mostrar badge "A" (igual que pane B muestra "B").
+ * Pre-fix: DocTabsBar no tenía badge de letra ni sticky top-0 en split mode.
+ */
+test('smoke · pane A muestra badge "A" en split mode (barra uniforme)', async ({ page }) => {
+  await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
+
+  // Activar split mode via localStorage y recargar
+  await page.evaluate(() => {
+    localStorage.setItem('reforma-ud:split-mode', 'true');
+    localStorage.setItem('reforma-ud:panes-state', JSON.stringify({
+      panes: [{ id: 'b', tabs: ['m08'], activeTabId: 'm08', history: ['m08'], historyIdx: 0 }],
+    }));
+  });
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForTimeout(600);
+
+  // Pane A debe tener badge "A"
+  const badgeA = page.locator('[data-pane="a"] .font-mono').filter({ hasText: /^A$/ }).first();
+  await expect(badgeA, 'pane A debe mostrar badge "A" en split mode').toBeVisible({ timeout: 5_000 });
+
+  // Pane B debe tener badge "B"
+  const badgeB = page.locator('[data-pane="b"] .font-mono').filter({ hasText: /^B$/ }).first();
+  await expect(badgeB, 'pane B debe mostrar badge "B"').toBeVisible({ timeout: 5_000 });
+});
+
 test('smoke · hover sobre wikilink /glosario/con-* monta HoverCard con CTA "Ver concepto completo"', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
 
