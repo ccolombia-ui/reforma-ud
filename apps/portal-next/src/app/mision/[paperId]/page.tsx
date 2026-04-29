@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { canonicPaper } from '#site/content';
+import { isPublished } from '@/lib/show-drafts';
 import { COMPREHENSION_REGISTRY, type ComprehensionSection } from '@/lib/comprehension';
 import { getReadingState, markSection, type ReadingState, type SectionStatus } from '@/lib/reading-state';
 import { useActiveProfile, ROLES } from '@/lib/ui-state';
@@ -18,7 +19,7 @@ import { cn } from '@/lib/utils';
 export default function MissionDetailPage({ params }: { params: Promise<{ paperId: string }> }) {
   const { paperId } = use(params);
   const paper = canonicPaper.find((p) => p.id === paperId);
-  if (!paper) notFound();
+  if (!paper || !isPublished(paper)) notFound();
 
   const { role, name, meta } = useActiveProfile();
   const [readingState, setReadingState] = useState<ReadingState | null>(null);
