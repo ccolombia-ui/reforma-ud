@@ -15,7 +15,9 @@ import { DocumentReader } from '@/components/biblioteca/document-reader';
 import { NoticiasRelacionadas } from '@/components/comunidad/noticias-relacionadas';
 import { ComunidadDefinicion } from '@/components/comunidad/comunidad-definicion';
 import { MisionesColectivas } from '@/components/comunidad/misiones-colectivas';
-import { CoPMissionCard, calcMisionCoPStatus, type MisionCoP } from '@/components/comunidad/cop-mission-card';
+import { type MisionCoP } from '@/components/comunidad/cop-mission-card';
+import { CoPMissionsPanel } from '@/components/comunidad/cop-missions-panel';
+import { CoPMissionPage } from '@/components/comunidad/cop-mission-page';
 import { RolesGrid } from '@/components/comunidad/roles-grid';
 import { GlosarioComunidad } from '@/components/comunidad/glosario-comunidad';
 import { Discusiones } from '@/components/comunidad/discusiones';
@@ -247,6 +249,24 @@ export default async function CommunityPage({
     return <NotePage note={noteMatch} />;
   }
 
+  // v8b · Detect CoP mission page: last segment matches a misionCoP.slug
+  if (segments.length >= 2) {
+    const misionSlug = segments[segments.length - 1];
+    const parentSlug = ['comunidades', ...segments.slice(0, -1)].join('/');
+    const parentCom = findCommunity(parentSlug);
+    const mision = (parentCom as unknown as { misionesCoP?: MisionCoP[] })
+      ?.misionesCoP?.find((m) => m.slug === misionSlug);
+    if (mision && parentCom) {
+      return (
+        <CoPMissionPage
+          mision={mision}
+          comunidad={parentCom}
+          papers={canonicPaper.filter((p) => mision.papers.includes(p.id))}
+        />
+      );
+    }
+  }
+
   const c = findCommunity(fullSlug);
   if (!c) notFound();
 
@@ -348,32 +368,15 @@ export default async function CommunityPage({
 
       <Separator className="my-10" />
 
-      {/* v8b — Misiones de CoP (comprension / deliberacion / produccion) */}
+      {/* v8b — Misiones de CoP con nivel real desde localStorage */}
       {misionesCoP.length > 0 && (
         <>
-          <section id="misiones-cop" className="scroll-mt-32">
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold">Misiones de esta comunidad</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                Completa las misiones para subir de nivel en esta CoP.
-              </p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {misionesCoP.map((m) => (
-                <CoPMissionCard
-                  key={m.id}
-                  mision={m}
-                  status={calcMisionCoPStatus({
-                    mision: m,
-                    userLevel: 0,          // TODO: conectar con userLevel real de la CoP
-                    earnedCCAs: [],        // TODO: conectar con CCAs ganadas
-                    completedMisionIds: [],
-                  })}
-                  comunidadHref={c.href}
-                />
-              ))}
-            </div>
-          </section>
+          <CoPMissionsPanel
+            misionesCoP={misionesCoP}
+            comunidadSlug={c.slug}
+            comunidadHref={c.href}
+            roles={roles as Array<{ nivel: number; nombre: string; emoji?: string }>}
+          />
           <Separator className="my-10" />
         </>
       )}
