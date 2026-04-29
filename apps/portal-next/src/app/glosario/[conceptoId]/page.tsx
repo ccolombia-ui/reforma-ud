@@ -4,10 +4,11 @@ import { ChevronLeft, BookOpen, ExternalLink, Hash, Quote } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { MDXWithHoverPreview } from '@/components/mdx-with-hover-preview';
 import { Discusiones } from '@/components/comunidad/discusiones';
 import { HeadingScrollSpy } from '@/components/heading-scroll-spy';
 import { concepto, canonicPaper, note } from '#site/content';
+import { ConceptoBodyClient, slugFromWikilink } from '@/components/glosario';
+import type { TuplaRelation } from '@/components/glosario';
 import type { Metadata } from 'next';
 
 export function generateStaticParams() {
@@ -49,6 +50,37 @@ export default async function ConceptoPage({ params }: { params: Promise<{ conce
 
   const paperBacklinks = canonicPaper.filter((p) => re.test(p.body));
   const noteBacklinks = note.filter((n) => re.test(n.body));
+
+  // v8 S4 · Pre-compute reverse prereq lookup server-side (no client iteration)
+  const habilita = concepto
+    .filter((x) =>
+      (x.concepto_prerequisitos ?? []).some(
+        (p: string) => slugFromWikilink(p) === c.id
+      )
+    )
+    .map((x) => x.id);
+
+  const conceptoTPLData = {
+    id: c.id,
+    kd_title: c.kd_title,
+    skos_prefLabel: c.skos_prefLabel,
+    concepto_capabilities: c.concepto_capabilities ?? [],
+    concepto_facet_normative: c.concepto_facet_normative,
+    concepto_prerequisitos: c.concepto_prerequisitos ?? [],
+    concepto_definitional_anchors: c.concepto_definitional_anchors ?? [],
+    concepto_current_anchor: c.concepto_current_anchor,
+    concepto_anchor_chain_status: c.concepto_anchor_chain_status,
+    tupla__relations: (c.tupla__relations as TuplaRelation[]) ?? [],
+    rol_seleccionado: c.rol_seleccionado,
+    applicable_domain: c.applicable_domain,
+    assumptions: c.assumptions ?? [],
+    breaks_at: c.breaks_at ?? [],
+    valid_from: c.valid_from,
+    valid_to: c.valid_to,
+    cited_in: c.cited_in ?? [],
+    cited_count: c.cited_count ?? 0,
+    habilita,
+  };
 
   return (
     <article className="mx-auto w-full max-w-4xl px-4 py-8 md:px-8">
@@ -123,9 +155,11 @@ export default async function ConceptoPage({ params }: { params: Promise<{ conce
 
       <Separator className="my-6" />
 
-      {/* Body markdown completo */}
+      {/* Body markdown completo — v8 S4: usa ConceptoBodyClient (superset de
+          MDXWithHoverPreview). Mientras S5 no active sentinel emission, el
+          output es byte-idéntico al de MDXWithHoverPreview. */}
       <div className="prose-paper">
-        <MDXWithHoverPreview code={c.body} />
+        <ConceptoBodyClient code={c.body} data={conceptoTPLData} />
       </div>
 
       {/* ISO 1087 metadata */}
