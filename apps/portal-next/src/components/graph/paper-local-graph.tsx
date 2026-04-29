@@ -8,6 +8,8 @@ import { Loader2, ExternalLink, RefreshCw, SplitSquareHorizontal } from 'lucide-
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { usePanesState } from '@/lib/panes-state';
+import { useSplitMode } from '@/lib/ui-state';
+import { decideGraphClick } from '@/lib/graph-click-action';
 
 type GraphNode = {
   id: string;
@@ -58,16 +60,25 @@ export function PaperLocalGraph({
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<GraphNode | null>(null);
   const panesState = usePanesState();
+  const { splitMode, setSplitMode } = useSplitMode();
 
-  // v7.6 · click en nodo del grafo right-panel:
-  //   - Si splitMode=ON → abre en último pane secundario usado
-  //   - Si splitMode=OFF → openInNextPane (crea/usa pane B, modo legacy)
-  // Razonamiento: el grafo del right panel siempre fue "split-friendly", pero
-  // ahora respeta el toggle global cuando está disponible.
-  const openInRightPane = useCallback((id: string) => {
-    if (id === focusId) return; // ya estamos viendo este doc
-    panesState.openInLastUsedPane(id);
-  }, [panesState, focusId]);
+  // v7.11 · política SOTA-adaptada (ver docs/audit/AUDIT-graph-click-sota.md):
+  // El grafo es exploración lateral. Click siempre abre en pane secundario
+  // (preserva el doc activo). Si splitMode=OFF, lo activa implícitamente.
+  // Lógica pura en src/lib/graph-click-action.ts (testeada con 12 vitest).
+  const handleGraphClick = useCallback((nodeId: string, modifierKey = false) => {
+    const action = decideGraphClick({ nodeId, focusId: focusId || null, splitMode, modifierKey });
+    switch (action.kind) {
+      case 'noop':
+        return;
+      case 'openInLastUsed':
+        panesState.openInLastUsedPane(action.docId);
+        return;
+      case 'activateSplitAndOpen':
+        setSplitMode(true);
+        panesState.openInLastUsedPane(action.docId);
+    }
+  }, [focusId, splitMode, setSplitMode, panesState]);
 
   // Fetch global graph una sola vez
   useEffect(() => {
@@ -169,12 +180,14 @@ export function PaperLocalGraph({
     // en panel lateral del grafo) — UX confusa: el usuario reportó "clic en
     // grafo no hace nada en área de trabajo". DoubleClick mantiene mismo
     // comportamiento para retrocompatibilidad.
-    network.on('click', (params: { nodes: string[] }) => {
+    network.on('click', (params: { nodes: string[]; event?: { srcEvent?: { ctrlKey?: boolean; metaKey?: boolean } } }) => {
       if (params.nodes.length > 0) {
         const nodeId = params.nodes[0];
         const node = subgraph.nodes.find((n) => n.id === nodeId);
         setSelected(node ?? null);
-        openInRightPane(nodeId);
+        const src = params.event?.srcEvent;
+        const modifierKey = !!(src?.ctrlKey || src?.metaKey);
+        handleGraphClick(nodeId, modifierKey);
       } else {
         setSelected(null);
       }
@@ -182,7 +195,7 @@ export function PaperLocalGraph({
 
     network.on('doubleClick', (params: { nodes: string[] }) => {
       if (params.nodes.length > 0) {
-        openInRightPane(params.nodes[0]);
+        handleGraphClick(params.nodes[0]);
       }
     });
 
@@ -191,7 +204,7 @@ export function PaperLocalGraph({
       network.destroy();
       networkRef.current = null;
     };
-  }, [subgraph, openInRightPane]);
+  }, [subgraph, handleGraphClick]);
 
   return (
     <div className="flex h-full flex-col">
@@ -252,7 +265,7 @@ export function PaperLocalGraph({
                 size="sm"
                 variant="outline"
                 className="gap-1.5 h-7 text-xs flex-1"
-                onClick={() => openInRightPane(selected.id)}
+                onClick={() => handleGraphClick(selected.id)}
                 disabled={selected.id === focusId}
                 title="Abrir en pane derecho (preserva el doc actual)"
               >
