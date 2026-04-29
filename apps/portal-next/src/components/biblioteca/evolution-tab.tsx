@@ -35,9 +35,12 @@ type RealCommit = {
 
 type SyncResult = {
   success: boolean;
+  mode?: 'local' | 'github-actions';
   report: string[];
   stats?: { new: number; updated: number; unchanged: number; ignored: number };
   error?: string;
+  message?: string;
+  actionsUrl?: string;
 };
 
 export function pathForDoc(doc: ActiveDoc): string {
@@ -150,7 +153,7 @@ export function EvolutionTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
       const res = await fetch('/api/sync/doc', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ docId: doc.id }),
+        body: JSON.stringify({ docId: doc.id, filter: 'all' }),
       });
       const data = await res.json() as SyncResult;
       setSyncResult(data);
@@ -233,53 +236,68 @@ export function EvolutionTab({ doc }: Readonly<{ doc: ActiveDoc | null }>) {
       {/* Sync panel — solo para conceptos del glosario */}
       {isConcepto && (
         <div className="border-t border-sidebar-border p-2 space-y-2">
-          {isDev ? (
-            <>
-              <Button
-                size="sm"
-                variant="outline"
-                className="w-full gap-1.5 h-7 text-[11px]"
-                onClick={handleSync}
-                disabled={syncing}
-                title="Copia la versión más reciente desde GDrive (vault) al repo"
-              >
-                {syncing
-                  ? <Loader2 className="h-3 w-3 animate-spin" />
-                  : <RefreshCw className="h-3 w-3" />}
-                {syncing ? 'Sincronizando…' : 'Sincronizar desde GDrive'}
-              </Button>
-              {syncResult && (
-                <div className={cn(
-                  'rounded-md border p-2 text-[10px] space-y-1',
-                  syncResult.success
-                    ? 'border-green-500/30 bg-green-500/5'
-                    : 'border-destructive/30 bg-destructive/5',
-                )}>
-                  <div className="flex items-center gap-1 font-medium">
-                    {syncResult.success
-                      ? <CheckCircle2 className="h-3 w-3 text-green-600" />
-                      : <AlertCircle className="h-3 w-3 text-destructive" />}
-                    {syncResult.success ? 'Sync completado' : 'Error en sync'}
-                  </div>
-                  {syncResult.stats && (
-                    <div className="flex gap-2 text-muted-foreground">
-                      {syncResult.stats.new > 0 && <span className="text-green-600">+{syncResult.stats.new} nuevo</span>}
-                      {syncResult.stats.updated > 0 && <span className="text-blue-600">↑{syncResult.stats.updated} actualizado</span>}
-                      {syncResult.stats.unchanged > 0 && <span>={syncResult.stats.unchanged} sin cambios</span>}
-                    </div>
-                  )}
-                  {syncResult.error && <p className="text-destructive">{syncResult.error}</p>}
-                  {syncResult.stats?.updated === 0 && syncResult.stats?.new === 0 && syncResult.success && (
-                    <p className="text-muted-foreground italic">El portal ya está al día con el vault.</p>
-                  )}
+          {/* Botón: en dev corre script local; en prod dispara GitHub Actions */}
+          <Button
+            size="sm"
+            variant="outline"
+            className="w-full gap-1.5 h-7 text-[11px]"
+            onClick={handleSync}
+            disabled={syncing}
+            title={isDev
+              ? 'Copia desde GDrive montada localmente (G:)'
+              : 'Dispara GitHub Actions → rclone GDrive → commit → Vercel (~2 min)'}
+          >
+            {syncing
+              ? <Loader2 className="h-3 w-3 animate-spin" />
+              : <RefreshCw className="h-3 w-3" />}
+            {syncing
+              ? 'Sincronizando…'
+              : isDev ? 'Sincronizar (local)' : 'Sincronizar desde GDrive'}
+          </Button>
+
+          {syncResult && (
+            <div className={cn(
+              'rounded-md border p-2 text-[10px] space-y-1',
+              syncResult.success
+                ? 'border-green-500/30 bg-green-500/5'
+                : 'border-destructive/30 bg-destructive/5',
+            )}>
+              <div className="flex items-center gap-1 font-medium">
+                {syncResult.success
+                  ? <CheckCircle2 className="h-3 w-3 text-green-600" />
+                  : <AlertCircle className="h-3 w-3 text-destructive" />}
+                {syncResult.success
+                  ? syncResult.mode === 'github-actions' ? 'Workflow disparado' : 'Sync completado'
+                  : 'Error en sync'}
+              </div>
+              {/* Modo prod: link al Actions run */}
+              {syncResult.mode === 'github-actions' && syncResult.actionsUrl && (
+                <a
+                  href={syncResult.actionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 text-primary underline underline-offset-2"
+                >
+                  <ExternalLink className="h-2.5 w-2.5" />
+                  Ver progreso en GitHub Actions
+                </a>
+              )}
+              {syncResult.message && (
+                <p className="text-muted-foreground">{syncResult.message}</p>
+              )}
+              {/* Modo dev: stats */}
+              {syncResult.stats && (
+                <div className="flex gap-2 text-muted-foreground">
+                  {syncResult.stats.new > 0 && <span className="text-green-600">+{syncResult.stats.new} nuevo</span>}
+                  {syncResult.stats.updated > 0 && <span className="text-blue-600">↑{syncResult.stats.updated} actualizado</span>}
+                  {syncResult.stats.unchanged > 0 && <span>={syncResult.stats.unchanged} sin cambios</span>}
                 </div>
               )}
-            </>
-          ) : (
-            <p className="text-center text-[9px] text-muted-foreground italic px-1">
-              Sincronización disponible solo en localhost.{' '}
-              <span className="font-mono">node scripts/sync-glosario.mjs --file {doc.id}</span>
-            </p>
+              {syncResult.error && <p className="text-destructive">{syncResult.error}</p>}
+              {syncResult.stats?.updated === 0 && syncResult.stats?.new === 0 && syncResult.success && (
+                <p className="text-muted-foreground italic">Portal ya está al día con el vault.</p>
+              )}
+            </div>
           )}
         </div>
       )}

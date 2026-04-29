@@ -1,11 +1,23 @@
 name: Sync from Google Drive
 
 on:
-  schedule:
-    - cron: '*/10 * * * *'   # cada 10 minutos
-  workflow_dispatch:           # trigger manual desde GitHub UI
+  workflow_dispatch:
+    inputs:
+      doc_slug:
+        description: 'Slug del concepto a sincronizar (vacío = sync completo glosario)'
+        required: false
+        default: ''
+      filter:
+        description: 'Filtro de estado: approved | all'
+        required: false
+        default: 'approved'
+
+  # Mantener schedule opcional (desactivado por defecto — costo de Action minutes)
+  # schedule:
+  #   - cron: '0 6 * * *'   # cada día 6am UTC
+
   repository_dispatch:
-    types: [drive-webhook]     # trigger via webhook externo
+    types: [drive-sync-request]  # trigger vía POST a GitHub API
 
 jobs:
   sync:
@@ -13,58 +25,99 @@ jobs:
     permissions:
       contents: write
 
+    env:
+      # rclone config via env vars — sin rclone.conf, sin archivos de config
+      RCLONE_CONFIG_GDRIVE_TYPE: drive
+      RCLONE_CONFIG_GDRIVE_SCOPE: drive.readonly
+      # Root = folder compartida con la service account
+      RCLONE_CONFIG_GDRIVE_ROOT_FOLDER_ID: 17DFwitZbTpS21iwNb6DWZU20UTpivS5L
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.SYNC_PAT || secrets.GITHUB_TOKEN }}
 
+      # ── rclone ──────────────────────────────────────────────────────────
       - name: Install rclone
         run: curl https://rclone.org/install.sh | sudo bash
 
-      - name: Configure rclone
+      - name: Decode service account JSON
         run: |
-          mkdir -p ~/.config/rclone
-          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+          echo "${{ secrets.GDRIVE_SA_JSON }}" | base64 -d > /tmp/gdrive-sa.json
+          # rclone usará este archivo via variable de entorno
+          echo "RCLONE_CONFIG_GDRIVE_DRIVE_SERVICE_ACCOUNT_FILE=/tmp/gdrive-sa.json" >> $GITHUB_ENV
 
-      - name: Sync Drive → content/drive-sync/
+      # ── Sync vault glosario → tmp ────────────────────────────────────────
+      - name: Sync GDrive glosario → /tmp/vault-glosario
         run: |
+          # La carpeta raíz (ROOT_FOLDER_ID) es 3-diseño-capitulo-libro/
+          # dentro está 00-glosoario-universal/ con los con-*.md
           rclone sync \
-            "gdrive:daath-zen/R002-daath-cortex/20--udfjc-reforma-vinculante" \
-            ./content/drive-sync/ \
-            --include "*.md" \
+            "gdrive:00-glosoario-universal" \
+            /tmp/vault-glosario \
+            --include "con-*.md" \
             --exclude ".obsidian/**" \
             --exclude ".trash/**" \
-            --exclude "*.canvas" \
-            --exclude "node_modules/**" \
             --transfers 8 \
             --verbose \
-            2>&1 | tail -30
+            2>&1 | tail -50
 
-      - name: Remove Obsidian internals that may have slipped
+      # ── Transform con sync-glosario.mjs ─────────────────────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Transform vault → content/glosario (sync-glosario.mjs)
         run: |
-          find ./content/drive-sync -name ".obsidian" -type d -exec rm -rf {} + 2>/dev/null || true
-          find ./content/drive-sync -name ".trash" -type d -exec rm -rf {} + 2>/dev/null || true
+          FILE_ARG=""
+          if [ -n "${{ inputs.doc_slug }}" ]; then
+            FILE_ARG="--file ${{ inputs.doc_slug }}"
+          fi
 
+          FILTER="${{ inputs.filter || 'approved' }}"
+
+          GHS_CHAPTER=/tmp/vault-glosario \
+          GHS_PORTAL_DEST=$(pwd)/apps/portal-next/content/glosario \
+            node apps/portal-next/scripts/sync-glosario.mjs \
+            --filter "$FILTER" \
+            $FILE_ARG \
+            2>&1
+
+      # ── Commit & push ────────────────────────────────────────────────────
       - name: Commit and push if changed
         run: |
           git config user.name  "drive-sync-bot"
           git config user.email "drive-sync@reforma-ud.vercel.app"
 
-          CHANGED=$(git status --porcelain | wc -l | tr -d ' ')
+          CHANGED=$(git status --porcelain apps/portal-next/content/glosario | wc -l | tr -d ' ')
 
           if [ "$CHANGED" -gt "0" ]; then
-            git add -A
+            git add apps/portal-next/content/glosario
 
-            FILES_CHANGED=$(git diff --cached --name-only | wc -l | tr -d ' ')
+            FILES=$(git diff --cached --name-only | wc -l | tr -d ' ')
             TIMESTAMP=$(date -u +%Y-%m-%dT%H:%MZ)
+            DOC_LABEL="${{ inputs.doc_slug }}"
+            LABEL="${DOC_LABEL:-glosario-completo}"
 
-            git commit -m "sync: drive snapshot ${TIMESTAMP}" \
-                       -m "Files changed: ${FILES_CHANGED}" \
-                       -m "Source: Google Drive (Patron C — B5 §14.3)"
+            git commit \
+              -m "sync(gdrive): ${LABEL} · ${TIMESTAMP}" \
+              -m "Archivos cambiados: ${FILES} · filtro: ${{ inputs.filter || 'approved' }}"
 
             git push
-            echo "✓ Pushed ${FILES_CHANGED} changed files"
+            echo "✓ Push OK · ${FILES} archivos"
           else
-            echo "✓ No changes to sync"
+            echo "✓ Sin cambios — portal ya está al día con el vault"
           fi
+
+      # ── Resumen en annotations ────────────────────────────────────────────
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Sync GDrive → Portal" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Doc:** ${{ inputs.doc_slug || '(todos)' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Filtro:** ${{ inputs.filter || 'approved' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Service account:** aksobhya-googlesheet-806@aksobhya.iam.gserviceaccount.com" >> $GITHUB_STEP_SUMMARY
+          echo "- **Folder ID:** 17DFwitZbTpS21iwNb6DWZU20UTpivS5L" >> $GITHUB_STEP_SUMMARY
