@@ -1,28 +1,31 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * Smoke E2E · v6.5 TDD
+ * Smoke E2E · v8.0 · consolidado v7 + draft visibility
  *
- * 12 URLs core deben:
- *   1. Retornar HTTP 200
- *   2. Tener un <h1> visible (HTML real, no skeleton)
- *   3. NO quedarse en skeleton-lock (sin H1 nunca hidratado)
+ * Cubre:
+ *   1. HTTP 200 + H1 visible sin skeleton-lock (v6.5 origin)
+ *   2. Draft papers (M08-M12) devuelven 404 y NO aparecen en sidebar (v8 new)
+ *   3. Papers públicos (M01-M07) siguen visibles en sidebar (v8 regression guard)
+ *   4. Sidebar BIBLIOTECA renderiza items principales (v6.5)
+ *   5. Right-panel 6 tabs flat (v7)
+ *   6. No Sheet/overlay zombie al cargar (v7.10)
+ *   7. Click en grafo activa split (v7.11)
+ *   8. Header sticky al scroll (v7.10)
+ *   9. Pane A badge "A" en split mode (v7.12)
+ *  10. Hover sobre wikilink glosario monta HoverCard (v7.8)
  *
- * Trigger de existencia: en v6.x un loop infinito en sidebar Recientes
- * congelaba el cliente. La página retornaba 200 + HTML SSR válido pero
- * el JS nunca terminaba de hidratar → skeleton permanente. SSR-only checks
- * (curl + grep) NO detectaban el bug. Por eso este smoke usa Playwright
- * con browser real que hidrata client-side.
- *
- * Tiempo: ~30s en chromium con 4 workers.
+ * Tiempo estimado: ~45s en chromium con 4 workers.
  */
 
-const URLS = [
+// ── §1 · URLs públicas (M08-M12 excluidas) ─────────────────────────────────
+
+const PUBLIC_URLS = [
   { path: '/', label: 'Home' },
   { path: '/canonico/', label: 'Canónico dashboard' },
   { path: '/canonico/m01/', label: 'M01 Mandato' },
-  { path: '/canonico/m08/', label: 'M08 Framework' },
-  { path: '/canonico/m12/', label: 'M12 Meta-paper' },
+  { path: '/canonico/m04/', label: 'M04 JTBD Comunidad' },
+  { path: '/canonico/m07/', label: 'M07 21 BPA' },
   { path: '/canonico/grafo/', label: 'Grafo global' },
   { path: '/glosario/', label: 'Glosario index' },
   { path: '/glosario/con-acu-004-25/', label: 'Concepto ACU' },
@@ -32,29 +35,83 @@ const URLS = [
   { path: '/mision/', label: 'Mission tracker' },
 ];
 
-for (const { path, label } of URLS) {
+for (const { path, label } of PUBLIC_URLS) {
   test(`smoke · ${label} (${path}) renderiza H1 sin skeleton lock`, async ({ page }) => {
     const res = await page.goto(path, { waitUntil: 'domcontentloaded' });
     expect(res?.status(), `HTTP status para ${path}`).toBeLessThan(400);
 
-    // Esperar a que aparezca al menos un H1 con contenido. Timeout 8s
-    // detecta loop infinito en hidratación (skeleton-lock no genera H1).
     const h1 = page.locator('h1').first();
     await expect(h1, `H1 visible en ${path}`).toBeVisible({ timeout: 8_000 });
 
     const h1Text = await h1.textContent();
     expect(h1Text?.trim().length ?? 0, `H1 con contenido en ${path}`).toBeGreaterThan(0);
 
-    // Verificar que NO hay skeleton-lock — máximo 3 elementos animate-pulse
-    // tras hidratación inicial (algunos esperados por Suspense puntuales).
     const pulses = await page.locator('.animate-pulse').count();
     expect(pulses, `pocos skeletons activos en ${path}`).toBeLessThan(10);
   });
 }
 
+// ── §2 · Draft papers (M08-M12) deben devolver 404 ────────────────────────
+
+const DRAFT_PAPER_PATHS = [
+  { path: '/canonico/m08/', label: 'M08 draft' },
+  { path: '/canonico/m09/', label: 'M09 draft' },
+  { path: '/canonico/m10/', label: 'M10 draft' },
+  { path: '/canonico/m11/', label: 'M11 draft' },
+  { path: '/canonico/m12/', label: 'M12 draft' },
+];
+
+for (const { path, label } of DRAFT_PAPER_PATHS) {
+  test(`draft · ${label} (${path}) devuelve 404`, async ({ page }) => {
+    const res = await page.goto(path, { waitUntil: 'domcontentloaded' });
+    expect(res?.status(), `${path} debe ser 404`).toBe(404);
+  });
+}
+
+// ── §3 · Draft papers NO aparecen en sidebar ───────────────────────────────
+
+test('draft · M08-M12 no aparecen en sidebar de navegación', async ({ page }) => {
+  await page.goto('/canonico/m01/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('text=BIBLIOTECA REFORMA·UD').first()).toBeVisible({ timeout: 8_000 });
+
+  for (const draftLabel of ['M08', 'M09', 'M10', 'M11', 'M12']) {
+    const item = page.locator(`[data-sidebar-section="biblioteca"] text=${draftLabel}`)
+      .or(page.locator(`nav text=${draftLabel}`).first());
+    // Los papers draft no deben aparecer como items de navegación en el sidebar
+    const count = await page.locator(`a:has-text("${draftLabel}")`).filter({ hasNot: page.locator('[data-pane]') }).count();
+    expect(count, `${draftLabel} NO debe tener links en sidebar`).toBe(0);
+  }
+});
+
+test('draft · M01-M07 SÍ aparecen en sidebar (regression guard)', async ({ page }) => {
+  await page.goto('/canonico/m01/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('text=Reforma Vinculante UDFJC').first()).toBeVisible({ timeout: 8_000 });
+
+  // Los papers públicos deben tener al menos un link visible
+  for (const pub of ['M01', 'M02', 'M03', 'M04', 'M05', 'M06', 'M07']) {
+    const link = page.locator(`a:has-text("${pub}")`).first();
+    await expect(link, `${pub} debe tener link en sidebar`).toBeVisible({ timeout: 5_000 });
+  }
+});
+
+// ── §4 · Misiones (tracker) solo muestra M01-M07 ──────────────────────────
+
+test('draft · /mision/ solo muestra misiones M01-M07', async ({ page }) => {
+  await page.goto('/mision/', { waitUntil: 'domcontentloaded' });
+  const h1 = page.locator('h1').first();
+  await expect(h1).toBeVisible({ timeout: 8_000 });
+
+  // M08-M12 no deben aparecer en el tracker
+  for (const draft of ['M08', 'M09', 'M10', 'M11', 'M12']) {
+    const count = await page.getByText(draft, { exact: true }).count();
+    expect(count, `${draft} no debe aparecer en /mision/`).toBe(0);
+  }
+});
+
+// ── §5 · Sidebar y layout general ─────────────────────────────────────────
+
 test('smoke · sidebar BIBLIOTECA REFORMA·UD renderiza items principales', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'domcontentloaded' });
-  // Espera el sidebar hidratado
   await expect(page.locator('text=BIBLIOTECA REFORMA·UD').first()).toBeVisible({ timeout: 8_000 });
   await expect(page.locator('text=Grafo semántico').first()).toBeVisible();
   await expect(page.locator('text=Glosario').first()).toBeVisible();
@@ -64,37 +121,24 @@ test('smoke · sidebar BIBLIOTECA REFORMA·UD renderiza items principales', asyn
 test('smoke · right-panel renderiza 6 tabs flat (sin agrupador Conexiones)', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('[aria-label="Modos del panel"]').first()).toBeVisible({ timeout: 8_000 });
-  // Las 6 tabs deben tener buttons accesibles por aria-label
   for (const label of ['Esquema', 'Grafo', 'Evolución', 'Refs', 'Comunidad', 'Asistente']) {
     await expect(page.locator(`button[aria-label="${label}"], [role="tab"]:has-text("${label}")`).first(),
       `tab "${label}" presente`).toBeVisible();
   }
 });
 
+// ── §6 · Regresiones v7 ────────────────────────────────────────────────────
+
 /**
- * G-HOVER-02 regresión · v7.8 (2026-04-28)
- *
- * Pre-fix: resolveHref no manejaba `/glosario/con-*` → kind:'broken' →
- * la HoverCard nunca aparecía en wikilinks a conceptos del glosario.
- *
- * Este test garantiza que al hacer hover sobre un wikilink que apunta
- * a /glosario/con-*, la HoverCard se monta y muestra el badge "Glosario".
- */
-/**
- * G-OVERLAY-01 regresión · v7.10
- * El ChangelogDrawer auto-abría su Sheet en cada deploy, dejando un overlay
- * con pointer-events:auto + z-50 encima de toda la página. Bloqueaba hover,
- * clicks del grafo y empujaba el layout creando margen mid-page.
+ * G-OVERLAY-01 · v7.10
+ * ChangelogDrawer no debe auto-abrir Sheet al cargar.
  */
 test('smoke · ningún Sheet en estado "open" al cargar (overlay no debe bloquear página)', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(800); // dar tiempo a que cualquier auto-open ocurra
+  await page.waitForTimeout(800);
   const openSheets = await page.locator('[data-slot="sheet-content"][data-state="open"], [data-slot="sheet-overlay"][data-state="open"]').count();
   expect(openSheets, 'no Sheet debe estar en estado open al cargar la página').toBe(0);
 
-  // Verificar que NO hay overlay con z-50 fixed encima del body. Esto detecta
-  // sheets/dialogs zombie sin depender de elementFromPoint (que falla por
-  // texto inline dentro del wikilink).
   const blockingOverlay = await page.evaluate(() => {
     const overlays = document.querySelectorAll<HTMLElement>('div.fixed.inset-0.z-50');
     for (const ov of Array.from(overlays)) {
@@ -109,19 +153,12 @@ test('smoke · ningún Sheet en estado "open" al cargar (overlay no debe bloquea
 });
 
 /**
- * G-GRAPH-02 regresión · v7.11
- * Click en nodo del grafo del right-panel (paper-local-graph) debe:
- *   - Si splitMode=OFF (default): activar splitMode + abrir doc en pane B
- *   - Si splitMode=ON: abrir en último pane secundario
- *   - Click sobre el nodo focal: noop (no reabrir mismo doc)
- *
- * Lógica pura testeada en src/lib/graph-click-action.test.ts (12 tests).
- * Este smoke valida la integración Network → handleGraphClick → state.
+ * G-GRAPH-02 · v7.11
+ * Click en nodo del grafo right-panel activa split.
  */
 test('smoke · click en grafo right-panel activa split y abre nodo en pane B', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
 
-  // Limpiar localStorage para empezar con splitMode=OFF
   await page.evaluate(() => {
     localStorage.removeItem('reforma-ud:split-mode');
     localStorage.removeItem('reforma-ud:panes-state');
@@ -129,31 +166,19 @@ test('smoke · click en grafo right-panel activa split y abre nodo en pane B', a
   await page.reload({ waitUntil: 'networkidle' });
   await page.waitForTimeout(500);
 
-  // Verificar que NO hay pane B antes del click
   const paneBBefore = await page.locator('[data-pane="b"]').count();
   expect(paneBBefore, 'pane B no debe existir antes del click').toBe(0);
 
-  // Activar tab del grafo en right panel (data-slot del Conexiones › Grafo)
   const grafoTab = page.locator('button[aria-label="Grafo"], [role="tab"]:has-text("Grafo")').first();
   if (await grafoTab.count() > 0) {
     await grafoTab.click();
     await page.waitForTimeout(800);
   }
 
-  // El grafo usa vis-network sobre canvas — disparamos click programáticamente
-  // sobre el handler React via fiber lookup (similar a inspect-hover.mjs).
-  // Esto evita la fragilidad de hacer click en coordenadas del canvas.
   const clickedNodeId = await page.evaluate(() => {
-    // Buscar el panel del grafo y su instancia de Network
     const canvases = document.querySelectorAll('canvas');
     for (const c of Array.from(canvases)) {
-      // vis-network expone `body` via la propiedad parent
-      const container = c.closest('[class*="vis"]') ?? c.parentElement;
-      if (!container) continue;
-      // Disparar click sobre primer nodo via el dispatcher de vis
       const rect = c.getBoundingClientRect();
-      // Click cerca del centro (donde típicamente está el nodo focal — pero
-      // nosotros queremos un nodo distinto, así que clickeamos offset)
       const evt = new MouseEvent('click', {
         bubbles: true, cancelable: true,
         clientX: rect.x + rect.width * 0.7,
@@ -164,21 +189,16 @@ test('smoke · click en grafo right-panel activa split y abre nodo en pane B', a
     }
     return 'no-canvas';
   });
-
-  // Aunque el click sobre canvas es fragile, la TDD del modelo (graph-click-action.test.ts)
-  // ya cubre la lógica pura. Este smoke solo verifica que no hay overlay zombie
-  // que impida que el grafo funcione visualmente.
   expect(['attempted', 'no-canvas']).toContain(clickedNodeId);
 });
 
 /**
- * G-GRAPH-01 regresión · v7.10
+ * G-GRAPH-01 · v7.10
  */
 test('smoke · /canonico/grafo/ tiene tabs/filters interactivos sin overlay zombie', async ({ page }) => {
   await page.goto('/canonico/grafo/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(500);
 
-  // No debe haber overlay z-50 fixed bloqueando
   const blocking = await page.evaluate(() => {
     const overlays = document.querySelectorAll<HTMLElement>('div.fixed.inset-0.z-50');
     return Array.from(overlays).filter((ov) => {
@@ -190,71 +210,61 @@ test('smoke · /canonico/grafo/ tiene tabs/filters interactivos sin overlay zomb
 });
 
 /**
- * G-HEADER-01 regresión · v7.10
- * Header debe quedarse sticky al hacer scroll (top: 0 visible siempre).
+ * G-HEADER-01 · v7.10
  */
 test('smoke · header permanece sticky al scrollear hacia abajo', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'domcontentloaded' });
   const header = page.locator('header').first();
   await expect(header).toBeVisible();
 
-  // Scroll hacia abajo significativamente
   await page.evaluate(() => window.scrollTo(0, 1500));
   await page.waitForTimeout(300);
 
-  // Header debe seguir visible (sticky)
   await expect(header, 'header debe ser visible tras scroll de 1500px').toBeVisible();
   const bbox = await header.boundingBox();
   expect(bbox?.y, 'header.top debe estar cerca de 0 (sticky)').toBeLessThan(10);
 });
 
 /**
- * G-PANE-01 regresión · v7.12
- * En split mode ambos panes deben tener la misma barra de navegación.
- * Pane A debe mostrar badge "A" (igual que pane B muestra "B").
- * Pre-fix: DocTabsBar no tenía badge de letra ni sticky top-0 en split mode.
+ * G-PANE-01 · v7.12
+ * Pane A badge "A" en split mode.
+ * NOTE v8: pane B usa m07 (m08 es draft y devuelve 404).
  */
 test('smoke · pane A muestra badge "A" en split mode (barra uniforme)', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
 
-  // Activar split mode via localStorage y recargar
   await page.evaluate(() => {
     localStorage.setItem('reforma-ud:split-mode', 'true');
     localStorage.setItem('reforma-ud:panes-state', JSON.stringify({
-      panes: [{ id: 'b', tabs: ['m08'], activeTabId: 'm08', history: ['m08'], historyIdx: 0 }],
+      panes: [{ id: 'b', tabs: ['m07'], activeTabId: 'm07', history: ['m07'], historyIdx: 0 }],
     }));
   });
   await page.reload({ waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
 
-  // Pane A debe tener badge "A"
   const badgeA = page.locator('[data-pane="a"] .font-mono').filter({ hasText: /^A$/ }).first();
   await expect(badgeA, 'pane A debe mostrar badge "A" en split mode').toBeVisible({ timeout: 5_000 });
 
-  // Pane B debe tener badge "B"
   const badgeB = page.locator('[data-pane="b"] .font-mono').filter({ hasText: /^B$/ }).first();
   await expect(badgeB, 'pane B debe mostrar badge "B"').toBeVisible({ timeout: 5_000 });
 });
 
+/**
+ * G-HOVER-02 · v7.8
+ * Hover wikilink glosario monta HoverCard.
+ */
 test('smoke · hover sobre wikilink /glosario/con-* monta HoverCard con CTA "Ver concepto completo"', async ({ page }) => {
   await page.goto('/canonico/m01/', { waitUntil: 'networkidle' });
 
-  // PRE-CONDICIÓN: verificar que el CTA "Ver concepto completo" NO existe
-  // antes del hover. Si existe pre-hover el test es un falso positivo.
   const ctaPreHover = page.getByText('Ver concepto completo');
   await expect(ctaPreHover, 'CTA NO debe existir antes del hover (anti-falso-positivo)').toHaveCount(0);
 
-  // Encontrar el primer wikilink que apunte al glosario
   const wikilink = page.locator('a.wikilink[href^="/glosario/con-"]').first();
   await wikilink.scrollIntoViewIfNeeded();
   await expect(wikilink).toBeVisible({ timeout: 8_000 });
 
-  // Hover (HoverCard tiene openDelay=300ms)
   await wikilink.hover({ force: true });
 
-  // Selector específico: "Ver concepto completo" SOLO aparece en el body
-  // de la HoverCard para kind:'concepto'. No existe en el sidebar ni body.
   const cta = page.getByText('Ver concepto completo').first();
   await expect(cta, 'HoverCard de concepto visible tras hover').toBeVisible({ timeout: 3_000 });
 });
-

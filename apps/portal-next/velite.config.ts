@@ -209,6 +209,7 @@ const canonicPaper = defineCollection({
       ]),
       rutaClark: s.array(s.enum(['R1', 'R2', 'R3', 'R4', 'R5'])).default([]),
       status: s.enum(['red', 'yellow', 'green']).default('red'),
+      kd_status: s.enum(['DRAFT', 'IN_REVIEW', 'PUBLISHED', 'DEPRECATED']).default('DRAFT'),
       tags: s.array(s.string()).default([]),
       // v5.0n · Layout opcional. 'infografia-quickstart' activa una vista
       // 3-zone (TOC izq + body + grafo local der) optimizada para principiantes
@@ -248,10 +249,12 @@ const canonicPaper = defineCollection({
     })
     .transform((data) => ({
       ...data,
-      // v5.0k · Pipeline: sanitize → APA cites. Sanitize PRIMERO arregla
-      // `</div</div>` y otros patrones malformados que rompen el SSG de Next.
+      // v5.0k · Pipeline: sanitize → APA cites.
       body: transformApaCites(sanitizeHtmlPatterns(data.body)),
       href: `/canonico/${data.id}`,
+      // draft derivado de kd_status — backward compat con código existente.
+      // PUBLISHED y DEPRECATED son visibles; DRAFT e IN_REVIEW son ocultos.
+      draft: data.kd_status !== 'PUBLISHED' && data.kd_status !== 'DEPRECATED',
     })),
 });
 
@@ -325,6 +328,7 @@ const concepto = defineCollection({
       kd_type: s.string().default('glosario-universal'),
       kd_status: s.string().optional(),
       kd_version: s.string().optional(),
+      draft: s.boolean().default(false),
       skos_prefLabel: s.string(),
       skos_altLabel: s.array(s.string()).default([]),
       skos_definition: s.string(),

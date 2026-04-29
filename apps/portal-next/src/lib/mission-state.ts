@@ -12,6 +12,7 @@ import { canonicPaper } from '#site/content';
 import type { ReadingState } from '@/lib/reading-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import type { RoleId } from '@/lib/ui-state';
+import { isPublished } from '@/lib/show-drafts';
 
 export type MissionStatus = 'locked' | 'active' | 'in-progress' | 'completed';
 
@@ -29,7 +30,11 @@ export type MissionState = {
   hasCCA: boolean;
 };
 
-const PAPERS_ORDER = ['m01','m02','m03','m04','m05','m06','m07','m08','m09','m10','m11','m12'];
+const ALL_PAPERS_ORDER = ['m01','m02','m03','m04','m05','m06','m07','m08','m09','m10','m11','m12'];
+const PAPERS_ORDER = ALL_PAPERS_ORDER.filter((id) => {
+  const p = canonicPaper.find((x) => x.id === id);
+  return p ? isPublished(p) : false;
+});
 
 /** Calcula el estado de UNA misión a partir del readingState + comprehension data. */
 export function calcMission(paperId: string, readingState: ReadingState | null, prevCompleted: boolean): MissionState {

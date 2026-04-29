@@ -117,8 +117,9 @@ function buildGlobalGraph() {
     edges.push({ from, to, label, arrows: 'to' });
   }
 
-  // Papers canonicos
-  for (const p of canonicPaper) {
+  // Papers canonicos (excluir borradores salvo SHOW_DRAFTS=true)
+  const showDrafts = process.env.SHOW_DRAFTS === 'true';
+  for (const p of canonicPaper.filter((x) => !x.draft || showDrafts)) {
     const ruta = p.rutaClark[0] ?? 'R1';
     const color = RUTA_COLORS[ruta] ?? COLORS.paper.bg;
     nodes.push({

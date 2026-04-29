@@ -20,6 +20,7 @@ import { PrintButton } from '@/components/print-button';
 // en el centro era herencia v4.0/v4.4 que ya no aporta valor con el shell
 // rebalanceado de v4.5.
 import { canonicPaper, note } from '#site/content';
+import { isPublished } from '@/lib/show-drafts';
 import type { Metadata } from 'next';
 
 // v5.0k · Force dynamic rendering — el HTML compilado de algunos papers
@@ -47,7 +48,7 @@ const RUTAS_LABEL: Record<string, string> = {
 };
 
 export function generateStaticParams() {
-  return canonicPaper.map((p) => ({ mid: p.id }));
+  return canonicPaper.filter(isPublished).map((p) => ({ mid: p.id }));
 }
 
 export async function generateMetadata({
@@ -64,7 +65,7 @@ export async function generateMetadata({
 export default async function PaperPage({ params }: { params: Promise<{ mid: string }> }) {
   const { mid } = await params;
   const paper = canonicPaper.find((p) => p.id === mid);
-  if (!paper) notFound();
+  if (!paper || !isPublished(paper)) notFound();
 
   // Backlinks: notas que citen este paper
   const backlinks = note.filter((n) => n.cites?.includes(mid));

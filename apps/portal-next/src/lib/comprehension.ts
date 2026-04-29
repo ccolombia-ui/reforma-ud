@@ -166,7 +166,79 @@ export const PRINCIPIOS_ESCUELA_EMP: DocumentComprehension = {
   ],
 };
 
+export const M01_COMPREHENSION: DocumentComprehension = {
+  docId: 'm01',
+  title: 'M01 — Mandato Normativo',
+  sections: [
+    {
+      heading: '§2.1 · Tres marcos de política de innovación',
+      anchor: '21-tres-marcos-para-la-política-de-innovación-schot--steinmueller-2018',
+      summary: 'Schot & Steinmueller (2018): Frame 1 = R&D, Frame 2 = Sistemas de Innovación, Frame 3 = Cambio Transformativo.',
+      question: {
+        prompt: '¿Cuál es la diferencia central entre Frame 2 (Sistemas de Innovación) y Frame 3 (Cambio Transformativo)?',
+        options: [
+          'Frame 2 financia I+D; Frame 3 conecta empresas y universidades',
+          'Frame 2 pregunta cómo conectar actores; Frame 3 pregunta hacia dónde dirigir la innovación',
+          'Frame 2 es público; Frame 3 solo aplica a Europa',
+          'Frame 2 aplica a Colombia; Frame 3 es solo para universidades privadas',
+        ],
+        correctIndex: 1,
+        explain: 'Frame 3 añade la pregunta de direccionalidad: innovación orientada hacia transformaciones sociotécnicas (pobreza, insostenibilidad), no solo crecimiento económico como en Frame 2.',
+      },
+    },
+    {
+      heading: '§4.4 · CONPES 4069 — Adopción de Frame 3 en Colombia',
+      anchor: '44-conpes-40692021-política-nacional-cti-adopción-formal-de-frame-3',
+      summary: 'El CONPES 4069/2021 adopta formalmente Frame 3 como paradigma rector de la Política Nacional CTI.',
+      question: {
+        prompt: '¿Qué instrumento de política pública adopta formalmente Frame 3 como paradigma rector de la CTI nacional colombiana?',
+        options: [
+          'Ley 30 de 1992',
+          'Constitución Política Art. 69',
+          'CONPES 4069 / 2021',
+          'PIIOM 2022-2026',
+        ],
+        correctIndex: 2,
+        explain: 'El CONPES 4069/2021 (Política Nacional de CTI) adopta explícitamente Frame 3, estableciendo misiones transformativas como eje de la CTI colombiana.',
+      },
+    },
+    {
+      heading: '§2.3 · Autonomía universitaria como instrumento',
+      anchor: '23-jerarquía-normativa-multinivel-co-la-autonomía-como-instrumento',
+      summary: 'Art. 69 CP: la autonomía universitaria es funcional e instrumental, no absoluta.',
+      question: {
+        prompt: 'Según §01, la autonomía universitaria del Art. 69 de la Constitución Política de Colombia es:',
+        options: [
+          'Un derecho absoluto que protege a la universidad de cualquier política del Estado',
+          'Una capacidad instrumental orientada al cumplimiento de los deberes constitucionales',
+          'Una garantía que aplica solo a universidades privadas',
+          'Un principio sin consecuencias jurídicas prácticas',
+        ],
+        correctIndex: 1,
+        explain: 'La autonomía es funcional e instrumental: limita interferencia política arbitraria pero no exime a la UDFJC de cumplir el marco normativo superior (CONPES 4069, PIIOM, Ley 30).',
+      },
+    },
+    {
+      heading: '§4.6 · PIIOM 2022-2026 — Las 5 Misiones Transformativas',
+      anchor: '46-piiom-2022-2026-las-5-misiones-transformativas-como-mandato-operativo',
+      summary: 'El PIIOM establece 5 misiones transformativas como mandato operativo para IES públicas.',
+      question: {
+        prompt: '¿Qué establece el PIIOM 2022-2026 para las IES públicas colombianas?',
+        options: [
+          'Un ranking de universidades por productividad investigativa',
+          'Cinco misiones transformativas como mandato operativo de acción',
+          'Un sistema de acreditación internacional voluntario',
+          'Criterios de distribución presupuestal entre facultades',
+        ],
+        correctIndex: 1,
+        explain: 'El PIIOM 2022-2026 operacionaliza el CONPES 4069 estableciendo 5 misiones transformativas concretas que las IES públicas deben implementar.',
+      },
+    },
+  ],
+};
+
 export const COMPREHENSION_REGISTRY: Record<string, DocumentComprehension> = {
+  m01: M01_COMPREHENSION,
   m04: M04_COMPREHENSION,
   m05: M05_COMPREHENSION,
   'comunidades/formacion/escuelas/fisica/principios-escuela-emprendedora': PRINCIPIOS_ESCUELA_EMP,
