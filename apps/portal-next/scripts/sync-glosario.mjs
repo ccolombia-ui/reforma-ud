@@ -48,6 +48,9 @@ const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const filterIdx = args.indexOf('--filter');
 const FILTER = filterIdx >= 0 ? args[filterIdx + 1] : 'approved'; // 'approved' | 'all'
+// --file <slug>: solo sincroniza ese concepto (e.g. 'con-acu-004-25')
+const fileIdx = args.indexOf('--file');
+const SINGLE_FILE = fileIdx >= 0 ? args[fileIdx + 1] : null;
 
 // ── Campos que Velite NO conoce — se eliminan del frontmatter de salida ───
 const STRIP_KEY_PATTERNS = [
@@ -162,10 +165,19 @@ function cleanFrontmatter(block) {
 }
 
 function cleanBody(body) {
-    // Extracts the final path component from any wikilink/embed with one or more '/' segments
     return body
+        // Wikilinks: extract final path component (strip relative ../../ prefixes)
         .replace(/!\[\[(?:[^\]|]*\/)([^\]|/]+?)(\|[^\]]+)?\]\]/g, '![[$1$2]]')
-        .replace(/\[\[(?:[^\]|]*\/)([^\]|/]+?)(\|[^\]]+)?\]\]/g, '[[$1$2]]');
+        .replace(/\[\[(?:[^\]|]*\/)([^\]|/]+?)(\|[^\]]+)?\]\]/g, '[[$1$2]]')
+        // Strip Obsidian Dataview/DataviewJS blocks (can't execute in portal)
+        .replace(/```dataviewjs[\s\S]*?```/gi, '')
+        .replace(/```dataview[\s\S]*?```/gi, '')
+        // Strip Obsidian Meta Bind directives (INPUT[...]:field syntax)
+        .replace(/`?INPUT\[[^\]]*\][^\n`]*/g, '')
+        // Strip Obsidian `VIEW[...]` / `BUTTON[...]` inline commands
+        .replace(/`?(VIEW|BUTTON)\[[^\]]*\][^\n`]*/g, '')
+        // Clean up triple blank lines left after block removal
+        .replace(/\n{4,}/g, '\n\n\n');
 }
 
 function collectConceptFiles(dir, acc = []) {
@@ -182,11 +194,18 @@ function collectConceptFiles(dir, acc = []) {
 
 // ── Lógica de sync (exportable para tests) ───────────────────────────────
 
-function runSync({ vaultGlosario, portalDest, filter, dryRun }) {
+function runSync({ vaultGlosario, portalDest, filter, dryRun, singleFile = null }) {
     const stats = { new: 0, updated: 0, unchanged: 0, ignored: 0, errors: 0 };
     const report = [];
 
-    const conceptFiles = collectConceptFiles(vaultGlosario);
+    let conceptFiles = collectConceptFiles(vaultGlosario);
+    if (singleFile) {
+        const slug = singleFile.endsWith('.md') ? singleFile : singleFile + '.md';
+        conceptFiles = conceptFiles.filter(f => path.basename(f) === slug);
+        if (conceptFiles.length === 0) {
+            return { stats, report: [`[!] No encontrado en vault: ${singleFile}`], total: 0 };
+        }
+    }
     for (const srcPath of conceptFiles) {
         const slug = path.basename(srcPath, '.md');
         const raw = fs.readFileSync(srcPath, 'utf8');
@@ -260,6 +279,7 @@ function main() {
         portalDest: PORTAL_DEST,
         filter: FILTER,
         dryRun: DRY_RUN,
+        singleFile: SINGLE_FILE,
     });
 
     console.log(`Encontrados ${total} con-*.md en vault\n`);
