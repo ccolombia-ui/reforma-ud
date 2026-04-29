@@ -18,7 +18,8 @@
     "sync:vault": "node scripts/sync-vault.mjs",
     "sync:vault:dry": "node scripts/sync-vault.mjs --dry-run --skip-papers --skip-fix",
     "baseline:capture": "node scripts/capture-baseline-snapshots.mjs",
-    "audit:dv": "node scripts/audit-dv-coverage.mjs"
+    "audit:dv": "node scripts/audit-dv-coverage.mjs",
+    "sync:csu": "node scripts/import-csu-acuerdo.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.71",
