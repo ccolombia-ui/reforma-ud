@@ -429,8 +429,22 @@ const community = defineCollection({
       miembros: s.array(s.object({
         nombre: s.string(),
         rol: s.string().optional(),
-        nivel: s.number().optional(),             // N1-N4
+        nivel: s.number().optional(),
         avatar: s.string().optional(),
+      })).default([]),
+      misionesCoP: s.array(s.object({
+        id: s.string(),
+        slug: s.string(),
+        titulo: s.string(),
+        tipo: s.enum(['comprension', 'deliberacion', 'produccion']),
+        descripcion: s.string().optional(),
+        papers: s.array(s.string()).default([]),
+        nivelRequerido: s.number().default(0),
+        nivelOtorga: s.number().optional(),
+        prerequisitosCanonicas: s.array(s.string()).default([]),
+        prerequisitosMision: s.array(s.string()).default([]),
+        estatuto: s.string().optional(),
+        orden: s.number().default(99),
       })).default([]),
       body: s.markdown(),
       toc: s.toc(),
@@ -477,6 +491,38 @@ const note = defineCollection({
         href: `/${data.slug}`,
       };
     }),
+});
+
+// v8 CSU · Acuerdos CSU derivados del Art. 98 ACU-004-25.
+// Importados via scripts/import-csu-acuerdo.mjs desde vault 100--csu/.
+const csuAcuerdo = defineCollection({
+  name: 'CsuAcuerdo',
+  pattern: 'acuerdos/*.mdx',
+  schema: s
+    .object({
+      id: s.string(),
+      titulo: s.string(),
+      objetoCorto: s.string(),
+      estado: s.string().default('DRAFT'),
+      organo: s.string().default('CSU'),
+      numero: s.string().optional(),
+      implementaAcuerdo: s.string().optional(),
+      implementaArticulo: s.string().optional(),
+      derogaA: s.array(s.string()).default([]),
+      vigentDesde: s.string().optional(),
+      capitulos: s.array(s.object({
+        id: s.string(),
+        titulo: s.string(),
+      })).default([]),
+      color: s.string().default('blue'),
+      body: s.markdown(),
+      toc: s.toc(),
+      slug: s.path(),
+    })
+    .transform((data) => ({
+      ...data,
+      href: `/acuerdos/${data.id}`,
+    })),
 });
 
 // v5.0z · News collection. Cada noticia es un atomo .md con tags + relations
@@ -528,6 +574,7 @@ export default defineConfig({
     concepto,
     dashboard,
     news,
+    csuAcuerdo,
   },
   markdown: {
     gfm: true,

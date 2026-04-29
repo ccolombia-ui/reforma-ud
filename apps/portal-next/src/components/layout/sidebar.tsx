@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles, Atom, X } from 'lucide-react';
+import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles, Atom, X, Scale, BookOpen, Hammer } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { canonicPaper, concepto, community } from '#site/content';
+import { canonicPaper, concepto, community, csuAcuerdo } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
 import { filterPublished, buildPublishedConceptIds, isConceptVisible } from '@/lib/show-drafts';
@@ -479,6 +479,38 @@ function TreeItem({ node, currentPath, depth = 0 }: { node: TreeNode; currentPat
           ))}
         </ul>
       )}
+      {/* Misiones CoP como sub-items directos bajo la comunidad */}
+      {node.misionesCoP && node.misionesCoP.length > 0 && open && (
+        <ul className="ml-3 border-l border-sidebar-border pl-2 mt-0.5">
+          {node.misionesCoP.map((m) => {
+            const mHref = `${node.href}/${m.slug}`;
+            const isActive = currentPath === mHref;
+            const icon = m.tipo === 'comprension'
+              ? <BookOpen className="h-3 w-3 shrink-0 text-blue-500" />
+              : m.tipo === 'deliberacion'
+              ? <Scale className="h-3 w-3 shrink-0 text-orange-500" />
+              : <Hammer className="h-3 w-3 shrink-0 text-green-500" />;
+            return (
+              <li key={m.id}>
+                <Link
+                  href={mHref}
+                  className={cn(
+                    'flex items-center gap-1.5 rounded px-1.5 py-1 text-[10px] truncate',
+                    isActive
+                      ? 'bg-sidebar-accent text-sidebar-primary font-semibold'
+                      : 'text-muted-foreground hover:bg-sidebar-accent hover:text-foreground',
+                  )}
+                  title={m.titulo}
+                >
+                  <span className="w-4 shrink-0" />
+                  {icon}
+                  <span className="truncate">{m.titulo}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </li>
   );
 }
@@ -671,6 +703,36 @@ export function Sidebar() {
             </li>
             <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
             <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
+            {/* v8 CSU · Estatutos Derivados Art. 98 ACU-004-25 */}
+            <li>
+              <div className="mt-1 flex items-center gap-1 px-2 py-0.5">
+                <Scale className="h-3 w-3 text-blue-400/70 shrink-0" />
+                <span className="text-[9px] uppercase tracking-wider text-muted-foreground/60 font-semibold">CSU — Estatutos</span>
+                <span className="ml-auto text-[9px] text-muted-foreground/60">{csuAcuerdo.length}</span>
+              </div>
+              <ul className="ml-3 space-y-0.5 border-l border-sidebar-border pl-2">
+                {csuAcuerdo.map((a) => (
+                  <li key={a.id}>
+                    <Link
+                      href={a.href}
+                      className={cn(
+                        'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
+                        pathname.startsWith(`/acuerdos/${a.id}`) && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+                      )}
+                    >
+                      <Scale className="h-3 w-3 text-blue-400/60 shrink-0" />
+                      <span className="flex-1 text-left leading-tight line-clamp-2">{a.objetoCorto}</span>
+                      <span className={cn(
+                        'shrink-0 text-[8px] font-mono px-1 rounded',
+                        a.estado === 'VIGENTE' ? 'bg-green-500/20 text-green-400' :
+                        a.estado === 'PRE_APROBADO' ? 'bg-sky-500/20 text-sky-400' :
+                        'bg-gray-500/20 text-gray-400'
+                      )}>{a.estado}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
           </ul>
         </SectionToggle>
 

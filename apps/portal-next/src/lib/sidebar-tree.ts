@@ -1,13 +1,22 @@
 import { community } from '#site/content';
 
+export type CoPMisionLite = {
+  id: string;
+  slug: string;
+  titulo: string;
+  tipo: 'comprension' | 'deliberacion' | 'produccion';
+  orden: number;
+};
+
 export type TreeNode = {
-  slug: string;          // full slug path "comunidades/formacion/escuelas/fisica"
-  segment: string;       // last segment "fisica"
-  name: string;          // display name
-  type?: string;         // community type (vicerrectoria, escuela, ...) o undefined si es sintetico
-  href?: string;         // url if has landing; undefined if synthetic group
+  slug: string;
+  segment: string;
+  name: string;
+  type?: string;
+  href?: string;
   children: TreeNode[];
   depth: number;
+  misionesCoP?: CoPMisionLite[];  // misiones de esta comunidad
 };
 
 /** Bonitos para nodos sinteticos (grupos sin landing). */
@@ -71,6 +80,11 @@ export function buildCommunityTree(): TreeNode[] {
         node.name = c.shortName ?? c.name;
         node.type = c.type;
         node.href = `/${c.slug}`;
+        // Attach CoP missions if present
+        const missions = (c as unknown as { misionesCoP?: CoPMisionLite[] }).misionesCoP;
+        if (missions?.length) {
+          node.misionesCoP = [...missions].sort((a, b) => a.orden - b.orden);
+        }
       }
     }
   }

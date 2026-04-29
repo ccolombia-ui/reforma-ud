@@ -15,6 +15,7 @@ import { DocumentReader } from '@/components/biblioteca/document-reader';
 import { NoticiasRelacionadas } from '@/components/comunidad/noticias-relacionadas';
 import { ComunidadDefinicion } from '@/components/comunidad/comunidad-definicion';
 import { MisionesColectivas } from '@/components/comunidad/misiones-colectivas';
+import { CoPMissionCard, calcMisionCoPStatus, type MisionCoP } from '@/components/comunidad/cop-mission-card';
 import { RolesGrid } from '@/components/comunidad/roles-grid';
 import { GlosarioComunidad } from '@/components/comunidad/glosario-comunidad';
 import { Discusiones } from '@/components/comunidad/discusiones';
@@ -254,6 +255,8 @@ export default async function CommunityPage({
 
   // v7.0 — datos del modelo extendido
   const misionesColectivas = (c as unknown as { misionesColectivas?: unknown[] }).misionesColectivas ?? [];
+  const misionesCoP = ((c as unknown as { misionesCoP?: MisionCoP[] }).misionesCoP ?? [])
+    .sort((a, b) => a.orden - b.orden);
   const roles = (c as unknown as { roles?: unknown[] }).roles ?? [];
   const miembros = (c as unknown as { miembros?: unknown[] }).miembros ?? [];
   const conceptoId = (c as unknown as { conceptoId?: string }).conceptoId;
@@ -344,6 +347,36 @@ export default async function CommunityPage({
       </section>
 
       <Separator className="my-10" />
+
+      {/* v8b — Misiones de CoP (comprension / deliberacion / produccion) */}
+      {misionesCoP.length > 0 && (
+        <>
+          <section id="misiones-cop" className="scroll-mt-32">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold">Misiones de esta comunidad</h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                Completa las misiones para subir de nivel en esta CoP.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {misionesCoP.map((m) => (
+                <CoPMissionCard
+                  key={m.id}
+                  mision={m}
+                  status={calcMisionCoPStatus({
+                    mision: m,
+                    userLevel: 0,          // TODO: conectar con userLevel real de la CoP
+                    earnedCCAs: [],        // TODO: conectar con CCAs ganadas
+                    completedMisionIds: [],
+                  })}
+                  comunidadHref={c.href}
+                />
+              ))}
+            </div>
+          </section>
+          <Separator className="my-10" />
+        </>
+      )}
 
       {/* v7.0 — Misiones colectivas con progress (id en el componente) */}
       {misionesColectivas.length > 0 && (

@@ -3,17 +3,138 @@ type: csu
 name: "Consejo Superior Universitario"
 shortName: "CSU"
 description: "Maximo organo de direccion y gobierno de la Universidad Distrital Francisco Jose de Caldas."
-cites: [m01]
+cites: [m01, m02, m03]
+roles:
+  - nivel: 1
+    nombre: Observador
+    descripcion: "Conoce el mandato normativo y la estructura de gobierno."
+    emoji: "👁️"
+  - nivel: 2
+    nombre: Practicante
+    descripcion: "Participa en misiones de comprension y deliberacion."
+    emoji: "🎓"
+  - nivel: 3
+    nombre: Experto
+    descripcion: "Lidera deliberaciones y coordina construccion de estatutos."
+    emoji: "⚖️"
+  - nivel: 4
+    nombre: Mentor
+    descripcion: "Propone acuerdos al CSU y consolida estatutos finales."
+    emoji: "🏛️"
+misionesCoP:
+  - id: CSU-MC-01
+    slug: participa-en-la-reforma-ud-que-queremos
+    titulo: "Participa en la Reforma UD que Queremos"
+    tipo: comprension
+    descripcion: "Comprende por que la reforma es un mandato constitucional y no una opcion discrecional."
+    papers: [m01, m03]
+    nivelRequerido: 0
+    nivelOtorga: 1
+    prerequisitosCanonicas: []
+    prerequisitosMision: []
+    orden: 1
+  - id: CSU-MC-02
+    slug: nueva-estructura-organizativa
+    titulo: "Nueva Estructura Organizativa"
+    tipo: comprension
+    descripcion: "Comprende el modelo Escuela Emprendedora Transformativa como reemplazo de la estructura Facultad/Programa."
+    papers: [m02, m05]
+    nivelRequerido: 1
+    nivelOtorga: 2
+    prerequisitosCanonicas: [m01]
+    prerequisitosMision: []
+    orden: 2
+  - id: CSU-MC-03-A
+    slug: estatuto-docente-participacion
+    titulo: "Estatuto Docente — construccion participativa"
+    tipo: deliberacion
+    descripcion: "Revisa y comenta el borrador de Estatuto Docente propuesto por VR Formacion."
+    papers: [m04, m06]
+    nivelRequerido: 2
+    prerequisitosCanonicas: [m01, m04, m06]
+    prerequisitosMision: []
+    estatuto: estatuto-docente
+    orden: 3
+  - id: CSU-MC-03-B
+    slug: estatuto-estudiantil-participacion
+    titulo: "Estatuto Estudiantil — construccion participativa"
+    tipo: deliberacion
+    descripcion: "Revisa y comenta el borrador de Estatuto Estudiantil."
+    papers: [m04, m05]
+    nivelRequerido: 2
+    prerequisitosCanonicas: [m01, m04]
+    prerequisitosMision: []
+    estatuto: estatuto-estudiantil
+    orden: 4
+  - id: CSU-MC-03-C
+    slug: estatuto-curricular-participacion
+    titulo: "Estatuto Curricular — construccion participativa"
+    tipo: deliberacion
+    descripcion: "Revisa y comenta el borrador de Estatuto Curricular."
+    papers: [m03, m06]
+    nivelRequerido: 2
+    prerequisitosCanonicas: [m01, m03, m06]
+    prerequisitosMision: []
+    estatuto: estatuto-curricular
+    orden: 5
+  - id: CSU-MC-04
+    slug: estatuto-academico-consolidado
+    titulo: "Estatuto Academico — consolidacion CSU"
+    tipo: produccion
+    descripcion: "Con los tres sub-estatutos deliberados, consolida y aprueba el Estatuto Academico."
+    papers: [m01, m02, m03, m04, m05, m06]
+    nivelRequerido: 3
+    nivelOtorga: 4
+    prerequisitosCanonicas: [m01, m04, m06]
+    prerequisitosMision: [CSU-MC-03-A, CSU-MC-03-B, CSU-MC-03-C]
+    orden: 6
+misionesColectivas:
+  - id: MC-GOB-01
+    titulo: "Analisis colectivo ACU 004-25"
+    descripcion: "Todos los N2+ analizan y deliberan sobre el ACU 004-25."
+    progreso: 40
+    estado: activo
+    papers: [m01, m03]
+  - id: MC-GOB-02
+    titulo: "Benchmarking marcos normativos IES"
+    descripcion: "Comparar marcos normativos de 21 IES publicas colombianas."
+    progreso: 20
+    estado: activo
+    papers: [m03, m07]
+  - id: MC-GOB-03
+    titulo: "Diseno capitulo gobernanza PID"
+    descripcion: "Redactar el capitulo de gobernanza del Plan Institucional de Desarrollo 2026-2034."
+    progreso: 5
+    estado: pendiente
+    papers: [m01, m02]
+miembros:
+  - nombre: "Carlos Camilo Madera"
+    rol: "Investigador principal"
+    nivel: 4
+  - nombre: "Rectoria UDFJC"
+    rol: "Direccion institucional"
+    nivel: 3
 ---
 
 # Consejo Superior Universitario
 
-Maximo organo de direccion y gobierno de la Universidad Distrital Francisco Jose de Caldas.
+Maximo organo de direccion y gobierno de la Universidad Distrital Francisco Jose de Caldas. Aprueba los estatutos institucionales y lidera la implementacion del [[con-acu-004-25|Acuerdo CSU 04/2025]].
 
 ## Fundado en
 
-- [[m01]]
+- [[m01]] — Mandato normativo: cadena Ley 30/1992 → CONPES 4069 → ACU-004-25
+- [[m02]] — Ciclo Virtuoso: modelo de transformacion institucional
+- [[m03]] — Estandares internacionales: benchmarks OECD para gobernanza
 
-## Notas
+## Arbol de estatutos
 
-En este espacio iran las notas vivas de esta comunidad.
+| Estatuto | Propone | Base legal |
+|---|---|---|
+| Estatuto General | Rectoria | Ley 30 Art. 28-29 |
+| Estatuto Docente | VR Formacion | Decreto 1279/2002 |
+| Estatuto Estudiantil | VR Formacion | Ley 30 Art. 98 |
+| Estatuto Curricular | Consejo Academico | Ley 30 Art. 19 |
+| Estatuto Bienestar | VR Formacion | Ley 30 Art. 117 |
+| Estatuto Investigacion | VR Investigacion | Ley 30 Art. 19 |
+| Estatuto Extension | VR Extension | Ley 30 Art. 120 |
+| Estatuto Presupuestal | VR Administrativa | Ley 30 + NICSP |
