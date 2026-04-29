@@ -50,16 +50,26 @@ export function parseYamlKeys(block) {
 }
 
 // ── Frontmatter cleanup ───────────────────────────────────────────────────
+//
+// v8 S1: campos TPL v2.0 ya NO se strippean — velite los preserva en su schema.
+// Removidos del strip:
+//   - /^tupla_/         (tupla__relations consumido por DvRelations/DvMandatos)
+//   - /^concepto_/      (concepto_prerequisitos, concepto_definitional_anchors,
+//                        concepto_capabilities, concepto_current_anchor, etc.)
+//   - /^concepto_facet_/ (concepto_facet_normative consumido por DvFacetNormative)
+//   - /^applicable_domain/, /^assumptions/, /^breaks_at/  (régimen epistémico)
+//   - /^valid_from/, /^valid_to/                           (evolución temporal)
+//
+// Lo que SÍ se strippea: campos legacy/internos que velite no necesita y que
+// ensucian el frontmatter del portal sin valor agregado.
 
 export const STRIP_KEY_PATTERNS = [
-  /^tupla_/, /^concepto_/, /^pasteur_axis_/, /^neon_/,
-  /^applicable_domain/, /^assumptions/, /^breaks_at/, /^extends_to/,
-  /^recorded_at/, /^valid_from/, /^valid_to/, /^lifecycle_state/,
-  /^kd_supersedes/, /^kd_responsible/, /^kd_parent/, /^kd_created/,
-  /^kd_updated/, /^kd_doc_layout/, /^kd_transcluible_en/,
+  /^pasteur_axis_/, /^neon_/, /^extends_to/, /^recorded_at/,
+  /^lifecycle_state/, /^kd_supersedes/, /^kd_responsible/, /^kd_parent/,
+  /^kd_created/, /^kd_updated/, /^kd_doc_layout/, /^kd_transcluible_en/,
   /^kd_classification/, /^kd_doc_type/, /^align_schema_type/,
-  /^concept_subtype/, /^cssclasses/, /^@type/, /^"@type"/,
-  /^concepto_facet_/, /^concepto_capabilities/, /^skos_hiddenLabel/,
+  /^concept_subtype/, /^cssclasses/, /^@type$/, /^"@type"$/,
+  /^"@context"$/, /^skos_hiddenLabel/, /^fileClass/, /^kd__up/,
 ];
 
 export function cleanFrontmatter(block) {

@@ -349,6 +349,22 @@ const concepto = defineCollection({
           custom: s.record(s.array(s.string())).default({}),
         })
         .default({ pre: [], pos: [], custom: {} }),
+      // v8 S1 · TPL v2.0 — DataviewJS portability (preserved from vault).
+      // Consumidos por DV components en sprints S2-S5. Todos opcional con
+      // defaults seguros — un concepto sin estos campos no rompe nada.
+      concepto_capabilities: s.array(s.string()).default([]),
+      concepto_facet_normative: s.any().optional(),
+      concepto_prerequisitos: s.array(s.string()).default([]),
+      concepto_definitional_anchors: s.array(s.string()).default([]),
+      concepto_current_anchor: s.string().optional(),
+      concepto_anchor_chain_status: s.string().optional(),
+      tupla__relations: s.any().default([]),
+      rol_seleccionado: s.string().optional(),
+      applicable_domain: s.string().optional(),
+      assumptions: s.array(s.string()).default([]),
+      breaks_at: s.array(s.string()).default([]),
+      valid_from: s.string().optional(),
+      valid_to: s.string().optional(),
       body: s.markdown(),
       toc: s.toc(),
       slug: s.path(),

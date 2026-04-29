@@ -57,26 +57,70 @@ describe('parseYamlKeys', () => {
   });
 });
 
-describe('cleanFrontmatter · campos prohibidos por Velite', () => {
-  it('elimina tupla_*, concepto_*, kd_created, etc.', () => {
+describe('cleanFrontmatter · v8 S1: campos legacy strip + TPL v2.0 preserve', () => {
+  it('elimina solo campos legacy/internos (pasteur_axis_, neon_, kd_created, cssclasses, @type)', () => {
     const block = [
       '---',
       'kd_id: con-test',
       'kd_status: APPROVED',
-      'tupla_a: foo',
-      'tupla_b: bar',
-      'concepto_facet_normative: x',
+      'pasteur_axis_x: foo',
+      'neon_concept: bar',
       'kd_created: 2026-04-28',
+      'kd_updated: 2026-04-28',
+      'cssclasses: dataview',
+      '"@type": Concept',
+      'fileClass: fc-concepto',
       'skos_prefLabel: Test',
       '---',
     ].join('\n');
     const cleaned = cleanFrontmatter(block);
     expect(cleaned).toContain('kd_id: con-test');
     expect(cleaned).toContain('skos_prefLabel: Test');
-    expect(cleaned).not.toContain('tupla_a');
-    expect(cleaned).not.toContain('tupla_b');
-    expect(cleaned).not.toContain('concepto_facet_normative');
+    expect(cleaned).not.toContain('pasteur_axis_');
+    expect(cleaned).not.toContain('neon_');
     expect(cleaned).not.toContain('kd_created');
+    expect(cleaned).not.toContain('kd_updated');
+    expect(cleaned).not.toContain('cssclasses');
+    expect(cleaned).not.toContain('"@type"');
+    expect(cleaned).not.toContain('fileClass');
+  });
+
+  it('PRESERVA campos TPL v2.0: concepto_*, tupla_*, applicable_domain, etc. (v8 S1)', () => {
+    const block = [
+      '---',
+      'kd_id: con-test',
+      'concepto_capabilities:',
+      '  - NORMATIVE',
+      'concepto_prerequisitos:',
+      '  - "[[con-prereq-1]]"',
+      'concepto_facet_normative:',
+      '  normative_locator: "Art. 109"',
+      'tupla__relations:',
+      '  - rel_nombre: norm_implements',
+      'applicable_domain: Universidad pública',
+      'assumptions:',
+      '  - Autonomía garantizada',
+      'breaks_at:',
+      '  - Cierre institucional',
+      'valid_from: "2025-05-05"',
+      'valid_to: ""',
+      '---',
+    ].join('\n');
+    const cleaned = cleanFrontmatter(block);
+    // Todos los campos TPL v2.0 deben preservarse
+    expect(cleaned).toContain('concepto_capabilities');
+    expect(cleaned).toContain('concepto_prerequisitos');
+    expect(cleaned).toContain('concepto_facet_normative');
+    expect(cleaned).toContain('tupla__relations');
+    expect(cleaned).toContain('applicable_domain');
+    expect(cleaned).toContain('assumptions');
+    expect(cleaned).toContain('breaks_at');
+    expect(cleaned).toContain('valid_from');
+    expect(cleaned).toContain('valid_to');
+    expect(cleaned).toContain('NORMATIVE');
+    expect(cleaned).toContain('[[con-prereq-1]]');
+    expect(cleaned).toContain('Art. 109');
+    expect(cleaned).toContain('norm_implements');
   });
 
   it('preserva listas indentadas de campos NO-strip', () => {
@@ -92,11 +136,11 @@ describe('cleanFrontmatter · campos prohibidos por Velite', () => {
     expect(cleaned).toContain('- tag2');
   });
 
-  it('elimina listas indentadas de campos strip', () => {
+  it('elimina listas indentadas de campos strip (kd_supersedes)', () => {
     const block = [
       '---',
       'kd_id: con-test',
-      'tupla_array:',
+      'kd_supersedes:',
       '  - item1',
       '  - item2',
       'kd_status: APPROVED',
@@ -229,15 +273,38 @@ describe('cleanBody · pureza', () => {
   });
 });
 
-describe('STRIP_KEY_PATTERNS · cobertura mínima', () => {
-  it('incluye los patrones críticos para Velite', () => {
-    const critical = [
-      'tupla_', 'concepto_', 'kd_created', 'kd_updated',
-      'cssclasses', '@type', 'concepto_facet_',
+describe('STRIP_KEY_PATTERNS · v8 S1: cobertura legacy + exclusión TPL v2.0', () => {
+  it('strippea campos legacy/internos NO consumidos por velite', () => {
+    const legacy = [
+      'pasteur_axis_x', 'neon_concept', 'kd_created', 'kd_updated',
+      'cssclasses', '@type', 'fileClass', 'kd_supersedes', 'kd__up',
+      'lifecycle_state', 'recorded_at', 'extends_to',
     ];
-    for (const key of critical) {
+    for (const key of legacy) {
       const matches = STRIP_KEY_PATTERNS.some((re: RegExp) => re.test(key));
-      expect(matches, `${key} debe matchear algún strip pattern`).toBe(true);
+      expect(matches, `${key} debe matchear algún strip pattern legacy`).toBe(true);
+    }
+  });
+
+  it('NO strippea campos TPL v2.0 (v8 S1: ahora preservados por velite)', () => {
+    const tplV2 = [
+      'concepto_capabilities',
+      'concepto_facet_normative',
+      'concepto_prerequisitos',
+      'concepto_definitional_anchors',
+      'concepto_current_anchor',
+      'concepto_anchor_chain_status',
+      'tupla__relations',
+      'applicable_domain',
+      'assumptions',
+      'breaks_at',
+      'valid_from',
+      'valid_to',
+      'rol_seleccionado',
+    ];
+    for (const key of tplV2) {
+      const matches = STRIP_KEY_PATTERNS.some((re: RegExp) => re.test(key));
+      expect(matches, `${key} NO debe matchear ningún strip pattern (es TPL v2.0)`).toBe(false);
     }
   });
 });
