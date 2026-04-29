@@ -95,7 +95,7 @@ function SectionToggle({
  *     └── ...
  * ============================================================ */
 
-type Paper = { id: string; number: number; title: string; href: string };
+type Paper = { id: string; number: number; title: string; href: string; kd_status?: string; draft?: boolean };
 
 function ReformaCuanticaSection({
   papers,
@@ -126,15 +126,18 @@ function ReformaCuanticaSection({
     });
   }
 
+  // v8d-p1: Filtrar papers por kd_status (DRAFT ocultos en producción)
+  const papersFiltrados = useMemo(() => filterPublished(papers), [papers]);
+
   // Filtrar papers por el query del search box
   const q = filter.trim().toLowerCase();
   const filtered = useMemo(() => {
-    if (!q) return papers;
-    return papers.filter((p) =>
+    if (!q) return papersFiltrados;
+    return papersFiltrados.filter((p) =>
       p.id.toLowerCase().includes(q) ||
       p.title.toLowerCase().includes(q),
     );
-  }, [papers, q]);
+  }, [papersFiltrados, q]);
 
   // Cuando hay filtro, abrimos automáticamente
   const effectiveOpen = open || q.length > 0;
