@@ -251,13 +251,13 @@ tags:
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-normative"></div>
 
 
 ## §3 · 🧩 Estructura DDD · invariantes operativas
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-ddd"></div>
 
 
 ## §4 · 🔻 Pre-requisitos cognitivos

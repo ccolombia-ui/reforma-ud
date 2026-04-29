@@ -352,8 +352,10 @@ const concepto = defineCollection({
       // v8 S1 · TPL v2.0 — DataviewJS portability (preserved from vault).
       // Consumidos por DV components en sprints S2-S5. Todos opcional con
       // defaults seguros — un concepto sin estos campos no rompe nada.
+      concepto_vistas_rol: s.any().optional(),
       concepto_capabilities: s.array(s.string()).default([]),
       concepto_facet_normative: s.any().optional(),
+      concepto_facet_ddd: s.any().optional(),
       concepto_prerequisitos: s.array(s.string()).default([]),
       concepto_definitional_anchors: s.array(s.string()).default([]),
       concepto_current_anchor: s.string().optional(),

@@ -17,7 +17,8 @@
     "test:sync-vault": "node --test scripts/test-sync-vault.mjs",
     "sync:vault": "node scripts/sync-vault.mjs",
     "sync:vault:dry": "node scripts/sync-vault.mjs --dry-run --skip-papers --skip-fix",
-    "baseline:capture": "node scripts/capture-baseline-snapshots.mjs"
+    "baseline:capture": "node scripts/capture-baseline-snapshots.mjs",
+    "audit:dv": "node scripts/audit-dv-coverage.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.71",

@@ -141,19 +141,19 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, secretaria-academic
 ## §2 · Anclaje + cadena de adopción
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-normative"></div>
 
 
 ## §3 · DDD invariantes
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-ddd"></div>
 
 
 ## §7 · Relaciones tipadas
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="relations"></div>
 
 
 ## §10 · Citado en

@@ -17,18 +17,21 @@ import { domToReact, type DOMNode, type HTMLReactParserOptions } from 'html-reac
 import { WikiLinkPreview } from '@/components/biblioteca/wikilink-preview';
 import { ApaCite } from '@/components/biblioteca/apa-cite';
 import {
-  DvFacetNormative,
+  DvFacetNormative, DvFacetDdd,
   DvPrereqs,
   DvHabilita,
   DvMandatos,
   DvEvolucion,
   DvRelations,
-  DvVistaPorRol,
   DvCitedIn,
   DvRegimenEpistemico,
   DvObsidianOnlyBlock,
+  DvKpiGrid,
 } from './index';
+import { DvVistaPorRolClient } from './dv-vista-por-rol-client';
+import { SelectorRolJTBD } from './selector-rol-jtbd';
 import type { ConceptoTPLData } from './types';
+import type { VistasRol } from './dv-vista-por-rol';
 
 interface DomElementShape {
   type: string;
@@ -40,8 +43,14 @@ interface DomElementShape {
 /** Mapea data-dv="X" al componente React correspondiente. */
 export function renderDvBlock(dvName: string, data: ConceptoTPLData): React.ReactElement {
   switch (dvName) {
-    case 'facet-normative':
-      return <DvFacetNormative facet={data.concepto_facet_normative} />;
+    case 'facet-normative': {
+      const fn = data.concepto_facet_normative as Record<string, unknown> | undefined;
+      return <DvFacetNormative facet={fn} />;
+    }
+    case 'facet-ddd': {
+      const fd = (data as Record<string, unknown>).concepto_facet_ddd as Record<string, unknown> | undefined;
+      return <DvFacetDdd facet={fd} />;
+    }
     case 'prereqs':
       return <DvPrereqs prereqs={data.concepto_prerequisitos} />;
     case 'habilita':
@@ -62,13 +71,12 @@ export function renderDvBlock(dvName: string, data: ConceptoTPLData): React.Reac
       return <DvRelations relations={data.tupla__relations} />;
     case 'vista-por-rol':
       return (
-        <DvVistaPorRol
-          // vistas se poblará cuando S5 active el transformer.
-          // Hasta entonces, muestra mensaje vacío.
-          vistas={{}}
-          rol={data.rol_seleccionado}
+        <DvVistaPorRolClient
+          vistas={(data.concepto_vistas_rol as VistasRol | undefined) ?? {}}
         />
       );
+    case 'selector-rol':
+      return <SelectorRolJTBD />;
     case 'cited-in':
       return <DvCitedIn cited_in={data.cited_in} cited_count={data.cited_count} />;
     case 'regimen-epistemico':
@@ -77,6 +85,15 @@ export function renderDvBlock(dvName: string, data: ConceptoTPLData): React.Reac
           applicable_domain={data.applicable_domain}
           assumptions={data.assumptions}
           breaks_at={data.breaks_at}
+        />
+      );
+    case 'kpi-grid':
+      return (
+        <DvKpiGrid
+          slug={data.id}
+          tupla__relations={data.tupla__relations}
+          habilita={data.habilita}
+          concepto_prerequisitos={data.concepto_prerequisitos}
         />
       );
     default:

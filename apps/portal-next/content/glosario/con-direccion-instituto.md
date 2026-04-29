@@ -150,19 +150,19 @@ tags: [glosario-universal, concepto-normativo, t1-normativo, direccion-instituto
 ## §2 · Anclaje
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-normative"></div>
 
 
 ## §3 · DDD
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-ddd"></div>
 
 
 ## §7 · Relaciones
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="relations"></div>
 
 
 ## §10 · Citado en

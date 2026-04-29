@@ -170,7 +170,7 @@ tags:
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-normative"></div>
 
 
 ## §3 · 🔻 Pre-requisitos cognitivos

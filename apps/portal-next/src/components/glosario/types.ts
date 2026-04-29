@@ -47,6 +47,8 @@ export type ConceptoTPLData = {
   cited_count: number;
   /** Pre-computado server-side: conceptos que declaran ESTE como prereq. */
   habilita: string[];
+  /** Vistas por rol JTBD (extraído del DV block §8 en el vault). */
+  concepto_vistas_rol?: Record<string, unknown>;
 };
 
 // ── Helpers wikilink (puros, testeables) ──────────────────────────────────

@@ -3,6 +3,8 @@
  * v8 S2 · Exportaciones ordenadas por patrón DV (§2-§12).
  */
 export { DvFacetNormative } from './dv-facet-normative';
+export { DvFacetDdd } from './dv-facet-ddd';
+export { DvKpiGrid } from './dv-kpi-grid';
 export { DvPrereqs } from './dv-prereqs';
 export { DvHabilita } from './dv-habilita';
 export { DvMandatos } from './dv-mandatos';
@@ -17,3 +19,5 @@ export { slugFromWikilink, labelFromWikilink } from './types';
 export type { VistasRol, VistaRol } from './dv-vista-por-rol';
 export { ConceptoBodyClient } from './concepto-body-client';
 export { renderDvBlock, createConceptoParserOptions } from './concepto-parser-options';
+export { SelectorRolJTBD } from './selector-rol-jtbd';
+export { DvVistaPorRolClient } from './dv-vista-por-rol-client';

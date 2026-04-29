@@ -253,7 +253,7 @@ concepto_noticias_asociadas:
 > Vista completa de las relaciones que ESTE concepto declara hacia otros. Labels humanizados + descripción del significado de cada tipo de relación, cargados dinámicamente desde [[_vocabulario-relaciones]] (SoT). Sin tocar el spec `concepto-universal` se preserva interoperabilidad SKOS/PROV.
 
 
-<div class="dv-block" data-dv="relations"></div>
+<div class="dv-block" data-dv="mandatos"></div>
 
 
 > 💡 **Patrón SOTA "Label Vocabulary"**: editas una description o label en [[_vocabulario-relaciones]] → se actualiza en todos los conceptos del corpus automáticamente. Cero acoplamiento al spec aleia-zen.
@@ -285,7 +285,7 @@ concepto_noticias_asociadas:
 ### §11.1 · KPIs del concepto en el grafo
 
 
-<div class="dv-block" data-dv="kpi-grid"></div>
+<div class="dv-block" data-dv="habilita"></div>
 
 
 ### §11.2 · Charts dashboard · Distribución frames + Top vecinos (grid 2-col)

@@ -107,18 +107,33 @@ export function cleanFrontmatter(block) {
 // Ordered by specificity — first match wins.
 
 const DV_PATTERNS = [
-  { name: 'facet-normative',    test: c => c.includes('concepto_facet_normative') && c.includes('normative_source') },
-  { name: 'prereqs',            test: c => c.includes('concepto_prerequisitos') && c.includes('dv.list') && !c.includes('dv.pages') },
-  { name: 'habilita',           test: c => c.includes('concepto_prerequisitos') && (c.includes('some(matchHere)') || c.includes('habilitados.length')) },
-  { name: 'mandatos',           test: c => c.includes('tupla__relations') && c.includes('norm_mandates') && !c.includes('rel_frame') && !c.includes('renderChart') },
+  // Facets normativos — varias variantes en el corpus (v2 usa normative_source; T2 usa origin_type)
+  { name: 'facet-normative',    test: c => c.includes('concepto_facet_normative') },
+  // Facet DDD — concepto_facet_ddd con ddd_invariants, ddd_ubiquitous_terms
+  { name: 'facet-ddd',          test: c => c.includes('concepto_facet_ddd') },
+  // Pre-requisitos: lista simple de concepto_prerequisitos
+  { name: 'prereqs',            test: c => c.includes('concepto_prerequisitos') && !c.includes('dv.pages') && !c.includes('some(matchHere)') },
+  // Reverse-lookup: quién me declara como prereq
+  { name: 'habilita',           test: c => c.includes('concepto_prerequisitos') && (c.includes('some(matchHere)') || c.includes('habilitados')) },
+  // Mandatos normativos filtrado de tupla__relations
+  { name: 'mandatos',           test: c => c.includes('tupla__relations') && c.includes('norm_mandates') && !c.includes('renderChart') },
+  // Evolución longitudinal / definitional anchors
   { name: 'evolucion',          test: c => c.includes('concepto_definitional_anchors') },
-  { name: 'relations',          test: c => c.includes('tupla__relations') && c.includes('rel_frame') && c.includes('humanLabel') },
+  // Relaciones outgoing — varias variantes (full humanLabel o simple paragraph)
+  { name: 'relations',          test: c => c.includes('tupla__relations') && !c.includes('norm_mandates') && !c.includes('renderChart') && !c.includes('directos.size') },
+  // Vista por rol JTBD
   { name: 'vista-por-rol',      test: c => c.includes('vistas[rol]') && c.includes('rol_seleccionado') },
+  // Recursos KDMO complementarios
   { name: 'recursos-kdmo',      test: c => c.includes('concepto_diagram_ref') || c.includes('concepto_qhu_refs') },
-  { name: 'cited-in',           test: c => c.includes('cited_in') && c.includes('cited_count') && c.includes('dv.list') },
+  // Citado en papers cap-MI12
+  { name: 'cited-in',           test: c => (c.includes('cited_in') || c.includes('citado')) && (c.includes('cited_count') || c.includes('dv.list')) },
+  // KPI Grid (in/out degree, centralidad)
   { name: 'kpi-grid',           test: c => c.includes('inDeg') && c.includes('outDeg') && c.includes('kpi-grid') },
+  // Charts (Chart.js via renderChart)
   { name: 'charts',             test: c => c.includes('window.renderChart') },
+  // Comunidades + métricas vecindad
   { name: 'comunidades',        test: c => c.includes('directos.size') || (c.includes('comunidades') && c.includes('indirectos')) },
+  // Régimen epistémico
   { name: 'regimen-epistemico', test: c => c.includes('applicable_domain') && c.includes('breaks_at') },
 ];
 

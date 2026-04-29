@@ -162,19 +162,19 @@ tags:
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-normative"></div>
 
 
 ## §3 · 🧩 Estructura DDD
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-ddd"></div>
 
 
 ## §7 · 🤝 Relaciones tipadas
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="relations"></div>
 
 
 ## §10 · 📜 Citado en

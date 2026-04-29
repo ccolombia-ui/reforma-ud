@@ -200,7 +200,7 @@ tags:
 ## §2 · 📜 Anclaje normativo + cadena de adopción
 
 
-<div class="dv-block" data-dv="obsidian-only"></div>
+<div class="dv-block" data-dv="facet-normative"></div>
 
 
 > 💡 **Interpretación**: el origen es aspiracional (OECD 2018) pero los actos en `adoption_chain` lo vuelven vinculante por declaración misional ACU-004-25.

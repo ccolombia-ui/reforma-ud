@@ -80,6 +80,7 @@ export default async function ConceptoPage({ params }: { params: Promise<{ conce
     cited_in: c.cited_in ?? [],
     cited_count: c.cited_count ?? 0,
     habilita,
+    concepto_vistas_rol: c.concepto_vistas_rol,
   };
 
   return (
