@@ -15,3 +15,5 @@ export { DvObsidianOnlyBlock } from './dv-obsidian-only';
 export type { ConceptoTPLData, TuplaRelation, FacetNormative } from './types';
 export { slugFromWikilink, labelFromWikilink } from './types';
 export type { VistasRol, VistaRol } from './dv-vista-por-rol';
+export { ConceptoBodyClient } from './concepto-body-client';
+export { renderDvBlock, createConceptoParserOptions } from './concepto-parser-options';
