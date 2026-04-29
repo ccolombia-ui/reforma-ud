@@ -1,0 +1,56 @@
+{
+  "capturedAt": "2026-04-29T02:44:46.210Z",
+  "totalConcepts": 163,
+  "snapshots": [
+    {
+      "id": "con-acu-004-25",
+      "filename": "con-acu-004-25.html",
+      "bytes": 55971,
+      "checksum": "179c185316f72d69",
+      "kd_status": "APPROVED",
+      "kd_version": "v2.0.0",
+      "hasDvBlock": false,
+      "hasMetabind": true
+    },
+    {
+      "id": "con-cca",
+      "filename": "con-cca.html",
+      "bytes": 2698,
+      "checksum": "346ccad67d471211",
+      "kd_status": "APPROVED",
+      "kd_version": "v1.0.0",
+      "hasDvBlock": false,
+      "hasMetabind": false
+    },
+    {
+      "id": "con-iso-21001",
+      "filename": "con-iso-21001.html",
+      "bytes": 13736,
+      "checksum": "959048c11ac9b4aa",
+      "kd_status": "APPROVED",
+      "kd_version": "v2.0.0",
+      "hasDvBlock": false,
+      "hasMetabind": true
+    },
+    {
+      "id": "con-mipg-funcion-publica",
+      "filename": "con-mipg-funcion-publica.html",
+      "bytes": 11840,
+      "checksum": "0bd970b2135b32f5",
+      "kd_status": "APPROVED",
+      "kd_version": "v1.0.0",
+      "hasDvBlock": false,
+      "hasMetabind": true
+    },
+    {
+      "id": "con-decreto-1421-2017",
+      "filename": "con-decreto-1421-2017.html",
+      "bytes": 20104,
+      "checksum": "ac49da38f9c90e2a",
+      "kd_status": "APPROVED",
+      "kd_version": "v1.0.0",
+      "hasDvBlock": false,
+      "hasMetabind": true
+    }
+  ]
+}

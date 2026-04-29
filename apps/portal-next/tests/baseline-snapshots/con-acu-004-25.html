@@ -1,0 +1,660 @@
+<h1 id="inputtextclassmeta-bind-readonlyskos_preflabel"><a href="#inputtextclassmeta-bind-readonlyskos_preflabel"><code>INPUT[text(class(meta-bind-readonly)):skos_prefLabel]</code></a></h1>
+<details class="callout" data-callout="quote" data-collapsible="true" open><summary class="callout-title"><div class="callout-title-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg></div><div class="callout-title-text">🏛️ Concepto raíz del grafo normativo UDFJC</div><div class="callout-fold-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></div></summary><div class="callout-content"><p>El <strong>ACU-004-25</strong> es la "carta constitucional que refunda la Universidad". Vigente desde <strong>2025-05-06</strong>. Deroga el Acuerdo 003/1997 (28 años de vigencia previa). Manda expedir <strong>7 estatutos derivados</strong> con plazos legales 6 meses-4 años. <strong>Nodo raíz</strong> de todos los conceptos normativos UDFJC en este grafo.</p></div></details>
+<hr>
+<h2 id="0---vista-por-rol-institucional"><a href="#0---vista-por-rol-institucional">§0 · 🎭 Vista por rol institucional</a></h2>
+<blockquote><p>Selecciona tu rol JTBD M04 — el body se adapta al contenido relevante para ti.</p></blockquote>
+<p><code>INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]</code></p>
+<hr>
+<h2 id="1--definición-canónica--skos-frozen"><a href="#1--definición-canónica--skos-frozen">§1 · Definición canónica  [SKOS frozen]</a></h2>
+<blockquote><p><code>INPUT[textArea(class(meta-bind-readonly)):skos_definition]</code></p></blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Sub-tipo</th><th align="center">Pasteur</th><th align="center">Authority level</th></tr></thead><tbody><tr><td><code>INPUT[text(class(meta-bind-readonly)):concept_subtype]</code></td><td align="center"><code>INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]</code></td><td align="center"><code>INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.normative_authority_level]</code></td></tr></tbody></table>
+<h2 id="2---anclaje-normativo--facet-normative"><a href="#2---anclaje-normativo--facet-normative">§2 · 📜 Anclaje normativo  [facet-normative]</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const f = me.concepto_facet_normative;</span></span>
+<span data-line=""><span>if (!f) {</span></span>
+<span data-line=""><span>  dv.paragraph("(sin facet normative declarado)");</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.table(</span></span>
+<span data-line=""><span>    ["Campo", "Valor"],</span></span>
+<span data-line=""><span>    [</span></span>
+<span data-line=""><span>      ["**Fuente normativa** (cita-universal)", f.normative_source ?? "—"],</span></span>
+<span data-line=""><span>      ["**Locator**", f.normative_locator ?? "—"],</span></span>
+<span data-line=""><span>      ["**Authority level**", f.normative_authority_level ?? "—"],</span></span>
+<span data-line=""><span>      ["**Chain status**", f.chain_status ?? "—"],</span></span>
+<span data-line=""><span>      ["**Deroga a**", (f.derogates ?? []).join(" · ") || "—"],</span></span>
+<span data-line=""><span>      ["**Derogada por**", f.derogated_by || "Vigente"],</span></span>
+<span data-line=""><span>      ["**Conflicts with**", (f.conflicts_with ?? []).join(" · ") || "—"]</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  );</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h3 id="21--estructura-del-acuerdo--109-artículos-en-4-títulos"><a href="#21--estructura-del-acuerdo--109-artículos-en-4-títulos">§2.1 · Estructura del Acuerdo · 109 artículos en 4 Títulos</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">Título</th><th align="center">Capítulos</th><th align="center">Artículos</th><th>Tema</th></tr></thead><tbody><tr><td align="center"><strong>I</strong></td><td align="center">3</td><td align="center">Arts. 1-17</td><td>Naturaleza Jurídica · Principios · Comunidad Universitaria</td></tr><tr><td align="center"><strong>II</strong></td><td align="center">2</td><td align="center">Arts. 18-57</td><td>Gobierno · Participación Democrática</td></tr><tr><td align="center"><strong>III</strong></td><td align="center">3</td><td align="center">Arts. 58-90</td><td>Estructura · Organización Académica + Administrativa + Bienestar</td></tr><tr><td align="center"><strong>IV</strong></td><td align="center">2</td><td align="center">Arts. 91-109</td><td>Disposiciones Generales · Régimen de Transición</td></tr></tbody></table>
+<h3 id="22--texto-literal--derogatoria-explícita"><a href="#22--texto-literal--derogatoria-explícita">§2.2 · Texto literal · derogatoria explícita</a></h3>
+<blockquote><p>"El presente Acuerdo reglamenta íntegramente la materia, deroga todas las disposiciones que le sean contrarias, en especial: Acuerdo 03 de 1997 (Estatuto General anterior) y las normas que adicionan o complementan a este. Vigencia: Rige a partir del día siguiente a su publicación." — <strong>ACU-004-25 Art. 109</strong>.</p></blockquote>
+<h2 id="3---pre-requisitos-cognitivos"><a href="#3---pre-requisitos-cognitivos">§3 · 🔻 Pre-requisitos cognitivos</a></h2>
+<blockquote><p>Para entender este concepto, necesitas comprender primero:</p></blockquote>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const prereq = me.concepto_prerequisitos ?? [];</span></span>
+<span data-line=""><span>if (prereq.length === 0) {</span></span>
+<span data-line=""><span>  dv.paragraph("Sin pre-requisitos formales declarados.");</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.list(prereq);</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="4---conceptos-que-declaran-este-como-pre-requisito-cognitivo"><a href="#4---conceptos-que-declaran-este-como-pre-requisito-cognitivo">§4 · 🔺 Conceptos que declaran este como pre-requisito cognitivo</a></h2>
+<blockquote><p>Reverse-lookup específico de <code>concepto_prerequisitos[]</code> (campo TPL v2.0). NO duplica §7 — §7 muestra las relaciones que YO declaro hacia otros conceptos; aquí veo solo quién me apunta como prerrequisito de comprensión.</p></blockquote>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const here = me.file.name;</span></span>
+<span data-line=""><span>const folder = me.file.folder;</span></span>
+<span data-line=""><span>const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>if (all.length === 0) {</span></span>
+<span data-line=""><span>  dv.paragraph(`⚠️ **Bug path**: folder=\`${folder}\` no contiene archivos kd_type=glosario-universal.`);</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const matchHere = (target) => {</span></span>
+<span data-line=""><span>  if (!target) return false;</span></span>
+<span data-line=""><span>  if (typeof target === "object" &#x26;&#x26; target.path !== undefined) {</span></span>
+<span data-line=""><span>    const slug = String(target.path).split("/").pop().replace(/\.md$/, "").trim();</span></span>
+<span data-line=""><span>    return slug === here;</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>  const s = String(target);</span></span>
+<span data-line=""><span>  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);</span></span>
+<span data-line=""><span>  if (m) {</span></span>
+<span data-line=""><span>    const slug = m[1].split("/").pop().replace(/\.md$/, "").trim();</span></span>
+<span data-line=""><span>    return slug === here;</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>  const slug = s.split("/").pop().replace(/\.md$/, "").trim();</span></span>
+<span data-line=""><span>  return slug === here;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const habilitados = all.where(p =></span></span>
+<span data-line=""><span>  (p.concepto_prerequisitos ?? []).some(matchHere)</span></span>
+<span data-line=""><span>).array();</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito directo`);</span></span>
+<span data-line=""><span>if (habilitados.length === 0) {</span></span>
+<span data-line=""><span>  dv.paragraph("_Ningún concepto del corpus declara `concepto_prerequisitos` apuntando aquí todavía. Este campo es nuevo del TPL v2.0 y se poblará durante Sprint 1 al migrar los 50 NORMATIVOS restantes. Para ver las relaciones outgoing (las que ESTE concepto declara hacia otros), consulta §7 abajo._");</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.list(habilitados.map(p => p.file.link));</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="5---mandatos-derivados--7-estatutos-art-98"><a href="#5---mandatos-derivados--7-estatutos-art-98">§5 · 📋 Mandatos derivados · 7 estatutos Art. 98</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const mandates = (me.tupla__relations ?? []).filter(r => r.rel_nombre === "norm_mandates");</span></span>
+<span data-line=""><span>if (mandates.length === 0) {</span></span>
+<span data-line=""><span>  dv.paragraph("Sin mandatos derivados declarados.");</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.table(</span></span>
+<span data-line=""><span>    ["§", "Estatuto derivado", "Evidencia · plazo · vencimiento"],</span></span>
+<span data-line=""><span>    mandates.map((r, i) => [`§${i+1}`, r.rel_target, r.rel_propiedades?.norm_evidence ?? "—"])</span></span>
+<span data-line=""><span>  );</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<blockquote><p>⚠️ <strong>Riesgo institucional documentado</strong> (DT-MI12-00-F-01): el Estatuto Académico nuevo (Art. 98 §1) tiene plazo vencido 2025-11-05 sin verificación pública de expedición.</p></blockquote>
+<h2 id="6---evolución-longitudinal--provenance-normativa--definitional-anchors"><a href="#6---evolución-longitudinal--provenance-normativa--definitional-anchors">§6 · 🌳 Evolución longitudinal · provenance normativa  [definitional anchors]</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const anchors = me.concepto_definitional_anchors ?? [];</span></span>
+<span data-line=""><span>dv.paragraph(`**Chain status**: ${me.concepto_anchor_chain_status ?? "—"} · **Anchor ACTIVE actual**: ${me.concepto_current_anchor ?? "—"}`);</span></span>
+<span data-line=""><span>dv.paragraph(`**Vigente desde**: ${me.valid_from ?? "—"} · **Hasta**: ${me.valid_to || "actualmente · ACTIVE"}`);</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>if (anchors.length === 0) {</span></span>
+<span data-line=""><span>  dv.paragraph("(Sin definitional anchors poblados todavía · TODO Sprint 1)");</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.header(4, "Cadena de definitional anchors (cronológica)");</span></span>
+<span data-line=""><span>  dv.list(anchors);</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="7---relaciones-semánticas-tipadas-outgoing"><a href="#7---relaciones-semánticas-tipadas-outgoing">§7 · 🤝 Relaciones semánticas tipadas (outgoing)</a></h2>
+<blockquote><p>Vista completa de las relaciones que ESTE concepto declara hacia otros. Labels humanizados + descripción del significado de cada tipo de relación, cargados dinámicamente desde <a href="/_vocabulario-relaciones" class="wikilink wikilink-broken">_vocabulario-relaciones</a> (SoT). Sin tocar el spec <code>concepto-universal</code> se preserva interoperabilidad SKOS/PROV.</p></blockquote>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const rels = me.tupla__relations ?? [];</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Cargar vocabulario humanizado desde SoT</span></span>
+<span data-line=""><span>const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");</span></span>
+<span data-line=""><span>const relMap = vocabPage?.relaciones ?? {};</span></span>
+<span data-line=""><span>const frameMap = vocabPage?.frames ?? {};</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Helpers</span></span>
+<span data-line=""><span>const lookupRel = (rel_nombre, rel_direccion) => {</span></span>
+<span data-line=""><span>  const dir = rel_direccion ?? "co";</span></span>
+<span data-line=""><span>  return relMap[rel_nombre]?.[dir]</span></span>
+<span data-line=""><span>    ?? relMap[rel_nombre]?.co</span></span>
+<span data-line=""><span>    ?? relMap[rel_nombre]?.pre</span></span>
+<span data-line=""><span>    ?? relMap[rel_nombre]?.post</span></span>
+<span data-line=""><span>    ?? null;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""><span>const humanLabel = (rel_nombre, rel_direccion) => {</span></span>
+<span data-line=""><span>  const e = lookupRel(rel_nombre, rel_direccion);</span></span>
+<span data-line=""><span>  return e?.label ?? `\`${rel_nombre}\``;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""><span>const humanDesc = (rel_nombre, rel_direccion) => {</span></span>
+<span data-line=""><span>  const e = lookupRel(rel_nombre, rel_direccion);</span></span>
+<span data-line=""><span>  return e?.description ?? "—";</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""><span>const humanFrame = (frame) => {</span></span>
+<span data-line=""><span>  const f = frame ?? "general";</span></span>
+<span data-line=""><span>  return frameMap[f]?.label ?? `\`${f}\``;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Agrupar por frame</span></span>
+<span data-line=""><span>const groups = {};</span></span>
+<span data-line=""><span>for (const r of rels) {</span></span>
+<span data-line=""><span>  if (r.rel_nombre === "norm_mandates") continue; // ya rendido en §5</span></span>
+<span data-line=""><span>  const k = r.rel_frame ?? "general";</span></span>
+<span data-line=""><span>  groups[k] = groups[k] ?? [];</span></span>
+<span data-line=""><span>  groups[k].push(r);</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Render por frame</span></span>
+<span data-line=""><span>for (const [frame, rs] of Object.entries(groups)) {</span></span>
+<span data-line=""><span>  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>  // Sub-render: agrupar por tipo de relación dentro del frame para mostrar</span></span>
+<span data-line=""><span>  // descripción una sola vez por tipo + tabla de targets</span></span>
+<span data-line=""><span>  const byRel = {};</span></span>
+<span data-line=""><span>  for (const r of rs) {</span></span>
+<span data-line=""><span>    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;</span></span>
+<span data-line=""><span>    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };</span></span>
+<span data-line=""><span>    byRel[key].items.push(r);</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>  for (const grp of Object.values(byRel)) {</span></span>
+<span data-line=""><span>    const label = humanLabel(grp.rel_nombre, grp.rel_direccion);</span></span>
+<span data-line=""><span>    const desc = humanDesc(grp.rel_nombre, grp.rel_direccion);</span></span>
+<span data-line=""><span>    dv.header(5, `${label}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);</span></span>
+<span data-line=""><span>    dv.paragraph(`> ${desc}`);</span></span>
+<span data-line=""><span>    dv.table(</span></span>
+<span data-line=""><span>      ["→ Target", "Evidencia (en este caso)"],</span></span>
+<span data-line=""><span>      grp.items.map(r => [</span></span>
+<span data-line=""><span>        r.rel_target,</span></span>
+<span data-line=""><span>        r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"</span></span>
+<span data-line=""><span>      ])</span></span>
+<span data-line=""><span>    );</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<blockquote><p>💡 <strong>Patrón SOTA "Label Vocabulary"</strong>: editas una description o label en <a href="/_vocabulario-relaciones" class="wikilink wikilink-broken">_vocabulario-relaciones</a> → se actualiza en todos los conceptos del corpus automáticamente. Cero acoplamiento al spec aleia-zen.</p></blockquote>
+<h2 id="8---vista-por-rol-seleccionado--metabind-reactivo"><a href="#8---vista-por-rol-seleccionado--metabind-reactivo">§8 · 🎭 Vista por rol seleccionado  [Metabind reactivo]</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const rol = me.rol_seleccionado ?? "estudiante-soberano";</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const vistas = {</span></span>
+<span data-line=""><span>  "estudiante-soberano": {</span></span>
+<span data-line=""><span>    titulo: "🎓 Para el Estudiante Soberano",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu situación**: el ACU-004-25 es la fuente jurídica de tus derechos académicos como estudiante UDFJC.",</span></span>
+<span data-line=""><span>      "**Lo más relevante para ti**:",</span></span>
+<span data-line=""><span>      "- **Art. 5** — los 10 principios refundacionales que orientan tu formación (Buen Vivir, Soberanía Cognitiva, etc.).",</span></span>
+<span data-line=""><span>      "- **Art. 7** — las 3 funciones misionales que articulan tu trayectoria académica.",</span></span>
+<span data-line=""><span>      "- **Arts. 8-17** — tus derechos y deberes como integrante de la Comunidad Universitaria.",</span></span>
+<span data-line=""><span>      "- **Arts. 45-48** — la Asamblea Universitaria donde puedes participar.",</span></span>
+<span data-line=""><span>      "- **Art. 73** — las CABAs donde puedes vincularte a investigación creditizada.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: identifica las invariantes que protegen tu agencia transformadora y ejérzelas en tu CABA."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-disenador": {</span></span>
+<span data-line=""><span>    titulo: "🎨 Para el Docente Diseñador",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu situación**: diseñas experiencias curriculares que deben ser conformes al ACU-004-25.",</span></span>
+<span data-line=""><span>      "**Lo más relevante para ti**:",</span></span>
+<span data-line=""><span>      "- **Art. 7** — las 3 funciones misionales que tu currículo debe articular.",</span></span>
+<span data-line=""><span>      "- **Art. 59** — el Campo conocimiento-saber como referente epistémico del diseño.",</span></span>
+<span data-line=""><span>      "- **Arts. 69-72** — la Escuela como contenedor de tus diseños.",</span></span>
+<span data-line=""><span>      "- **Art. 73** — la CABA como dispositivo activador de retroalimentaciones R1-R6.",</span></span>
+<span data-line=""><span>      "- **Art. 98 §1** — el Estatuto Académico nuevo (vencido) que define las reglas curriculares específicas.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: traduce las invariantes del Acuerdo en restricciones de diseño de Paquetes CCA (V1∧V2∧V3)."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-formador": {</span></span>
+<span data-line=""><span>    titulo: "🎤 Para el Docente Formador",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu situación**: facilitas el aprendizaje activo en aula, coherente con los principios del Acuerdo.",</span></span>
+<span data-line=""><span>      "**Lo más relevante para ti**:",</span></span>
+<span data-line=""><span>      "- **Art. 5** — los 10 principios que dan dirección pedagógica.",</span></span>
+<span data-line=""><span>      "- **Art. 5g** — Soberanía Cognitiva como criterio de selección de plataformas/recursos.",</span></span>
+<span data-line=""><span>      "- **Art. 5a** — Buen Vivir como horizonte de la formación.",</span></span>
+<span data-line=""><span>      "- **Art. 7 PM1** — Formación como proceso misional explícito.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: usa el texto literal del Art. 5 como ancla en sesiones de fundamentos institucionales; desarrolla las preguntas QHU vinculadas al Acuerdo."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-investigador-pasteur": {</span></span>
+<span data-line=""><span>    titulo: "🔬 Para el Investigador Pasteur",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu situación**: investigas problemas territoriales con rigor académico bajo Frame 3.",</span></span>
+<span data-line=""><span>      "**Lo más relevante para ti**:",</span></span>
+<span data-line=""><span>      "- **Art. 7 PM2** — Investigación-Creación-Innovación como proceso misional.",</span></span>
+<span data-line=""><span>      "- **Art. 62** — Vicerrectoría de Investigación-Creación-Innovación.",</span></span>
+<span data-line=""><span>      "- **Art. 73** — CABA como dispositivo de articulación con territorio.",</span></span>
+<span data-line=""><span>      "- **Arts. 69-72** — Escuela como adscripción docente por campo.",</span></span>
+<span data-line=""><span>      "- **Art. 96-100** — Período de Transición · ventana de oportunidad para nichos transformativos.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: usa los anchors normativos como restricción institucional + las invariantes DDD como condiciones de campo de tus proyectos PM2."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-emprendedor-coop": {</span></span>
+<span data-line=""><span>    titulo: "🤝 Para el Emprendedor/Coop",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu situación**: articulas cooperación universidad-territorio-sector productivo.",</span></span>
+<span data-line=""><span>      "**Lo más relevante para ti**:",</span></span>
+<span data-line=""><span>      "- **Art. 7 PM3** — Extensión-Contextos como proceso misional.",</span></span>
+<span data-line=""><span>      "- **Art. 63** — Vicerrectoría de Contextos y Extensión.",</span></span>
+<span data-line=""><span>      "- **Arts. 78-81** — Centro como nodo de PM3.",</span></span>
+<span data-line=""><span>      "- **Art. 5b** — Autonomía Universitaria como base de los convenios.",</span></span>
+<span data-line=""><span>      "- **Chain_status: LINEAR** del ACU es condición de viabilidad jurídica de tus convenios.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: cita Art. 5b + Art. 7 PM3 como base jurídica de cualquier convenio de extensión territorial; verifica que los convenios respeten el régimen de transición Art. 96-100."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-director": {</span></span>
+<span data-line=""><span>    titulo: "🏛️ Para el Docente Director",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu situación**: gobiernas una unidad académica con evidencia hacia ΩMT.",</span></span>
+<span data-line=""><span>      "**Lo más relevante para ti**:",</span></span>
+<span data-line=""><span>      "- **Arts. 18-57** (Título II completo) — Gobierno y participación democrática.",</span></span>
+<span data-line=""><span>      "- **Arts. 22-29** — CSU como autoridad superior de tus decisiones.",</span></span>
+<span data-line=""><span>      "- **Art. 30-32** — CACAD como autoridad académica.",</span></span>
+<span data-line=""><span>      "- **Arts. 33-39** — Rectoría como ejecutivo institucional.",</span></span>
+<span data-line=""><span>      "- **Arts. 96-100** — Período de Transición y Comisión Art. 100 (PENDIENTE conformación).",</span></span>
+<span data-line=""><span>      "- **Art. 107** — Potestad rectoral transitoria 2025-2027 (vence pronto).",</span></span>
+<span data-line=""><span>      "- **Art. 98** — los 7 estatutos derivados que estructuran tu gestión cotidiana.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: tu gobernanza se valida contra: (a) competencias formales del Acuerdo, (b) chain_status LINEAR del anchor normativo, (c) cumplimiento de mandatos Art. 98 vigentes."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const v = vistas[rol] ?? vistas["estudiante-soberano"];</span></span>
+<span data-line=""><span>dv.header(3, v.titulo);</span></span>
+<span data-line=""><span>for (const linea of v.contenido) dv.paragraph(linea);</span></span></code></pre></figure>
+<h2 id="9---recursos-kdmo-complementarios"><a href="#9---recursos-kdmo-complementarios">§9 · 📊 Recursos KDMO complementarios</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const refs = [</span></span>
+<span data-line=""><span>  ["📊 Diagrama (diagram-universal)", me.concepto_diagram_ref],</span></span>
+<span data-line=""><span>  ["📋 Tabla alineación (tabla-universal)", me.concepto_alignment_table_ref],</span></span>
+<span data-line=""><span>  ["🖼️ Imagen (imagen-universal)", me.concepto_imagen_ref]</span></span>
+<span data-line=""><span>].filter(([_, v]) => v);</span></span>
+<span data-line=""><span>if (refs.length) {</span></span>
+<span data-line=""><span>  dv.table(["Tipo", "Recurso"], refs);</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.paragraph("⚠️ TODO Sprint 1 · stubs entidades KDMO complementarias por crear (`diagram-universal`, `tabla-universal`, `qhu-universal`, `imagen-universal`).");</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const lista = [</span></span>
+<span data-line=""><span>  ["❓ Preguntas trazadoras (qhu-universal)", me.concepto_qhu_refs ?? []],</span></span>
+<span data-line=""><span>  ["🧮 Fórmulas (formula-universal)", me.concepto_formula_refs ?? []]</span></span>
+<span data-line=""><span>];</span></span>
+<span data-line=""><span>for (const [titulo, items] of lista) {</span></span>
+<span data-line=""><span>  if (items.length) {</span></span>
+<span data-line=""><span>    dv.header(4, titulo);</span></span>
+<span data-line=""><span>    dv.list(items);</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="10---citado-en-papers-cap-mi12"><a href="#10---citado-en-papers-cap-mi12">§10 · 📜 Citado en (papers cap-MI12)</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>dv.list(me.cited_in ?? []);</span></span>
+<span data-line=""><span>dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);</span></span></code></pre></figure>
+<hr>
+<h2 id="11---grafo-semántico-local--kpis--comunidades"><a href="#11---grafo-semántico-local--kpis--comunidades">§11 · 🌐 Grafo Semántico Local · KPIs + Comunidades</a></h2>
+<blockquote><p>Vista in-situ del concepto en su ecosistema relacional. Calculado en vivo desde <code>tupla__relations[]</code> + reverse-lookup en el corpus completo.</p></blockquote>
+<h3 id="111--kpis-del-concepto-en-el-grafo"><a href="#111--kpis-del-concepto-en-el-grafo">§11.1 · KPIs del concepto en el grafo</a></h3>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const here = me.file.name;</span></span>
+<span data-line=""><span>const all = dv.pages('"00-glosoario-universal"').where(p => p.kd_type === "glosario-universal");</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Out-degree: relaciones salientes</span></span>
+<span data-line=""><span>const outDeg = (me.tupla__relations ?? []).length;</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// In-degree: cuántos conceptos me apuntan</span></span>
+<span data-line=""><span>let inDeg = 0;</span></span>
+<span data-line=""><span>for (const p of all) {</span></span>
+<span data-line=""><span>  for (const r of (p.tupla__relations ?? [])) {</span></span>
+<span data-line=""><span>    if (String(r.rel_target ?? "").includes(here)) inDeg++;</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Pre-requisitos declarados</span></span>
+<span data-line=""><span>const prereq = (me.concepto_prerequisitos ?? []).length;</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Reverse-lookup: cuántos me declaran prerequisito</span></span>
+<span data-line=""><span>let habilitados = 0;</span></span>
+<span data-line=""><span>for (const p of all) {</span></span>
+<span data-line=""><span>  if ((p.concepto_prerequisitos ?? []).some(x => String(x).includes(here))) habilitados++;</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Distribución por frame de mis relaciones</span></span>
+<span data-line=""><span>const byFrame = {};</span></span>
+<span data-line=""><span>for (const r of (me.tupla__relations ?? [])) {</span></span>
+<span data-line=""><span>  const f = r.rel_frame ?? "general";</span></span>
+<span data-line=""><span>  byFrame[f] = (byFrame[f] ?? 0) + 1;</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// HTML cards</span></span>
+<span data-line=""><span>dv.el("div", `</span></span>
+<span data-line=""><span>&#x3C;div class="kpi-grid-grafo" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:12px 0;"></span></span>
+<span data-line=""><span>  &#x3C;div class="kpi-card-grafo kpi-blue" style="background:linear-gradient(135deg,#0284c7,#075985);border-radius:14px;padding:18px;color:white;box-shadow:0 4px 12px rgba(2,132,199,0.25);"></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:0.7rem;letter-spacing:0.06em;opacity:0.85;text-transform:uppercase;">In-degree&#x3C;/div></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:2.6rem;font-weight:800;line-height:1;margin:6px 0;">${inDeg}&#x3C;/div></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:0.78rem;opacity:0.85;">conceptos me apuntan&#x3C;/div></span></span>
+<span data-line=""><span>  &#x3C;/div></span></span>
+<span data-line=""><span>  &#x3C;div class="kpi-card-grafo kpi-purple" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);border-radius:14px;padding:18px;color:white;box-shadow:0 4px 12px rgba(124,58,237,0.25);"></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:0.7rem;letter-spacing:0.06em;opacity:0.85;text-transform:uppercase;">Out-degree&#x3C;/div></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:2.6rem;font-weight:800;line-height:1;margin:6px 0;">${outDeg}&#x3C;/div></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:0.78rem;opacity:0.85;">relaciones salientes&#x3C;/div></span></span>
+<span data-line=""><span>  &#x3C;/div></span></span>
+<span data-line=""><span>  &#x3C;div class="kpi-card-grafo kpi-green" style="background:linear-gradient(135deg,#10b981,#047857);border-radius:14px;padding:18px;color:white;box-shadow:0 4px 12px rgba(16,185,129,0.25);"></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:0.7rem;letter-spacing:0.06em;opacity:0.85;text-transform:uppercase;">Habilita comprensión&#x3C;/div></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:2.6rem;font-weight:800;line-height:1;margin:6px 0;">${habilitados}&#x3C;/div></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:0.78rem;opacity:0.85;">conceptos lo declaran prereq&#x3C;/div></span></span>
+<span data-line=""><span>  &#x3C;/div></span></span>
+<span data-line=""><span>  &#x3C;div class="kpi-card-grafo kpi-orange" style="background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:14px;padding:18px;color:white;box-shadow:0 4px 12px rgba(245,158,11,0.25);"></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:0.7rem;letter-spacing:0.06em;opacity:0.85;text-transform:uppercase;">Centralidad total&#x3C;/div></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:2.6rem;font-weight:800;line-height:1;margin:6px 0;">${inDeg + outDeg}&#x3C;/div></span></span>
+<span data-line=""><span>    &#x3C;div style="font-size:0.78rem;opacity:0.85;">in + out degree&#x3C;/div></span></span>
+<span data-line=""><span>  &#x3C;/div></span></span>
+<span data-line=""><span>&#x3C;/div></span></span>
+<span data-line=""><span>`);</span></span></code></pre></figure>
+<h3 id="112--charts-dashboard--distribución-frames--top-vecinos-grid-2-col"><a href="#112--charts-dashboard--distribución-frames--top-vecinos-grid-2-col">§11.2 · Charts dashboard · Distribución frames + Top vecinos (grid 2-col)</a></h3>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const colors = { normativo: "#0284c7", skos: "#10b981", bibliografico: "#f59e0b", ddd: "#7c3aed", general: "#94a3b8" };</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Datos chart 1: distribución por frame</span></span>
+<span data-line=""><span>const byFrame = {};</span></span>
+<span data-line=""><span>for (const r of (me.tupla__relations ?? [])) {</span></span>
+<span data-line=""><span>  const f = r.rel_frame ?? "general";</span></span>
+<span data-line=""><span>  byFrame[f] = (byFrame[f] ?? 0) + 1;</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""><span>const fLabels = Object.keys(byFrame);</span></span>
+<span data-line=""><span>const fData = Object.values(byFrame);</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Datos chart 2: distribución por rel_nombre (top 8)</span></span>
+<span data-line=""><span>const byRel = {};</span></span>
+<span data-line=""><span>for (const r of (me.tupla__relations ?? [])) {</span></span>
+<span data-line=""><span>  const k = r.rel_nombre ?? "(sin)";</span></span>
+<span data-line=""><span>  byRel[k] = (byRel[k] ?? 0) + 1;</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""><span>const rEntries = Object.entries(byRel).sort((a,b) => b[1] - a[1]).slice(0, 8);</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Wrapper grid 2-columnas</span></span>
+<span data-line=""><span>const wrapper = dv.container.createEl("div", { attr: { style: "display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0;" }});</span></span>
+<span data-line=""><span>const c1 = wrapper.createEl("div");</span></span>
+<span data-line=""><span>const c2 = wrapper.createEl("div");</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>if (typeof window.renderChart === "function" &#x26;&#x26; fLabels.length) {</span></span>
+<span data-line=""><span>  window.renderChart({</span></span>
+<span data-line=""><span>    type: "doughnut",</span></span>
+<span data-line=""><span>    data: {</span></span>
+<span data-line=""><span>      labels: fLabels.map((l, i) => `${l} (${fData[i]})`),</span></span>
+<span data-line=""><span>      datasets: [{</span></span>
+<span data-line=""><span>        data: fData,</span></span>
+<span data-line=""><span>        backgroundColor: fLabels.map(l => (colors[l] ?? "#64748b") + "cc"),</span></span>
+<span data-line=""><span>        borderColor: fLabels.map(l => colors[l] ?? "#64748b"),</span></span>
+<span data-line=""><span>        borderWidth: 2</span></span>
+<span data-line=""><span>      }]</span></span>
+<span data-line=""><span>    },</span></span>
+<span data-line=""><span>    options: {</span></span>
+<span data-line=""><span>      responsive: true, maintainAspectRatio: true,</span></span>
+<span data-line=""><span>      plugins: {</span></span>
+<span data-line=""><span>        legend: { position: "bottom", labels: { font: { size: 11 } } },</span></span>
+<span data-line=""><span>        title: { display: true, text: "Distribución por frame", font: { size: 13, weight: "bold" } }</span></span>
+<span data-line=""><span>      }</span></span>
+<span data-line=""><span>    }</span></span>
+<span data-line=""><span>  }, c1);</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>  window.renderChart({</span></span>
+<span data-line=""><span>    type: "bar",</span></span>
+<span data-line=""><span>    data: {</span></span>
+<span data-line=""><span>      labels: rEntries.map(([k]) => k),</span></span>
+<span data-line=""><span>      datasets: [{</span></span>
+<span data-line=""><span>        label: "# relaciones",</span></span>
+<span data-line=""><span>        data: rEntries.map(([, v]) => v),</span></span>
+<span data-line=""><span>        backgroundColor: rEntries.map((_, i) => `hsl(${210 - i*22}, 70%, 55%)`),</span></span>
+<span data-line=""><span>        borderRadius: 4</span></span>
+<span data-line=""><span>      }]</span></span>
+<span data-line=""><span>    },</span></span>
+<span data-line=""><span>    options: {</span></span>
+<span data-line=""><span>      indexAxis: "y", responsive: true, maintainAspectRatio: true,</span></span>
+<span data-line=""><span>      plugins: {</span></span>
+<span data-line=""><span>        legend: { display: false },</span></span>
+<span data-line=""><span>        title: { display: true, text: "Top 8 tipos de relación (rel_nombre)", font: { size: 13, weight: "bold" } }</span></span>
+<span data-line=""><span>      },</span></span>
+<span data-line=""><span>      scales: { x: { beginAtZero: true } }</span></span>
+<span data-line=""><span>    }</span></span>
+<span data-line=""><span>  }, c2);</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.paragraph("⚠️ Plugin Charts no disponible.");</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h3 id="113--comunidades--métricas-grid-2-col"><a href="#113--comunidades--métricas-grid-2-col">§11.3 · Comunidades + Métricas (grid 2-col)</a></h3>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const here = me.file.name;</span></span>
+<span data-line=""><span>const folder = me.file.folder;</span></span>
+<span data-line=""><span>const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Helper match wikilink · robusto Link-object + string</span></span>
+<span data-line=""><span>const matchSlug = (target) => {</span></span>
+<span data-line=""><span>  if (!target) return null;</span></span>
+<span data-line=""><span>  if (typeof target === "object" &#x26;&#x26; target.path !== undefined) {</span></span>
+<span data-line=""><span>    return String(target.path).split("/").pop().replace(/\.md$/, "").trim();</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>  const s = String(target);</span></span>
+<span data-line=""><span>  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);</span></span>
+<span data-line=""><span>  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim();</span></span>
+<span data-line=""><span>  return s.split("/").pop().replace(/\.md$/, "").trim() || null;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Vecindad 1-hop (out + in)</span></span>
+<span data-line=""><span>const directos = new Set();</span></span>
+<span data-line=""><span>for (const r of (me.tupla__relations ?? [])) {</span></span>
+<span data-line=""><span>  const slug = matchSlug(r.rel_target);</span></span>
+<span data-line=""><span>  if (slug) directos.add(slug);</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""><span>for (const p of all) {</span></span>
+<span data-line=""><span>  if ((p.tupla__relations ?? []).some(r => matchSlug(r.rel_target) === here)) {</span></span>
+<span data-line=""><span>    directos.add(p.file.name);</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""><span>directos.delete(here);</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Agrupar por capa</span></span>
+<span data-line=""><span>const comunidades = {};</span></span>
+<span data-line=""><span>for (const v of directos) {</span></span>
+<span data-line=""><span>  const p = all.where(x => x.file.name === v).first();</span></span>
+<span data-line=""><span>  if (!p) continue;</span></span>
+<span data-line=""><span>  const tags = p.tags ?? [];</span></span>
+<span data-line=""><span>  let capa = "otros";</span></span>
+<span data-line=""><span>  for (const t of tags) {</span></span>
+<span data-line=""><span>    if (typeof t === "string" &#x26;&#x26; t.match(/^m\d{2}-(base|corpus)$/)) { capa = t; break; }</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>  comunidades[capa] = comunidades[capa] ?? [];</span></span>
+<span data-line=""><span>  comunidades[capa].push(p);</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Métricas</span></span>
+<span data-line=""><span>const indirectos = new Set();</span></span>
+<span data-line=""><span>for (const v of directos) {</span></span>
+<span data-line=""><span>  const p = all.where(x => x.file.name === v).first();</span></span>
+<span data-line=""><span>  if (!p) continue;</span></span>
+<span data-line=""><span>  for (const r of (p.tupla__relations ?? [])) {</span></span>
+<span data-line=""><span>    const slug = matchSlug(r.rel_target);</span></span>
+<span data-line=""><span>    if (slug) indirectos.add(slug);</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""><span>indirectos.delete(here);</span></span>
+<span data-line=""><span>for (const d of directos) indirectos.delete(d);</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const totalConceptos = all.length;</span></span>
+<span data-line=""><span>const myDegree = (me.tupla__relations ?? []).length;</span></span>
+<span data-line=""><span>const density = (myDegree / Math.max(1, totalConceptos - 1)).toFixed(3);</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Grid 2-col render</span></span>
+<span data-line=""><span>const wrapper = dv.container.createEl("div", { attr: { style: "display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:14px 0;" }});</span></span>
+<span data-line=""><span>const left = wrapper.createEl("div");</span></span>
+<span data-line=""><span>const right = wrapper.createEl("div");</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Columna izquierda · comunidades por capa</span></span>
+<span data-line=""><span>left.createEl("h4", { text: `🧬 Comunidades por capa · ${directos.size} vecinos en ${Object.keys(comunidades).length} capa(s)` });</span></span>
+<span data-line=""><span>for (const [capa, conceptos] of Object.entries(comunidades).sort()) {</span></span>
+<span data-line=""><span>  const block = left.createEl("div", { attr: { style: "margin-bottom:10px;" }});</span></span>
+<span data-line=""><span>  block.createEl("strong", { text: `${capa} · ${conceptos.length}` });</span></span>
+<span data-line=""><span>  const ul = block.createEl("ul", { attr: { style: "margin:4px 0 0 1.2em;font-size:0.88rem;" }});</span></span>
+<span data-line=""><span>  for (const p of conceptos.slice(0, 8)) {</span></span>
+<span data-line=""><span>    const li = ul.createEl("li");</span></span>
+<span data-line=""><span>    const a = li.createEl("a", { text: p.file.name, attr: { "data-href": p.file.name, "class": "internal-link" }});</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>  if (conceptos.length > 8) block.createEl("em", { text: `… +${conceptos.length - 8} más` });</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>// Columna derecha · métricas</span></span>
+<span data-line=""><span>right.createEl("h4", { text: "📐 Métricas de navegación" });</span></span>
+<span data-line=""><span>const tbl = right.createEl("table", { attr: { style: "width:100%;font-size:0.9rem;" }});</span></span>
+<span data-line=""><span>const rows = [</span></span>
+<span data-line=""><span>  ["Vecindad 1-hop", directos.size, "directa"],</span></span>
+<span data-line=""><span>  ["Vecindad 2-hop", indirectos.size, "indirecta nueva"],</span></span>
+<span data-line=""><span>  ["Cobertura 1+2 hops", directos.size + indirectos.size + 1, `de ${totalConceptos}`],</span></span>
+<span data-line=""><span>  ["Density local", density, "out / (N-1)"],</span></span>
+<span data-line=""><span>  ["Out-degree", myDegree, "salientes"],</span></span>
+<span data-line=""><span>];</span></span>
+<span data-line=""><span>const thead = tbl.createEl("thead").createEl("tr");</span></span>
+<span data-line=""><span>for (const h of ["Métrica", "Valor", "Detalle"]) thead.createEl("th", { text: h, attr: { style: "text-align:left;border-bottom:1px solid #555;padding:4px;" }});</span></span>
+<span data-line=""><span>const tbody = tbl.createEl("tbody");</span></span>
+<span data-line=""><span>for (const r of rows) {</span></span>
+<span data-line=""><span>  const tr = tbody.createEl("tr");</span></span>
+<span data-line=""><span>  for (const c of r) tr.createEl("td", { text: String(c), attr: { style: "padding:4px;border-bottom:1px solid #333;" }});</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>right.createEl("div", { attr: { style: "margin-top:12px;font-size:0.82rem;opacity:0.85;" }, text: "🔌 Plugins navegación: Juggl · Graph Analysis · Breadcrumbs" });</span></span></code></pre></figure>
+<h3 id="114--mini-grafo-mermaid--concepto--vecindad-1-hop"><a href="#114--mini-grafo-mermaid--concepto--vecindad-1-hop">§11.4 · Mini-grafo Mermaid · concepto + vecindad 1-hop</a></h3>
+<pre class="mermaid">flowchart LR
+    ACU["⚖️ con-acu-004-25&#x3C;br/>(este concepto)"]:::self
+
+    subgraph PREREQ ["🔻 Pre-requisitos"]
+        ART69[con-constitucion-1991-art-69]:::pre
+        LEY30[con-ley-30-1992-art-6]:::pre
+        MCU[con-mcu-2020]:::pre
+    end
+
+    subgraph IMPLEMENTS ["⚖️ Implementa norma superior"]
+        CADENA[con-cadena-normativa-multinivel]:::norm
+        CONPES[con-conpes-4069]:::norm
+        F3[con-frame-3]:::norm
+    end
+
+    subgraph MANDATA ["📋 Mandata Art. 98 · 7 estatutos"]
+        EST_AC[con-estatuto-academico-nuevo]:::mandato
+        EST_DOC[con-estatuto-docente-nuevo]:::mandato
+        EST_OTROS[+5 estatutos derivados]:::mandato
+    end
+
+    subgraph DERIVADOS ["🔺 Conceptos derivados"]
+        OMT[con-omt]:::derivado
+        PM[con-procesos-misionales-pm1-pm2-pm3]:::derivado
+        MLP[con-mlp-geels]:::derivado
+        OECD[con-oecd-learning-compass-2030]:::derivado
+        ISO[con-iso-21001]:::derivado
+    end
+
+    %% Relaciones
+    ART69 --> ACU
+    LEY30 --> ACU
+    MCU --> ACU
+    CADENA --> ACU
+    CONPES --> ACU
+    F3 --> ACU
+
+    ACU --> EST_AC
+    ACU --> EST_DOC
+    ACU --> EST_OTROS
+
+    ACU --> PM
+    ACU --> OMT
+    ACU --> MLP
+    ACU --> OECD
+    ACU --> ISO
+
+    classDef self fill:#10b981,color:#fff,stroke:#047857,stroke-width:3px
+    classDef pre fill:#a78bfa,color:#1e1b4b,stroke:#7c3aed
+    classDef norm fill:#0284c7,color:#fff,stroke:#075985
+    classDef mandato fill:#f59e0b,color:#fff,stroke:#d97706
+    classDef derivado fill:#14b8a6,color:#fff,stroke:#0f766e
+</pre>
+<hr>
+<h2 id="12--régimen-epistémico"><a href="#12--régimen-epistémico">§12 · Régimen epistémico</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>dv.header(4, "Domain de aplicación");</span></span>
+<span data-line=""><span>dv.paragraph(me.applicable_domain ?? "—");</span></span>
+<span data-line=""><span>dv.header(4, "Supuestos explícitos");</span></span>
+<span data-line=""><span>dv.list(me.assumptions ?? []);</span></span>
+<span data-line=""><span>dv.header(4, "Condiciones que invalidan el concepto (breaks_at)");</span></span>
+<span data-line=""><span>dv.list(me.breaks_at ?? []);</span></span></code></pre></figure>
+<hr>
+<h2 id="historial-de-versiones"><a href="#historial-de-versiones">Historial de versiones</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Versión</th><th>Fecha</th><th>Cambios</th></tr></thead><tbody><tr><td>v1.0.0</td><td>2026-04-26</td><td>Concepto-universal v5.2 inicial · campos legacy <code>norm_*</code> a nivel root</td></tr><tr><td>v1.1.0-v1.3.0</td><td>2026-04-26..27</td><td>Cross-references M01-M03 audit-driven</td></tr><tr><td><strong>v2.0.0</strong></td><td><strong>2026-04-27</strong></td><td><strong>PILOTO TPL T1 NORMATIVO concepto-universal v2.0 SOTA</strong>: (a) <strong>Faceted Architecture</strong>: <code>concepto_capabilities: [NORMATIVE]</code> + <code>concepto_facet_normative</code> con campos canónicos <code>#FacetNormative</code> (<code>normative_source</code>, <code>normative_locator</code>, <code>normative_text</code>, <code>normative_authority_level: ESTATUTARIO</code>, <code>chain_status: LINEAR</code>, <code>derogates</code>, <code>derogated_by</code>, <code>conflicts_with</code>). (b) <strong>Provenance</strong>: <code>concepto_definitional_anchors</code> + <code>concepto_current_anchor</code> + <code>concepto_anchor_chain_status: LINEAR</code>. (c) <strong>Pre-requisitos cognitivos</strong>: <code>concepto_prerequisitos: [const-1991-art-69, ley-30-1992-art-6, mcu-2020]</code>. (d) <strong>Refs entidades KDMO</strong>: <code>concepto_diagram_ref</code>, <code>concepto_alignment_table_ref</code>, <code>concepto_qhu_refs</code>, <code>concepto_imagen_ref</code> (TODO stubs). (e) <strong>Mandatos Art. 98</strong>: 7 wikilinks <code>norm_mandates</code> agregados a <code>tupla__relations</code>. (f) <strong>Body 100% reactivo</strong>: cero duplicación frontmatter↔body. Metabind selector de rol JTBD M04 (<code>rol_seleccionado</code>) + 8 secciones DataviewJS reactivas (Anclaje + Pre-req + Derivados + Mandatos + Evolución + Relaciones + Vista por rol + Recursos KDMO + Citado en). (g) Cadena causal: el body lee <code>me.rol_seleccionado</code> y muestra contenido específico para 1 de 6 roles JTBD. <strong>PRIMER concepto del corpus en TPL T1 v2.0 · sirve de referente para los 50 NORMATIVOS restantes del Sprint 1.</strong></td></tr></tbody></table>
+<hr>
+<p><em>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-04-27 · <code>con-acu-004-25</code> v2.0.0 · TPL T1 NORMATIVO piloto</em></p>

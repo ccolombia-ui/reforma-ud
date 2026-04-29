@@ -1,0 +1,124 @@
+<h1 id="inputtextclassmeta-bind-readonlyskos_preflabel"><a href="#inputtextclassmeta-bind-readonlyskos_preflabel"><code>INPUT[text(class(meta-bind-readonly)):skos_prefLabel]</code></a></h1>
+<details class="callout" data-callout="quote" data-collapsible="true" open><summary class="callout-title"><div class="callout-title-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg></div><div class="callout-title-text">⚖️ Marco nacional · adopta principios ISO en sector público</div><div class="callout-fold-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></div></summary><div class="callout-content"><p>MIPG (Modelo Integrado de Planeación y Gestión) es el marco nacional vinculante para entidades públicas colombianas que <strong>articula 7 dimensiones operativas y 19 políticas</strong>, <strong>adoptando principios ISO 9001</strong> y volviéndolos vinculantes para el sector público. Base: Art. 133 Ley 1753/2015 + Decreto 1083/2015. Para UDFJC: articulado con SIGUD vía Resolución Rectoría 207/2016.</p></div></details>
+<hr>
+<h2 id="0---vista-por-rol-institucional"><a href="#0---vista-por-rol-institucional">§0 · 🎭 Vista por rol institucional</a></h2>
+<p><code>INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]</code></p>
+<hr>
+<h2 id="1--definición-canónica"><a href="#1--definición-canónica">§1 · Definición canónica</a></h2>
+<blockquote><p><code>INPUT[textArea(class(meta-bind-readonly)):skos_definition]</code></p></blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Sub-tipo</th><th align="center">Pasteur</th><th align="center">Authority level</th></tr></thead><tbody><tr><td><code>INPUT[text(class(meta-bind-readonly)):concept_subtype]</code></td><td align="center"><code>INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]</code></td><td align="center"><code>INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.normative_authority_level]</code></td></tr></tbody></table>
+<h2 id="2---anclaje-normativo--cadena-de-adopción"><a href="#2---anclaje-normativo--cadena-de-adopción">§2 · 📜 Anclaje normativo + cadena de adopción</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const f = me.concepto_facet_normative;</span></span>
+<span data-line=""><span>if (!f) {</span></span>
+<span data-line=""><span>  dv.paragraph("(sin facet normative)");</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.table(["Campo", "Valor"], [</span></span>
+<span data-line=""><span>    ["**Origen**", `${f.origin_type ?? "—"} · ${f.origin_force ?? "—"}`],</span></span>
+<span data-line=""><span>    ["**Authority level**", f.normative_authority_level ?? "—"],</span></span>
+<span data-line=""><span>    ["**Effective force en UDFJC**", f.effective_force_in_udfjc ?? "—"],</span></span>
+<span data-line=""><span>    ["**Chain status**", f.chain_status ?? "—"]</span></span>
+<span data-line=""><span>  ]);</span></span>
+<span data-line=""><span>  const chain = f.adoption_chain ?? [];</span></span>
+<span data-line=""><span>  if (chain.length) {</span></span>
+<span data-line=""><span>    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);</span></span>
+<span data-line=""><span>    dv.table(["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],</span></span>
+<span data-line=""><span>      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence]));</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="3---pre-requisitos-cognitivos"><a href="#3---pre-requisitos-cognitivos">§3 · 🔻 Pre-requisitos cognitivos</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const prereq = dv.current().concepto_prerequisitos ?? [];</span></span>
+<span data-line=""><span>if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales.");</span></span>
+<span data-line=""><span>else dv.list(prereq);</span></span></code></pre></figure>
+<h2 id="4---conceptos-que-declaran-este-como-pre-requisito"><a href="#4---conceptos-que-declaran-este-como-pre-requisito">§4 · 🔺 Conceptos que declaran este como pre-requisito</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const here = me.file.name;</span></span>
+<span data-line=""><span>const folder = me.file.folder;</span></span>
+<span data-line=""><span>const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");</span></span>
+<span data-line=""><span>const matchHere = (target) => {</span></span>
+<span data-line=""><span>  if (!target) return false;</span></span>
+<span data-line=""><span>  if (typeof target === "object" &#x26;&#x26; target.path !== undefined) return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;</span></span>
+<span data-line=""><span>  const s = String(target);</span></span>
+<span data-line=""><span>  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);</span></span>
+<span data-line=""><span>  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;</span></span>
+<span data-line=""><span>  return s.split("/").pop().replace(/\.md$/, "").trim() === here;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""><span>const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();</span></span>
+<span data-line=""><span>dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito`);</span></span>
+<span data-line=""><span>if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía._");</span></span>
+<span data-line=""><span>else dv.list(habilitados.map(p => p.file.link));</span></span></code></pre></figure>
+<h2 id="7---relaciones-tipadas-outgoing"><a href="#7---relaciones-tipadas-outgoing">§7 · 🤝 Relaciones tipadas (outgoing)</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const rels = me.tupla__relations ?? [];</span></span>
+<span data-line=""><span>const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");</span></span>
+<span data-line=""><span>const relMap = vocabPage?.relaciones ?? {};</span></span>
+<span data-line=""><span>const frameMap = vocabPage?.frames ?? {};</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const lookupRel = (n, d) => {</span></span>
+<span data-line=""><span>  const dir = d ?? "co";</span></span>
+<span data-line=""><span>  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""><span>const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;</span></span>
+<span data-line=""><span>const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";</span></span>
+<span data-line=""><span>const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const groups = {};</span></span>
+<span data-line=""><span>for (const r of rels) {</span></span>
+<span data-line=""><span>  const k = r.rel_frame ?? "general";</span></span>
+<span data-line=""><span>  groups[k] = groups[k] ?? [];</span></span>
+<span data-line=""><span>  groups[k].push(r);</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""><span>for (const [frame, rs] of Object.entries(groups)) {</span></span>
+<span data-line=""><span>  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);</span></span>
+<span data-line=""><span>  const byRel = {};</span></span>
+<span data-line=""><span>  for (const r of rs) {</span></span>
+<span data-line=""><span>    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;</span></span>
+<span data-line=""><span>    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };</span></span>
+<span data-line=""><span>    byRel[key].items.push(r);</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>  for (const grp of Object.values(byRel)) {</span></span>
+<span data-line=""><span>    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);</span></span>
+<span data-line=""><span>    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);</span></span>
+<span data-line=""><span>    dv.table(["→ Target", "Evidencia"],</span></span>
+<span data-line=""><span>      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"]));</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="10---citado-en"><a href="#10---citado-en">§10 · 📜 Citado en</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>dv.list(me.cited_in ?? []);</span></span>
+<span data-line=""><span>dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);</span></span></code></pre></figure>
+<hr>
+<h2 id="historial"><a href="#historial">Historial</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Versión</th><th>Fecha</th><th>Cambios</th></tr></thead><tbody><tr><td><strong>v1.0.0</strong></td><td><strong>2026-04-27</strong></td><td>Concepto creado en PRE-Sprint 1A (cadena de adopción ISO). Modela MIPG como marco nacional que adopta principios ISO 9001 y los vuelve vinculantes para sector público colombiano.</td></tr></tbody></table>
+<hr>
+<p><em>CC BY-SA 4.0 · UDFJC · 2026-04-27 · <code>con-mipg-funcion-publica</code> v1.0.0 · TPL T1 NORMATIVO</em></p>

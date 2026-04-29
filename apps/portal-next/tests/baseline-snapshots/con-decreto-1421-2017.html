@@ -1,0 +1,206 @@
+<h1 id="inputtextclassmeta-bind-readonlyskos_preflabel"><a href="#inputtextclassmeta-bind-readonlyskos_preflabel"><code>INPUT[text(class(meta-bind-readonly)):skos_prefLabel]</code></a></h1>
+<details class="callout" data-callout="quote" data-collapsible="true" open><summary class="callout-title"><div class="callout-title-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg></div><div class="callout-title-text">⚖️ Mandato nacional de UDL/DUA para IES colombianas</div><div class="callout-fold-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></div></summary><div class="callout-content"><p>El <strong>Decreto 1421/2017</strong> es el acto normativo que convierte UDL/DUA de marco aspiracional voluntario (CAST) a <strong>obligación jurídica vinculante</strong> para todas las instituciones educativas en Colombia, incluyendo UDFJC. Modifica el Decreto 1075/2015 (Decreto Único Reglamentario Sector Educación). Vigente desde <strong>2017-08-29</strong> con implementación progresiva a 5 años. <strong>Es el primer eslabón de la cadena de adopción que vuelve UDL vinculante para UDFJC.</strong></p></div></details>
+<hr>
+<h2 id="0---vista-por-rol-institucional"><a href="#0---vista-por-rol-institucional">§0 · 🎭 Vista por rol institucional</a></h2>
+<p><code>INPUT[inlineSelect(option(estudiante-soberano,🎓 Estudiante Soberano), option(docente-disenador,🎨 Diseñador), option(docente-formador,🎤 Formador), option(docente-investigador-pasteur,🔬 Investigador Pasteur), option(docente-emprendedor-coop,🤝 Emprendedor/Coop), option(docente-director,🏛️ Director)):rol_seleccionado]</code></p>
+<hr>
+<h2 id="1--definición-canónica"><a href="#1--definición-canónica">§1 · Definición canónica</a></h2>
+<blockquote><p><code>INPUT[textArea(class(meta-bind-readonly)):skos_definition]</code></p></blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Sub-tipo</th><th align="center">Pasteur</th><th align="center">Authority level</th></tr></thead><tbody><tr><td><code>INPUT[text(class(meta-bind-readonly)):concept_subtype]</code></td><td align="center"><code>INPUT[text(class(meta-bind-readonly)):pasteur_quadrant]</code></td><td align="center"><code>INPUT[text(class(meta-bind-readonly)):concepto_facet_normative.normative_authority_level]</code></td></tr></tbody></table>
+<h2 id="2---anclaje-normativo--cadena-de-adopción"><a href="#2---anclaje-normativo--cadena-de-adopción">§2 · 📜 Anclaje normativo + cadena de adopción</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const f = me.concepto_facet_normative;</span></span>
+<span data-line=""><span>if (!f) {</span></span>
+<span data-line=""><span>  dv.paragraph("(sin facet normative)");</span></span>
+<span data-line=""><span>} else {</span></span>
+<span data-line=""><span>  dv.table(</span></span>
+<span data-line=""><span>    ["Campo", "Valor"],</span></span>
+<span data-line=""><span>    [</span></span>
+<span data-line=""><span>      ["**Origen**", `${f.origin_type ?? "—"} · fuerza original: ${f.origin_force ?? "—"}`],</span></span>
+<span data-line=""><span>      ["**Fuente original**", f.origin_source ?? "—"],</span></span>
+<span data-line=""><span>      ["**Authority level (resultante)**", f.normative_authority_level ?? "—"],</span></span>
+<span data-line=""><span>      ["**Effective force en UDFJC**", f.effective_force_in_udfjc ?? "—"],</span></span>
+<span data-line=""><span>      ["**Chain status**", f.chain_status ?? "—"],</span></span>
+<span data-line=""><span>      ["**Modifica**", f.modification_type || "—"]</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  );</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>  const chain = f.adoption_chain ?? [];</span></span>
+<span data-line=""><span>  if (chain.length) {</span></span>
+<span data-line=""><span>    dv.header(4, `🔗 Cadena de adopción · ${chain.length} eslabón(es)`);</span></span>
+<span data-line=""><span>    dv.table(</span></span>
+<span data-line=""><span>      ["Adoptante", "Locator", "Autoridad", "Fecha", "Evidencia"],</span></span>
+<span data-line=""><span>      chain.map(a => [a.adopter, a.adopter_locator, a.adopter_authority_level, a.adopted_at, a.adoption_evidence])</span></span>
+<span data-line=""><span>    );</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="3---pre-requisitos-cognitivos"><a href="#3---pre-requisitos-cognitivos">§3 · 🔻 Pre-requisitos cognitivos</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const prereq = me.concepto_prerequisitos ?? [];</span></span>
+<span data-line=""><span>if (prereq.length === 0) dv.paragraph("Sin pre-requisitos formales declarados.");</span></span>
+<span data-line=""><span>else dv.list(prereq);</span></span></code></pre></figure>
+<h2 id="4---conceptos-que-declaran-este-como-pre-requisito-cognitivo"><a href="#4---conceptos-que-declaran-este-como-pre-requisito-cognitivo">§4 · 🔺 Conceptos que declaran este como pre-requisito cognitivo</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const here = me.file.name;</span></span>
+<span data-line=""><span>const folder = me.file.folder;</span></span>
+<span data-line=""><span>const all = dv.pages(`"${folder}"`).where(p => p.kd_type === "glosario-universal");</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const matchHere = (target) => {</span></span>
+<span data-line=""><span>  if (!target) return false;</span></span>
+<span data-line=""><span>  if (typeof target === "object" &#x26;&#x26; target.path !== undefined) {</span></span>
+<span data-line=""><span>    return String(target.path).split("/").pop().replace(/\.md$/, "").trim() === here;</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>  const s = String(target);</span></span>
+<span data-line=""><span>  const m = s.match(/\[\[([^\]|]+?)(?:\|[^\]]*)?\]\]/);</span></span>
+<span data-line=""><span>  if (m) return m[1].split("/").pop().replace(/\.md$/, "").trim() === here;</span></span>
+<span data-line=""><span>  return s.split("/").pop().replace(/\.md$/, "").trim() === here;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const habilitados = all.where(p => (p.concepto_prerequisitos ?? []).some(matchHere)).array();</span></span>
+<span data-line=""><span>dv.header(4, `📚 ${habilitados.length} concepto(s) declaran este como pre-requisito directo`);</span></span>
+<span data-line=""><span>if (habilitados.length === 0) dv.paragraph("_Sin reverse declaraciones todavía. Para outgoing ver §7._");</span></span>
+<span data-line=""><span>else dv.list(habilitados.map(p => p.file.link));</span></span></code></pre></figure>
+<h2 id="6---evolución-longitudinal--provenance"><a href="#6---evolución-longitudinal--provenance">§6 · 🌳 Evolución longitudinal · provenance</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const anchors = me.concepto_definitional_anchors ?? [];</span></span>
+<span data-line=""><span>dv.paragraph(`**Chain status**: ${me.concepto_anchor_chain_status ?? "—"} · **Anchor ACTIVE**: ${me.concepto_current_anchor ?? "—"}`);</span></span>
+<span data-line=""><span>dv.paragraph(`**Vigente desde**: ${me.valid_from ?? "—"} · **Hasta**: ${me.valid_to || "actualmente · ACTIVE"}`);</span></span>
+<span data-line=""><span>if (anchors.length) {</span></span>
+<span data-line=""><span>  dv.header(4, "Cadena de definitional anchors");</span></span>
+<span data-line=""><span>  dv.list(anchors);</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="7---relaciones-semánticas-tipadas-outgoing"><a href="#7---relaciones-semánticas-tipadas-outgoing">§7 · 🤝 Relaciones semánticas tipadas (outgoing)</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const rels = me.tupla__relations ?? [];</span></span>
+<span data-line=""><span>const vocabPage = dv.page("00-glosoario-universal/_vocabulario-relaciones");</span></span>
+<span data-line=""><span>const relMap = vocabPage?.relaciones ?? {};</span></span>
+<span data-line=""><span>const frameMap = vocabPage?.frames ?? {};</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const lookupRel = (n, d) => {</span></span>
+<span data-line=""><span>  const dir = d ?? "co";</span></span>
+<span data-line=""><span>  return relMap[n]?.[dir] ?? relMap[n]?.co ?? relMap[n]?.pre ?? relMap[n]?.post ?? null;</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""><span>const humanLabel = (n, d) => lookupRel(n, d)?.label ?? `\`${n}\``;</span></span>
+<span data-line=""><span>const humanDesc = (n, d) => lookupRel(n, d)?.description ?? "—";</span></span>
+<span data-line=""><span>const humanFrame = (f) => frameMap[f ?? "general"]?.label ?? `\`${f ?? "general"}\``;</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>const groups = {};</span></span>
+<span data-line=""><span>for (const r of rels) {</span></span>
+<span data-line=""><span>  const k = r.rel_frame ?? "general";</span></span>
+<span data-line=""><span>  groups[k] = groups[k] ?? [];</span></span>
+<span data-line=""><span>  groups[k].push(r);</span></span>
+<span data-line=""><span>}</span></span>
+<span data-line=""> </span>
+<span data-line=""><span>for (const [frame, rs] of Object.entries(groups)) {</span></span>
+<span data-line=""><span>  dv.header(4, `${humanFrame(frame)} · ${rs.length} relación(es)  \`[frame: ${frame}]\``);</span></span>
+<span data-line=""><span>  const byRel = {};</span></span>
+<span data-line=""><span>  for (const r of rs) {</span></span>
+<span data-line=""><span>    const key = `${r.rel_nombre}::${r.rel_direccion ?? "co"}`;</span></span>
+<span data-line=""><span>    byRel[key] = byRel[key] ?? { rel_nombre: r.rel_nombre, rel_direccion: r.rel_direccion, items: [] };</span></span>
+<span data-line=""><span>    byRel[key].items.push(r);</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>  for (const grp of Object.values(byRel)) {</span></span>
+<span data-line=""><span>    dv.header(5, `${humanLabel(grp.rel_nombre, grp.rel_direccion)}  \`(${grp.rel_nombre} · ${grp.rel_direccion ?? "co"})\``);</span></span>
+<span data-line=""><span>    dv.paragraph(`> ${humanDesc(grp.rel_nombre, grp.rel_direccion)}`);</span></span>
+<span data-line=""><span>    dv.table(</span></span>
+<span data-line=""><span>      ["→ Target", "Evidencia"],</span></span>
+<span data-line=""><span>      grp.items.map(r => [r.rel_target, r.rel_propiedades?.norm_evidence ?? r.rel_propiedades?.skos_evidence ?? "—"])</span></span>
+<span data-line=""><span>    );</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>}</span></span></code></pre></figure>
+<h2 id="8---vista-por-rol-seleccionado"><a href="#8---vista-por-rol-seleccionado">§8 · 🎭 Vista por rol seleccionado</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>const rol = me.rol_seleccionado ?? "estudiante-soberano";</span></span>
+<span data-line=""><span>const vistas = {</span></span>
+<span data-line=""><span>  "estudiante-soberano": {</span></span>
+<span data-line=""><span>    titulo: "🎓 Para el Estudiante Soberano",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu derecho**: el Decreto 1421/2017 garantiza tu derecho a aprender sin barreras estructurales — no es 'accesibilidad', es **diseño universal desde el inicio**.",</span></span>
+<span data-line=""><span>      "- Si encuentras barreras en tu currículo, puedes invocar este decreto como base jurídica para exigir ajustes razonables.",</span></span>
+<span data-line=""><span>      "- UDL aplica a toda la población estudiantil, no solo a personas con discapacidad declarada.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: identifica barreras de tu trayectoria académica y conviértelas en demanda de UDL ante tu CABA y Comité de Currículo."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-disenador": {</span></span>
+<span data-line=""><span>    titulo: "🎨 Para el Docente Diseñador",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu obligación legal**: el Decreto 1421/2017 te obliga a incorporar UDL **desde el diseño** del currículo — no como adaptación post-hoc.",</span></span>
+<span data-line=""><span>      "- Los Paquetes CCA deben tener desde su origen múltiples medios de representación + acción/expresión + implicación.",</span></span>
+<span data-line=""><span>      "- El PEI institucional debe documentar UDL en los procesos misionales.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: cada Paquete CCA debe tener checklist UDL 3 principios x 9 pautas y validarse contra el Decreto 1421."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-formador": {</span></span>
+<span data-line=""><span>    titulo: "🎤 Para el Docente Formador",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu práctica de aula** debe operar bajo UDL: entregas, materiales, evaluaciones con múltiples vías.",</span></span>
+<span data-line=""><span>      "- El PIAR (Plan Individual de Ajustes Razonables) lo elaboras tú como docente de aula, no un especialista externo.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: incluye en tu syllabus las múltiples vías de representación + acción + implicación; documenta los ajustes razonables que aplicas."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-investigador-pasteur": {</span></span>
+<span data-line=""><span>    titulo: "🔬 Para el Investigador Pasteur",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu investigación territorial** debe ser UDL-compatible: instrumentos accesibles, comunicación de hallazgos en múltiples formatos, equipos diversos.",</span></span>
+<span data-line=""><span>      "- Investigaciones sobre cultura de inclusión + DUA en IES tienen marco normativo en este decreto.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: documenta en tu PM2 cómo UDL aplica a tu metodología investigativa territorial."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-emprendedor-coop": {</span></span>
+<span data-line=""><span>    titulo: "🤝 Para el Emprendedor/Coop",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tus convenios** universidad-territorio-sector productivo deben respetar UDL: accesibilidad de espacios físicos, materiales accesibles, lenguaje claro.",</span></span>
+<span data-line=""><span>      "**Acción concreta**: incluye cláusula UDL en convenios PM3 + verifica accesibilidad en eventos territoriales."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  },</span></span>
+<span data-line=""><span>  "docente-director": {</span></span>
+<span data-line=""><span>    titulo: "🏛️ Para el Docente Director",</span></span>
+<span data-line=""><span>    contenido: [</span></span>
+<span data-line=""><span>      "**Tu obligación de gobernanza**: implementar UDL en el PEI institucional + reportes SIMAT + condiciones de calidad para registro calificado (Decreto 1330/2019).",</span></span>
+<span data-line=""><span>      "- Verificación: ¿el PEI UDFJC documenta UDL? ¿hay datos SIMAT actualizados?",</span></span>
+<span data-line=""><span>      "**Acción concreta**: exigir a Vicerrectoría Académica reporte anual de cumplimiento Decreto 1421/2017 ante CACAD."</span></span>
+<span data-line=""><span>    ]</span></span>
+<span data-line=""><span>  }</span></span>
+<span data-line=""><span>};</span></span>
+<span data-line=""><span>const v = vistas[rol] ?? vistas["estudiante-soberano"];</span></span>
+<span data-line=""><span>dv.header(3, v.titulo);</span></span>
+<span data-line=""><span>for (const linea of v.contenido) dv.paragraph(linea);</span></span></code></pre></figure>
+<h2 id="10---citado-en"><a href="#10---citado-en">§10 · 📜 Citado en</a></h2>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#ffffff;color:#1f2328" tabindex="0" data-language="dataviewjs" data-theme="github-light-default"><code data-language="dataviewjs" data-theme="github-light-default" style="display: grid;"><span data-line=""><span>const me = dv.current();</span></span>
+<span data-line=""><span>dv.list(me.cited_in ?? []);</span></span>
+<span data-line=""><span>dv.paragraph(`**Total citaciones**: ${me.cited_count ?? 0}`);</span></span></code></pre></figure>
+<hr>
+<h2 id="historial-de-versiones"><a href="#historial-de-versiones">Historial de versiones</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Versión</th><th>Fecha</th><th>Cambios</th></tr></thead><tbody><tr><td><strong>v1.0.0</strong></td><td><strong>2026-04-27</strong></td><td><strong>Concepto creado en PRE-Sprint 1A · cadena de adopción</strong>. T1 NORMATIVO con <code>concepto_facet_normative.adoption_chain</code> poblado: el Decreto 1421/2017 es el acto que convierte UDL de voluntario (CAST) a vinculante para IES colombianas (incluyendo UDFJC). Reemplaza la mención narrativa en <code>con-udl-3.skos_scopeNote</code> por wikilink tipado.</td></tr></tbody></table>
+<hr>
+<p><em>CC BY-SA 4.0 · UDFJC · 2026-04-27 · <code>con-decreto-1421-2017</code> v1.0.0 · TPL T1 NORMATIVO</em></p>

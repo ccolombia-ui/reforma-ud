@@ -28,6 +28,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  splitFrontmatter, parseYamlKeys, cleanFrontmatter, cleanBody,
+} from './lib/glosario-transform.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const ROOT = path.resolve(path.dirname(__filename), '..');             // _gold-html-static/
@@ -52,133 +55,8 @@ const FILTER = filterIdx >= 0 ? args[filterIdx + 1] : 'approved'; // 'approved' 
 const fileIdx = args.indexOf('--file');
 const SINGLE_FILE = fileIdx >= 0 ? args[fileIdx + 1] : null;
 
-// ── Campos que Velite NO conoce — se eliminan del frontmatter de salida ───
-const STRIP_KEY_PATTERNS = [
-    /^tupla_/,
-    /^concepto_/,
-    /^pasteur_axis_/,
-    /^neon_/,
-    /^applicable_domain/,
-    /^assumptions/,
-    /^breaks_at/,
-    /^extends_to/,
-    /^recorded_at/,
-    /^valid_from/,
-    /^valid_to/,
-    /^lifecycle_state/,
-    /^kd_supersedes/,
-    /^kd_responsible/,
-    /^kd_parent/,
-    /^kd_created/,
-    /^kd_updated/,
-    /^kd_doc_layout/,
-    /^kd_transcluible_en/,
-    /^kd_classification/,
-    /^kd_doc_type/,
-    /^align_schema_type/,
-    /^concept_subtype/,
-    /^cssclasses/,
-    /^@type/,
-    /^"@type"/,
-    /^concepto_facet_/,
-    /^concepto_capabilities/,
-    /^skos_hiddenLabel/,
-];
-
-// ── Utilidades ────────────────────────────────────────────────────────────
-
-function splitFrontmatter(raw) {
-    if (!raw.startsWith('---')) return { frontmatterBlock: '', body: raw };
-    const end = raw.indexOf('\n---', 4);
-    if (end === -1) return { frontmatterBlock: '', body: raw };
-    return {
-        frontmatterBlock: raw.slice(0, end + 4).trimEnd(),
-        body: raw.slice(end + 4),
-    };
-}
-
-function parseYamlKeys(block) {
-    const keys = {};
-    const lines = block.replace(/^---\n/, '').replace(/\n---$/, '').split('\n');
-    let i = 0;
-    while (i < lines.length) {
-        const line = lines[i];
-        const kv = line.match(/^([a-zA-Z_@"'][a-zA-Z0-9_@"'.-]*)\s*:\s*(.*)$/);
-        if (!kv) { i++; continue; }
-        const [, k, vRaw] = kv;
-        const v = vRaw.trim();
-        if (v === '' || v === '|' || v === '>') {
-            const items = [];
-            i++;
-            while (i < lines.length && (lines[i].startsWith('  -') || lines[i].startsWith('    '))) {
-                const item = lines[i].replace(/^\s+-\s*/, '').trim().replace(/^["']|["']$/g, '');
-                if (lines[i].startsWith('  -')) items.push(item);
-                i++;
-            }
-            keys[k] = items.length ? items : v;
-        } else {
-            keys[k] = v.replace(/^["']|["']$/g, '');
-            i++;
-        }
-    }
-    return keys;
-}
-
-function cleanFrontmatter(block) {
-    const lines = block.split('\n');
-    const out = [];
-    let i = 0;
-    let inList = false;
-    let skipCurrent = false;
-
-    for (i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        if (line.trim() === '---') { out.push(line); inList = false; skipCurrent = false; continue; }
-
-        if (inList) {
-            if (/^\s+-/.test(line) || /^\s{2,}/.test(line)) {
-                if (skipCurrent) continue;
-                out.push(line);
-                continue;
-            } else {
-                inList = false;
-                skipCurrent = false;
-            }
-        }
-
-        const kv = line.match(/^([a-zA-Z_@"'][a-zA-Z0-9_@"'.-]*)\s*:\s*/);
-        if (kv) {
-            const k = kv[1];
-            const shouldStrip = STRIP_KEY_PATTERNS.some(re => re.test(k));
-            if (shouldStrip) {
-                skipCurrent = true;
-                inList = true;
-                continue;
-            }
-            skipCurrent = false;
-            inList = true;
-        }
-
-        if (!skipCurrent) out.push(line);
-    }
-    return out.join('\n');
-}
-
-function cleanBody(body) {
-    return body
-        // Wikilinks: extract final path component (strip relative ../../ prefixes)
-        .replace(/!\[\[(?:[^\]|]*\/)([^\]|/]+?)(\|[^\]]+)?\]\]/g, '![[$1$2]]')
-        .replace(/\[\[(?:[^\]|]*\/)([^\]|/]+?)(\|[^\]]+)?\]\]/g, '[[$1$2]]')
-        // Strip Obsidian Dataview/DataviewJS blocks (can't execute in portal)
-        .replace(/```dataviewjs[\s\S]*?```/gi, '')
-        .replace(/```dataview[\s\S]*?```/gi, '')
-        // Strip Obsidian Meta Bind directives (INPUT[...]:field syntax)
-        .replace(/`?INPUT\[[^\]]*\][^\n`]*/g, '')
-        // Strip Obsidian `VIEW[...]` / `BUTTON[...]` inline commands
-        .replace(/`?(VIEW|BUTTON)\[[^\]]*\][^\n`]*/g, '')
-        // Clean up triple blank lines left after block removal
-        .replace(/\n{4,}/g, '\n\n\n');
-}
+// Transformaciones puras viven en ./lib/glosario-transform.mjs (testeable con vitest).
+// Si necesitas modificar reglas de limpieza, cambia el módulo, no este archivo.
 
 function collectConceptFiles(dir, acc = []) {
     if (!fs.existsSync(dir)) return acc;
@@ -303,8 +181,12 @@ if (_isMain) {
     main();
 }
 
+// Re-exports para compat con tests existentes que importan desde sync-glosario.mjs
 export {
     splitFrontmatter, parseYamlKeys, cleanFrontmatter, cleanBody,
+    STRIP_KEY_PATTERNS,
+} from './lib/glosario-transform.mjs';
+export {
     collectConceptFiles, runSync,
-    VAULT_GLOSARIO, PORTAL_DEST, STRIP_KEY_PATTERNS,
+    VAULT_GLOSARIO, PORTAL_DEST,
 };

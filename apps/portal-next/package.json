@@ -16,7 +16,8 @@
     "test:smoke": "playwright test e2e/smoke.spec.ts",
     "test:sync-vault": "node --test scripts/test-sync-vault.mjs",
     "sync:vault": "node scripts/sync-vault.mjs",
-    "sync:vault:dry": "node scripts/sync-vault.mjs --dry-run --skip-papers --skip-fix"
+    "sync:vault:dry": "node scripts/sync-vault.mjs --dry-run --skip-papers --skip-fix",
+    "baseline:capture": "node scripts/capture-baseline-snapshots.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.71",
