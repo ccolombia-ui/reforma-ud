@@ -1,4 +1,4 @@
----
+![1777522585809](image/AUDIT-v8f-serious-games-sota/1777522585809.png)![1777555169957](image/AUDIT-v8f-serious-games-sota/1777555169957.png)---
 kd_id: audit/v8f-serious-games-sota
 kd_version: 2.0.0
 kd_date: 2026-04-30

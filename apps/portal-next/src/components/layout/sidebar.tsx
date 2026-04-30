@@ -7,7 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { canonicPaper, concepto, community, csuAcuerdo } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
-import { filterPublished, buildPublishedConceptIds, isConceptVisible } from '@/lib/show-drafts';
+import { filterPublished } from '@/lib/show-drafts';
 import { cn } from '@/lib/utils';
 
 const TYPE_ICONS: Record<string, React.ReactNode> = {
@@ -530,15 +530,11 @@ export function Sidebar() {
     () => filterPublished([...canonicPaper]).sort((a, b) => a.number - b.number),
     [],
   );
-  const publishedConceptIds = useMemo(
-    () => buildPublishedConceptIds(canonicPaper),
-    [],
-  );
+  // v8d-p1: MVP — mostrar todos los conceptos mientras se resuelve gap de wikilinks.
   const conceptos = useMemo(() =>
     [...concepto]
-      .filter((c) => isConceptVisible(c.id, publishedConceptIds))
       .sort((a, b) => (a.skos_prefLabel ?? a.kd_title).localeCompare(b.skos_prefLabel ?? b.kd_title, 'es')),
-    [publishedConceptIds],
+    [],
   );
   const [filter, setFilter] = useState('');
 
