@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { canonicPaper } from '#site/content';
+import { filterPublished } from '@/lib/show-drafts';
 import { MiActividad } from '@/components/home/mi-actividad';
 import { MissionTrackerWidget } from '@/components/home/mission-tracker-widget';
 import { QuickTabs } from '@/components/home/quick-tabs';
@@ -49,7 +50,7 @@ const RUTAS_LABEL: Record<string, string> = {
 };
 
 export default function HomePage() {
-  const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
+  const papers = filterPublished([...canonicPaper]).sort((a, b) => a.number - b.number);
   const counts = {
     total: papers.length,
     red: papers.filter((p) => p.status === 'red').length,

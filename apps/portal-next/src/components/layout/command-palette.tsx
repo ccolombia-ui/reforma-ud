@@ -6,6 +6,7 @@ import { Command } from 'cmdk';
 import { Search, Hash, BookMarked, FileText, Network, Library, Sparkles, Sun, Moon, Code2, Home, GraduationCap, Clock, Pin, Layers } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { canonicPaper, community, note } from '#site/content';
+import { filterPublished } from '@/lib/show-drafts';
 import { useDocTabs } from '@/lib/doc-tabs';
 
 const HISTORY_KEY = 'reforma-ud:cmdk-history';
@@ -61,7 +62,7 @@ export function CommandPalette() {
   }, [open]);
 
   const items = useMemo(() => {
-    const papers = [...canonicPaper]
+    const papers = filterPublished([...canonicPaper])
       .sort((a, b) => a.number - b.number)
       .map((p) => ({
         type: 'paper' as const,

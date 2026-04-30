@@ -6,6 +6,7 @@ import { BookMarked, Clock, Sparkles, Calendar, AlertCircle, Vote, FileText } fr
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { canonicPaper, community, note } from '#site/content';
+import { filterPublished } from '@/lib/show-drafts';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
 import { useActiveProfile } from '@/lib/ui-state';
 import { cn } from '@/lib/utils';
@@ -51,7 +52,7 @@ export function MiActividad() {
     const readDocs = new Set(
       readingState ? Object.entries(readingState.docs).filter(([, d]) => d.progress > 0).map(([id]) => id) : [],
     );
-    return canonicPaper
+    return filterPublished([...canonicPaper])
       .filter((p) => !readDocs.has(p.id))
       .sort((a, b) => a.number - b.number)
       .slice(0, 3)

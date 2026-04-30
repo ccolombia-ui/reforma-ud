@@ -29,6 +29,9 @@ import type { Metadata } from 'next';
 // dynamic='force-dynamic' renderea en server runtime con tolerancia mayor.
 // Trade-off: TTFB ~50ms más en cold start, cubierto por Vercel CDN cache.
 export const dynamic = 'force-dynamic';
+// v8d-p1-fix: Bloquear acceso a rutas dinámicas no generadas en static params
+// (M08-M12 con kd_status=DRAFT no generan static params → deben dar 404)
+export const dynamicParams = false;
 
 const PHASE_LABEL: Record<string, string> = {
   business: 'Business Understanding',

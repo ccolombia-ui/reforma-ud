@@ -23,6 +23,7 @@ import { canonicPaper } from '#site/content';
 import { Network, ExternalLink, ArrowRight, SplitSquareHorizontal } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback } from 'react';
+import { filterPublished } from '@/lib/show-drafts';
 import { usePanesState } from '@/lib/panes-state';
 import { useRightPanel, useFocusedPane } from '@/lib/ui-state';
 import { NoticiasInforme } from '@/components/biblioteca/noticias-informe';
@@ -72,7 +73,7 @@ const KANBAN_COLUMNS: readonly KanbanSlot[] = [
 ];
 
 export function InfografiaCanonico() {
-  const papers = [...canonicPaper].sort((a, b) => a.number - b.number);
+  const papers = filterPublished([...canonicPaper]).sort((a, b) => a.number - b.number);
   const panesState = usePanesState();
   const { setTab } = useRightPanel();
   const [, setFocused] = useFocusedPane();
