@@ -430,7 +430,8 @@ function PaperItem({ paper, pathname }: Readonly<{ paper: Paper; pathname: strin
 }
 
 function TreeItem({ node, currentPath, depth = 0 }: { node: TreeNode; currentPath: string; depth?: number }) {
-  const isLeaf = node.children.length === 0;
+  const hasMisiones = node.misionesCoP && node.misionesCoP.length > 0;
+  const isLeaf = node.children.length === 0 && !hasMisiones;
   const icon = node.type ? TYPE_ICONS[node.type] : <Folder className="h-3.5 w-3.5 opacity-60" />;
   const isActive = node.href === currentPath;
   const hasActiveChild = currentPath.startsWith(`/${node.slug}/`) || currentPath === `/${node.slug}`;

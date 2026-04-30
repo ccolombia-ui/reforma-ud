@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "docs/audit/AUDIT-v8f-serious-games-sota.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "AUDIT-v8f-serious-games-sota"
             }
           }
         ]
@@ -182,6 +182,13 @@
   },
   "active": "b868dd085975160c",
   "lastOpenFiles": [
+    "docs/audit/image/AUDIT--v8d.1--mejorar-glosario-considerandos/1777518426451.png",
+    "docs/audit/image/AUDIT--v8d.1--mejorar-glosario-considerandos/1777518419533.png",
+    "docs/audit/image/AUDIT--v8d.1--mejorar-glosario-considerandos",
+    "docs/audit/image",
+    "README.md",
+    "docs/audit/AUDIT--v8d.1--mejorar-glosario-considerandos.md",
+    "docs/audit/AUDIT-v8f-serious-games-sota.md",
     "docs/audit/AUDIT-v8d-draft-sidebar-gamification.md",
     "apps/portal-next/src/lib/show-drafts.production.test.ts",
     "apps/portal-next/src/components/layout/sidebar-draft-integration.test.tsx",
@@ -194,8 +201,6 @@
     "docs/audit/AUDIT-v8c-walkthrough-handoff.md",
     "docs/audit/AUDIT-v8c-walkthrough-handoff.md.tmp.20992.1777488317904",
     "apps/portal-next/src/app/mision/[paperId]/page.tsx.tmp.20992.1777488016893",
-    "apps/portal-next/src/app/mision/[paperId]/page.tsx.tmp.20992.1777488011267",
-    "apps/portal-next/src/lib/cop-access.test.ts",
     "docs/audit/AUDIT-v8b-sprint2-misiones-cop-estatutos.md",
     "docs/audit/AUDIT-v8b-document-lifecycle.md",
     "apps/portal-next/content/glosario/con-bpa-e02-extension-territorial-ods.md",
@@ -213,9 +218,6 @@
     "apps/portal-next/content/glosario/con-bpa-i04-open-science.md",
     "apps/portal-next/content/glosario/con-bpa-i03-cris-hub.md",
     "apps/portal-next/content/glosario/con-bpa-i02-pi-inventor-friendly.md",
-    "apps/portal-next/content/glosario/con-bpa-i01-urop-investigacion-pregrado.md",
-    "apps/portal-next/content/glosario/con-bpa-f05-ciclos-propedeuticos.md",
-    "apps/portal-next/content/glosario/con-bpa-f04-coop-practicas.md",
-    "apps/portal-next/content/glosario/con-bpa-f03-flexibilidad-curricular.md"
+    "apps/portal-next/content/glosario/con-bpa-i01-urop-investigacion-pregrado.md"
   ]
 }

@@ -23,71 +23,27 @@ roles:
     emoji: "🏛️"
 misionesCoP:
   - id: CSU-MC-01
-    slug: participa-en-la-reforma-ud-que-queremos
-    titulo: "Participa en la Reforma UD que Queremos"
+    slug: mandato-normativo
+    titulo: "Mandato Normativo"
     tipo: comprension
     descripcion: "Comprende por que la reforma es un mandato constitucional y no una opcion discrecional."
-    papers: [m01, m03]
+    papers: [m01, m02, m03]
     nivelRequerido: 0
     nivelOtorga: 1
     prerequisitosCanonicas: []
     prerequisitosMision: []
     orden: 1
   - id: CSU-MC-02
-    slug: nueva-estructura-organizativa
-    titulo: "Nueva Estructura Organizativa"
+    slug: salto-cuantico
+    titulo: "Salto Cuantico"
     tipo: comprension
-    descripcion: "Comprende el modelo Escuela Emprendedora Transformativa como reemplazo de la estructura Facultad/Programa."
-    papers: [m02, m05]
+    descripcion: "Analiza el benchmarking de 21 IES y las 21 BPAs activadoras para el salto institucional."
+    papers: [m05, m07]
     nivelRequerido: 1
     nivelOtorga: 2
-    prerequisitosCanonicas: [m01]
-    prerequisitosMision: []
+    prerequisitosCanonicas: [m01, m02, m03]
+    prerequisitosMision: [CSU-MC-01]
     orden: 2
-  - id: CSU-MC-03-A
-    slug: estatuto-docente-participacion
-    titulo: "Estatuto Docente — construccion participativa"
-    tipo: deliberacion
-    descripcion: "Revisa y comenta el borrador de Estatuto Docente propuesto por VR Formacion."
-    papers: [m04, m06]
-    nivelRequerido: 2
-    prerequisitosCanonicas: [m01, m04, m06]
-    prerequisitosMision: []
-    estatuto: estatuto-docente
-    orden: 3
-  - id: CSU-MC-03-B
-    slug: estatuto-estudiantil-participacion
-    titulo: "Estatuto Estudiantil — construccion participativa"
-    tipo: deliberacion
-    descripcion: "Revisa y comenta el borrador de Estatuto Estudiantil."
-    papers: [m04, m05]
-    nivelRequerido: 2
-    prerequisitosCanonicas: [m01, m04]
-    prerequisitosMision: []
-    estatuto: estatuto-estudiantil
-    orden: 4
-  - id: CSU-MC-03-C
-    slug: estatuto-curricular-participacion
-    titulo: "Estatuto Curricular — construccion participativa"
-    tipo: deliberacion
-    descripcion: "Revisa y comenta el borrador de Estatuto Curricular."
-    papers: [m03, m06]
-    nivelRequerido: 2
-    prerequisitosCanonicas: [m01, m03, m06]
-    prerequisitosMision: []
-    estatuto: estatuto-curricular
-    orden: 5
-  - id: CSU-MC-04
-    slug: estatuto-academico-consolidado
-    titulo: "Estatuto Academico — consolidacion CSU"
-    tipo: produccion
-    descripcion: "Con los tres sub-estatutos deliberados, consolida y aprueba el Estatuto Academico."
-    papers: [m01, m02, m03, m04, m05, m06]
-    nivelRequerido: 3
-    nivelOtorga: 4
-    prerequisitosCanonicas: [m01, m04, m06]
-    prerequisitosMision: [CSU-MC-03-A, CSU-MC-03-B, CSU-MC-03-C]
-    orden: 6
 misionesColectivas:
   - id: MC-GOB-01
     titulo: "Analisis colectivo ACU 004-25"
@@ -125,16 +81,3 @@ Maximo organo de direccion y gobierno de la Universidad Distrital Francisco Jose
 - [[m01]] — Mandato normativo: cadena Ley 30/1992 → CONPES 4069 → ACU-004-25
 - [[m02]] — Ciclo Virtuoso: modelo de transformacion institucional
 - [[m03]] — Estandares internacionales: benchmarks OECD para gobernanza
-
-## Arbol de estatutos
-
-| Estatuto | Propone | Base legal |
-|---|---|---|
-| Estatuto General | Rectoria | Ley 30 Art. 28-29 |
-| Estatuto Docente | VR Formacion | Decreto 1279/2002 |
-| Estatuto Estudiantil | VR Formacion | Ley 30 Art. 98 |
-| Estatuto Curricular | Consejo Academico | Ley 30 Art. 19 |
-| Estatuto Bienestar | VR Formacion | Ley 30 Art. 117 |
-| Estatuto Investigacion | VR Investigacion | Ley 30 Art. 19 |
-| Estatuto Extension | VR Extension | Ley 30 Art. 120 |
-| Estatuto Presupuestal | VR Administrativa | Ley 30 + NICSP |
