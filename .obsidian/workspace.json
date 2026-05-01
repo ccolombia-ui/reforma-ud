@@ -185,6 +185,7 @@
   },
   "active": "a2e541d0a269fc56",
   "lastOpenFiles": [
+    "prod-check.html",
     "apps/portal-next/src/components/layout/vault-tree-section.tsx",
     "apps/portal-next/content/vault-index/_Index_of_biblioteca.md",
     "apps/portal-next/content/vault-index",
@@ -196,7 +197,6 @@
     "apps/portal-next/src/components/mission",
     "apps/portal-next/src/lib/layout/config.ts",
     "apps/portal-next/src/lib/layout/sidebar-config.test.ts",
-    "apps/portal-next/src/lib/layout/types.ts",
     "docs/audit/AUDIT-v8g-gamification-config-protocol.md",
     "20-estrategias/analisis-iniciativa-bpa-v4/outputs/anexo-A-v4--asignacion-responsabilidades-bpa.md",
     "20-estrategias/analisis-iniciativa-bpa-v4/outputs/res-EA-001a-v4--ejecutivo-csu-adopcion-bpa.md",

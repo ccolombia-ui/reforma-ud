@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import { ChevronDown, Folder, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { zoottelkeeperIndex } from '#site/content';
 import type { VaultTreeNode } from '@/lib/layout/zoottelkeeper-parser';
 import { parseZoottelkeeperIndex } from '@/lib/layout/zoottelkeeper-parser';
 import type { SidebarSection } from '@/lib/layout/types';
@@ -102,12 +103,17 @@ export function VaultTreeSection({
   const { vaultConfig } = section;
 
   // v8g-l5 · Los índices Zoottelkeeper se cargan desde Velite (#site/content).
-  // Fallback: usar el índice de biblioteca local como demo.
+  // Si no hay índice real, se usa demoContent como fallback.
   const treeNodes = useMemo<VaultTreeNode[]>(() => {
     if (!vaultConfig) return [];
-    // TODO v8g-l5-full: importar zoottelkeeperIndex desde #site/content
-    // tras build de Velite. Por ahora usamos contenido inline para demo.
-    const demoContent = `%% Zoottelkeeper: Beginning %%
+
+    // Buscar el índice correspondiente en el rootPath configurado
+    const root = vaultConfig.rootPath ?? 'vault-index';
+    const indexEntry = zoottelkeeperIndex.find((entry) =>
+      entry.slug.startsWith(root),
+    );
+
+    const raw = indexEntry?.raw ?? `%% Zoottelkeeper: Beginning %%
 [[canonico/m01|M01 — Mandato Normativo]]
 [[canonico/m02|M02 — Ciclo Virtuoso]]
 [[canonico/m03|M03 — Estándares Internacionales]]
@@ -118,7 +124,7 @@ export function VaultTreeSection({
 [[glosario/con-cca|con-cca]]
 %% Zoottelkeeper: End %%`;
 
-    return parseZoottelkeeperIndex(demoContent, {
+    return parseZoottelkeeperIndex(raw, {
       rootPath: vaultConfig.rootPath,
       excludePatterns: vaultConfig.excludePatterns ?? [],
       folderMappings: vaultConfig.folderMappings ?? {},
