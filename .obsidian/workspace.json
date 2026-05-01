@@ -1,24 +1,24 @@
 {
   "main": {
-    "id": "c29cf26263d60a78",
+    "id": "c5f8ca9ceff136a1",
     "type": "split",
     "children": [
       {
-        "id": "9c97bb8715a13a54",
+        "id": "07b9f841bff16e11",
         "type": "tabs",
         "children": [
           {
-            "id": "b868dd085975160c",
+            "id": "62815583de097ab7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/audit/AUDIT-v8f-serious-games-sota.md",
+                "file": "docs/audit/AUDIT-v8d-draft-sidebar-gamification.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "AUDIT-v8f-serious-games-sota"
+              "title": "AUDIT-v8d-draft-sidebar-gamification"
             }
           }
         ]
@@ -27,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "1a9ad2c124c3dba4",
+    "id": "bcce535e3106d2e5",
     "type": "split",
     "children": [
       {
-        "id": "659e659ed681439b",
+        "id": "f1d2d43e5308c778",
         "type": "tabs",
         "children": [
           {
-            "id": "5a2907b24a454903",
+            "id": "a2e541d0a269fc56",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +48,7 @@
             }
           },
           {
-            "id": "af3d98d1f89b46a3",
+            "id": "8be0c494d8b2e6d2",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +65,7 @@
             }
           },
           {
-            "id": "13f7d56c314a0589",
+            "id": "ced0d9963ec328ec",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -78,22 +78,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 470.5
   },
   "right": {
-    "id": "bbf201468896be1d",
+    "id": "896c7a33070f8a34",
     "type": "split",
     "children": [
       {
-        "id": "3639c9c19ceff796",
+        "id": "d4a6b821641bf0b8",
         "type": "tabs",
         "children": [
           {
-            "id": "0807a9247b775a21",
+            "id": "54848b188a32f259",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "docs/audit/AUDIT-v8d-draft-sidebar-gamification.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,24 +104,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Enlaces entrantes"
+              "title": "Enlaces entrantes de AUDIT-v8d-draft-sidebar-gamification"
             }
           },
           {
-            "id": "3542206519368ac5",
+            "id": "0ca4d292139ade32",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "docs/audit/AUDIT-v8d-draft-sidebar-gamification.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Enlaces salientes"
+              "title": "Enlaces salientes de AUDIT-v8d-draft-sidebar-gamification"
             }
           },
           {
-            "id": "9ecc07dccfd8dde3",
+            "id": "f623e3eca76d7366",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -135,7 +137,7 @@
             }
           },
           {
-            "id": "a0fe974d0de8ad43",
+            "id": "6c22642d1832701a",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -149,17 +151,18 @@
             }
           },
           {
-            "id": "a6439580ad62d80f",
+            "id": "1b719c9484561e8d",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
+                "file": "docs/audit/AUDIT-v8d-draft-sidebar-gamification.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema"
+              "title": "Esquema de AUDIT-v8d-draft-sidebar-gamification"
             }
           }
         ]
@@ -180,44 +183,24 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "b868dd085975160c",
+  "active": "a2e541d0a269fc56",
   "lastOpenFiles": [
-    "docs/audit/image/AUDIT--v8d.1--mejorar-glosario-considerandos/1777518426451.png",
-    "docs/audit/image/AUDIT--v8d.1--mejorar-glosario-considerandos/1777518419533.png",
-    "docs/audit/image/AUDIT--v8d.1--mejorar-glosario-considerandos",
-    "docs/audit/image",
-    "README.md",
-    "docs/audit/AUDIT--v8d.1--mejorar-glosario-considerandos.md",
-    "docs/audit/AUDIT-v8f-serious-games-sota.md",
-    "docs/audit/AUDIT-v8d-draft-sidebar-gamification.md",
-    "apps/portal-next/src/lib/show-drafts.production.test.ts",
-    "apps/portal-next/src/components/layout/sidebar-draft-integration.test.tsx",
-    "apps/portal-next/src/components/layout/tree-item.test.tsx",
-    "apps/portal-next/src/components/layout/sidebar.test.tsx",
-    "docs/audit/AUDIT-v8d-v8e-portal-gamification-tdd.md",
-    "docs/audit/ROADMAP-v8-dataviewjs-tdd.md",
-    "apps/portal-next/src/components/ui/progress.tsx",
-    "apps/portal-next/src/components/comunidad/cop-access-panel.tsx",
-    "docs/audit/AUDIT-v8c-walkthrough-handoff.md",
-    "docs/audit/AUDIT-v8c-walkthrough-handoff.md.tmp.20992.1777488317904",
-    "apps/portal-next/src/app/mision/[paperId]/page.tsx.tmp.20992.1777488016893",
-    "docs/audit/AUDIT-v8b-sprint2-misiones-cop-estatutos.md",
-    "docs/audit/AUDIT-v8b-document-lifecycle.md",
-    "apps/portal-next/content/glosario/con-bpa-e02-extension-territorial-ods.md",
-    "apps/portal-next/content/glosario/con-bpa-int07-extension-productiva.md",
-    "apps/portal-next/content/glosario/con-bpa-int06-retencion-engagement.md",
-    "apps/portal-next/content/glosario/con-bpa-int05-racionalizacion-oferta.md",
-    "apps/portal-next/content/glosario/con-bpa-int04-caba-design-factory.md",
-    "apps/portal-next/content/glosario/con-bpa-int03-clr-learner-record.md",
-    "apps/portal-next/content/glosario/con-bpa-int02-creditos-investigacion-extension.md",
-    "apps/portal-next/content/glosario/con-bpa-int01-mision-operacionalizada.md",
-    "apps/portal-next/content/glosario/con-bpa-e04-articulacion-media.md",
-    "apps/portal-next/content/glosario/con-bpa-e03-educacion-continua.md",
-    "apps/portal-next/content/glosario/con-bpa-e01-tto-transferencia.md",
-    "apps/portal-next/content/glosario/con-bpa-i05-ecosistema-spinoffs.md",
-    "apps/portal-next/content/glosario/con-bpa-i04-open-science.md",
-    "apps/portal-next/content/glosario/con-bpa-i03-cris-hub.md",
-    "apps/portal-next/content/glosario/con-bpa-i02-pi-inventor-friendly.md",
-    "apps/portal-next/content/glosario/con-bpa-i01-urop-investigacion-pregrado.md"
+    "apps/portal-next/src/components/layout/vault-tree-section.tsx",
+    "apps/portal-next/content/vault-index/_Index_of_biblioteca.md",
+    "apps/portal-next/content/vault-index",
+    "apps/portal-next/src/lib/layout/zoottelkeeper-parser.test.ts",
+    "apps/portal-next/src/lib/layout/zoottelkeeper-parser.ts",
+    "apps/portal-next/src/components/mission/mission-panel.test.tsx",
+    "apps/portal-next/src/lib/layout/right-panel-config.test.ts",
+    "apps/portal-next/src/components/mission/mission-panel.tsx",
+    "apps/portal-next/src/components/mission",
+    "apps/portal-next/src/lib/layout/config.ts",
+    "apps/portal-next/src/lib/layout/sidebar-config.test.ts",
+    "apps/portal-next/src/lib/layout/types.ts",
+    "docs/audit/AUDIT-v8g-gamification-config-protocol.md",
+    "20-estrategias/analisis-iniciativa-bpa-v4/outputs/anexo-A-v4--asignacion-responsabilidades-bpa.md",
+    "20-estrategias/analisis-iniciativa-bpa-v4/outputs/res-EA-001a-v4--ejecutivo-csu-adopcion-bpa.md",
+    "20-estrategias/analisis-iniciativa-bpa-v4/Anexo-v4--medicion-adopcion-reforma-bpa.md",
+    "docs/audit/AUDIT-v8d-v8e-portal-gamification-tdd.md"
   ]
 }

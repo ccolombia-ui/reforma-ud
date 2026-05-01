@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo D v3 · Sistema de Indicadores y Seguimiento BSC-S</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:acuerdo:2026:EA-001a:anexo-D-v3</div>
+    <h1>Anexo D v3 · Sistema de Indicadores y Seguimiento (BSC-S)</h1>
+    <div class="hero-sub">Resolver D6 (DOFA 001) y D_b3 (DOFA 001b): ausencia de métricas explícitas. Síntesis de EA001 base + EA001a-v2 (Art. 60quater) + EA001b (Arts. 33, 40). Dashboard público de implementación EA001a-v3.</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">v3.0.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-04-30<br>
+      Supersede: anexo-D v2<br>
+      Anexo orden: 4<br>
+      Acuerdo: EA-001a
+    </div>
+  </div>
+</div>
+
+<h2>§0 · Introducción · Linaje de esta versión v3</h2>
+
+<div class="qb">
+<strong>Este Anexo D v3 es producto de la síntesis de tres versiones:</strong><br><br>
+<table class="tbl-small">
+<thead><tr><th>Fuente</th><th>Qué se aprovecha</th><th>Qué se mejora</th></tr></thead>
+<tbody>
+<tr><td><b>EA001 base</b></td><td>DGE&P como cerebro estratégico (F5 DOFA 001)</td><td>Se operacionaliza con BSC-S concreto</td></tr>
+<tr><td><b>EA001a-v2</b></td><td>5 perspectivas BSC-S; tablero público; disparadores automáticos</td><td>Se amplía a 8 dependencias; se vincula con Anexo A (RACI)</td></tr>
+<tr><td><b>EA001b</b></td><td>Art. 33 (DGE&P funciones); Art. 40 (OEG indicadores)</td><td>Se traduce en KPIs medibles por función; seguimiento de transferencia</td></tr>
+</tbody>
+</table><br>
+<strong>Novedad en v3:</strong> Se introduce el <b>"Dashboard de Implementación EA001a-v3"</b> — tablero público con 5 perspectivas BSC-S + indicadores de transferencia institucional + producción normativa (estatutos derivados). DGE&P opera el tablero; OTT alimenta datos de transformación (meses 1-18).
+</div>
+
+<h2>§1 · Marco BSC-S v3 (5 perspectivas + 1 transversal)</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Perspectiva BSC-S</th><th>Pregunta que responde</th><th>Aplicación a EA001a-v3</th></tr></thead>
+<tbody>
+<tr><td><b>1. Financiera</b></td><td>¿La reforma es sostenible económicamente?</td><td>% ejecución presupuesto de transición; costo por dependencia reestructurada</td></tr>
+<tr><td><b>2. Cliente / Comunidad</b></td><td>¿La comunidad percibe mejora?</td><td>Satisfacción estudiantes/docentes/administrativos; percepción de agilidad</td></tr>
+<tr><td><b>3. Procesos Internos</b></td><td>¿Los procesos cross-VR funcionan?</td><td>% procesos RACI con Driver asignado; tiempos de resolución Comité Inter-VR</td></tr>
+<tr><td><b>4. Aprendizaje y Crecimiento</b></td><td>¿Las personas están preparadas?</td><td>% directivos formados en gestión del cambio; % personal capacitado en nuevo modelo</td></tr>
+<tr><td><b>5. Sostenibilidad</b></td><td>¿La reforma perdura en el tiempo?</td><td>% estatutos derivados aprobados; capacidad innovación DGE&P operativa</td></tr>
+<tr><td><b>+ Transversal · Transferencia</b></td><td>¿La transición avanza sin parálisis?</td><td>% elementos transferencia completados; % activos reasignados</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§2 · KPIs por unidad organizativa</h2>
+
+<h3>2.1 · Vicerrectoría de Formación (VIF)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>KPI</th><th>Perspectiva</th><th>Meta T1 (6m)</th><th>Meta T2 (12m)</th><th>Fuente datos</th></tr></thead>
+<tbody>
+<tr><td>D-VIF-01</td><td>% programas académicos con protocolo VIF-Escuela aprobado</td><td>Procesos</td><td>50%</td><td>100%</td><td>Anexo A v3</td></tr>
+<tr><td>D-VIF-02</td><td>Tiempo promedio respuesta a solicitudes de Escuelas (días)</td><td>Cliente</td><td>≤5</td><td>≤3</td><td>Sistema institucional</td></tr>
+<tr><td>D-VIF-03</td><td>% docentes participando en formación nuevo modelo</td><td>Aprendizaje</td><td>30%</td><td>70%</td><td>OTT + DGE&P</td></tr>
+<tr><td>D-VIF-04</td><td>Satisfacción estudiantes con servicios académicos (1-5)</td><td>Cliente</td><td>3.0</td><td>3.8</td><td>Encuesta institucional</td></tr>
+<tr><td>D-VIF-05</td><td>% presupuesto VIF ejecutado vs. asignado</td><td>Financiera</td><td>80%</td><td>95%</td><td>GA&F</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.2 · Vicerrectoría de Investigación-Creación-Innovación (VIC&I)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>KPI</th><th>Perspectiva</th><th>Meta T1 (6m)</th><th>Meta T2 (12m)</th><th>Fuente datos</th></tr></thead>
+<tbody>
+<tr><td>D-VIC-01</td><td>% grupos de investigación migrados a nueva estructura</td><td>Transferencia</td><td>70%</td><td>100%</td><td>OTT + VIC&I</td></tr>
+<tr><td>D-VIC-02</td><td>Nuevos proyectos de investigación aprobados (vs. T0)</td><td>Financiera</td><td>≥T0</td><td>T0+10%</td><td>VIC&I</td></tr>
+<tr><td>D-VIC-03</td><td>Satisfacción investigadores con apoyo administrativo</td><td>Cliente</td><td>3.0</td><td>3.8</td><td>Encuesta</td></tr>
+<tr><td>D-VIC-04</td><td>% fondo especial investigación ejecutado</td><td>Financiera</td><td>75%</td><td>90%</td><td>GA&F</td></tr>
+<tr><td>D-VIC-05</td><td>Spin-offs / emprendimientos registrados</td><td>Sostenibilidad</td><td>2</td><td>5</td><td>VIC&I + VICE&PS</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo D v3 · Indicadores · Página 1 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h3>2.3 · Vicerrectoría de Contextos-Extensión-Proyección Social (VICE&PS)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>KPI</th><th>Perspectiva</th><th>Meta T1 (6m)</th><th>Meta T2 (12m)</th><th>Fuente datos</th></tr></thead>
+<tbody>
+<tr><td>D-VICE-01</td><td>% convenios territoriales activados</td><td>Procesos</td><td>3</td><td>10</td><td>VICE&PS</td></tr>
+<tr><td>D-VICE-02</td><td>Satisfacción comunidad externa con extensión</td><td>Cliente</td><td>3.0</td><td>3.8</td><td>Encuesta</td></tr>
+<tr><td>D-VICE-03</td><td>IDEXUD→Centro: % equipos de trabajo conformados</td><td>Transferencia</td><td>100%</td><td>100%</td><td>OTT</td></tr>
+<tr><td>D-VICE-04</td><td>% fondo especial extensión ejecutado</td><td>Financiera</td><td>75%</td><td>90%</td><td>GA&F</td></tr>
+<tr><td>D-VICE-05</td><td>Cursos educación continua / SAR ofertados</td><td>Sostenibilidad</td><td>20</td><td>50</td><td>VICE&PS</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.4 · Gerencia Administrativa y Financiera (GA&F)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>KPI</th><th>Perspectiva</th><th>Meta T1 (6m)</th><th>Meta T2 (12m)</th><th>Fuente datos</th></tr></thead>
+<tbody>
+<tr><td>D-GAF-01</td><td>% reasignación presupuestal funcional completada</td><td>Transferencia</td><td>80%</td><td>100%</td><td>GA&F + OTT</td></tr>
+<tr><td>D-GAF-02</td><td>Tiempo promedio trámite contratación (días)</td><td>Procesos</td><td>≤15</td><td>≤10</td><td>Sistema institucional</td></tr>
+<tr><td>D-GAF-03</td><td>Satisfacción dependencias con servicios administrativos</td><td>Cliente</td><td>3.0</td><td>3.8</td><td>Encuesta</td></tr>
+<tr><td>D-GAF-04</td><td>% activos inventariados y reasignados</td><td>Transferencia</td><td>80%</td><td>100%</td><td>GA&F</td></tr>
+<tr><td>D-GAF-05</td><td>Informe trimestral financiero entregado al CSU</td><td>Financiera</td><td>2/2</td><td>4/4</td><td>GA&F</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.5 · Dirección de Bienestar Universitario y Buen Vivir (DBU&BV)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>KPI</th><th>Perspectiva</th><th>Meta T1 (6m)</th><th>Meta T2 (12m)</th><th>Fuente datos</th></tr></thead>
+<tbody>
+<tr><td>D-DBU-01</td><td>% programas bienestar operando bajo nuevo modelo</td><td>Transferencia</td><td>60%</td><td>100%</td><td>DBU&BV + OTT</td></tr>
+<tr><td>D-DBU-02</td><td>Tasa de permanencia estudiantil (vs. T0)</td><td>Sostenibilidad</td><td>≥T0</td><td>T0+2%</td><td>DGE&P</td></tr>
+<tr><td>D-DBU-03</td><td>Satisfacción estudiantes con servicios bienestar</td><td>Cliente</td><td>3.2</td><td>4.0</td><td>Encuesta</td></tr>
+<tr><td>D-DBU-04</td><td>Cobertura salud integral (% estudiantes)</td><td>Cliente</td><td>40%</td><td>60%</td><td>DBU&BV</td></tr>
+<tr><td>D-DBU-05</td><td>Eventos culturales/deportes por semestre</td><td>Sostenibilidad</td><td>10</td><td>20</td><td>DBU&BV</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.6 · Dirección de Gestión Estratégica y Planeación (DGE&P)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>KPI</th><th>Perspectiva</th><th>Meta T1 (6m)</th><th>Meta T2 (12m)</th><th>Fuente datos</th></tr></thead>
+<tbody>
+<tr><td>D-DGE-01</td><td>Tablero BSC-S operativo con datos actualizados</td><td>Sostenibilidad</td><td>✅</td><td>✅</td><td>DGE&P</td></tr>
+<tr><td>D-DGE-02</td><td>% indicadores institucionales reportados al CSU</td><td>Procesos</td><td>80%</td><td>100%</td><td>DGE&P</td></tr>
+<tr><td>D-DGE-03</td><td>Satisfacción directivos con información estratégica</td><td>Cliente</td><td>3.0</td><td>3.8</td><td>Encuesta</td></tr>
+<tr><td>D-DGE-04</td><td>Informes de impacto institucional producidos</td><td>Sostenibilidad</td><td>1</td><td>3</td><td>DGE&P</td></tr>
+<tr><td>D-DGE-05</td><td>Benchmarks internacionales actualizados</td><td>Aprendizaje</td><td>2</td><td>5</td><td>DGE&P</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.7 · Oficina de Egresados (OEG)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>KPI</th><th>Perspectiva</th><th>Meta T1 (6m)</th><th>Meta T2 (12m)</th><th>Fuente datos</th></tr></thead>
+<tbody>
+<tr><td>D-OEG-01</td><td>% egresados en base de datos actualizada</td><td>Transferencia</td><td>30%</td><td>60%</td><td>OEG</td></tr>
+<tr><td>D-OEG-02</td><td>Tasa empleabilidad egresados (seguimiento)</td><td>Sostenibilidad</td><td>40%</td><td>50%</td><td>OEG + DGE&P</td></tr>
+<tr><td>D-OEG-03</td><td>Satisfacción egresados con vinculación institucional</td><td>Cliente</td><td>3.0</td><td>3.8</td><td>Encuesta</td></tr>
+<tr><td>D-OEG-04</td><td>Redes de egresados activas (por programa)</td><td>Sostenibilidad</td><td>5</td><td>15</td><td>OEG</td></tr>
+<tr><td>D-OEG-05</td><td>Retroalimentación curricular incorporada (% programas)</td><td>Procesos</td><td>20%</td><td>50%</td><td>OEG + VIF</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo D v3 · Indicadores · Página 2 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h3>2.8 · Oficina Temporal de Transformación (OTT) — meses 1-18</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>KPI</th><th>Perspectiva</th><th>Meta T1 (6m)</th><th>Meta T2 (12m)</th><th>Fuente datos</th></tr></thead>
+<tbody>
+<tr><td>D-OTT-01</td><td>% hitos fase 1 completados</td><td>Transferencia</td><td>100%</td><td>—</td><td>OTT</td></tr>
+<tr><td>D-OTT-02</td><td>% personal directivo formado en gestión del cambio</td><td>Aprendizaje</td><td>70%</td><td>100%</td><td>OTT</td></tr>
+<tr><td>D-OTT-03</td><td>Satisfacción dependencias con soporte OTT</td><td>Cliente</td><td>3.2</td><td>3.8</td><td>Encuesta</td></tr>
+<tr><td>D-OTT-04</td><td>Informes mensuales entregados a Rectoría</td><td>Procesos</td><td>6/6</td><td>12/12</td><td>OTT</td></tr>
+<tr><td>D-OTT-05</td><td>Informes trimestrales entregados al CSU</td><td>Procesos</td><td>2/2</td><td>4/4</td><td>OTT</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§3 · Disparadores automáticos de revisión</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Condición</th><th>Disparador</th><th>Acción automática</th><th>Responsable</th></tr></thead>
+<tbody>
+<tr><td>< 50% hitos fase 1 a mes 3</td><td>🟡 Alerta amarilla</td><td>Reunión extraordinaria Comité Inter-VR</td><td>OTT</td></tr>
+<tr><td>< 30% hitos fase 1 a mes 3</td><td>🔴 Alerta roja</td><td>Informe inmediato al CSU + plan corrección</td><td>OTT + Rectoría</td></tr>
+<tr><td>< 80% reasignación funcional a mes 6</td><td>🟡 Alerta amarilla</td><td>Revisión plan financiero + recursos adicionales</td><td>GA&F + OTT</td></tr>
+<tr><td>< 50% reasignación funcional a mes 6</td><td>🔴 Alerta roja</td><td>Informe CSU + posible ajuste plazos</td><td>Rectoría</td></tr>
+<tr><td>EST-4 (APA-001) no aprobado a mes 18</td><td>🔴 Alerta roja</td><td>Prórroga OTT + plan emergencia normativa</td><td>Rectoría + CSU</td></tr>
+<tr><td>Satisfacción < 2.5 en cualquier encuesta</td><td>🔴 Alerta roja</td><td>Diagnóstico inmediato + plan comunicación</td><td>OTT + DGE&P</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§4 · Tablero público de implementación</h2>
+
+<h3>4.1 · Estructura del tablero</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Panel</th><th>Contenido</th><th>Actualización</th><th>Público</th></tr></thead>
+<tbody>
+<tr><td><b>Panel 1 · Avance general</b></td><td>% implementación total; estado 7 estatutos; estado transferencia</td><td>Semanal</td><td>Comunidad universitaria</td></tr>
+<tr><td><b>Panel 2 · Financiero</b></td><td>% ejecución presupuesto de transición; costo por fase</td><td>Mensual</td><td>CSU, Asamblea</td></tr>
+<tr><td><b>Panel 3 · Operativo</b></td><td>Hitos cumplidos/pendientes por dependencia; alertas activas</td><td>Semanal</td><td>Directivos</td></tr>
+<tr><td><b>Panel 4 · Comunidad</b></td><td>Resultados encuestas satisfacción; quejas/sugerencias</td><td>Trimestral</td><td>Comunidad universitaria</td></tr>
+<tr><td><b>Panel 5 · Benchmark</b></td><td>Comparación con universidades referentes; lecciones aprendidas</td><td>Semestral</td><td>CSU, MEN</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>4.2 · Acceso</h3>
+<div class="qb">
+<b>URL institucional:</b> <code>https://udfjc.edu.co/segumiento-ea001a-v3</code><br>
+<b>Responsable técnico:</b> DGE&P + GA&F (sistemas)<br>
+<b>Responsable contenido:</b> OTT (meses 1-18) → DGE&P (post-OTT)
+</div>
+
+<div class="verdict">
+  <div style="font-family: 'Georgia', serif; font-size: 10pt; font-weight: 700; color: #fff; line-height: 1.35;">Anexo D v3 · Síntesis de tres versiones · 5 perspectivas BSC-S + 1 transversal · 40 KPIs · 5 paneles</div>
+  <div style="font-size: 6.5pt; color: rgba(255,255,255,0.72); margin-top: 0.1rem;">Novedad v3: Dashboard público con indicadores de transferencia institucional + producción normativa; OTT alimenta datos meses 1-18.</div>
+</div>
+
+<div class="ft">
+  <div>Anexo D v3 · Indicadores · Página 3 / 3</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+</body>
+</html>

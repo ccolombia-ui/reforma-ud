@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo C v3 · Cronograma de Estatutos Derivados y Fases de Implementación</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:acuerdo:2026:EA-001a:anexo-C-v3</div>
+    <h1>Anexo C v3 · Cronograma de Estatutos Derivados y Fases de Implementación</h1>
+    <div class="hero-sub">Resolver A10 (DOFA 001) y A_b2 (DOFA 001b): riesgo de demora de estatutos derivados. Síntesis de EA001 base + EA001a-v2 + EA001b (Arts. 42, 63). Dos ejes: producción normativa + transferencia institucional.</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">v3.0.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-04-30<br>
+      Supersede: anexo-C v2<br>
+      Anexo orden: 3<br>
+      Acuerdo: EA-001a
+    </div>
+  </div>
+</div>
+
+<h2>§0 · Introducción · Linaje de esta versión v3</h2>
+
+<div class="qb">
+<strong>Este Anexo C v3 es producto de la síntesis de tres versiones:</strong><br><br>
+<table class="tbl-small">
+<thead><tr><th>Fuente</th><th>Qué se aprovecha</th><th>Qué se mejora</th></tr></thead>
+<tbody>
+<tr><td><b>EA001 base</b></td><td>Art. 98 ACU-004-25 (mandato 7 estatutos derivados)</td><td>Se detallan dependencias, hitos irreversibles, responsables RACI</td></tr>
+<tr><td><b>EA001a-v2</b></td><td>Cronograma de 7 estatutos; fases 3m/6m/12m; hitos irreversibles</td><td>Se enriquece con elementos de transferencia institucional de EA001b</td></tr>
+<tr><td><b>EA001b</b></td><td>Art. 42 (8 elementos plan); Art. 63 (7 elementos transferencia)</td><td>Se integran al cronograma maestro como hitos obligatorios</td></tr>
+</tbody>
+</table><br>
+<strong>Novedad en v3:</strong> Se introduce la <b>"línea de transferencia institucional"</b> — un eje paralelo al cronograma de estatutos que garantiza que la transición administrativa no se desfase de la producción normativa. La OTT coordina ambos ejes.
+</div>
+
+<h2>§1 · Estructura del cronograma maestro v3</h2>
+
+<div class="qb">
+<strong>Dos ejes temporales:</strong><br><br>
+<b>Eje 1: PRODUCCIÓN NORMATIVA</b> → 7 estatutos derivados<br>
+Eje 2: TRANSFERENCIA INSTITUCIONAL → 7 elementos + 3 fases<br><br>
+Ambos ejes coordinados por la <b>OTT</b> (meses 1-18) y luego por la <b>DGE&P</b>.
+</div>
+
+<h2>§2 · Eje 1: 7 Estatutos Derivados</h2>
+
+<h3>2.1 · Precedencias y dependencias</h3>
+<div class="qb">
+┌─────────────────────────────────────────────────────────────┐<br>
+│  [ACU-004-25 Art. 98]                                       │<br>
+│       │                                                     │<br>
+│       ▼                                                     │<br>
+│  ┌─────────────┐                                            │<br>
+│  │ EA001a-v3   │ ──► base estructural (YA APROBADO)        │<br>
+│  │ (ESTRUCTURA)│                                            │<br>
+│  └──────┬──────┘                                            │<br>
+│    ┌────┴────┬────────────┐                                 │<br>
+│    ▼         ▼            ▼                                 │<br>
+│ ┌──────┐ ┌──────┐   ┌──────────┐                            │<br>
+│ │EST-1 │ │EST-2 │   │ EST-3    │  ← paralelo               │<br>
+│ │Académ│ │Inv-Cr│   │Contextos │                            │<br>
+│ │émico │ │eación│   │-Extensión│                            │<br>
+│ └──┬───┘ └──┬───┘   └────┬─────┘                            │<br>
+│    │        │            │                                  │<br>
+│    └────────┴────────────┘                                  │<br>
+│              │                                              │<br>
+│              ▼                                              │<br>
+│    ┌─────────────────┐                                      │<br>
+│    │ EST-4 · APA-001 │  ← depende de 1+2+3                 │<br>
+│    │ (Administrativo)│                                      │<br>
+│    └────────┬────────┘                                      │<br>
+│    ┌────────┴────────┬────────────┐                         │<br>
+│    ▼                 ▼            ▼                         │<br>
+│ ┌──────┐        ┌──────┐    ┌──────────┐                   │<br>
+│ │EST-5 │        │EST-6 │    │ EST-7    │  ← paralelo       │<br>
+│ │Bienes│        │Egresa│    │Planeación│                   │<br>
+│ │tar   │        │dos   │    │Estratégica│                  │<br>
+│ └──────┘        └──────┘    └──────────┘                   │<br>
+└─────────────────────────────────────────────────────────────┘
+</div>
+
+<h3>2.2 · Detalle por estatuto</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>Estatuto</th><th>Dependencia</th><th>Plazo</th><th>Responsable redacción</th><th>Hitos críticos</th></tr></thead>
+<tbody>
+<tr><td><b>EST-1</b></td><td>Estatuto Académico</td><td>EA001a-v3 §1-2 (VIF)</td><td>6 meses</td><td>VIF + Comisión Redactora</td><td>Aprobación plan de estudios; protocolos VIF-Escuela</td></tr>
+<tr><td><b>EST-2</b></td><td>Estatuto de Investigación-Creación-Innovación</td><td>EA001a-v3 §3 (VIC&I)</td><td>6 meses</td><td>VIC&I + Comisión Redactora</td><td>Fondo especial regulado; grupos de investigación migrados</td></tr>
+<tr><td><b>EST-3</b></td><td>Estatuto de Contextos-Extensión-Proyección Social</td><td>EA001a-v3 §4 (VICE&PS)</td><td>6 meses</td><td>VICE&PS + Comisión Redactora</td><td>IDEXUD→Centro aprobado; convenios territoriales</td></tr>
+<tr><td><b>EST-4</b></td><td>Estatuto Administrativo y de Personal (APA-001)</td><td>EST-1, EST-2, EST-3</td><td>12 meses</td><td>GA&F + Comisión Redactora</td><td>Derogación integral Acuerdo 15/2023; planta consolidada</td></tr>
+<tr><td><b>EST-5</b></td><td>Estatuto de Bienestar Universitario y Buen Vivir</td><td>EA001a-v3 §5 (DBU&BV)</td><td>4 meses</td><td>DBU&BV + Comisión Redactora</td><td>Sistema Bienestar-Buen Vivir operativo</td></tr>
+<tr><td><b>EST-6</b></td><td>Estatuto de Egresados</td><td>EA001a-v3 §6 (OEG)</td><td>4 meses</td><td>OEG + VICE&PS</td><td>Sistema información egresados; indicadores empleabilidad</td></tr>
+<tr><td><b>EST-7</b></td><td>Estatuto de Planeación y Gestión Estratégica</td><td>EA001a-v3 §7 (DGE&P)</td><td>3 meses</td><td>DGE&P + Comisión Redactora</td><td>BSC-S operativo; indicadores institucionales aprobados</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo C v3 · Cronograma · Página 1 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h3>2.3 · Roadmap temporal (meses post-vigencia EA001a-v3)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>Mes</th><th>EST-1 Académico</th><th>EST-2 Inv-Cre</th><th>EST-3 Contextos</th><th>EST-4 APA-001</th><th>EST-5 Bienestar</th><th>EST-6 Egresados</th><th>EST-7 Planeación</th></tr></thead>
+<tbody>
+<tr><td>M1</td><td>Convocatoria comisión</td><td>Convocatoria comisión</td><td>Convocatoria comisión</td><td>—</td><td>Convocatoria comisión</td><td>Convocatoria comisión</td><td>Convocatoria comisión</td></tr>
+<tr><td>M2</td><td>Diagnóstico</td><td>Diagnóstico</td><td>Diagnóstico + equipo IDEXUD</td><td>—</td><td>Diagnóstico</td><td>Diagnóstico</td><td>Diagnóstico</td></tr>
+<tr><td>M3</td><td>Borrador v1</td><td>Borrador v1</td><td>Borrador v1</td><td>—</td><td>Borrador v1</td><td>Borrador v1</td><td><b>Borrador v1 + aprobación</b></td></tr>
+<tr><td>M4</td><td>Consulta</td><td>Consulta</td><td>Consulta</td><td>—</td><td>Consulta</td><td>Consulta</td><td>✅ <b>APROBADO</b></td></tr>
+<tr><td>M5</td><td>Revisión</td><td>Revisión</td><td>Revisión</td><td>—</td><td>Revisión</td><td><b>Borrador v2</b></td><td>—</td></tr>
+<tr><td>M6</td><td><b>Borrador v2</b></td><td><b>Borrador v2</b></td><td><b>Borrador v2</b></td><td>—</td><td><b>Aprobación</b></td><td><b>Aprobación</b></td><td>—</td></tr>
+<tr><td>M7</td><td>Consulta ampliada</td><td>Consulta ampliada</td><td>Consulta ampliada</td><td>Convocatoria comisión</td><td>✅</td><td>✅</td><td>—</td></tr>
+<tr><td>M8</td><td>Revisión</td><td>Revisión</td><td>Revisión</td><td>Diagnóstico</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>M9</td><td><b>Borrador final</b></td><td><b>Borrador final</b></td><td><b>Borrador final</b></td><td>Borrador v1</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>M10</td><td><b>Aprobación CSU</b></td><td><b>Aprobación CSU</b></td><td><b>Aprobación CSU</b></td><td>Consulta</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>M11</td><td>✅</td><td>✅</td><td>✅</td><td>Revisión</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>M12</td><td>—</td><td>—</td><td>—</td><td><b>Borrador v2</b></td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>M13-14</td><td>—</td><td>—</td><td>—</td><td>Consulta ampliada</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>M15-16</td><td>—</td><td>—</td><td>—</td><td>Revisión</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>M17-18</td><td>—</td><td>—</td><td>—</td><td><b>Aprobación CSU</b></td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>M18</td><td>—</td><td>—</td><td>—</td><td>✅</td><td>—</td><td>—</td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§3 · Eje 2: Transferencia Institucional (7 elementos)</h2>
+
+<h3>3.1 · Elementos de transferencia (Art. 63 EA001b)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>Elemento</th><th>Plazo</th><th>Responsable</th><th>Producto</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>Entrega y recepción formal de archivos físicos y digitales</b></td><td>60 días</td><td>Secretaría General + OTT</td><td>Acta de entrega-recepción por dependencia</td></tr>
+<tr><td>2</td><td><b>Transferencia de bienes, recursos técnicos, tecnológicos y financieros</b></td><td>90 días</td><td>GA&F + OTT</td><td>Inventario actualizado + acta de asignación</td></tr>
+<tr><td>3</td><td><b>Migración y aseguramiento de sistemas de información institucionales</b></td><td>90 días</td><td>GA&F + DGE&P</td><td>Sistemas operativos bajo nueva estructura de accesos</td></tr>
+<tr><td>4</td><td><b>Continuidad de trámites, procesos administrativos y procedimientos en curso</b></td><td>30 días</td><td>GA&F + VRs receptoras</td><td>Listado de trámites en curso + responsable asignado</td></tr>
+<tr><td>5</td><td><b>Cesión y seguimiento de contratos, convenios, proyectos y demás compromisos</b></td><td>60 días</td><td>GA&F + VRs receptoras</td><td>Matriz de contratos migrados + hitos de seguimiento</td></tr>
+<tr><td>6</td><td><b>Definición expresa de responsables en cada fase del proceso</b></td><td>30 días</td><td>OTT + DGE&P</td><td>Matriz RACI de transferencia (Anexo A v3)</td></tr>
+<tr><td>7</td><td><b>Implementación de mecanismos de seguimiento, control y verificación</b></td><td>90 días</td><td>DGE&P + OTT</td><td>Tablero de control de transferencia (Anexo D v3)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.2 · Fases de implementación (sincronizadas con Anexo B v3)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Fase</th><th>Plazo</th><th>Estatutos objetivo</th><th>Transferencia objetivo</th><th>Hitos críticos</th></tr></thead>
+<tbody>
+<tr><td><b>Fase 1 · Críticos</b></td><td>Meses 1-3</td><td>EST-7 + inicio EST-5, EST-6</td><td>Elementos 1, 3, 4, 6</td><td>OTT operativa; Comité Inter-VR sesionando; EST-7 aprobado</td></tr>
+<tr><td><b>Fase 2 · Importantes</b></td><td>Meses 4-6</td><td>EST-1, EST-2, EST-3 (borradores finales) + EST-5, EST-6 aprobados</td><td>Elementos 2, 5, 7 (parcial)</td><td>80% reasignación funcional; protocolos VIF-Escuela; 5 estatutos en consulta/avance</td></tr>
+<tr><td><b>Fase 3 · Sistemas</b></td><td>Meses 7-12</td><td>EST-4 (APA-001) + aprobaciones finales EST-1, EST-2, EST-3</td><td>Elemento 7 (completo) + BSC-S operativo</td><td>100% activos reasignados; 7 estatutos aprobados o en trámite final</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo C v3 · Cronograma · Página 2 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§4 · Hitos irreversibles por fase</h2>
+
+<h3>Fase 1 (Meses 1-3) — Hitos que no pueden revertirse</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Hito</th><th>Fecha límite</th><th>Responsable</th><th>Consecuencia de no cumplir</th></tr></thead>
+<tbody>
+<tr><td>H-1.1 · Constitución OTT</td><td>Día 15</td><td>Rectoría</td><td>Parálisis de toda la transformación</td></tr>
+<tr><td>H-1.2 · Primera sesión Comité Inter-VR</td><td>Mes 1</td><td>Presidente rotativo</td><td>Silos institucionales desde el inicio</td></tr>
+<tr><td>H-1.3 · Inventario 50% activos</td><td>Mes 2</td><td>GA&F + OTT</td><td>Reasignación presupuestal sin sustento</td></tr>
+<tr><td>H-1.4 · Aprobación EST-7 (Planeación)</td><td>Mes 3</td><td>DGE&P + CSU</td><td>Sin indicadores = sin rendición de cuentas</td></tr>
+<tr><td>H-1.5 · Tablero BSC-S operativo (mínimo)</td><td>Mes 3</td><td>DGE&P</td><td>Imposibilidad de reportar avance</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Fase 2 (Meses 4-6) — Hitos que consolidan la reforma</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Hito</th><th>Fecha límite</th><th>Responsable</th><th>Consecuencia de no cumplir</th></tr></thead>
+<tbody>
+<tr><td>H-2.1 · Aprobación EST-5 (Bienestar)</td><td>Mes 4</td><td>DBU&BV + CSU</td><td>Sistema de bienestar no opera</td></tr>
+<tr><td>H-2.2 · Aprobación EST-6 (Egresados)</td><td>Mes 5</td><td>OEG + CSU</td><td>Ciclo virtuoso universidad-territorio roto</td></tr>
+<tr><td>H-2.3 · Borradores finales EST-1, EST-2, EST-3</td><td>Mes 6</td><td>VIF, VIC&I, VICE&PS</td><td>Retraso en estatutos misionales</td></tr>
+<tr><td>H-2.4 · 80% reasignación funcional</td><td>Mes 6</td><td>GA&F + OTT</td><td>VRs sin recursos para operar</td></tr>
+<tr><td>H-2.5 · Protocolos VIF-Escuela aprobados</td><td>Mes 6</td><td>VIF + Escuelas</td><td>Núcleo operativo desarticulado</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Fase 3 (Meses 7-12) — Hitos de consolidación</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Hito</th><th>Fecha límite</th><th>Responsable</th><th>Consecuencia de no cumplir</th></tr></thead>
+<tbody>
+<tr><td>H-3.1 · Aprobación EST-1, EST-2, EST-3</td><td>Mes 9-10</td><td>VIF, VIC&I, VICE&PS + CSU</td><td>Estructura misional sin reglamento</td></tr>
+<tr><td>H-3.2 · Aprobación EST-4 (APA-001)</td><td>Mes 17-18</td><td>GA&F + CSU</td><td>Coexistencia normativa (Acuerdo 15/2023 + EA001a-v3)</td></tr>
+<tr><td>H-3.3 · 100% activos reasignados</td><td>Mes 12</td><td>GA&F</td><td>Incertidumbre jurídica permanente</td></tr>
+<tr><td>H-3.4 · BSC-S reportando al CSU</td><td>Mes 12</td><td>DGE&P</td><td>Sin evidencia de implementación</td></tr>
+<tr><td>H-3.5 · Informe anual Rectoría + Asamblea</td><td>Mes 12</td><td>Rectoría</td><td>Sin rendición de cuentas</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§5 · Rendición de cuentas del cronograma</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Instancia</th><th>Frecuencia</th><th>Contenido</th><th>Responsable</th></tr></thead>
+<tbody>
+<tr><td>Comité Inter-VR</td><td>Quincenal</td><td>Avance estatutos + transferencia + riesgos</td><td>Secretaría Técnica (DGE&P + OTT)</td></tr>
+<tr><td>Rectoría</td><td>Mensual</td><td>Ejecución cronograma maestro</td><td>OTT (meses 1-18)</td></tr>
+<tr><td>CSU</td><td>Trimestral</td><td>Informe de avance estatutos + hitos</td><td>Rectoría + DGE&P</td></tr>
+<tr><td>Asamblea Universitaria</td><td>Semestral</td><td>Avance global implementación</td><td>Rectoría</td></tr>
+<tr><td>Tablero público</td><td>Continuo</td><td>% avance por estatuto, por fase, por dependencia</td><td>DGE&P</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <div style="font-family: 'Georgia', serif; font-size: 10pt; font-weight: 700; color: #fff; line-height: 1.35;">Anexo C v3 · Síntesis de tres versiones · 7 estatutos · 2 ejes · 3 fases · 15 hitos irreversibles</div>
+  <div style="font-size: 6.5pt; color: rgba(255,255,255,0.72); margin-top: 0.1rem;">Novedad v3: Línea de transferencia institucional paralela al cronograma de estatutos, coordinada por OTT.</div>
+</div>
+
+<div class="ft">
+  <div>Anexo C v3 · Cronograma · Página 3 / 3</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+</body>
+</html>

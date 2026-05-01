@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo F v4 · Alcance y Límites de Decisión del CSU sobre BPAs</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+h4 { font-size: 8pt; font-weight: 700; color: var(--navy3); margin: 0.35rem 0 0.15rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+pre { background: var(--navy2); color: #fff; padding: 0.5rem; border-radius: 6px; font-family: var(--mono); font-size: 7pt; overflow-x: auto; margin: 0.3rem 0; }
+code { font-family: var(--mono); font-size: 7.2pt; background: #f1f5f9; padding: 0.05rem 0.2rem; border-radius: 3px; }
+pre code { background: transparent; padding: 0; }
+
+ul, ol { margin: 0.3rem 0 0.3rem 1.2rem; font-size: 7.5pt; }
+li { margin-bottom: 0.15rem; }
+a { color: var(--sky-d); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb, pre { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:anexo:2026:v4-F</div>
+    <h1>Anexo F v4 · Alcance y Límites de Decisión del CSU sobre BPAs</h1>
+    <div class="hero-sub"></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">4.1.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-05-01<br>
+      Acuerdo: EA-001a-v4<br>Anexo: F
+    </div>
+  </div>
+</div>
+<h1>Anexo F v4 · Alcance y Límites de Decisión del CSU sobre BPAs</h1>
+
+<div class="qb"><b>Nota de versión</b>: Este documento <b>enriquece</b> al Anexo F v3 (alcance y límites de decisión del CSU) añadiendo las <b>reglas de decisión específicas para la adopción de BPAs</b>. Conserva intactos los límites del Acuerdo 004/2025 y el Anexo F v3. Es una capa de precisión decisional <b>aditiva</b>.</div>
+
+<hr>
+<h2>1 · Jerarquía de decisiones sobre BPAs</h2>
+
+La adopción de BPAs requiere decisiones en 4 niveles. Este anexo define quién decide qué en cada nivel:
+
+<pre><code>
+┌─────────────────────────────────────────────────────────────────┐
+│  NIVEL 4 · CSU                                                  │
+│  Aprueba marco obligatorio (cómo se mide)                       │
+│  Recibe catálogo referencial (qué se puede adoptar)             │
+│  Aprueba Plan Institucional consolidado                         │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │
+┌──────────────────────────▼──────────────────────────────────────┐
+│  NIVEL 3 · Comité Inter-VR                                      │
+│  Valida contratos de coherencia C1–C8 por BPA                   │
+│  Resuelve conflictos cross-VR                                   │
+│  Ajusta escenarios S0–S5 (pesos wF/wC/wT)                       │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │
+┌──────────────────────────▼──────────────────────────────────────┐
+│  NIVEL 2 · Vicerrectorías                                       │
+│  Eligen ≥ 3 BPAs del catálogo referencial                       │
+│  Proponen metas TO-BE propias                                   │
+│  Diseñan planes de acción con P4 (TDABC) + P2 (IVC)             │
+│  Ejecutan y alimentan BSC-S                                     │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │
+┌──────────────────────────▼──────────────────────────────────────┐
+│  NIVEL 1 · Escuelas / Programas / Unidades                      │
+│  Participan en diagnóstico P5–P1                                │
+│  Co-diseñan BPA con Embajador v4                                │
+│  Implementan prácticas en aula / laboratorio / territorio       │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+
+<hr>
+<h2>2 · Decisiones del CSU (Nivel 4)</h2>
+
+<h3>2.1 · Qué decide el CSU</h3>
+
+| # | Decisión | Tipo | Reversible sin reforma |
+|---|---|---|---|
+| 1 | Aprobar el <b>marco obligatorio</b> del Anexo v4 (§3: P5–P1, N0–N4, S0–S5, C1–C8, BSC-S) | Vinculante | Sí: el CSU puede ajustar el marco en cualquier sesión. |
+| 2 | <b>Recibir</b> el catálogo de 21 BPAs como documento técnico de consulta | Informativo | No aplica: es referencial. |
+| 3 | Aprobar el <b>Plan Institucional consolidado</b> de adopción de BPAs (presentado por DGE&P) | Vinculante | Sí: el CSU puede pedir ajustes semestralmente. |
+| 4 | Aprobar <b>modificaciones al marco</b> (nuevas perspectivas, nuevos contratos de coherencia) | Vinculante | Sí. |
+| 5 | <b>No aprueba BPAs individuales</b>: esa decisión es de las VRs validadas por Comité Inter-VR | — | — |
+
+<h3>2.2 · Qué NO decide el CSU (y por qué)</h3>
+
+| # | Decisión | Quién la toma | Por qué no el CSU |
+|---|---|---|---|
+| 1 | Qué BPAs adopta cada VR | La VR + Comité Inter-VR | Preserva autonomía académica; evita micromanejo político. |
+| 2 | Metas TO-BE específicas por BPA | La VR (referencial del catálogo) | Las VRs conocen sus capacidades reales mejor que el CSU. |
+| 3 | Presupuesto detallado por BPA | La VR + DGE&P (con invariante R7) | El CSU aprueba el tope institucional; el desagregado es técnico. |
+| 4 | Diagnóstico cultural (IVC) por BPA | La VR | Es información sensible que requiere confianza local. |
+| 5 | Cambios en syllabi o mallas curriculares | Comités curriculares / VR-F | El CSU no diseña currículos; aprueba estatutos generales. |
+
+<hr>
+<h2>3 · Decisiones del Comité Inter-VR (Nivel 3)</h2>
+
+<h3>3.1 · Atribuciones vinculantes (no solo consultivas)</h3>
+
+El Art. 60bis del Acuerdo 004/2025 creó el Comité Inter-VR como órgano de <b>coordinación</b>. El Anexo F v4 le asigna <b>atribuciones vinculantes específicas para BPAs</b>:
+
+| Atribución | Descripción | Si no hay acuerdo |
+|---|---|---|
+| <b>Validar C1–C8</b> | Verificar que una BPA propuesta por una VR cumple los 8 contratos de coherencia | La BPA no pasa al CSU. La VR debe corregir o abandonar. |
+| <b>Resolver conflictos cross-VR</b> | Decidir cuando dos VRs reclaman la misma BPA o recursos | Voto del Presidente del Comité (Rectoría o VR en turno). |
+| <b>Ajustar escenarios</b> | Modificar pesos wF/wC/wT del dashboard S0–S5 cada semestre | Se mantiene el peso del semestre anterior. |
+| <b>Aprobar reinversión de ingresos</b> | Decidir cómo se distribuye el fondo de innovación institucional | No se distribuye; se acumula para siguiente ciclo. |
+| <b>Congelar BPAs</b> | Suspender temporalmente una BPA si IVC < 0,6 después de mitigación | La BPA se congela 1 semestre; se reevalúa después. |
+
+<h3>3.2 · Quórum y votación</h3>
+
+| Tipo de decisión | Quórum | Mayoría requerida |
+|---|---|---|
+| Validación C1–C8 | 4 de 7 miembros | Simple (4/7) |
+| Resolución de conflictos | 5 de 7 miembros | Calificada (5/7) |
+| Ajuste de escenarios | 4 de 7 miembros | Simple (4/7) |
+| Congelamiento de BPA | 5 de 7 miembros | Calificada (5/7) |
+
+<b>Miembros con voto</b>: 3 Vicerrectores + Director(a) DGE&P + Director(a) GA&F + Representante CABA + Secretario Técnico (sin voto, con voz).
+
+<hr>
+<h2>4 · Decisiones de las VRs (Nivel 2)</h2>
+
+<h3>4.1 · Autonomía con accountability</h3>
+
+Las VRs tienen <b>autonomía amplia</b> para diseñar su camino, sujeta a 3 límites:
+<ol><li><b>Mínimo 3 BPAs</b>: cada VR debe adoptar al menos 3 BPAs del catálogo referencial por vigencia.</li><li><b>Máximo presupuestal</b>: la suma de OPEX de BPAs no puede exceder el presupuesto vigente × 1,05 (invariante R7).</li><li><b>Máximo cultural</b>: si IVC < 0,6, la BPA requiere plan de mitigación aprobado por Comité Inter-VR.</li></ol>
+
+<h3>4.2 · Secuencia crítica: recomendación vs obligación</h3>
+
+| BPA | ¿Obligatoria? | ¿Qué pasa si se omite? |
+|---|---|---|
+| <b>BP-INT02</b> Créditos inv/ext | <b>Sí, para VR-F</b> | Sin créditos obligatorios, no hay masa crítica para integrar. El Comité Inter-VR puede condicionar aprobación de otras BPAs de VR-F. |
+| <b>BP-INT01</b> Misión operacionalizada | <b>Sí, transversal</b> | Sin "Proyecto Bogotá", no hay dirección compartida. El dashboard S0–S5 penaliza escenarios sin INT01. |
+| <b>BP-I01</b> UROP | Recomendada para VR-I | Si se omite, VR-I debe justificar cómo activará R1 sin UROP. |
+| <b>BP-INT04</b> CABA Design Factory | Recomendada para CABA | Si se omite, CABA sigue siendo espacio físico sin metodología. |
+| <b>BP-F01</b> Concepto compartido | Recomendada para VR-F | Si se omite, VR-F debe mostrar coherencia curricular por otro mecanismo. |
+| <b>BP-E02</b> Extensión territorial ODS | Recomendada para VR-E | Si se omite, VR-E pierde acceso a financiación PIIOM vinculada a ODS. |
+
+<hr>
+<h2>5 · Decisiones de Escuelas / Programas (Nivel 1)</h2>
+
+<h3>5.1 · Participación obligatoria</h3>
+
+Las Escuelas y programas no deciden si se adopta una BPA, pero <b>deben participar</b> en:
+<ul><li>Diagnóstico de línea base P5–P1.</li><li>Co-diseño de la BPA adaptada a su contexto disciplinar.</li><li>Implementación en aula, laboratorio o territorio.</li><li>Alimentación de datos para BSC-S.</li></ul>
+
+<h3>5.2 · Derecho de objeción</h3>
+
+Una Escuela puede objetar una BPA si presenta evidencia de:
+<ul><li>Imposibilidad técnica (infraestructura inexistente).</li><li>Violación de norma académica (libertad de cátedra, autonomía del catedrático).</li><li>Impacto negativo en calidad educativa demostrable.</li></ul>
+
+La objeción se eleva al Comité Inter-VR, que resuelve en máximo 2 semanas.
+
+<hr>
+<h2>6 · Tabla de decisiones resumen</h2>
+
+| Tema | Nivel 1 Escuela | Nivel 2 VR | Nivel 3 Comité Inter-VR | Nivel 4 CSU |
+|---|---|---|---|---|
+| Diagnóstico P5–P1 | Participa | Decide | Valida | Informado |
+| Selección BPAs | Opina | Decide | Valida C1–C8 | Informado |
+| Metas TO-BE | Propone | Decide | Valida coherencia | Informado |
+| Presupuesto P4 | Estima | Decide | Valida R7 | Aprueba tope |
+| Diagnóstico cultural P2 | Participa | Decide | Valida IVC | Informado |
+| Ejecución | Implementa | Supervisa | Monitorea | Informado |
+| BSC-S | Alimenta datos | Revisa | Consolida | Aprueba informe |
+| Marco de evaluación | — | — | Propone ajustes | Aprueba |
+| Catálogo BPAs | — | — | — | Recibe |
+| Plan Institucional | — | — | Consolida (DGE&P) | Aprueba |
+
+<hr>
+<h2>7 · Riesgos de confusión de roles y mitigación</h2>
+
+| Confusión | Riesgo | Mitigación |
+|---|---|---|
+| CSU quiere decidir qué BPAs adopta cada VR | Pérdida de autonomía; resistencia docente | Capacitación Anexo F v4 §2.2: el CSU aprueba marco, no BPAs. |
+| VR quiere ignorar validación del Comité Inter-VR | Fragmentación; BPAs incompatibles | El Comité Inter-VR tiene atribución vinculante (Anexo F v4 §3.1). |
+| Escuela quiere vetar toda BPA | Parálisis; nada se adopta | Derecho de objeción con evidencia; no objeción genérica. |
+| Comité Inter-VR actúa como "mini-CSU" | Sobrecarga; decisiones políticas | Quórum y mayorías calificadas limitan el poder del Comité. |
+
+<hr>
+<i>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</i>
+<i>Anexo F v4 · Alcance y Límites de Decisión CSU sobre BPAs v4.1.0</i>
+<i>Aditivo al Anexo F v3 · 4 niveles decisionales · Comité Inter-VR con atribuciones vinculantes</i>
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</div><div class="ft-r">4.1.0</div></div>
+</body>
+</html>

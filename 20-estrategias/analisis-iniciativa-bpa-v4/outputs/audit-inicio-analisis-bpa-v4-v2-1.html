@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUDIT — Inicio del Análisis BPA v4 v2.1: Narrativa de referencia, DOFA 5R Clark y BSC-S simplificado</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+h4 { font-size: 8pt; font-weight: 700; color: var(--navy3); margin: 0.35rem 0 0.15rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+pre { background: var(--navy2); color: #fff; padding: 0.5rem; border-radius: 6px; font-family: var(--mono); font-size: 7pt; overflow-x: auto; margin: 0.3rem 0; }
+code { font-family: var(--mono); font-size: 7.2pt; background: #f1f5f9; padding: 0.05rem 0.2rem; border-radius: 3px; }
+pre code { background: transparent; padding: 0; }
+
+ul, ol { margin: 0.3rem 0 0.3rem 1.2rem; font-size: 7.5pt; }
+li { margin-bottom: 0.15rem; }
+a { color: var(--sky-d); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb, pre { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:audit:2026:AUDIT-v4-bpa-v2-1</div>
+    <h1>AUDIT — Inicio del Análisis BPA v4 v2.1: Narrativa de referencia, DOFA 5R Clark y BSC-S simplificado</h1>
+    <div class="hero-sub"></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">2.1.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-05-01<br>
+      Acuerdo: EA-001a-v4<br>Anexo: v4
+    </div>
+  </div>
+</div>
+<h1>AUDIT — Inicio del Análisis BPA v4 · Versión 2.1</h1>
+
+<div class="qb"><b>Nota de versión</b>: Este documento enriquece de manera aditiva al <a href="AUDIT-inicio-analisis-bpa-v4.md:1"><code>AUDIT v1.0.0</code></a>. Las secciones §1–§11 del AUDIT original se mantienen intactas. Las nuevas secciones §12–§14 aportan: (1) una narrativa de referencia que conecta el mandato normativo con las 21 BPAs; (2) un DOFA comparativo «con BPA vs sin BPA» usando la metodología 5R Clark para evidenciar amenazas; y (3) un BSC-S simplificado con 20 KPIs por función misional que miden transformación real, no solo actividad.</div>
+
+<hr>
+<h2>12 · Narrativa de referencia: De la misión-visión a las 21 BPAs</h2>
+
+<h3>12.1 · Resumen ejecutivo para el CSU (1 minuto de lectura)</h3>
+
+La UDFJC tiene un <b>deber constitucional</b> (Art. 69 CP, Art. 6 Ley 30/1992): formar personas útiles a la sociedad. El país le ha dicho <b>cómo</b> cumplirlo: mediante Frame 3 (CONPES 4069/2021), crecimiento verde (CONPES 3934/2018) y las 5 Misiones Transformativas del PIIOM 2022-2026. El Acuerdo 004/2025 del CSU tradujo ese mandato en una estructura organizativa con 3 procesos misionales (PM1 Formación, PM2 Investigación, PM3 Extensión) y una CABA como nodo vitalizador.
+
+Pero <b>tener la estructura no es lo mismo que tener el funcionamiento</b>. El diagnóstico de 21 universidades referentes demuestra que la UDFJC está en el último lugar del corpus en formación, investigación y extensión integradas. Esa brecha no se cierra con más reuniones ni con más cargos. Se cierra con <b>21 Buenas Prácticas Adoptables (BPAs)</b> que ya funcionan en otras universidades y que el corpus BPA ha traducido al contexto UDFJC.
+
+Esta sección explica, en orden narrativo: <b>por qué</b> debemos hacerlo (mandato), <b>cómo</b> funciona teóricamente (ciclo virtuoso), <b>a qué altura</b> aspiramos (estándares), <b>dónde</b> estamos hoy (diagnóstico) y <b>qué</b> hacer mañana (BPAs).
+
+<hr>
+<h3>12.2 · El mandato: la reforma como deber, no como opción (M01)</h3>
+
+La narrativa normativa tiene 5 eslabones. Perder uno de ellos invalida el argumento de la reforma:
+
+| Eslabón | Fuente | Qué exige | Línea base UDFJC 2026 |
+|---|---|---|---|
+| <b>Constitución</b> | Art. 69 CP (1991) | Autonomía universitaria al servicio del bien social | Estructura aprobada; funcionamiento pendiente |
+| <b>Ley orgánica</b> | Art. 6 Ley 30/1992 | Deber de vincularse con planes nacionales de desarrollo | ACU-004-25 lo declara; sin BPAs no se operativiza |
+| <b>Política CTI</b> | CONPES 4069/2021 | Adoptar Frame 3: investigación orientada a problemas nacionales | 0 % programas con currículo Pasteur explícito |
+| <b>Crecimiento verde</b> | CONPES 3934/2018 | Articular misiones con ODS y economía sostenible | < 10 % proyectos con métrica ODS |
+| <b>PIIOM</b> | MinCiencias 2022-2026 | 5 Misiones Transformativas con financiación condicionada | Sin matriz BPAs × Misiones, se pierden ~$3.100 M COP/año |
+| <b>Operativización</b> | ACU-004-25/2025 | 3 PM + CABA + 4 plataformas de interoperabilidad | Plataformas declaradas; integración depende de BPAs |
+
+<b>Insight clave de M01</b>: la autonomía del Art. 69 no es un derecho defensivo frente al Estado; es una <b>capacidad instrumental</b> para cumplir deberes constitucionales. Si la UDFJC no reforma su funcionamiento, no está ejerciendo autonomía: está incumpliendo un mandato. Véase <a href="../../2-resultado-consolidados/M01-mandato-normativo/M01-mandato-normativo-v2.md:111"><code>M01-mandato-normativo-v2.md</code></a> §4.2–§4.7.
+
+<b>Los 6 riesgos de transición (RT1–RT6)</b> identificados en M01 §5.2 se resumen en una idea: sin BPAs, la reforma se queda en «papel mojado». El ACU-004-25 caduca su Art. 98 en 2026 y deja el Art. 100 pendiente; el rector tiene poder discrecional (Art. 107) pero no cuenta con prácticas operativas para ejecutarlo.
+
+<hr>
+<h3>12.3 · El ciclo virtuoso: cómo las misiones se alimentan mutuamente (M02)</h3>
+
+El Acuerdo 004/2025 define 3 procesos misionales. M02 demuestra que esos 3 procesos no deben ser silos: deben formar un <b>ciclo virtuoso ΩMT</b> donde cada misión le inyecta energía a las otras.
+
+Las <b>6 retroalimentaciones QMT</b> son los engranajes:
+
+| Retroalimentación | De → Hacia | Qué mueve | BPA que la activa |
+|---|---|---|---|
+| <b>R1</b> | Semilleros (PM1) → Grupos de inv. (PM2) | Estudiantes que llegan a la investigación antes de egresar | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:691"><code>BP-I01 UROP</code></a> |
+| <b>R2</b> | Currículo vivo (PM2) → Formación (PM1) | Resultados de investigación que se convierten en cursos nuevos | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:402"><code>BP-F02 PBL</code></a> + <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:803"><code>BP-I04 Open Science</code></a> |
+| <b>R3</b> | Transferencia (PM2) → Extensión (PM3) | Tecnologías que salen al mercado o a la comunidad | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:914"><code>BP-E01 TTO</code></a> + <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:858"><code>BP-I05 Spin-offs</code></a> |
+| <b>R4</b> | Problemas reales (PM3) → Investigación (PM2) | Demandas territoriales que definen la agenda de investigación | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:966"><code>BP-E02 Extensión territorial ODS</code></a> |
+| <b>R5</b> | Aprendizaje experiencial (PM3) → Formación (PM1) | Prácticas profesionales y vinculación que mejoran la formación | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:514"><code>BP-F04 Co-op</code></a> |
+| <b>R6</b> | Egresados (PM1) → Extensión (PM3) | Graduados que crean empresas o proyectos de impacto social | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:1441"><code>BP-INT06 Retención y engagement</code></a> |
+
+<b>Regla sistémica</b>: una retroalimentación rota rompe el ciclo. Hoy la UDFJC tiene todas las retroalimentaciones en intensidad baja o nula (diagnóstico Sub-N1 en Formación, N1 en Investigación/Extensión). Las BPAs no son «iniciativas aisladas»: son <b>reparaciones quirúrgicas</b> de esos 6 engranajes.
+
+<b>Las 5 Vías Clark (R-1→R-5)</b> traducen ese ciclo virtuoso en palancas de gestión. Más adelante (§13) usaremos esas 5 vías como lente para evidenciar amenazas. Véase <a href="../../2-resultado-consolidados/M02-ciclo-virtuoso/M02-ciclo-virtuoso-v3.md:870"><code>M02-ciclo-virtuoso-v3.md</code></a> §4.5.
+
+<hr>
+<h3>12.4 · Los estándares: a qué altura del mundo aspiramos (M03)</h3>
+
+¿Cómo sabemos si una BPA es «buena» o solo «novedosa»? M03 responde con un mapa de <b>8 estándares internacionales</b> aplicables a la UDFJC, organizados en 4 capas:
+
+| Capa | Estándar ejemplo | Qué cubre | Gap crítico UDFJC |
+|---|---|---|---|
+| <b>Aspiracional</b> | OECD 2030 Learning Compass | Competencias para 2030 | Sin traducción a perfiles de egreso por Escuela |
+| <b>Epistemológico</b> | Cuadrante Pasteur (Stokes, 1997) | Investigación use-inspired | 0 % programas con currículo explícitamente Pasteur |
+| <b>Disciplinar</b> | ABET / CDIO / TUNING-AL / EUR-ACE | Calidad de ingeniería y ciencias básicas | 0 acreditaciones internacionales en Ingeniería de Sistemas |
+| <b>Gestión</b> | ISO 21001:2018 / ARCU-SUR | Sistema de gestión de la educación | Sin EOMS certificado; acreditación ARCU-SUR no iniciada |
+
+<b>El heatmap 9 Escuelas × 8 estándares</b> (M03 §5.1) muestra que la UDFJC tiene <b>10 gaps críticos</b> frente al corpus internacional. Esos gaps no son teóricos: se traducen en desventajas competitivas concretas. Por ejemplo, la ausencia de UDL 3.0 afecta permanencia estudiantil; la ausencia de MIT UROP explica por qué la investigación undergrad es marginal (< 5 %); la ausencia de ISO 21001 dificulta acreditar procesos ante el CNA.
+
+<b>Insight clave</b>: las BPAs no son inventos locales. Son <b>adaptaciones validadas</b> de estándares que ya funcionan en MIT, Stanford, Aalto, ÉTS, UNAL, UIS e ITM. La UDFJC no necesita «inventar la rueda»: necesita «adaptar el neumático». Véase <a href="../../2-resultado-consolidados/M03-estandares-internacionales/M03-estandares-internacionales.md:986"><code>M03-estandares-internacionales.md</code></a> §5.1–§5.3.
+
+<hr>
+<h3>12.5 · El diagnóstico: dónde estamos hoy (M05)</h3>
+
+M05 comparó a la UDFJC con <b>21 Instituciones de Educación Superior</b> en un Dashboard Maestro 4F×5C (4 Funciones × 5 Criterios). El resultado es inequívoco:
+
+| Índice compuesto | UDFJC (AS-IS 2026) | Posición en corpus | Interpretación |
+|---|---|---|---|
+| <b>F-IMP</b> (Formación Integrada) | 0,30 | 21 / 21 | Última. Formación desconectada de investigación y extensión. |
+| <b>I-IMP</b> (Investigación Integrada) | 0,12 | 21 / 21 | Última. Investigación sin vinculación territorial ni undergrad. |
+| <b>E-IMP</b> (Extensión Integrada) | 0,08 | 21 / 21 | Última. Extensión sin métricas de impacto ni sostenibilidad. |
+
+<b>La ecuación <code>culture_lag = max(0, N_estructural − G_equivalente) = 2</code></b> (M05 §1.3) explica por qué la UDFJC está en esta situación: tiene una estructura normativa de nivel N2 (Acuerdo aprobado, plataformas declaradas), pero una práctica institucional de nivel Sub-N1 (sin BPAs operativas). Ese <b>retraso cultural de 2 niveles</b> es lo que la reforma debe cerrar.
+
+El concepto de <b>«Organigrama Vacío»</b> (M05 §9.7) resume el problema: los cargos existen, los procesos misionales están definidos en el papel, pero las capacidades y los comportamientos no han cambiado. Las BPAs son el combustible que llena ese organigrama de sentido.
+
+Véase <a href="../../2-resultado-consolidados/M05-procesos-misionales/M05-procesos-misionales-v5.md:1"><code>M05-procesos-misionales-v5.md</code></a> §7.4, §9.0, §9.7.
+
+<hr>
+<h3>12.6 · Las 21 BPAs: qué hacer y en qué orden (M07)</h3>
+
+El corpus BPA ha especificado <b>21 Buenas Prácticas Adoptables</b> organizadas en 4 capacidades misionales (Cap-F1 a Cap-F4). Cada BPA incluye: árbol de problemas, cadena de resultados inversa, matriz 4×5 (capacidades × comportamientos) y mapeo a las 6 retroalimentaciones QMT.
+
+<b>Las 5 BPAs ancla</b> (más INT02 como pre-requisito normativo) concentran el 80 % del impacto con el 20 % del esfuerzo:
+
+| Rol | BPA | Qué resuelve | Ruta Clark |
+|---|---|---|---|
+| 🏛️ <b>Ancla</b> | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:1144"><code>BP-INT01</code></a> Misión operacionalizada «Proyecto Bogotá» | Fragmentación de gobernanza: las VRs no saben hacia dónde remar juntas | R-1 Núcleo Directivo |
+| 🔑 <b>Pre-requisito</b> | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:1210"><code>BP-INT02</code></a> Créditos de inv/ext | Sin créditos obligatorios, no hay incentivo para integrar misiones | R-1 + R-3 |
+| 🏛️ <b>Ancla</b> | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:1321"><code>BP-INT04</code></a> CABA Design Factory | La CABA es un nodo vacío sin metodología ni equipos | R-2 Periferia |
+| 🏛️ <b>Ancla</b> | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:625"><code>BP-I01</code></a> UROP | Los estudiantes nunca tocan investigación real antes de egresar | R-4 Heartland |
+| 🏛️ <b>Ancla</b> | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:339"><code>BP-F01</code></a> Concepto compartido | Cada profesor dicta lo que quiere; no hay coherencia curricular | R-5 Cultura |
+| 🏛️ <b>Ancla</b> | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:966"><code>BP-E02</code></a> Extensión territorial ODS | La extensión es voluntariado sin métrica ni sostenibilidad | R-3 Financiamiento |
+
+<b>Secuencia crítica</b> (plan mínimo viable): <b>INT02 → INT01 → I01 / INT04 → F01 / E02</b>.
+<ul><li><b>Año 0, Semestre 1</b>: activar R-1 con INT02 (reforma de créditos) + INT01 (gobernanza unificada).</li><li><b>Año 0, Semestre 2</b>: activar R-2 y R-3 parcial con INT04 (CABA Design Factory) y I01 (UROP piloto).</li><li><b>Año 1</b>: activar R-3 pleno + R-4 con escalamiento de UROP y primeros spin-offs.</li><li><b>Año 3–5</b>: activar R-5 con F01 (concepto compartido institucionalizado) y E02 (extensión territorial escalada).</li></ul>
+
+<b>Insight clave de M07</b>: «Sin R-1 ejecutada, ninguna otra R puede activarse a escala.» El núcleo directivo fortalecido no es un lujo administrativo: es la <b>puerta de entrada</b> a todo lo demás. Véase <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md:1760"><code>M07-21-bpa-especificadas.md</code></a> §6.3–§6.4.
+
+<hr>
+<h3>12.7 · Síntesis de la narrativa (párrafo único)</h3>
+
+<div class="qb">La Constitución y el PIIOM le ordenan a la UDFJC transformarse en una universidad que resuelva problemas nacionales. El Acuerdo 004/2025 le dio la estructura para hacerlo. Pero la estructura sin prácticas es un «Organigrama Vacío». Las 21 BPAs son prácticas ya probadas en 21 universidades del mundo que reparan, una a una, los 6 engranajes del ciclo virtuoso. Empezar por las 5 anclas (INT01, INT04, I01, F01, E02) y el pre-requisito INT02 es la única secuencia que no desperdicia recursos ni tiempo. El estándar no es la perfección: es salir del último lugar del corpus.</div>
+
+<hr>
+<h2>13 · DOFA de la reforma: Con BPA vs Sin BPA (Metodología 5R Clark)</h2>
+
+<h3>13.1 · Por qué usar las 5R Clark como lente de amenazas</h3>
+
+Burton Clark (1998) describió 5 rutas por las que una universidad tradicional se transforma en universidad emprendedora. En M02 y M07 esas rutas se tradujeron al contexto UDFJC como:
+
+| Ruta | Nombre en español | Qué gobierna |
+|---|---|---|
+| <b>R-1</b> | Núcleo Directivo Fortalecido | Gobernanza, decisión estratégica, coordinación inter-VR |
+| <b>R-2</b> | Periferia de Desarrollo Expandida | Unidades de innovación, TTO, Design Factory, educación continua |
+| <b>R-3</b> | Base de Financiamiento Diversificada | Ingresos propios, spin-offs, PIIOM, educación continua |
+| <b>R-4</b> | Heartland Académico Estimulado | Docentes y estudiantes como motor de investigación y creación |
+| <b>R-5</b> | Cultura Emprendedora Integrada | Valores, rutinas, lenguaje común, concepto compartido |
+
+<b>Hipótesis de este DOFA</b>: si la reforma UDFJC avanza <b>sin BPAs</b>, cada una de esas 5 rutas se convierte en una <b>amenaza latente</b> que eventualmente bloquea la transformación. Si avanza <b>con BPAs</b>, las amenazas se mitigan y las rutas se convierten en fortalezas. Este DOFA no reemplaza al de la §2 del AUDIT v1: lo <b>enfoca</b> a través de un solo lente sistémico.
+
+<hr>
+<h3>13.2 · DOFA · Escenario SIN BPAs: «Reforma de papel»</h3>
+
+Escenario hipotético: el CSU aprueba el Acuerdo 004/2025, mantiene los anexos v3 A–G, pero <b>ninguna BPA se implementa</b>. Las VRs operan con sus procesos habituales.
+
+<h4>F · Fortalezas (lo que aún tendríamos)</h4>
+
+| # | Fortaleza | Vencimiento |
+|---|---|---|
+| F-S1 | Estructura organizativa aprobada y publicada | 2025–2030 |
+| F-S2 | Plataformas PAI/PIC/PET/PGE declaradas en papel | Depende de BPAs para funcionar |
+| F-S3 | Modelo 70/30 aceptado por comunidad académica | Sin BPAs se queda en principio no cuantificado |
+| F-S4 | Comité Inter-VR creado (Art. 60bis) | Sin BPAs no tiene objeto de coordinación |
+
+<h4>D · Debilidades (lo que el corpus BPA expone como irreparable sin prácticas)</h4>
+
+| # | Debilidad | Por qué es crítica sin BPAs |
+|---|---|---|
+| D-S1 | <b>R-1 vacío</b>: los cargos existen pero no hay capacidad de decisión integrada | Cada VR optimiza su propio presupuesto; no hay «Proyecto Bogotá» unificado |
+| D-S2 | <b>R-2 inexistente</b>: no hay unidades de desarrollo con método | La CABA es un espacio físico sin equipos ni procesos; el TTO no existe |
+| D-S3 | <b>R-3 mono-canal</b>: > 90 % del presupuesto depende del estado colombiano | Cualquier recorte fiscal (ej. ajuste 2027) paraliza la reforma |
+| D-S4 | <b>R-4 aislado</b>: docentes sin incentivos para vincular inv-docencia | La promoción académica premia artículos, no estudiantes en semilleros |
+| D-S5 | <b>R-5 burocrática</b>: cultura de trámites, no de resultados | El «Organigrama Vacío» persiste: procesos en papel, comportamientos sin cambio |
+| D-S6 | Sin indicadores de transformación | El CSU no puede distinguir entre «reforma en marcha» y «reforma estancada» |
+
+<h4>O · Oportunidades (que se perderían o no se aprovecharían)</h4>
+
+| # | Oportunidad perdida | Costo estimado |
+|---|---|---|
+| O-S1 | Financiación PIIOM condicionada a proyectos misionales integrados | ~$3.100 M COP/año no accedidos |
+| O-S2 | Alianzas internacionales (MIT, Aalto, ÉTS) que exigen contrapartida operativa | Sin UROP ni Design Factory, no hay interés de contraparte |
+| O-S3 | Nichos transformativos locales (ej. distrito de ciencia en Bogotá) | Sin extensión territorial ODS, la UDFJC no es actor relevante |
+
+<h4>A · Amenazas (evidenciadas por las 5R Clark)</h4>
+
+| Ruta | Amenaza concreta | Evidencia del corpus | Probabilidad |
+|---|---|---|---|
+| <b>R-1</b> | <b>Fragmentación de gobernanza</b>: cada VR interpreta la reforma a su manera. El Comité Inter-VR se convierte en una reunión protocolaria sin objetivos compartidos. | M07 §6.3: UDFJC 2026, R-1 en nivel «Desconocida» para 16 de 21 BPAs | Alta |
+| <b>R-2</b> | <b>Aislamiento institucional</b>: la universidad sigue siendo una «isla» sin conexión estructural con empresas, gobierno ni comunidad. Sin TTO ni Design Factory, no hay interfaz. | M05 §9.7: UDFJC última en E-IMP (0,08); sin periferia no hay transferencia | Alta |
+| <b>R-3</b> | <b>Vulnerabilidad fiscal</b>: una sola fuente de ingresos hace que la reforma sea rehén del ciclo político presupuestal. | M02 §5.4: sin diversificación, cualquier shock fiscal detiene la transición | Alta |
+| <b>R-4</b> | <b>Fuga de talento académico</b>: los mejores docentes se van a IES que sí ofrecen UROP, spin-offs y libertad académica con recursos. | M03 §5.3: gap crítico #3 — ausencia de MIT UROP y PI inventor-friendly; docentes jóvenes prefieren UNAL/UIS | Media-Alta |
+| <b>R-5</b> | <b>Reforma como maquillaje administrativo</b>: la comunidad percibe que «cambiaron los nombres de los cargos pero nada más». Eso genera cinismo y resistencia pasiva. | M05 §1.3: <code>culture_lag = 2</code> significa que la cultura va 2 niveles por debajo de la estructura; el cinismo es inevitable si no hay comportamientos nuevos | Alta |
+
+<b>Veredicto parcial SIN BPAs</b>: la reforma se convierte en un <b>cambio estructural estéril</b>. Los documentos existen, los cargos están, pero las capacidades y los comportamientos no cambian. En 2030 la UDFJC seguirá en el lugar 21 del corpus, habiendo gastado 4 años de oportunidad política y presupuestal.
+
+<hr>
+<h3>13.3 · DOFA · Escenario CON BPAs: «Reforma operativa»</h3>
+
+Escenario: el CSU aprueba el Anexo v4 (Opción C, marco obligatorio + catálogo referencial), las VRs adoptan las 5 BPAs ancla + INT02, y se ejecuta la secuencia crítica.
+
+<h4>F · Fortalezas (las BPAS como palancas)</h4>
+
+| # | Fortaleza | BPA que la genera | Ruta Clark |
+|---|---|---|---|
+| F-C1 | Gobernanza unificada con meta-telos compartido (ΩMT) | BP-INT01 «Proyecto Bogotá» | R-1 |
+| F-C2 | CABA operativa con metodología Design Factory y equipos asignados | BP-INT04 CABA Design Factory | R-2 |
+| F-C3 | Estudiantes en investigación real desde primeros semestres | BP-I01 UROP | R-4 |
+| F-C4 | Currículo con coherencia vertical (perfil de egreso → syllabi → rúbricas) | BP-F01 Concepto compartido | R-5 |
+| F-C5 | Extensión con financiación sostenible vinculada a ODS | BP-E02 Extensión territorial ODS | R-3 |
+| F-C6 | Marco de evaluación madurez N0-N4 + dashboard S0-S5 | Framework MARCO P5-P1 | R-1 |
+
+<h4>D · Debilidades (que persisten aunque se implementen BPAs)</h4>
+
+| # | Debilidad | Mitigación temporal |
+|---|---|---|
+| D-C1 | Inversión inicial requerida: ~$10.000 M COP en 8 años | ROI 3,5x documentado; financiación PIIOM cubre 31 % del costo |
+| D-C2 | Cambio cultural de 8 años: no se acelera con dinero | Índice de Viabilidad Cultural (IVC) obligatorio antes de aprobar cada BPA |
+| D-C3 | Dependencia de R-1 en Año 0: si INT01/INT02 fallan, todo se retrasa | Secuencia crítica con hitos de go/no-go cada semestre |
+| D-C4 | Capacidad técnica limitada en VRs para diseñar planes | DGE&P asesora; catálogo referencial reduce complejidad de diseño |
+
+<h4>O · Oportunidades (que se abren solo con BPAs operativas)</h4>
+
+| # | Oportunidad | Mecanismo | Retorno estimado |
+|---|---|---|---|
+| O-C1 | Financiación PIIOM (+182 %) | Matriz BPAs × 5 Misiones; proyectos integrados califican a convocatorias misionales | +$3.100 M COP/año |
+| O-C2 | Diversificación de ingresos (educación continua, spin-offs, TTO) | BP-E03, BP-I05, BP-E01 generan ingresos propios | 25–35 % del presupuesto VR Extensión en Año 8 |
+| O-C3 | Nichos transformativos (E3 del ciclo virtuoso) | CABA + UROP + extensión territorial crean capacidades irreplicables localmente | Liderazgo territorial en 2–3 sectores (ej. energía, agua, movilidad) |
+| O-C4 | Alianzas internacionales estratégicas | UROP permite acuerdos de doble titulación; Design Factory atrae consorcios de innovación | 3–5 alianzas firmadas en Año 4 |
+
+<h4>A · Amenazas residuales (aun con BPAs, requieren vigilancia)</h4>
+
+| # | Amenaza residual | Probabilidad | Mitigación |
+|---|---|---|---|
+| A-C1 | Resistencia docente severa a BPAs que afectan libertad de cátedra (BP-F01, BP-F03) | Alta | P2 (DOFA cultural) obligatorio; IVC mínimo; co-diseño con Escuelas |
+| A-C2 | Intento de implementar las 21 BPAs simultáneamente, dispersando recursos | Media | Secuencia crítica obligatoria; solo 5 anclas + INT02 en Año 0–1 |
+| A-C3 | Obsolescencia de BPAs si no se versionan | Media | BPAs versionadas por fuera del Acuerdo; actualizaciones técnicas anuales |
+| A-C4 | Fricción cross-VR si cada VR elige BPAs incompatibles | Media | Contratos de coherencia C1-C8; Comité Inter-VR valida antes de CSU |
+| A-C5 | Expectativa irreal al comparar con MIT/Stanford | Media | Nivel de ambición ajustable por escenario (S1 conservador → S5 ambicioso) |
+
+<hr>
+<h3>13.4 · Matriz comparativa 5R × Amenazas</h3>
+
+| Ruta Clark | ¿Qué pasa SIN BPA? (Amenaza) | ¿Qué cambia CON BPA? (Mitigación) | BPA clave | Año de activación |
+|---|---|---|---|---|
+| <b>R-1</b> Núcleo Directivo | Fragmentación: cada VR optimiza localmente; Comité Inter-VR es protocolo | Gobernanza unificada bajo ΩMT; decisiones con dashboard S0-S5 | BP-INT01, BP-INT02 | Año 0 |
+| <b>R-2</b> Periferia | Aislamiento: sin interfaz con ecosistema externo; CABA = espacio vacío | TTO funcional + Design Factory + educación continua con oferta propia | BP-E01, BP-INT04, BP-E03 | Año 0–1 |
+| <b>R-3</b> Financiamiento | Vulnerabilidad fiscal: > 90 % estatal; reforma rehén del ciclo político | Ingresos propios: spin-offs + PIIOM + educación continua + transferencia | BP-I05, BP-E03, BP-E02 | Año 1–2 |
+| <b>R-4</b> Heartland | Fuga de talento: docentes se van a IES con UROP e incentivos reales | UROP masivo + PI inventor-friendly + PBL; promoción académica vinculada a integración | BP-I01, BP-I02, BP-F02 | Año 0–1 |
+| <b>R-5</b> Cultura | Cinismo: «cambiaron los cargos pero nada más»; reforma = maquillaje | Concepto compartido institucionalizado + CLR + retención con sentido de propósito | BP-F01, BP-INT03, BP-INT06 | Año 2–5 |
+
+<b>Conclusión de la matriz</b>: las 5 amenazas SIN BPA no son hipotéticas; son el <b>estatus actual</b> de la UDFJC en 2026. El diagnóstico M07 §6.3 muestra que 16 de 21 BPAs están en estado «Desconocida» y las 5 restantes en «Declarada» (solo en papel). Es decir: <b>ya estamos viviendo el escenario SIN BPAs</b>. La única diferencia es que ahora tenemos nombre y número para cada amenaza, y una ruta para mitigarla.
+
+<hr>
+<h3>13.5 · Veredicto del DOFA 5R</h3>
+
+<div class="qb"><b>Sin BPAs, la reforma es un «Organigrama Vacío»</b>: la estructura existe, la norma existe, pero las capacidades y los comportamientos no cambian. Las 5R Clark se convierten en 5 amenazas convergentes que bloquean cualquier transformación real. <b>Con BPAs, cada Ruta Clark se convierte en una palanca</b>: R-1 da dirección, R-2 da interfaz, R-3 da sostenibilidad fiscal, R-4 da talento y R-5 da permanencia cultural. La secuencia crítica (INT02 → INT01 → I01/INT04 → F01/E02) no es una recomendación optativa: es el <b>único orden</b> en el que las palancas se activan sin romperse mutuamente.</div>
+
+<hr>
+<h2>14 · BSC-S Simplificado: KPIs por función misional que miden transformación</h2>
+
+<h3>14.1 · Principio de simplificación</h3>
+
+El Anexo D v3 propone un sistema de indicadores institucionales. El MARCO P5-P1 añade 105 celdas de diagnóstico (21 BPAs × 5 perspectivas). Ambos son necesarios para la operación técnica, pero <b>demasiado densos</b> para el CSU y para las VRs en su planeación anual.
+
+El BSC-S simplificado de esta sección se rige por 4 reglas:
+<ol><li><b>Un tablero por función misional</b> (F1 Formación, F2 Investigación, F3 Extensión, F4 Integración).</li><li><b>5 KPIs por tablero</b>, uno por criterio (C1 Producto, C2 Calidad, C3 Eficiencia, C4 Pertinencia, C5 Reconocimiento).</li><li><b>Cada KPI mide transformación</b>, no actividad. No cuenta «cuántos cursos se dictaron», sino «cuántos cursos cambiaron su metodología por efecto de una BPA».</li><li><b>Cada KPI tiene AS-IS (2026), TO-BE (2034), BPA activador y fórmula</b>. Sin estos 4 elementos, no es KPI: es deseo.</li></ol>
+
+El resultado es un <b>dashboard de 20 KPIs</b> (4 × 5) que el CSU puede revisar en una sola página por función, y que las VRs pueden usar para sus planes de acción anuales.
+
+<hr>
+<h3>14.2 · Tablero F1 · Formación</h3>
+
+<b>Pregunta rectora</b>: ¿La formación de la UDFJC está integrando investigación, extensión y emprendimiento en la experiencia del estudiante?
+
+| Criterio | KPI | Fórmula | AS-IS 2026 | TO-BE 2034 | BPA activador | Confianza |
+|---|---|---|---|---|---|---|
+| <b>C1 Producto</b> | % estudiantes matriculados en programas con <b>concepto compartido</b> aprobado (perfil de egreso → currículo → rúbricas alineadas) | Σ estudiantes en programas con BP-F01 implementado / Σ estudiantes totales × 100 | 0 % | 80 % | BP-F01 | 0,7 |
+| <b>C2 Calidad</b> | % cursos con metodología <b>PBL o UROP integrado</b> (no visitas ni charlas: proyectos reales con entregables) | Σ cursos con BP-F02 o BP-I01 en syllabi / Σ cursos totales × 100 | < 5 % | 70 % | BP-F02, BP-I01 | 0,6 |
+| <b>C3 Eficiencia</b> | Tasa de retención semestral en programas con <b>flexibilidad curricular</b> (rutas personalizadas, validación de saberes previos) | Σ estudiantes que continúan semestre n+1 en programas BP-F03 / Σ matriculados semestre n × 100 | 78 % | 90 % | BP-F03 | 0,6 |
+| <b>C4 Pertinencia</b> | % estudiantes con <b>experiencia laboral formal</b> (co-op, prácticas profesionales remuneradas o contrato de aprendizaje) antes de egresar | Σ estudiantes con BP-F04 certificado / Σ cohorte de pregrado × 100 | 15 % | 60 % | BP-F04 | 0,7 |
+| <b>C5 Reconocimiento</b> | Número de programas acreditados con <b>estándar internacional</b> (ABET, CDIO, TUNING-AL, EUR-ACE) | Conteo de programas con acreditación vigente | 0 | 5 | BP-F01, BP-F05 | 0,5 |
+
+<b>Nota de lectura</b>: C1 y C2 son los KPIs más difíciles porque requieren cambiar el syllabi de cientos de cursos. Por eso el plan mínimo viable los deja para Año 2–3, después de que R-1 (gobernanza) y R-4 (heartland) estén activos.
+
+<hr>
+<h3>14.3 · Tablero F2 · Investigación</h3>
+
+<b>Pregunta rectora</b>: ¿La investigación UDFJC genera nuevo conocimiento con participación estudiantil y resuelve problemas reales del territorio?
+
+| Criterio | KPI | Fórmula | AS-IS 2026 | TO-BE 2034 | BPA activador | Confianza |
+|---|---|---|---|---|---|---|
+| <b>C1 Producto</b> | % proyectos de investigación formal con participación <b>undergrad</b> (UROP) | Σ proyectos UDFJC con ≥ 1 estudiante de pregrado / Σ proyectos activos × 100 | < 5 % | 70 % | BP-I01 | 0,6 |
+| <b>C2 Calidad</b> | Patentes o registros de invención por año con <b>participación estudiantil o docente-inventor</b> | Conteo anual en RNCE o equivalente internacional | 0 | 10 | BP-I02 | 0,5 |
+| <b>C3 Eficiencia</b> | Tiempo promedio de gestión de propiedad intelectual (desde solicitud interna hasta registro o licenciamiento) en meses | Promedio de duración de trámites PI en TTO | 36 | 12 | BP-I02, BP-I03 | 0,5 |
+| <b>C4 Pertinencia</b> | % proyectos de investigación alineados con al menos una <b>Misión Transformativa PIIOM</b> | Σ proyectos con código PIIOM / Σ proyectos activos × 100 | 20 % | 70 % | BP-I03, BP-I04 | 0,6 |
+| <b>C5 Reconocimiento</b> | Citaciones por docente/año en áreas <b>Pasteur</b> (use-inspired basic research) | Citaciones en Scopus/WoS de áreas STEM aplicadas / número de docentes investigadores | 0,3 | 2,0 | BP-I04 | 0,5 |
+
+<b>Nota de lectura</b>: C2 (patentes) es ambicioso para una universidad que hoy registra cero. La meta TO-BE = 10 en 2034 asume que BP-I02 (PI inventor-friendly) y BP-E01 (TTO) están operativos desde Año 1. Si no es así, este KPI será el primero en advertir que la cadena I02→I05→E01 está rota.
+
+<hr>
+<h3>14.4 · Tablero F3 · Extensión</h3>
+
+<b>Pregunta rectora</b>: ¿La extensión UDFJC genera impacto medible en el territorio y diversifica los ingresos institucionales?
+
+| Criterio | KPI | Fórmula | AS-IS 2026 | TO-BE 2034 | BPA activador | Confianza |
+|---|---|---|---|---|---|---|
+| <b>C1 Producto</b> | Contratos de <b>transferencia tecnológica</b> ejecutados por año (licenciamiento, spin-off, servicio técnico) | Conteo anual de contratos firmados por TTO | 2 | 25 | BP-E01 | 0,6 |
+| <b>C2 Calidad</b> | % proyectos de extensión con <b>impacto medible ODS</b> (indicador cuantificado y reportado) | Σ proyectos BP-E02 con métrica ODS / Σ proyectos de extensión × 100 | 10 % | 75 % | BP-E02 | 0,5 |
+| <b>C3 Eficiencia</b> | Ingresos por <b>educación continua</b> como % del presupuesto total de la VR de Extensión | Ingresos EC / Presupuesto VR Extensión × 100 | 5 % | 35 % | BP-E03 | 0,6 |
+| <b>C4 Pertinencia</b> | % programas de pregrado con <b>articulación formal con educación media</b> (doble titulación, validación, mentorías) | Σ programas con convenio BP-E04 / Σ programas de pregrado × 100 | 5 % | 50 % | BP-E04 | 0,5 |
+| <b>C5 Reconocimiento</b> | Reconocimientos <b>municipales, regionales o nacionales</b> por impacto territorial (resoluciones, premios, designaciones) | Conteo anual de reconocimientos formales | 1 | 5 | BP-E02, BP-E03 | 0,5 |
+
+<b>Nota de lectura</b>: C3 es el KPI financiero más importante de Extensión. Si en 2034 la educación continua no representa al menos el 35 % del presupuesto de la VR, la dependencia fiscal seguirá siendo crítica y R-3 no se habrá activado.
+
+<hr>
+<h3>14.5 · Tablero F4 · Integración</h3>
+
+<b>Pregunta rectora</b>: ¿Las 3 misiones funcionan como un sistema integrado, o siguen siendo silos independientes?
+
+| Criterio | KPI | Fórmula | AS-IS 2026 | TO-BE 2034 | BPA activador | Confianza |
+|---|---|---|---|---|---|---|
+| <b>C1 Producto</b> | % estudiantes de pregrado con <b>créditos de investigación y/o extensión</b> obligatorios en su plan de estudios | Σ estudiantes con BP-INT02 cumplido / Σ matriculados × 100 | 0 % | 100 % | BP-INT02 | 0,8 |
+| <b>C2 Calidad</b> | <b>Índice de integración misional</b> (promedio de intensidad de las 6 retroalimentaciones QMT activas) | (R1 + R2 + R3 + R4 + R5 + R6) / 6, cada R en escala 0–1 | 0,15 | 0,75 | BP-INT01 | 0,6 |
+| <b>C3 Eficiencia</b> | Tiempo de respuesta del <b>Comité Inter-VR</b> desde solicitud hasta decisión formal, en días hábiles | Promedio de días entre radicación y acta de decisión | 90 | 14 | BP-INT01, BP-INT04 | 0,7 |
+| <b>C4 Pertinencia</b> | % oferta académica (programas) <b>racionalizada</b> con justificación de mercado laboral + alineación ODS + viabilidad presupuestal | Σ programas con BP-INT05 aprobado / Σ programas activos × 100 | 0 % | 80 % | BP-INT05 | 0,5 |
+| <b>C5 Reconocimiento</b> | <b>Índice de cultura emprendedora</b> (encuesta institucional anónima, escala 1–5) | Promedio de respuestas a ítems de innovación, riesgo calculado y colaboración interdisciplinar | 2,1 / 5 | 4,0 / 5 | BP-INT06, BP-INT07 | 0,5 |
+
+<b>Nota de lectura</b>: F4 es el tablero más importante porque mide <b>lo que los otros tres no pueden medir solos</b>. C2 (Índice de integración misional) es el KPI sintético de toda la reforma: si llega a 0,75 en 2034, la UDFJC habrá dejado de ser 3 silos para convertirse en 1 sistema. C1 (créditos inv/ext) es el pre-requisito normativo: sin él, no hay materia prima para integrar.
+
+<hr>
+<h3>14.6 · Reglas de lectura del BSC-S simplificado</h3>
+<ol><li><b>Línea base obligatoria</b>: un KPI sin AS-IS 2026 no existe. Si no sabemos dónde estamos, cualquier meta es fantasía.</li><li><b>Meta ambiciosa pero verosímil</b>: TO-BE 2034 corresponde al nivel N3–N4 del corpus BPA (práctica operativa o institucionalizada). No es MIT; es salir del último lugar.</li><li><b>BPA activador único</b>: cada KPI tiene 1–2 BPAs responsables. Si el KPI no mejora en 2 años, se revisa la BPA, no se cambia el indicador.</li><li><b>Confianza epistémica</b>: la columna «Confianza» (0–1) indica cuán seguros estamos de la línea base. Valores < 0,6 significan que el AS-IS es estimado y debe validarse en el primer año de medición.</li><li><b>Frecuencia de medición</b>: C1–C3 se miden semestralmente; C4–C5 se miden anualmente. El tablero F4 se presenta en cada sesión del Comité Inter-VR.</li></ol>
+
+<hr>
+<h3>14.7 · Hoja de ruta de activación de KPIs</h3>
+
+No todos los KPIs se encienden el mismo día. Esta hoja de ruta vincula cada KPI al plan mínimo viable:
+
+| Año | KPIs que se activan | BPA que entra en operación | Ruta Clark |
+|---|---|---|---|
+| <b>Año 0</b> | F4-C1 (créditos inv/ext); F4-C3 (tiempo Comité Inter-VR); F1-C1 (concepto compartido piloto) | BP-INT02, BP-INT01, BP-F01 (piloto) | R-1 |
+| <b>Año 1</b> | F2-C1 (UROP piloto); F1-C2 (PBL piloto); F4-C2 (índice integración piloto) | BP-I01, BP-F02, BP-INT04 | R-1, R-2, R-4 |
+| <b>Año 2</b> | F3-C1 (TTO operativo); F2-C3 (tiempo PI); F1-C3 (flexibilidad curricular piloto) | BP-E01, BP-I02, BP-F03 | R-2, R-3 parcial |
+| <b>Año 3</b> | F3-C2 (extensión ODS); F2-C4 (alineación PIIOM); F1-C4 (co-op escalado) | BP-E02, BP-I03, BP-F04 | R-3 pleno, R-4 pleno |
+| <b>Año 4–5</b> | F4-C5 (cultura emprendedora); F1-C5 (acreditaciones); F3-C3 (educación continua); F2-C2 (patentes) | BP-INT06, BP-F05, BP-E03, BP-I05 | R-5 |
+| <b>Año 6–8</b> | Todos los KPIs en consolidación y ajuste de metas TO-BE | Todas las BPAs en estado Operativa o Institucionalizada | R-5 consolidado |
+
+<b>Regla de oro</b>: si un KPI de F4 no mejora, los KPIs de F1–F3 pueden mejorar localmente pero la reforma <b>no habrá transformado la universidad</b>. La integración misional es la variable de salida definitiva.
+
+<hr>
+<h2>15 · Conclusiones de la versión 2.1</h2>
+
+Este AUDIT v2.1 enriquece al v1.0.0 con tres herramientas de decisión:
+<ol><li><b>Narrativa de referencia (§12)</b>: conecta el mandato constitucional con las 21 BPAs en una historia de 5 actos. Sirve para explicarle al CSU, a las VRs y a la comunidad académica <b>por qué</b> cada BPA existe y <b>dónde</b> encaja en el rompecabezas institucional.</li><li><b>DOFA 5R Clark (§13)</b>: evidencia que las 5 rutas de transformación universitaria se convierten en 5 amenazas convergentes si no se implementan BPAs. La matriz comparativa permite al CSU evaluar, en una sola página, el costo de oportunidad de no actuar.</li><li><b>BSC-S simplificado (§14)</b>: reduce el sistema de indicadores a 20 KPIs transformacionales, 4 tableros por función misional, con AS-IS, TO-BE, BPA activador y hoja de ruta de activación. Es lo suficientemente simple para la deliberación del CSU y lo suficientemente preciso para la operación de las VRs.</li></ol>
+
+<b>Próximo paso recomendado</b>: incorporar las secciones §12–§14 como anexos técnicos del Anexo v4 (Opción C), manteniendo el principio de que el marco de evaluación es obligatorio pero las metas TO-BE son referenciales y ajustables por escenario (S1–S5).
+
+<hr>
+<i>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</i>
+<i>AUDIT-inicio-analisis-bpa-v4-v2-1.md v2.1.0</i>
+<i>Narrativa M01→M02→M03→M05→M07 · DOFA 5R Clark Con/Sin BPA · BSC-S 4F×5C simplificado · 20 KPIs transformacionales</i>
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</div><div class="ft-r">2.1.0</div></div>
+</body>
+</html>

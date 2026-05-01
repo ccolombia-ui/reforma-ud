@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+![1777618325852](image/mcp/1777618325852.png)![1777618335542](image/mcp/1777618335542.png)![1777618337506](image/mcp/1777618337506.png)![1777618347660](image/mcp/1777618347660.png)    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSAY_09sG2BtXhhm2zcO-nIXjK5dVbE"
+      }
+    }
+  }
+}

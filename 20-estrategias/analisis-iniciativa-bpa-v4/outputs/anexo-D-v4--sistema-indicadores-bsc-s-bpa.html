@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo D v4 · Sistema de Indicadores BSC-S Simplificado por BPA</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+h4 { font-size: 8pt; font-weight: 700; color: var(--navy3); margin: 0.35rem 0 0.15rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+pre { background: var(--navy2); color: #fff; padding: 0.5rem; border-radius: 6px; font-family: var(--mono); font-size: 7pt; overflow-x: auto; margin: 0.3rem 0; }
+code { font-family: var(--mono); font-size: 7.2pt; background: #f1f5f9; padding: 0.05rem 0.2rem; border-radius: 3px; }
+pre code { background: transparent; padding: 0; }
+
+ul, ol { margin: 0.3rem 0 0.3rem 1.2rem; font-size: 7.5pt; }
+li { margin-bottom: 0.15rem; }
+a { color: var(--sky-d); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb, pre { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:anexo:2026:v4-D</div>
+    <h1>Anexo D v4 · Sistema de Indicadores BSC-S Simplificado por BPA</h1>
+    <div class="hero-sub"></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">4.1.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-05-01<br>
+      Acuerdo: EA-001a-v4<br>Anexo: D
+    </div>
+  </div>
+</div>
+<h1>Anexo D v4 · Sistema de Indicadores BSC-S Simplificado por BPA</h1>
+
+<div class="qb"><b>Nota de versión</b>: Este documento <b>enriquece</b> al Anexo D v3 (sistema de indicadores institucionales BSC-S) añadiendo el <b>tablero de 20 KPIs transformacionales</b> organizados por función misional y vinculados a las 21 BPAs. El Anexo D v3 conserva sus indicadores institucionales; el v4 añade la capa de medición por BPA. Es <b>aditivo</b>, no sustitutivo.</div>
+
+<hr>
+<h2>1 · Principios del BSC-S v4</h2>
+
+<h3>1.1 · Diferencia entre indicador de actividad y de transformación</h3>
+
+| Tipo | Ejemplo (mal) | Ejemplo (bien) | Por qué importa |
+|---|---|---|---|
+| <b>Actividad</b> | "Número de cursos dictados" | "% cursos con metodología PBL validada" | Contar cursos no mide si cambió la formación. |
+| <b>Actividad</b> | "Número de proyectos de investigación" | "% proyectos con participación undergrad" | Contar proyectos no mide si los estudiantes investigan. |
+| <b>Actividad</b> | "Número de convenios de extensión" | "% convenios con métrica ODS publicada" | Contar convenios no mide impacto territorial. |
+| <b>Transformación</b> | "Estudiantes satisfechos con la carrera" | "Índice de integración misional (promedio R1–R6)" | La satisfacción es subjetiva; la integración es sistémica. |
+
+<h3>1.2 · Reglas del BSC-S v4</h3>
+<ol><li><b>20 KPIs fijos</b>: 4 funciones × 5 criterios. No se añaden ni quitan sin reforma del anexo.</li><li><b>Línea base obligatoria</b>: todo KPI tiene AS-IS 2026. Si no se sabe, se declara "N/A (estimar en Año 0)".</li><li><b>BPA activador único</b>: cada KPI se vincula a 1–2 BPAs. Si el KPI no mejora, se revisa la BPA.</li><li><b>Confianza epistémica</b>: valor 0–1. < 0,6 = estimado; ≥ 0,6 = medido.</li><li><b>Frecuencia</b>: C1–C3 semestral; C4–C5 anual.</li></ol>
+
+<hr>
+<h2>2 · Tablero F1 · Formación</h2>
+
+<b>Pregunta rectora</b>: ¿La formación integra investigación, extensión y emprendimiento en la experiencia del estudiante?
+
+| Criterio | KPI | Fórmula | AS-IS 2026 | TO-BE 2034 | BPA activador | Confianza |
+|---|---|---|---|---|---|---|
+| <b>C1 Producto</b> | % estudiantes en programas con <b>concepto compartido</b> aprobado | Σ BP-F01 / Σ total × 100 | 0 % | 80 % | BP-F01 | 0,7 |
+| <b>C2 Calidad</b> | % cursos con <b>PBL o UROP integrado</b> | Σ cursos BP-F02 o BP-I01 / Σ total × 100 | < 5 % | 70 % | BP-F02, BP-I01 | 0,6 |
+| <b>C3 Eficiencia</b> | Tasa retención en programas con <b>flexibilidad curricular</b> | Σ continúan n+1 en BP-F03 / Σ matriculados n × 100 | 78 % | 90 % | BP-F03 | 0,6 |
+| <b>C4 Pertinencia</b> | % estudiantes con <b>experiencia laboral formal</b> antes de egresar | Σ BP-F04 / Σ cohorte × 100 | 15 % | 60 % | BP-F04 | 0,7 |
+| <b>C5 Reconocimiento</b> | Programas acreditados con <b>estándar internacional</b> | Conteo acreditaciones vigentes | 0 | 5 | BP-F01, BP-F05 | 0,5 |
+
+<b>Semáforo de alerta</b>:
+<ul><li>🟢 Verde: ≥ 80 % de avance hacia TO-BE.</li><li>🟡 Amarillo: 50–79 % de avance.</li><li>🔴 Rojo: < 50 % de avance o tendencia negativa 2 semestres consecutivos.</li></ul>
+
+<hr>
+<h2>3 · Tablero F2 · Investigación</h2>
+
+<b>Pregunta rectora</b>: ¿La investigación genera nuevo conocimiento con estudiantes y resuelve problemas reales del territorio?
+
+| Criterio | KPI | Fórmula | AS-IS 2026 | TO-BE 2034 | BPA activador | Confianza |
+|---|---|---|---|---|---|---|
+| <b>C1 Producto</b> | % proyectos con participación <b>undergrad</b> (UROP) | Σ proyectos con ≥1 pregrado / Σ activos × 100 | < 5 % | 70 % | BP-I01 | 0,6 |
+| <b>C2 Calidad</b> | Patentes/año con <b>participación estudiantil o docente-inventor</b> | Conteo anual RNCE | 0 | 10 | BP-I02 | 0,5 |
+| <b>C3 Eficiencia</b> | Tiempo promedio gestión PI (solicitud → registro) en meses | Promedio duración trámites TTO | 36 | 12 | BP-I02, BP-I03 | 0,5 |
+| <b>C4 Pertinencia</b> | % proyectos alineados con <b>Misión Transformativa PIIOM</b> | Σ con código PIIOM / Σ activos × 100 | 20 % | 70 % | BP-I03, BP-I04 | 0,6 |
+| <b>C5 Reconocimiento</b> | Citaciones/docente/año en áreas <b>Pasteur</b> | Citaciones Scopus/WoS STEM / docentes investigadores | 0,3 | 2,0 | BP-I04 | 0,5 |
+
+<hr>
+<h2>4 · Tablero F3 · Extensión</h2>
+
+<b>Pregunta rectora</b>: ¿La extensión genera impacto medible en el territorio y diversifica los ingresos institucionales?
+
+| Criterio | KPI | Fórmula | AS-IS 2026 | TO-BE 2034 | BPA activador | Confianza |
+|---|---|---|---|---|---|---|
+| <b>C1 Producto</b> | Contratos <b>transferencia tecnológica</b> ejecutados/año | Conteo anual contratos TTO | 2 | 25 | BP-E01 | 0,6 |
+| <b>C2 Calidad</b> | % proyectos extensión con <b>impacto medible ODS</b> | Σ BP-E02 con métrica ODS / Σ total × 100 | 10 % | 75 % | BP-E02 | 0,5 |
+| <b>C3 Eficiencia</b> | Ingresos <b>educación continua</b> como % presupuesto VR Extensión | Ingresos EC / Presupuesto VR × 100 | 5 % | 35 % | BP-E03 | 0,6 |
+| <b>C4 Pertinencia</b> | % programas con <b>articulación formal educación media</b> | Σ con convenio BP-E04 / Σ programas × 100 | 5 % | 50 % | BP-E04 | 0,5 |
+| <b>C5 Reconocimiento</b> | Reconocimientos <b>territoriales</b> por impacto | Conteo anual | 1 | 5 | BP-E02, BP-E03 | 0,5 |
+
+<hr>
+<h2>5 · Tablero F4 · Integración</h2>
+
+<b>Pregunta rectora</b>: ¿Las 3 misiones funcionan como sistema integrado o siguen siendo silos independientes?
+
+| Criterio | KPI | Fórmula | AS-IS 2026 | TO-BE 2034 | BPA activador | Confianza |
+|---|---|---|---|---|---|---|
+| <b>C1 Producto</b> | % estudiantes con <b>créditos inv/ext obligatorios</b> | Σ BP-INT02 / Σ matriculados × 100 | 0 % | 100 % | BP-INT02 | 0,8 |
+| <b>C2 Calidad</b> | <b>Índice de integración misional</b> (promedio R1–R6) | (R1+R2+R3+R4+R5+R6) / 6, escala 0–1 | 0,15 | 0,75 | BP-INT01 | 0,6 |
+| <b>C3 Eficiencia</b> | Tiempo respuesta <b>Comité Inter-VR</b> (días hábiles) | Promedio radicación → acta | 90 | 14 | BP-INT01, BP-INT04 | 0,7 |
+| <b>C4 Pertinencia</b> | % oferta académica <b>racionalizada</b> | Σ BP-INT05 / Σ programas × 100 | 0 % | 80 % | BP-INT05 | 0,5 |
+| <b>C5 Reconocimiento</b> | <b>Índice de cultura emprendedora</b> (encuesta 1–5) | Promedio ítems innovación, riesgo, colaboración | 2,1 / 5 | 4,0 / 5 | BP-INT06, BP-INT07 | 0,5 |
+
+<b>Regla de oro</b>: si F4 no mejora, F1–F3 pueden mejorar localmente pero la reforma <b>no habrá transformado la universidad</b>.
+
+<hr>
+<h2>6 · Hoja de ruta de activación de KPIs</h2>
+
+| Año | KPIs que se activan | BPA que entra en operación | Ruta Clark |
+|---|---|---|---|
+| <b>Año 0</b> | F4-C1, F4-C3, F1-C1 (piloto) | BP-INT02, BP-INT01, BP-F01 | R-1 |
+| <b>Año 1</b> | F2-C1, F1-C2, F4-C2 (piloto) | BP-I01, BP-F02, BP-INT04 | R-1, R-2, R-4 |
+| <b>Año 2</b> | F3-C1, F2-C3, F1-C3 (piloto) | BP-E01, BP-I02, BP-F03 | R-2, R-3 parcial |
+| <b>Año 3</b> | F3-C2, F2-C4, F1-C4 | BP-E02, BP-I03, BP-F04 | R-3 pleno, R-4 pleno |
+| <b>Año 4–5</b> | F4-C5, F1-C5, F3-C3, F2-C2 | BP-INT06, BP-F05, BP-E03, BP-I05 | R-5 |
+| <b>Año 6–8</b> | Todos en consolidación | Todas en Operativa/Institucionalizada | R-5 consolidado |
+
+<hr>
+<h2>7 · Infraestructura de datos</h2>
+
+<h3>7.1 · Tupla JSONL estándar</h3>
+
+<pre><code>json
+{
+  "kpi_id": "F1-C1",
+  "kpi_nombre": "% estudiantes en programas con concepto compartido",
+  "funcion": "F1",
+  "criterio": "C1",
+  "bpa_activador": "BP-F01",
+  "valor": 12.5,
+  "unidad": "porcentaje",
+  "as_is": 0.0,
+  "to_be": 80.0,
+  "periodo": "2027-I",
+  "vr_responsable": "VR Formación",
+  "confianza": 0.7,
+  "fuente": "Sistema de Registro Académico",
+  "timestamp": "2026-05-01T00:00:00Z"
+}
+</code></pre>
+
+<h3>7.2 · Dashboard DataviewJS (consulta ejemplo)</h3>
+
+<pre><code>dataviewjs
+// Tablero F4 · Integración
+const kpis = dv.pages()
+  .where(p => p.kpi_id && p.kpi_id.startsWith("F4"))
+  .sort(p => p.criterio);
+
+dv.table(
+  ["KPI", "Valor", "AS-IS", "TO-BE", "% Avance", "Semáforo"],
+  kpis.map(k => {
+    const avance = ((k.valor - k.as_is) / (k.to_be - k.as_is) * 100).toFixed(1);
+    const color = avance >= 80 ? "🟢" : avance >= 50 ? "🟡" : "🔴";
+    return [k.kpi_nombre, k.valor + "%", k.as_is + "%", k.to_be + "%", avance + "%", color];
+  })
+);
+</code></pre>
+
+<h3>7.3 · Integración con Anexo D v3</h3>
+
+Los 20 KPIs v4 se suman a los indicadores institucionales del Anexo D v3. La DGE&P consolida ambos en un informe único:
+<ul><li><b>Indicadores v3</b>: permanencia institucional, eficiencia terminal, cobertura, etc. (se mantienen).</li><li><b>Indicadores v4</b>: 20 KPIs transformacionales por BPA (se añaden).</li></ul>
+
+La frecuencia de publicación del informe consolidado: <b>semestral</b>.
+
+<hr>
+<h2>8 · Glosario de indicadores v4</h2>
+
+| Término | Definición |
+|---|---|
+| <b>AS-IS</b> | Valor medido o estimado en la línea base (2026). |
+| <b>TO-BE</b> | Meta proyectada para 2034. |
+| <b>BPA activador</b> | Buena Práctica Adoptable responsable directa del movimiento del KPI. |
+| <b>Confianza epistémica</b> | Grado de certeza en la línea base (0 = especulación; 1 = medición directa). |
+| <b>Índice de integración misional</b> | Promedio de intensidad de las 6 retroalimentaciones QMT (R1–R6). |
+| <b>Semáforo</b> | 🟢 ≥ 80 % avance; 🟡 50–79 %; 🔴 < 50 % o tendencia negativa. |
+| <b>Transformación</b> | Cambio medible en comportamientos institucionales, no solo en actividades realizadas. |
+
+<hr>
+<i>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</i>
+<i>Anexo D v4 · BSC-S Simplificado 20 KPIs v4.1.0</i>
+<i>Aditivo al Anexo D v3 · 4 tableros × 5 criterios · JSONL + DataviewJS · Integración v3+v4</i>
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</div><div class="ft-r">4.1.0</div></div>
+</body>
+</html>

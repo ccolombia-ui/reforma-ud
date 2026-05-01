@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo C v4 · Cronograma de Adopción de BPAs y Estatutos Derivados</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+h4 { font-size: 8pt; font-weight: 700; color: var(--navy3); margin: 0.35rem 0 0.15rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+pre { background: var(--navy2); color: #fff; padding: 0.5rem; border-radius: 6px; font-family: var(--mono); font-size: 7pt; overflow-x: auto; margin: 0.3rem 0; }
+code { font-family: var(--mono); font-size: 7.2pt; background: #f1f5f9; padding: 0.05rem 0.2rem; border-radius: 3px; }
+pre code { background: transparent; padding: 0; }
+
+ul, ol { margin: 0.3rem 0 0.3rem 1.2rem; font-size: 7.5pt; }
+li { margin-bottom: 0.15rem; }
+a { color: var(--sky-d); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb, pre { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:anexo:2026:v4-C</div>
+    <h1>Anexo C v4 · Cronograma de Adopción de BPAs y Estatutos Derivados</h1>
+    <div class="hero-sub"></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">4.1.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-05-01<br>
+      Acuerdo: EA-001a-v4<br>Anexo: C
+    </div>
+  </div>
+</div>
+<h1>Anexo C v4 · Cronograma de Adopción de BPAs y Estatutos Derivados</h1>
+
+<div class="qb"><b>Nota de versión</b>: Este documento <b>enriquece</b> al Anexo C v3 (cronograma de estatutos derivados del Acuerdo 004/2025) añadiendo los <b>hitos de adopción de las 21 BPAs</b> alineados con el cronograma normativo. La columna «Normativo» conserva el Anexo C v3; la columna «BPA» es la adición v4.</div>
+
+<hr>
+<h2>1 · Cronograma maestro: Normativo + BPAs</h2>
+
+| Semestre | Hito normativo (Anexo C v3) | Hito BPA (Anexo C v4) | Responsable | Entregable |
+|---|---|---|---|---|
+| <b>2026-II</b> | Aprobación Anexo v4 por CSU | Capacitación "v4 en 90 minutos" | DGE&P + Asesor | 1 sesión con CSU + VRs |
+| <b>2026-II</b> | Designación Embajadores v4 | Designación Embajadores v4 | Cada VR | Acta de designación |
+| <b>2027-I</b> | Estatuto de Bienestar Universitario | <b>BP-INT02</b> Créditos inv/ext: aprobación curricular piloto (3 programas) | VR-F + Comité Curricular | 3 programas con créditos inv/ext en malla |
+| <b>2027-I</b> | Reglamento de Contratación Docente | <b>BP-INT01</b> Misión operacionalizada: firma "Proyecto Bogotá 2027" | DGE&P + CSU | Documento firmado por 3 VRs + Rector |
+| <b>2027-II</b> | Estatuto de Investigación | <b>BP-I01</b> UROP: convocatoria piloto (50 estudiantes, 1 Escuela) | VR-I | 50 estudiantes asignados a proyectos |
+| <b>2027-II</b> | Reglamento de Extensión | <b>BP-INT04</b> CABA Design Factory: 3 proyectos piloto operativos | CABA | 3 proyectos con entregables |
+| <b>2028-I</b> | Estatuto de Formación | <b>BP-F01</b> Concepto compartido: aprobado en 3 programas piloto | VR-F | Perfiles de egreso + syllabi alineados |
+| <b>2028-I</b> | Estatuto de Gestión Administrativa | <b>BP-E02</b> Extensión territorial ODS: 2 territorios con métrica | VR-E | 2 convenios territoriales firmados |
+| <b>2028-II</b> | Reglamento de Bienestar | <b>BP-I01</b> UROP escalado: 300 estudiantes, 3 Escuelas | VR-I | Informe de resultados académicos |
+| <b>2028-II</b> | — | <b>BP-I02</b> PI inventor-friendly: reglamento aprobado por CSU | VR-I + GA&F | Reglamento de PI publicado |
+| <b>2029-I</b> | Revisión integral Acuerdo 004/2025 | <b>BP-INT04</b> CABA escalado: 10 proyectos, 5 empresas aliadas | CABA | Portafolio de proyectos |
+| <b>2029-I</b> | — | <b>BP-E01</b> TTO: estructurado con presupuesto y equipo | VR-E | TTO operativo con 2 evaluaciones de tecnología |
+| <b>2029-II</b> | — | <b>BP-F02</b> PBL piloto: 1 Escuela, 30 % cursos con proyectos reales | VR-F | Syllabi con PBL validados |
+| <b>2030-I</b> | — | <b>BP-E03</b> Educación continua: 5 programas nuevos con empresas | VR-E | 5 convenios con sector productivo |
+| <b>2030-II</b> | — | <b>BP-INT03</b> CLR: plataforma operativa, 30 % estudiantes | VR-F + TI | Sistema CLR en producción |
+| <b>2031-I</b> | — | <b>BP-F01</b> Concepto compartido escalado: 50 % programas | VR-F | Informe de coherencia curricular |
+| <b>2031-II</b> | — | <b>BP-INT05</b> Racionalización: 1er ciclo de dictámenes | VR-F + DGE&P | 5 dictámenes de pertinencia |
+| <b>2032-I</b> | — | <b>BP-INT06</b> Retención y engagement: sistema universidad completa | VR-F + Bienestar | Tasa de retención ≥ 85 % |
+| <b>2032-II</b> | — | <b>BP-F03</b> Flexibilidad curricular: 3 programas | VR-F | 3 programas con rutas personalizadas |
+| <b>2033-I</b> | — | <b>BP-I05</b> Spin-offs: 2 operativas con facturación | VR-I + VR-E | 2 empresas constituidas |
+| <b>2033-II</b> | — | <b>BP-INT07</b> Extensión productiva: 1 sede operativa | VR-E + CABA | 1 sede productiva con empleos generados |
+| <b>2034-I</b> | Evaluación final reforma | <b>Todas las BPAs</b>: evaluación de madurez N0–N4 | DGE&P + Evaluador externo | Informe de madurez institucional |
+| <b>2034-II</b> | — | ≥ 5 BPAs en N4; BSC-S con 20 KPIs consolidados | CSU | Aprobación de continuidad o ajuste |
+
+<hr>
+<h2>2 · Hitos go/no-go (puertas de decisión)</h2>
+
+Cada transición de la secuencia crítica tiene una puerta. Si no se cumple el criterio, la siguiente BPA no se activa.
+
+| Puerta | Fecha límite | Criterio de paso | Si NO pasa |
+|---|---|---|---|
+| <b>G0</b> | Dic 2026 | CSU aprueba marco v4 + designa Embajadores | Parálisis: sin marco no hay adopción. |
+| <b>G1</b> | Jun 2027 | BP-INT02 aprobado en ≥ 3 programas | Revisión curricular postergada 1 semestre. |
+| <b>G2</b> | Dic 2027 | BP-INT01 firmado por 3 VRs + Rector | Revisión de gobernanza; sin dirección no hay escala. |
+| <b>G3</b> | Jun 2028 | BP-I01: ≥ 40 estudiantes completan UROP con evaluación positiva | Ajustar metodología mentoría; no escalar. |
+| <b>G4</b> | Dic 2028 | BP-INT04: ≥ 2 proyectos con cliente externo satisfecho | Rediseñar oferta de CABA; no firmar nuevas alianzas. |
+| <b>G5</b> | Jun 2029 | BP-F01: ≥ 2 programas con concepto compartido validado por estudiantes y empleadores | Ampliar co-diseño con Escuelas; no escalar a 50 %. |
+| <b>G6</b> | Dic 2029 | BP-E02: ≥ 1 territorio con métrica ODS publicada y financiada | Revisar modelo territorial; no abrir nuevos territorios. |
+| <b>G7</b> | Jun 2031 | Índice de integración misional (F4-C2) ≥ 0,40 | Revisar articulación cross-VR; no avanzar a fase transformativa. |
+| <b>G8</b> | Dic 2034 | ≥ 5 BPAs en N4 + 20 KPIs con tendencia positiva | Ajuste del plan; posible reforma del Acuerdo 004/2025. |
+
+<hr>
+<h2>3 · Sincronización normativa – BPAs</h2>
+
+Cada estatuto derivado habilita o deshabilita BPAs:
+
+| Estatuto derivado | BPAs que habilita | BPAs que bloquea si NO se aprueba |
+|---|---|---|
+| Estatuto de Formación | BP-F01, BP-F02, BP-F03, BP-F04, BP-F05, BP-INT02, BP-INT03 | Sin estatuto, no hay reforma curricular firme. |
+| Estatuto de Investigación | BP-I01, BP-I02, BP-I03, BP-I04, BP-I05 | Sin estatuto, UROP no tiene respaldo normativo. |
+| Estatuto de Extensión | BP-E01, BP-E02, BP-E03, BP-E04 | Sin estatuto, TTO y educación continua carecen de base. |
+| Estatuto de Bienestar | BP-INT06 (retención) | Sin estatuto, retención es acción aislada, no sistémica. |
+| Reglamento de PI | BP-I02, BP-I05, BP-E01 | Sin reglamento, no hay incentivo para innovar. |
+| Reglamento de Contratación Docente | BP-F01, BP-I01, BP-I04 | Sin reglamento, promoción académica no vincula inv-docencia. |
+
+<hr>
+<h2>4 · Diagrama de Gantt simplificado (secuencia crítica)</h2>
+
+<pre><code>
+         2026  2027  2028  2029  2030  2031  2032  2033  2034
+         ───────────────────────────────────────────────────────
+BP-INT02  ████
+BP-INT01   ████████
+BP-I01        ████████████
+BP-INT04      ████████████
+BP-F01           ████████████████
+BP-E02           ████████████████
+──────────────────────────────────────────────────────────────
+         G0 G1    G2 G3    G4 G5    G6       G7          G8
+</code></pre>
+
+<b>Convención</b>:
+<ul><li><code>████</code> = Fase de inversión y estructuración</li><li><code>▓▓▓▓</code> = Fase operativa y consolidación</li><li><code>G</code> = Puerta go/no-go</li></ul>
+
+<hr>
+<h2>5 · Riesgos de cronograma y mitigación</h2>
+
+| Riesgo | Probabilidad | Impacto | Mitigación |
+|---|---|---|---|
+| Retraso en aprobación de estatuto por resistencia política | Media | Crítico | Desacoplar BPAs de estatutos: BP-INT01 e INT02 no requieren estatuto nuevo. |
+| Año electoral (2027, 2031) congelamiento institucional | Alta | Alto | Fases 0–1 diseñadas para funcionar con reorganización, no inversión. |
+| Cambio de rectoría interrumpe continuidad | Media | Crítico | Anexo v4 es aditivo; no depende de un gobierno específico. |
+| Retraso en contratación de personal clave | Media | Alto | Perfiles de cargo definidos en Anexo E v4; pipeline de selección desde Año 0. |
+| Falla tecnológica (plataformas PAI/PIC/PET/PGE) | Baja | Alto | P3 v1 ligero: no requiere desarrollo software nuevo en Año 0–1. |
+
+<hr>
+<i>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</i>
+<i>Anexo C v4 · Cronograma Adopción BPAs + Estatutos v4.1.0</i>
+<i>Aditivo al Anexo C v3 · 21 hitos BPA · 8 puertas go/no-go · Sincronización normativa</i>
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</div><div class="ft-r">4.1.0</div></div>
+</body>
+</html>

@@ -12,6 +12,7 @@ import { resolveIcon } from '@/lib/layout/icons';
 import { layoutConfig } from '@/lib/layout/config';
 import { filterVisibleSections } from '@/lib/layout/sidebar-config';
 import type { SidebarSection } from '@/lib/layout/types';
+import { VaultTreeSection } from './vault-tree-section';
 import { cn } from '@/lib/utils';
 
 
@@ -635,6 +636,10 @@ function SidebarSectionContent({
         ))}
       </ul>
     );
+  }
+
+  if (section.type === 'vault-tree') {
+    return <VaultTreeSection section={section} pathname={pathname} />;
   }
 
   return null;

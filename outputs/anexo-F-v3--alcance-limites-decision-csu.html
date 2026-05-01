@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo F v3 · Alcance, Limites y Temas Clave para la Decision del CSU</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:acuerdo:2026:EA-001a:anexo-F-v3</div>
+    <h1>Anexo F v3 · Alcance, Limites y Temas Clave para la Decision del CSU</h1>
+    <div class="hero-sub">Simplificar la decision del CSU al distinguir: (a) que temas resuelve EA001a-v3, (b) que temas NO resuelve y requieren actuacion posterior, y (c) que decisiones especificas debe tomar el CSU en la sesion de aprobacion. Prevencion de expectativas irrealistas.</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">v3.0.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-04-30<br>
+      Anexo orden: 6<br>
+      Acuerdo: EA-001a
+    </div>
+  </div>
+</div>
+
+<h2>§0 · Introduccion</h2>
+
+<div class="qb">
+<strong>Proposito de este Anexo F:</strong> evitar que el CSU debate o apruebe temas que no estan en el Acuerdo, y garantizar que los temas que SI estan sean decididos con pleno conocimiento de sus alcances y limitaciones.<br><br>
+<strong>Estructura:</strong> Tabla unica de "Que se resuelve hoy?" vs. "Que se resuelve despues?" con indicacion de quien decide, en que plazo y con que instrumento.
+</div>
+
+<h2>§1 · Que resuelve EA001a-v3? (Decision del CSU hoy)</h2>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>Tema</th><th>Que se decide</th><th>Instrumento</th><th>Plazo de ejecucion</th><th>Responsable ejecucion</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>Estructura organizativa</b></td><td>Crear 3 VRs + GA&F + DBU&BV + DGE&P + OEG</td><td>Acuerdo CSU</td><td>Inmediato (al publicarse)</td><td>Rectoria</td></tr>
+<tr><td>2</td><td><b>Planta de cargos</b></td><td>Suprimir 6 cargos; crear/transformar 7+ cargos directivos</td><td>Anexo E v3</td><td>30 dias</td><td>GA&F</td></tr>
+<tr><td>3</td><td><b>Oficina Temporal de Transformacion (OTT)</b></td><td>Crear OTT adscrita a Rectoria con 18 funciones y 18-30 meses</td><td>Art. 60ter</td><td>15 dias</td><td>Rectoria</td></tr>
+<tr><td>4</td><td><b>Comite Coordinador Inter-VR</b></td><td>Crear instancia de 7 miembros, quincenal</td><td>Art. 60bis</td><td>15 dias</td><td>Rectoria + VRs</td></tr>
+<tr><td>5</td><td><b>Sistema de Indicadores BSC-S</b></td><td>Mandato a DGE&P para operar tablero publico</td><td>Art. 60quater</td><td>90 dias</td><td>DGE&P</td></tr>
+<tr><td>6</td><td><b>Protocolo VIF-Escuela</b></td><td>Establecer articulacion vinculante VIF-Escuelas</td><td>Art. 16 §1-2</td><td>90 dias</td><td>VIF + Escuelas</td></tr>
+<tr><td>7</td><td><b>Calidades de gestion del cambio</b></td><td>Exigir Prosci/Kotter/7S en cargos directivos</td><td>Arts. 13,39,45,57 lit. i</td><td>Inmediato (nombramientos)</td><td>Rectoria</td></tr>
+<tr><td>8</td><td><b>Fondos especiales preservados</b></td><td>Mantener autonomia Fondo Investigacion y Fondo Extension</td><td>Art. 44 EA001b</td><td>Inmediato</td><td>GA&F</td></tr>
+<tr><td>9</td><td><b>Transferencia institucional</b></td><td>7 elementos obligatorios de transicion</td><td>Art. 63 EA001b</td><td>60-90 dias</td><td>OTT + GA&F</td></tr>
+<tr><td>10</td><td><b>Regimen transitorio contratos</b></td><td>Continuidad sin solucion de continuidad</td><td>Art. 44 EA001b</td><td>Inmediato</td><td>GA&F</td></tr>
+<tr><td>11</td><td><b>Clausula prospectiva APA-001</b></td><td>Mandato: APA-001 derogara Acuerdo 15/2023</td><td>Art. 65bis</td><td>Aprobacion APA-001 (mes 12-18)</td><td>CSU futuro</td></tr>
+<tr><td>12</td><td><b>Plan de implementacion</b></td><td>90 dias + OTT responsable + 7 elementos</td><td>Art. 66 modificado</td><td>90 dias</td><td>OTT + Rectoria</td></tr>
+<tr><td>13</td><td><b>3 fases de implementacion</b></td><td>Criticos (3m) / Importantes (6m) / Sistemas (12m)</td><td>Art. 67 modificado</td><td>12 meses</td><td>OTT + DGE&P</td></tr>
+<tr><td>14</td><td><b>Cronograma 7 estatutos derivados</b></td><td>Hitos irreversibles y dependencias</td><td>Anexo C v3</td><td>6-18 meses</td><td>OTT + comisiones</td></tr>
+<tr><td>15</td><td><b>Reasignacion funcional presupuestal</b></td><td>Migrar funciones T0 a T2 sin porcentajes especulativos</td><td>Anexo B v3</td><td>3-12 meses</td><td>GA&F + OTT</td></tr>
+<tr><td>16</td><td><b>Matriz RACI cross-VR</b></td><td>48 procesos con Driver, Accountable, Consulted, Informed</td><td>Anexo A v3</td><td>30 dias</td><td>DGE&P + OTT</td></tr>
+<tr><td>17</td><td><b>Indicadores BSC-S por dependencia</b></td><td>40 KPIs en 5 perspectivas + 1 transversal</td><td>Anexo D v3</td><td>90 dias</td><td>DGE&P</td></tr>
+<tr><td>18</td><td><b>Transformacion IDEXUD a Centro</b></td><td>Equipo designado; propuesta en 6 meses</td><td>Art. 34 EA001b</td><td>6 meses</td><td>VICE&PS</td></tr>
+<tr><td>19</td><td><b>Redaccion simplificada funciones</b></td><td>Lenguaje directo por dependencia</td><td>Arts. 9,14,19,24 EA001b</td><td>Inmediato</td><td>Secretaria General</td></tr>
+<tr><td>20</td><td><b>DBU&BV como sistema institucional</b></td><td>Enfoque transversal articulado</td><td>Arts. 26-30 EA001b</td><td>3 meses</td><td>DBU&BV</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§2 · Que NO resuelve EA001a-v3? (Decision posterior)</h2>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>Tema</th><th>Por que no se resuelve hoy</th><th>Quien decide despues</th><th>Cuando</th><th>Instrumento</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>Estatuto Academico (EST-1)</b></td><td>Requiere consulta con Escuelas, Facultades, Consejo Academico</td><td>CSU</td><td>6 meses</td><td>Acuerdo CSU</td></tr>
+<tr><td>2</td><td><b>Estatuto Inv-Cre-Inn (EST-2)</b></td><td>Requiere mapeo grupos de investigacion, MinCiencias</td><td>CSU</td><td>6 meses</td><td>Acuerdo CSU</td></tr>
+<tr><td>3</td><td><b>Estatuto Contextos-Extension (EST-3)</b></td><td>Requiere convenios territoriales, consulta externa</td><td>CSU</td><td>6 meses</td><td>Acuerdo CSU</td></tr>
+<tr><td>4</td><td><b>APA-001 (Administrativo y Personal)</b></td><td>Depende de EST-1, EST-2, EST-3 para planta consolidada</td><td>CSU</td><td>12-18 meses</td><td>Acuerdo CSU</td></tr>
+<tr><td>5</td><td><b>Estatuto Bienestar (EST-5)</b></td><td>Requiere consulta estudiantil, definicion programas</td><td>CSU</td><td>4 meses</td><td>Acuerdo CSU</td></tr>
+<tr><td>6</td><td><b>Estatuto Egresados (EST-6)</b></td><td>Requiere base de datos, encuestas, validacion</td><td>CSU</td><td>4 meses</td><td>Acuerdo CSU</td></tr>
+<tr><td>7</td><td><b>Estatuto Planeacion (EST-7)</b></td><td>Requiere sistema de indicaciones aprobado</td><td>CSU</td><td>3 meses</td><td>Acuerdo CSU</td></tr>
+<tr><td>8</td><td><b>Reforma Acuerdo 009/2006 (planes de estudio)</b></td><td>No es competencia de este acuerdo; requiere Consejo Academico</td><td>Consejo Academico</td><td>6-12 meses</td><td>Acuerdo Consejo Academico</td></tr>
+<tr><td>9</td><td><b>Presupuesto detallado por VR</b></td><td>Depende de cuotas asignadas por Distrito; no se proyectan % sin sustento</td><td>CSU + Distrito</td><td>Ano fiscal 2027</td><td>Resolucion CSU</td></tr>
+<tr><td>10</td><td><b>Nombres de los nuevos directivos</b></td><td>Son de libre nombramiento del Rector; el CSU aprueba estructura, no personas</td><td>Rectoria</td><td>Post-vigencia</td><td>Acto administrativo</td></tr>
+<tr><td>11</td><td><b>Reforma del Estatuto Docente</b></td><td>Fuera del alcance de estructura organizativa; requiere acuerdo especifico</td><td>CSU</td><td>12-24 meses</td><td>Acuerdo CSU</td></tr>
+<tr><td>12</td><td><b>Convenio marco UDFJC-Alcaldia</b></td><td>Requiere negociacion bilateral; no es interno</td><td>Rectoria + Alcaldia</td><td>6-18 meses</td><td>Convenio</td></tr>
+<tr><td>13</td><td><b>Sistema de informacion unico (ERP)</b></td><td>Requiere licitacion, contratacion, implementacion tecnica</td><td>Rectoria + GA&F</td><td>12-24 meses</td><td>Contrato</td></tr>
+<tr><td>14</td><td><b>Adquisicion de nuevos bienes/infraestructura</b></td><td>Requiere presupuesto adicional; no modifica estructura</td><td>CSU + Distrito</td><td>Segun disponibilidad</td><td>Resolucion</td></tr>
+<tr><td>15</td><td><b>Modificacion de estatutos de Escuelas/Facultades</b></td><td>Autonomia academica; cada unidad decide su reglamento interno</td><td>Consejos de Escuela/Facultad</td><td>6-18 meses</td><td>Reglamento interno</td></tr>
+<tr><td>16</td><td><b>Ajuste de mallas curriculares</b></td><td>Requiere reforma Acuerdo 009/2006; no es estructura</td><td>Consejo Academico</td><td>12-24 meses</td><td>Acuerdo</td></tr>
+<tr><td>17</td><td><b>Creacion de nuevos programas academicos</b></td><td>Competencia del Consejo Academico con base en PED</td><td>Consejo Academico</td><td>Continuo</td><td>Acuerdo</td></tr>
+<tr><td>18</td><td><b>Evaluacion de desempeno del Rector</b></td><td>Competencia del CSU pero no de este acuerdo</td><td>CSU</td><td>Segun calendario</td><td>Acta CSU</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo F v3 · Alcance y limites · Pagina 1 / 3</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§3 · Decisiones que el CSU debe tomar HOY</h2>
+
+<h3>3.1 · Decision principal (unica)</h3>
+<div class="qb">
+<strong>¿Aprueba el Consejo Superior Universitario el Acuerdo EA001a-v3 (Estructura Organizativa de la UDFJC) con sus 5 anexos tecnicos vinculantes (A, B, C, D, E) y los 2 anexos de claridad (F, G), en los terminos presentados?</strong>
+</div>
+
+<h3>3.2 · Decisiones derivadas (si la principal es aprobada)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>Decision derivada</th><th>Alternativas</th><th>Recomendacion tecnica</th></tr></thead>
+<tbody>
+<tr><td>3.2.1</td><td>¿Aprueba la creacion de la OTT con presupuesto provisional del 3%?</td><td>Si / No</td><td><b>Si</b> — condicion del exito</td></tr>
+<tr><td>3.2.2</td><td>¿Aprueba el Comite Coordinador Inter-VR con las 7 funciones definidas?</td><td>Si / No (solo con funciones basicas)</td><td><b>Si</b> — resuelve D1 DOFA</td></tr>
+<tr><td>3.2.3</td><td>¿Aprueba el mandato BSC-S a la DGE&P con tablero publico obligatorio?</td><td>Si / No</td><td><b>Si</b> — resuelve D6 DOFA</td></tr>
+<tr><td>3.2.4</td><td>¿Aprueba la clausula prospectiva APA-001 que deroga Acuerdo 15/2023?</td><td>Si / No (dejar deuda abierta)</td><td><b>Si</b> — coherencia normativa</td></tr>
+<tr><td>3.2.5</td><td>¿Aprueba los plazos ajustados (90 dias plan + 3 fases)?</td><td>Si / No (mantener 60 dias)</td><td><b>Si</b> — 60 dias es insuficiente</td></tr>
+<tr><td>3.2.6</td><td>¿Aprueba que la OTT coordine los 7 estatutos derivados?</td><td>Si / No (dejar a cada VR)</td><td><b>Si</b> — evita dispersion</td></tr>
+<tr><td>3.2.7</td><td>¿Aprueba la correccion de codigos Decreto 785 (020 para Directores)?</td><td>Si / No (mantener 009)</td><td><b>Si</b> — correccion juridica</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.3 · Decisiones que el CSU NO debe tomar hoy (competencia diferida)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Tema</th><th>Razon para no decidir hoy</th><th>Quien decide</th><th>Cuando</th></tr></thead>
+<tbody>
+<tr><td>Nombres de vicerrectores/gerente/directores</td><td>LNyR del Rector</td><td>Rectoria</td><td>Post-vigencia</td></tr>
+<tr><td>Monto exacto presupuesto por VR</td><td>Depende de cuotas Distrito</td><td>CSU + Distrito</td><td>Ano fiscal 2027</td></tr>
+<tr><td>Contenido de estatutos derivados</td><td>Requiere comisiones redactoras</td><td>CSU (futuro)</td><td>3-18 meses</td></tr>
+<tr><td>Reforma planes de estudio</td><td>Competencia Consejo Academico</td><td>Consejo Academico</td><td>12-24 meses</td></tr>
+<tr><td>Contratacion ERP/SIGUD</td><td>Requiere proceso contractual</td><td>Rectoria + GA&F</td><td>12-24 meses</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§4 · Mapa de decisiones: CSU vs. Rectoria vs. OTT vs. Distrito</h2>
+
+<div class="qb">
+┌─────────────────────────────────────────────────────────────────────────┐<br>
+│                         MAPA DE DECISIONES EA001a-v3                    │<br>
+│                                                                         │<br>
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐               │<br>
+│  │   CSU       │────►│  Rectoria   │────►│    OTT      │               │<br>
+│  │ (Politica)  │     │ (Ejecuta)   │     │ (Coordina)  │               │<br>
+│  │             │     │             │     │  18 meses   │               │<br>
+│  │ · Aprueba   │     │ · Nombra    │     │ · Gestion   │               │<br>
+│  │   acuerdo   │     │   directivos│     │   cambio    │               │<br>
+│  │ · Aprueba   │     │ · Asigna    │     │ · 7 estatutos│              │<br>
+│  │   estatutos │     │   recursos  │     │ · Migracion  │              │<br>
+│  │   derivados │     │   OTT       │     │   personal   │              │<br>
+│  │ · Fija      │     │ · Reporta   │     │ · Tablero    │              │<br>
+│  │   politicas │     │   al CSU    │     │   BSC-S      │              │<br>
+│  └─────────────┘     └─────────────┘     └─────────────┘               │<br>
+│         │                   │                   │                       │<br>
+│         └───────────────────┴───────────────────┘                       │<br>
+│                             │                                           │<br>
+│                             ▼                                           │<br>
+│                    ┌─────────────────┐                                  │<br>
+│                    │  Distrito Capital│                                  │<br>
+│                    │  (Presupuesto)   │                                  │<br>
+│                    │                  │                                  │<br>
+│                    │ · Asigna cuota   │                                  │<br>
+│                    │ · Vigila ejecucion│                                 │<br>
+│                    └─────────────────┘                                  │<br>
+│                                                                         │<br>
+└─────────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h2>§5 · Glosario rapido para el debate del CSU</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Termino</th><th>Significado en EA001a-v3</th></tr></thead>
+<tbody>
+<tr><td><b>OTT</b></td><td>Oficina Temporal de Transformacion · 18 meses · adscrita a Rectoria · coordina implementacion</td></tr>
+<tr><td><b>BSC-S</b></td><td>Balanced Scorecard + Sustainability · sistema de 5 perspectivas + sostenibilidad</td></tr>
+<tr><td><b>Comite Inter-VR</b></td><td>Instancia de 7 miembros que resuelve conflictos cross-VR antes de Rectoria</td></tr>
+<tr><td><b>RACI</b></td><td>Matriz de responsabilidades: Responsible, Accountable, Consulted, Informed</td></tr>
+<tr><td><b>APA-001</b></td><td>Estatuto Administrativo y de Personal · proximo estatuto derivado · deroga Acuerdo 15/2023</td></tr>
+<tr><td><b>Reasignacion funcional</b></td><td>Trasladar el gasto segun las funciones que migran, no por % arbitrario</td></tr>
+<tr><td><b>Hito irreversible</b></td><td>Punto de no retorno en la implementacion; si se cumple, la reforma avanza</td></tr>
+<tr><td><b>Clausula prospectiva</b></td><td>Mandato futuro incorporado hoy: "APA-001 derogara Acuerdo 15/2023"</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <div style="font-family: 'Georgia', serif; font-size: 10pt; font-weight: 700; color: #fff; line-height: 1.35;">Anexo F v3 · 20 temas resueltos hoy · 18 temas diferidos · 7 decisiones derivadas · Mapa de decisiones</div>
+  <div style="font-size: 6.5pt; color: rgba(255,255,255,0.72); margin-top: 0.1rem;">Proposito: simplificar el debate del CSU, prevenir expectativas irrealistas, delimitar competencias.</div>
+</div>
+
+<div class="ft">
+  <div>Anexo F v3 · Alcance y limites · Pagina 3 / 3</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+</body>
+</html>

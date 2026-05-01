@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo E v3 · Planta de Cargos Administrativos conforme al Decreto 785 de 2005</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:acuerdo:2026:EA-001a:anexo-E-v3</div>
+    <h1>Anexo E v3 · Planta de Cargos Administrativos (Decreto 785/2005)</h1>
+    <div class="hero-sub">Resolver D_b9 (DOFA 001b): tabla incompleta (celdas vacias, codigos ???). Sintesis de EA001 base (Arts. 61-65) + EA001a-v2 (analisis SOTA) + EA001b (Art. 41). Tabla consolidada unica; codigos corregidos (009 a 020); clausula prospectiva APA-001.</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">v3.0.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-04-30<br>
+      Supersede: anexo-E v2<br>
+      Anexo orden: 5<br>
+      Acuerdo: EA-001a
+    </div>
+  </div>
+</div>
+
+<h2>§0 · Introduccion · Linaje de esta version v3</h2>
+
+<div class="qb">
+<strong>Este Anexo E v3 es producto de la sintesis de tres versiones:</strong><br><br>
+<table class="tbl-small">
+<thead><tr><th>Fuente</th><th>Que se aprovecha</th><th>Que se mejora</th></tr></thead>
+<tbody>
+<tr><td><b>EA001 base</b></td><td>Arts. 61-65 (tablas detalladas de planta)</td><td>Se migran del articulado al anexo tecnico (practica SOTA)</td></tr>
+<tr><td><b>EA001a-v2</b></td><td>Analisis SOTA de derogacion Acuerdo 15/2023; codigos corregidos</td><td>Se completa la tabla con todos los codigos; se anade clausula prospectiva</td></tr>
+<tr><td><b>EA001b</b></td><td>Arts. 2-3-9-41 (supresiones y creaciones concretas)</td><td>Se completa la tabla del Art. 41 (celdas vacias); se verifican codigos</td></tr>
+</tbody>
+</table><br>
+<strong>Novedad en v3:</strong><br>
+1. <b>Tabla consolidada unica</b> por nivel jerarquico.<br>
+2. <b>Codigos verificados</b> contra Decreto 785/2005 Art. 16. Correcciones: Director Bienestar (009 a <b>020</b>); Director Planeacion (009 a <b>020</b>).<br>
+3. <b>Clausula prospectiva</b> sobre transicion hacia APA-001, que derogara integralmente el Acuerdo 15/2023.<br>
+4. <b>Derechos adquiridos</b>: nota explicita sobre proteccion de derechos laborales del personal actual.
+</div>
+
+<h2>§1 · Principios rectores</h2>
+
+<div class="rule-card r1">
+  <div class="rule-title">1 · Codigos Decreto 785/2005</div>
+  <div class="rule-body">Toda denominacion debe corresponder a un codigo valido del Decreto 785.</div>
+</div>
+<div class="rule-card r2">
+  <div class="rule-title">2 · Nivel jerarquico correcto</div>
+  <div class="rule-body">Directivo (067, 077, 039, 020), Asesor (105), Profesional (006, 008, 115), Tecnico (varios), Asistencial.</div>
+</div>
+<div class="rule-card r3">
+  <div class="rule-title">3 · Tabla en anexo, no en articulado</div>
+  <div class="rule-body">Practica SOTA (Akoma Ntoso / EUR-Lex): datos operativos en anexos; articulado contiene principios y mandatos.</div>
+</div>
+<div class="rule-card r4">
+  <div class="rule-title">4 · Actualizable sin reforma del acuerdo</div>
+  <div class="rule-body">Modificar el Anexo E no requiere nuevo acuerdo CSU (resolucion rectoral o acto administrativo suficiente).</div>
+</div>
+<div class="rule-card r5">
+  <div class="rule-title">5 · Proteccion derechos adquiridos</div>
+  <div class="rule-body">La transicion respeta el regimen laboral y los derechos del personal actual (Art. 53 C.P.).</div>
+</div>
+
+<h2>§2 · Estado pre-reforma (T0) · Acuerdo 15/2023 vigente</h2>
+
+<h3>2.1 · Planta directiva pre-reforma</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Denominacion</th><th>Codigo</th><th>Grado Salarial</th><th>N Cargos</th><th>Observacion</th></tr></thead>
+<tbody>
+<tr><td>Vicerrector de Universidad (Academico)</td><td>077</td><td>04</td><td>1</td><td>Se divide en 3</td></tr>
+<tr><td>Vicerrector de Universidad (Adm-Financiero)</td><td>077</td><td>04</td><td>1</td><td>Se transforma en Gerente</td></tr>
+<tr><td>Jefe de Oficina (Investigaciones)</td><td>006</td><td>01</td><td>1</td><td>Se suprime</td></tr>
+<tr><td>Jefe de Oficina (Extension / IDEXUD)</td><td>006</td><td>01</td><td>1</td><td>Se suprime</td></tr>
+<tr><td>Jefe de Oficina (Bienestar)</td><td>006</td><td>01</td><td>1</td><td>Se transforma en Director</td></tr>
+<tr><td>Jefe de Oficina (Financiera)</td><td>006</td><td>01</td><td>1</td><td>Se suprime</td></tr>
+<tr><td>Jefe Oficina Asesora de Planeacion</td><td>115</td><td>03</td><td>1</td><td>Se transforma en Director</td></tr>
+<tr><td>Lider de Programa (Infraestructura)</td><td>206</td><td>12</td><td>1</td><td>Vacancia definitiva</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.2 · Planta administrativa pre-reforma (resumen)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Nivel</th><th>Denominacion representativa</th><th>Codigo</th><th>Aprox. cargos</th></tr></thead>
+<tbody>
+<tr><td>Directivo</td><td>Decano de Universidad</td><td>008</td><td>7</td></tr>
+<tr><td>Directivo</td><td>Secretario General</td><td>052</td><td>1</td></tr>
+<tr><td>Asesor</td><td>Asesor Rectoria</td><td>105</td><td>1</td></tr>
+<tr><td>Profesional</td><td>Jefe de Oficina (TH, Infraestructura, etc.)</td><td>006</td><td>7</td></tr>
+<tr><td>Profesional</td><td>Jefe Oficina Asesora Juridica y TI</td><td>115</td><td>2</td></tr>
+<tr><td>Tecnico</td><td>Lider de Programa (Financiero)</td><td>206</td><td>1</td></tr>
+<tr><td>Tecnico</td><td>Lider de Programa (varios)</td><td>206</td><td>(vacantes)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo E v3 · Planta de cargos · Pagina 1 / 3</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§3 · Planta post-reforma (T2) · EA001a-v3</h2>
+
+<h3>3.1 · Nivel Directivo</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Denominacion</th><th>Codigo</th><th>Grado Salarial</th><th>N Cargos</th><th>Origen / Transformacion</th></tr></thead>
+<tbody>
+<tr><td><b>Rector de Universidad</b></td><td>067</td><td>05</td><td>1</td><td>Sin cambio</td></tr>
+<tr><td><b>Vicerrector de Formacion</b></td><td>077</td><td>04</td><td>1</td><td>Transformado de Vicerrector Academico</td></tr>
+<tr><td><b>Vicerrector de Investigacion-Creacion e Innovacion</b></td><td>077</td><td>04</td><td>1</td><td>Transformado de Jefe Oficina Investigaciones</td></tr>
+<tr><td><b>Vicerrector de Contextos-Extension y Proyeccion Social</b></td><td>077</td><td>04</td><td>1</td><td>Transformado de Jefe Oficina Extension</td></tr>
+<tr><td><b>Gerente Administrativo y Financiero</b></td><td>039</td><td>04</td><td>1</td><td>Transformado de Vicerrector Adm-Financiero</td></tr>
+<tr><td><b>Director General de Bienestar Universitario y Buen Vivir</b></td><td><b>020</b></td><td>03</td><td>1</td><td>Transformado de Jefe Oficina Bienestar (006 a 020)</td></tr>
+<tr><td><b>Director General de Gestion Estrategica y de Planeacion</b></td><td><b>020</b></td><td>03</td><td>1</td><td>Transformado de Jefe Oficina Asesora Planeacion (115 a 020)</td></tr>
+<tr><td>Decano de Universidad</td><td>008</td><td>03</td><td>7</td><td>Sin cambio</td></tr>
+<tr><td>Secretario General de Universidad</td><td>052</td><td>02</td><td>1</td><td>Sin cambio</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="qb">
+<strong>Correccion v3:</strong> EA001b y EA001 original asignaban codigo 009 a Directores Bienestar y Planeacion. El Decreto 785/2005 Art. 16 establece que la denominacion "Director General" corresponde al codigo <b>020</b>. El codigo 009 es "Director de Division/Departamento/Seccion". Como ambas direcciones son transversales y estrategicas, el codigo correcto es <b>020</b>.
+</div>
+
+<h3>3.2 · Nivel Asesor</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Denominacion</th><th>Codigo</th><th>Grado Salarial</th><th>N Cargos</th><th>Observacion</th></tr></thead>
+<tbody>
+<tr><td>Asesor de Rectoria</td><td>105</td><td>01</td><td>1</td><td>Sin cambio</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.3 · Nivel Profesional (Jefes de Oficina)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Denominacion</th><th>Codigo</th><th>Grado Salarial</th><th>N Cargos</th><th>Observacion</th></tr></thead>
+<tbody>
+<tr><td>Jefe de Oficina de Talento Humano</td><td>006</td><td>01</td><td>1</td><td>Adscrito a GA&F</td></tr>
+<tr><td>Jefe de Oficina de Infraestructura</td><td>006</td><td>01</td><td>1</td><td>Adscrito a GA&F</td></tr>
+<tr><td>Jefe de Oficina de Contratacion</td><td>006</td><td>01</td><td>1</td><td>Adscrito a GA&F</td></tr>
+<tr><td>Jefe de Oficina de Tecnologias de la Informacion</td><td>006</td><td>01</td><td>1</td><td>Adscrito a GA&F</td></tr>
+<tr><td>Jefe de Oficina de Egresados</td><td>006</td><td>01</td><td>1</td><td>Adscrito a VICE&PS</td></tr>
+<tr><td>Jefe Oficina Asesora de Juridica</td><td>115</td><td>03</td><td>1</td><td>Adscrito a Rectoria / Secretaria General</td></tr>
+<tr><td>Jefe Oficina Asesora de Tecnologias</td><td>115</td><td>03</td><td>1</td><td>Adscrito a Rectoria / GA&F</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.4 · Nivel Tecnico (Lideres de Programa)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Denominacion</th><th>Codigo</th><th>Grado Salarial</th><th>N Cargos</th><th>Observacion</th></tr></thead>
+<tbody>
+<tr><td>Lider de Programa (Financiero / Presupuesto)</td><td>206</td><td>12</td><td>1</td><td>Adscrito a GA&F</td></tr>
+<tr><td>Lider de Programa (Quejas, Reclamos, Atencion al Ciudadano, Red UD NET)</td><td>206</td><td>12</td><td>(a definir)</td><td>Adscrito a GA&F / DBU&BV</td></tr>
+<tr><td>Lider de Programa (Admisiones, Registro y Control, Emisora LA UD)</td><td>206</td><td>12</td><td>(a definir)</td><td>Adscrito a VIF / VICE&PS</td></tr>
+<tr><td>Lider de Proyecto (Publicaciones, Novedades, Contabilidad, Biblioteca, Actas, Archivo, Microfilmacion)</td><td>206</td><td>12</td><td>(a definir)</td><td>Distribuido por VRs y GA&F</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.5 · Profesional Especializado</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Denominacion</th><th>Codigo</th><th>Grado Salarial</th><th>N Cargos</th><th>Observacion</th></tr></thead>
+<tbody>
+<tr><td>Profesional Especializado (varias areas)</td><td>(segun funcion)</td><td>07-09</td><td>(a completar por GA&F)</td><td>Distribuido por dependencias</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo E v3 · Planta de cargos · Pagina 2 / 3</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§4 · Resumen de transformacion de cargos</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Accion</th><th>Cargos afectados</th><th>Resultado</th></tr></thead>
+<tbody>
+<tr><td><b>Suprimir</b></td><td>Vicerrector Academico (077)</td><td>Dividido en 3 Vicerrectores (077)</td></tr>
+<tr><td><b>Suprimir</b></td><td>Vicerrector Adm-Financiero (077)</td><td>Transformado en Gerente (039)</td></tr>
+<tr><td><b>Suprimir</b></td><td>Jefe Oficina Investigaciones (006)</td><td>Transformado en Vicerrector (077)</td></tr>
+<tr><td><b>Suprimir</b></td><td>Jefe Oficina Extension (006)</td><td>Transformado en Vicerrector (077)</td></tr>
+<tr><td><b>Suprimir</b></td><td>Jefe Oficina Financiera (006)</td><td>Funciones absorbidas por GA&F</td></tr>
+<tr><td><b>Suprimir</b></td><td>Lider Programa Infraestructura (206)</td><td>Vacancia definitiva</td></tr>
+<tr><td><b>Transformar</b></td><td>Jefe Oficina Bienestar (006) a Director General Bienestar (020)</td><td>Codigo corregido</td></tr>
+<tr><td><b>Transformar</b></td><td>Jefe Oficina Planeacion (115) a Director General Planeacion (020)</td><td>Codigo corregido</td></tr>
+<tr><td><b>Crear</b></td><td>OTT Director (cargo transitorio, max 30 meses)</td><td>Nuevo, adscrito a Rectoria</td></tr>
+<tr><td><b>Crear</b></td><td>Jefe Oficina Egresados (006)</td><td>Nuevo, adscrito a VICE&PS</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§5 · Notas juridicas y transitorias</h2>
+
+<h3>5.1 · Derechos adquiridos</h3>
+<div class="qb">
+<strong>PARAGRAFO 1:</strong> La modificacion de la planta de cargos administrativos establecida en el presente Anexo E v3 <b>no afecta los derechos laborales</b> del personal de carrera que actualmente ocupa cargos de libre nombramiento y remocion. El personal sera reubicado conforme al Plan de Migracion de Personal elaborado por la OTT, garantizando el debido proceso, la continuidad laboral y los derechos adquiridos conforme al Art. 53 de la Constitucion Politica y la jurisprudencia constitucional vigente.
+</div>
+
+<h3>5.2 · Clausula prospectiva</h3>
+<div class="qb">
+<strong>PARAGRAFO 2:</strong> El <b>Estatuto Administrativo y de Personal (APA-001)</b> que el Consejo Superior Universitario expedira en cumplimiento del Art. 98 §4 del ACU-004-25 <b>derogara integralmente el Acuerdo 15 de 2023</b>, consolidando en un solo cuerpo normativo la totalidad de la reglamentacion de la planta de personal. Hasta tanto APA-001 entre en vigencia, las modificaciones introducidas por el presente Anexo E v3 prevalecen sobre las disposiciones contrarias del Acuerdo 15 de 2023.
+</div>
+
+<h3>5.3 · Actualizacion del anexo</h3>
+<div class="qb">
+<strong>PARAGRAFO 3:</strong> El presente Anexo E v3 puede ser actualizado por resolucion rectoral para: (a) completar los codigos y grados salariales pendientes de definicion; (b) ajustar el numero de cargos profesionales y tecnicos segun presupuesto aprobado; (c) incorporar modificaciones derivadas de la implementacion de APA-001. Toda actualizacion sera comunicada al Consejo Superior Universitario y publicada en el tablero de implementacion (Anexo D v3).
+</div>
+
+<div class="verdict">
+  <div style="font-family: 'Georgia', serif; font-size: 10pt; font-weight: 700; color: #fff; line-height: 1.35;">Anexo E v3 · Sintesis de tres versiones · Tabla consolidada · Codigos corregidos (020) · Clausula prospectiva</div>
+  <div style="font-size: 6.5pt; color: rgba(255,255,255,0.72); margin-top: 0.1rem;">Novedad v3: Correccion juridica de codigos Decreto 785; proteccion de derechos adquiridos; transicion hacia APA-001.</div>
+</div>
+
+<div class="ft">
+  <div>Anexo E v3 · Planta de cargos · Pagina 3 / 3</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+</body>
+</html>

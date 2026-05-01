@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo G v3 · Guia para Planes de Accion de Unidades a 8 Anos — BPAs, Transicion, Minimo Viable y ADN Emprendedor</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:acuerdo:2026:EA-001a:anexo-G-v3</div>
+    <h1>Anexo G v3 · Guia para Planes de Accion de Unidades a 8 Anos — ADN Emprendedor & Transformativa</h1>
+    <div class="hero-sub">Incorpora explicitamente el ADN de universidad-emprendedora: responsabilidades misionales NO exclusivas ni excluyentes, mecanismos de articulacion, plataformas de interoperabilidad, y Escuelas permeando la fuerza de trabajo de las tres Vicerrectorias. Sintesis de EA001 + EA001a-v2 + EA001b + auditoria AG-v3-001.</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">v3.0.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-04-30<br>
+      Anexo orden: 7<br>
+      Acuerdo: EA-001a
+    </div>
+  </div>
+</div>
+
+<h2>§0 · Introduccion · Linaje de esta version v3</h2>
+
+<div class="qb">
+<strong>Este Anexo G v3 es producto de la sintesis de tres versiones + mejoras estructurales:</strong><br><br>
+<table class="tbl-small">
+<thead><tr><th>Fuente</th><th>Que se aprovecha</th><th>Que se mejora</th></tr></thead>
+<tbody>
+<tr><td><b>EA001 base</b></td><td>Art. 16 (articulacion inter-VR declarativa)</td><td>Se convierte en protocolo operativo vinculante</td></tr>
+<tr><td><b>EA001a-v2</b></td><td>Plan Minimo Viable 8 anos; retroalimentaciones QMT R1-R6; BPAs M07</td><td>Se enriquece con ADN emprendedor; se anaden plataformas de interoperabilidad</td></tr>
+<tr><td><b>EA001b</b></td><td>Art. 42 (plan implementacion); Art. 63 (transferencia); funciones especificas por dependencia</td><td>Se traduce en BPAs cross-VR con responsabilidades compartidas</td></tr>
+<tr><td><b>Auditoria AG-v3-001</b></td><td>Hallazgos H1-H7 sobre exclusividad, silos, permeabilidad Escuela-VR</td><td>Se incorporan 5 secciones nuevas (SS1, SS4, SS5, SS6, SS7)</td></tr>
+</tbody>
+</table><br>
+<strong>Novedades en v3:</strong><br>
+1. <b>Principios rectores</b> (SS1) con ADN universidad-emprendedora & transformativa.<br>
+2. <b>Responsabilidades no exclusivas ni excluyentes</b>: cada VR lidera, pero ninguna monopoliza.<br>
+3. <b>15 BPAs cross-VR</b> (SS4) que comparten 2+ Vicerrectorias.<br>
+4. <b>5 mecanismos de articulacion</b> (SS5): fisicos, digitales, normativos, financieros, de talento.<br>
+5. <b>4 plataformas de interoperabilidad</b> (SS6): PAI, PIC, PET, PGE.<br>
+6. <b>Escuelas permeando las 3 VRs</b> (SS7): modelo 70/30, matriz de permeabilidad, indicadores.
+</div>
+
+<h2>§1 · Principios rectores</h2>
+
+<h3>1.1 · ADN universidad-emprendedora & transformativa</h3>
+<div class="qb">
+La Universidad Distrital Francisco Jose de Caldas es una <b>universidad-emprendedora</b> (Clark, 1998; Carayannis & Campbell, 2012) y una <b>universidad transformativa</b> (Mode 3, Quintuple Helix). Esto no es un eslogan: es un <b>principio operativo</b> que debe permejar todos los Planes de Accion a 8 anos.
+</div>
+
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>Manifestacion del ADN</th><th>En VIF</th><th>En VIC&I</th><th>En VICE&PS</th><th>En GA&F</th><th>En DBU&BV</th><th>En DGE&P</th><th>En OEG</th></tr></thead>
+<tbody>
+<tr><td><b>Emprendimiento</b></td><td>Cursos de emprendimiento en todos los programas</td><td>Spin-offs y transferencia tecnologica</td><td>Incubadoras territoriales</td><td>Contratacion agil para startups</td><td>Bienestar del emprendedor estudiantil</td><td>Indicadores de emprendimiento institucional</td><td>Red de egresados emprendedores</td></tr>
+<tr><td><b>Transformacion social</b></td><td>Formacion con enfoque de impacto</td><td>Investigacion orientada a problemas publicos</td><td>Extension como co-creacion, no asistencia</td><td>Presupuesto por resultados de impacto</td><td>Buen vivir como eje transversal</td><td>Planeacion estrategica con enfoque territorial</td><td>Empleabilidad con sentido</td></tr>
+<tr><td><b>Innovacion continua</b></td><td>Flexibilidad curricular</td><td>Open science + CRIS Hub</td><td>Educacion continua SAR</td><td>Gestion por competencias</td><td>Innovacion en servicios de bienestar</td><td>Benchmarking internacional</td><td>Retroalimentacion curricular continua</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>1.2 · Responsabilidades misionales NO exclusivas ni excluyentes</h3>
+<div class="qb">
+<strong>PRINCIPIO FUNDAMENTAL:</strong> La Vicerrectoria de Formacion <b>lidera</b> la formacion, pero no <b>exclusivamente</b> posee la formacion. La Vicerrectoria de Investigacion-Creacion-Innovacion <b>lidera</b> la investigacion, pero no <b>exclusivamente</b> posee la investigacion. La Vicerrectoria de Contextos-Extension-Proyeccion Social <b>lidera</b> la extension, pero no <b>exclusivamente</b> posee la extension.
+</div>
+
+<div class="rule-card r1">
+  <div class="rule-title">Aplicacion operativa</div>
+  <div class="rule-body">
+    <b>VIF</b> puede investigar (ej: didactica, pedagogia) sin pedir permiso a VIC&I.<br>
+    <b>VIC&I</b> puede formar (ej: UROP, mentoria pregrado) sin pedir permiso a VIF.<br>
+    <b>VICE&PS</b> puede investigar (ej: evaluacion de impacto territorial) sin pedir permiso a VIC&I.<br>
+    <b>Todas las VRs</b> deben articularse con las Escuelas, que son <b>unidades de integracion</b>.
+  </div>
+</div>
+
+<div class="rule-card r2">
+  <div class="rule-title">Limite</div>
+  <div class="rule-body">Cuando una actividad cross-VR compite por recursos presupuestales, aplica la matriz RACI (Anexo A v3) y, en caso de conflicto, el Comite Inter-VR (Art. 60bis).</div>
+</div>
+
+<h3>1.3 · Articulacion como valor, no como excepcion</h3>
+<div class="rule-card r3">
+  <div class="rule-body">La articulacion entre VRs no es un acto administrativo excepcional: es una <b>practica institucional habitual</b>. Cada Plan de Accion a 8 anos debe incluir, obligatoriamente, al menos <b>3 proyectos cross-VR por ano</b>.</div>
+</div>
+
+<h3>1.4 · Interoperabilidad por diseno</h3>
+<div class="rule-card r4">
+  <div class="rule-body">Ningun sistema, plataforma o procedimiento debe disenarse para una sola VR. El principio de interoperabilidad exige que desde la concepcion se prevea la conexion con las demas dependencias.</div>
+</div>
+
+<h3>1.5 · Escuelas como nucleo permeador de las 3 VRs</h3>
+<div class="rule-card r5">
+  <div class="rule-body">Las Escuelas (Facultades, Institutos) no son unidades de recepcion de servicios de las VRs. Son <b>nucleos de integracion</b> donde confluyen formacion, investigacion y extension. Cada Plan de Accion de VR debe incluir una seccion explicita: "Como esta VR se articula con las Escuelas".</div>
+</div>
+
+<div class="ft">
+  <div>Anexo G v3 · Planes de Accion · Pagina 1 / 5</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§2 · Marco de planeacion: los 8 anos del CONSOLIDADOR</h2>
+
+<h3>2.1 · Fases del Plan Minimo Viable</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Fase</th><th>Anos</th><th>Enfoque</th><th>Pregunta guia</th></tr></thead>
+<tbody>
+<tr><td><b>Fase 1 · Cimentacion</b></td><td>1-2</td><td>Instalar estructura, nombrar directivos, aprobar estatutos derivados</td><td>¿La estructura opera sin friccion?</td></tr>
+<tr><td><b>Fase 2 · Aceleracion</b></td><td>3-4</td><td>Incorporar BPAs ancla, pilotos en Escuelas CABAs, primeros nichos N4</td><td>¿Hay al menos 3 nichos en N4?</td></tr>
+<tr><td><b>Fase 3 · Consolidacion</b></td><td>5-6</td><td>Escalar nichos exitosos, acreditacion internacional, sostenibilidad financiera</td><td>¿El modelo se sostiene sin OTT?</td></tr>
+<tr><td><b>Fase 4 · Proyeccion</b></td><td>7-8</td><td>Liderazgo territorial, exportacion de modelo, nueva reforma si aplica</td><td>¿La UDFJC es referente nacional?</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.2 · Retroalimentaciones QMT a mantener activas</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Retroalimentacion</th><th>Que conecta</th><th>Responsable de monitoreo</th></tr></thead>
+<tbody>
+<tr><td><b>R1 · Nucleo Directivo</b></td><td>CSU a Rectoria a directivos</td><td>DGE&P</td></tr>
+<tr><td><b>R2 · Formacion-Investigacion</b></td><td>VIF a VIC&I (UROP, mentoria)</td><td>VIF + VIC&I</td></tr>
+<tr><td><b>R3 · Extension-Territorio</b></td><td>VICE&PS a Alcaldia a comunidad</td><td>VICE&PS</td></tr>
+<tr><td><b>R4 · Egresados-Mercado</b></td><td>OEG a empresas a egresados</td><td>OEG + VICE&PS</td></tr>
+<tr><td><b>R5 · Internacionalizacion</b></td><td>VIF a convenios doble titulacion</td><td>VIF + Relaciones Internacionales</td></tr>
+<tr><td><b>R6 · Ciclo Virtuoso</b></td><td>Todo el sistema en bucle de mejora</td><td>DGE&P + OTT (meses 1-18)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§3 · Metodologia: 5 pasos por dependencia</h2>
+
+<h3>Paso 1 · Diagnostico de linea base (mes 1)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Nivel</th><th>Descripcion</th><th>Indicador</th></tr></thead>
+<tbody>
+<tr><td><b>N0 · Inexistente</b></td><td>La funcion no existe o esta fragmentada</td><td>Sin procesos definidos</td></tr>
+<tr><td><b>N1 · Reactivo</b></td><td>Opera pero sin estrategia</td><td>Procesos ad-hoc, sin KPIs</td></tr>
+<tr><td><b>N2 · Proceso</b></td><td>Procesos estandarizados</td><td>Manuales, indicadores basicos</td></tr>
+<tr><td><b>N3 · Sistematico</b></td><td>Gestion integrada</td><td>BSC-S operativo, benchmarking</td></tr>
+<tr><td><b>N4 · Transformador</b></td><td>Liderazgo en su campo</td><td>Nichos N4, modelos exportables</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Paso 2 · Mapeo de BPAs pertinentes (mes 1-2)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>Dependencia</th><th>BPAs ancla (prioridad 1)</th><th>BPAs complementarias (prioridad 2)</th></tr></thead>
+<tbody>
+<tr><td><b>VIF</b></td><td>BP-F01 Core Curriculum compartido · BP-F02 PBL · BP-F03 Flexibilidad curricular · BP-F04 Co-op / Practicas · BP-F05 Ciclos propedeuticos</td><td>BP-F06 Internacionalizacion · BP-F07 Educacion continua</td></tr>
+<tr><td><b>VIC&I</b></td><td>BP-I01 UROP investigacion pregrado · BP-I02 PI inventor-friendly · BP-I03 CRIS Hub · BP-I04 Open Science · BP-I05 Ecosistema spin-offs</td><td>BP-I06 Mentoria investigadores · BP-I07 Divulgacion cientifica</td></tr>
+<tr><td><b>VICE&PS</b></td><td>BP-E01 TTO transferencia tecnologica · BP-E02 Extension territorial ODS · BP-E03 Educacion continua ($4.000M/ano) · BP-E04 Articulacion media</td><td>BP-E05 Emprendimiento · BP-E06 Responsabilidad social</td></tr>
+<tr><td><b>GA&F</b></td><td>BP-A01 Sistema financiero integrado · BP-A02 Contratacion agil · BP-A03 Gestion activos · BP-A04 Talento humano por competencias</td><td>BP-A05 Tecnologia e informacion · BP-A06 Control interno</td></tr>
+<tr><td><b>DBU&BV</b></td><td>BP-B01 Permanencia estudiantil · BP-B02 Salud integral · BP-B03 Cultura y deporte · BP-B04 Prevencion violencias</td><td>BP-B05 Bienestar docente · BP-B06 Accesibilidad</td></tr>
+<tr><td><b>DGE&P</b></td><td>BP-P01 Planeacion estrategica PED · BP-P02 Indicadores BSC-S · BP-P03 Autoevaluacion · BP-P04 Acreditacion</td><td>BP-P05 Benchmarking · BP-P06 Prospectiva</td></tr>
+<tr><td><b>OEG</b></td><td>BP-O01 Base datos egresados · BP-O02 Empleabilidad · BP-O03 Redes egresados · BP-O04 Retroalimentacion curricular</td><td>BP-O05 Educacion continua egresados · BP-O06 Filantropia</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo G v3 · Planes de Accion · Pagina 2 / 5</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h3>Paso 3 · Benchmarking con universidades referentes (mes 2-3)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>BPA</th><th>Universidad referente</th><th>Que hicieron</th><th>Leccion para UDFJC</th></tr></thead>
+<tbody>
+<tr><td>UROP (BP-I01)</td><td>MIT (USA)</td><td>90% estudiantes participan en investigacion pregrado</td><td>Requiere reforma Estatuto Docente para valorar mentoria</td></tr>
+<tr><td>Co-op (BP-F04)</td><td>ETS Montreal (Canada)</td><td>45 creditos obligatorios en practicas empresariales</td><td>Requiere reforma Acuerdo 009/2006 para creditizar practicas</td></tr>
+<tr><td>Extension territorial</td><td>U. Veracruzana (Mexico)</td><td>Centros universitarios en 50+ municipios</td><td>Requiere convenio marco Alcaldia + presupuesto territorial</td></tr>
+<tr><td>TTO (BP-E01)</td><td>Stanford (USA)</td><td>OTL gestiona 500+ patentes/ano</td><td>Requiere politica PI inventor-friendly + capital semilla</td></tr>
+<tr><td>BSC-S</td><td>U. de Chile</td><td>BSC operativo desde 2005 con 4 perspectivas</td><td>Adaptar a 5 perspectivas + sostenibilidad</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Paso 4 · Diseno de plan minimo viable por BPA (mes 3)</h3>
+<div class="qb">
+<b>Formato del plan por BPA:</b><br>
+BPA: [codigo y nombre]<br>
+Dependencia responsable: [VIF/VIC&I/VICE&PS/GA&F/DBU&BV/DGE&P/OEG]<br>
+Nivel actual (T0): [N0-N4] · Meta ano 2: [N1-N4] · Meta ano 4: [N1-N4] · Meta ano 8: [N1-N4]<br>
+Acciones ano 1: [lista concreta] · Recursos requeridos: [$ y personas]<br>
+Dependencias con las que articula: [lista] · Riesgos: [lista] · Mitigaciones: [lista]<br>
+Indicador de exito: [KPI especifico]
+</div>
+
+<h3>Paso 5 · Consolidacion y aprobacion (mes 3-4)</h3>
+<div class="rule-card r1">
+  <div class="rule-body">1. Cada dependencia presenta su Plan de Accion a 8 anos al Comite Inter-VR.<br>2. El Comite evalua coherencia cross-VR (evita duplicaciones, cubre vacios).<br>3. La DGE&P consolida los 7 planes en un <b>Plan Institucional de Implementacion</b>.<br>4. El Rector presenta al CSU (trimestralmente) el avance del Plan Institucional.</div>
+</div>
+
+<h2>§4 · BPAs cross-VR: las 15 practicas que articulan las 3 misiones</h2>
+
+<div class="qb">
+<strong>Principio:</strong> Ninguna BPA es propiedad exclusiva de una sola VR. Las 15 BPAs cross-VR son practicas que, por su naturaleza, requieren la participacion de 2 o mas Vicerrectorias.
+</div>
+
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>BPA cross-VR</th><th>VRs que la comparten</th><th>Escuela permeadora</th><th>Plataforma</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>UROP pregrado</b> (BP-I01)</td><td>VIF + VIC&I</td><td>Todas las Escuelas con pregrado</td><td>PIC</td></tr>
+<tr><td>2</td><td><b>Co-op / Practicas integradas</b> (BP-F04)</td><td>VIF + VICE&PS</td><td>Escuelas con componente practico</td><td>PAI</td></tr>
+<tr><td>3</td><td><b>Spin-offs y emprendimiento</b></td><td>VIC&I + VICE&PS + VIF</td><td>Ingenieria, administracion, diseno</td><td>PIC + PET</td></tr>
+<tr><td>4</td><td><b>Extension territorial con investigacion</b></td><td>VICE&PS + VIC&I</td><td>Escuelas con proyectos de impacto</td><td>PET</td></tr>
+<tr><td>5</td><td><b>Educacion continua SAR</b> (BP-E03)</td><td>VICE&PS + VIF</td><td>Todas las Escuelas</td><td>PAI</td></tr>
+<tr><td>6</td><td><b>Internacionalizacion academica</b></td><td>VIF + VIC&I + VICE&PS</td><td>Escuelas con doble titulacion</td><td>PAI</td></tr>
+<tr><td>7</td><td><b>Innovacion curricular basada en I+D</b></td><td>VIF + VIC&I</td><td>Escuelas con grupos de investigacion</td><td>PAI + PIC</td></tr>
+<tr><td>8</td><td><b>Transferencia tecnologica TTO</b></td><td>VIC&I + VICE&PS + GA&F</td><td>Escuelas con I+D+i patentable</td><td>PIC</td></tr>
+<tr><td>9</td><td><b>Responsabilidad social universitaria</b></td><td>VICE&PS + DBU&BV + VIF</td><td>Escuelas con practica social</td><td>PET</td></tr>
+<tr><td>10</td><td><b>Bienestar en la investigacion</b></td><td>DBU&BV + VIC&I</td><td>Escuelas con doctorandos</td><td>PIC</td></tr>
+<tr><td>11</td><td><b>Empleabilidad y egresados</b></td><td>OEG + VICE&PS + VIF</td><td>Todas las Escuelas</td><td>PGE</td></tr>
+<tr><td>12</td><td><b>Retroalimentacion curricular</b></td><td>OEG + VIF</td><td>Todas las Escuelas</td><td>PGE</td></tr>
+<tr><td>13</td><td><b>Open Science y repositorios</b></td><td>VIC&I + VIF + DGE&P</td><td>Escuelas con produccion academica</td><td>PIC</td></tr>
+<tr><td>14</td><td><b>Indicadores de impacto territorial</b></td><td>DGE&P + VICE&PS</td><td>Escuelas con convenios de impacto</td><td>PGE + PET</td></tr>
+<tr><td>15</td><td><b>Formacion de directivos</b></td><td>DGE&P + Todas las VRs</td><td>Escuelas con lideres academicos</td><td>PGE</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo G v3 · Planes de Accion · Pagina 3 / 5</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§5 · Mecanismos de articulacion</h2>
+
+<h3>5.1 · Mecanismos fisicos</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Mecanismo</th><th>Descripcion</th><th>Responsable</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td><b>Laboratorios compartidos</b></td><td>Espacios de I+D+i abiertos a pregrado y posgrado</td><td>VIC&I + VIF</td><td>Ano 1-2</td></tr>
+<tr><td><b>Centros de extension territorial</b></td><td>Sedes en municipios con presencia de Escuelas y proyectos</td><td>VICE&PS + VIC&I</td><td>Ano 2-4</td></tr>
+<tr><td><b>Espacios de co-working</b></td><td>Areas compartidas para spin-offs y emprendimientos</td><td>VIC&I + VICE&PS + GA&F</td><td>Ano 1-3</td></tr>
+<tr><td><b>Salas de articulacion inter-VR</b></td><td>Espacios fisicos para reuniones del Comite Inter-VR</td><td>GA&F + OTT</td><td>Mes 3-6</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>5.2 · Mecanismos digitales</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Mecanismo</th><th>Descripcion</th><th>Responsable</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td><b>Directorio de competencias institucional</b></td><td>Base de datos de expertos por Escuela, VR, tema ODS</td><td>DGE&P</td><td>Ano 1</td></tr>
+<tr><td><b>Sistema de gestion de proyectos cross-VR</b></td><td>Herramienta compartida para seguimiento de proyectos articulados</td><td>DGE&P + GA&F</td><td>Ano 1-2</td></tr>
+<tr><td><b>Repositorio institucional abierto</b></td><td>Acceso unificado a produccion academica, extensiones e innovaciones</td><td>VIC&I + DGE&P</td><td>Ano 1-2</td></tr>
+<tr><td><b>Tablero BSC-S cross-VR</b></td><td>Panel de indicadores que muestra articulacion entre VRs</td><td>DGE&P</td><td>Mes 3-6</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>5.3 · Mecanismos normativos</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Mecanismo</th><th>Descripcion</th><th>Responsable</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td><b>Protocolo VIF-Escuela</b> (Anexo A v3)</td><td>Reglas de articulacion con participacion de VIC&I y VICE&PS cuando aplique</td><td>VIF + Escuelas</td><td>Mes 3-6</td></tr>
+<tr><td><b>Reglamento de proyectos cross-VR</b></td><td>Procedimiento para crear, ejecutar y evaluar proyectos entre 2+ VRs</td><td>Comite Inter-VR</td><td>Ano 1</td></tr>
+<tr><td><b>Politica de PI inventor-friendly</b> (BP-I02)</td><td>Reglas de reparto de royalties que incentiven la participacion cross-VR</td><td>VIC&I + Asesoria Juridica</td><td>Ano 1-2</td></tr>
+<tr><td><b>Lineamientos de dedicacion docente 70/30</b></td><td>Norma que regula el 30% de tiempo cross-VR (SS7)</td><td>VIF + VIC&I + VICE&PS</td><td>Ano 1-2</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>5.4 · Mecanismos financieros</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Mecanismo</th><th>Descripcion</th><th>Responsable</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td><b>Fondos mixtos cross-VR</b></td><td>Lineas de financiacion que requieren cofinanciacion de 2+ VRs</td><td>GA&F + Comite Inter-VR</td><td>Ano 1-2</td></tr>
+<tr><td><b>Concurrencia de fondos especiales</b></td><td>Fondo Investigacion + Fondo Extension pueden financiar proyectos conjuntos</td><td>GA&F</td><td>Ano 1</td></tr>
+<tr><td><b>Presupuesto de articulacion</b></td><td>Partida del 5% del presupuesto de cada VR destinada a proyectos cross-VR</td><td>GA&F + CSU</td><td>Ano fiscal 2027</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>5.5 · Mecanismos de talento humano</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Mecanismo</th><th>Descripcion</th><th>Responsable</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td><b>Comisiones docentes cross-VR</b></td><td>Docentes con dedicacion 70/30 pueden ser comisionados a otra VR hasta 2 semestres</td><td>VIF + VIC&I + VICE&PS</td><td>Ano 1</td></tr>
+<tr><td><b>Doble adscripcion de investigadores</b></td><td>Investigadores adscritos a un grupo de VIC&I y a una Escuela simultaneamente</td><td>VIC&I + Escuelas</td><td>Ano 1-2</td></tr>
+<tr><td><b>Mentores cross-VR</b></td><td>Profesores de VIF mentorando proyectos de VIC&I; investigadores mentorando practicas de VICE&PS</td><td>Comite Inter-VR</td><td>Ano 1-3</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§6 · Plataformas de interoperabilidad</h2>
+
+<div class="qb">
+<strong>Definicion:</strong> Plataforma de interoperabilidad es un sistema (fisico, digital o normativo) que permite que dos o mas unidades organizativas compartan informacion, recursos o procesos sin necesidad de replicar infraestructura.
+</div>
+
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>Plataforma</th><th>Funcion</th><th>Usuarios</th><th>Interoperabilidad</th><th>Responsable</th><th>Plazo</th><th>Indicador</th></tr></thead>
+<tbody>
+<tr><td><b>PAI</b> Academica Integrada</td><td>Integrar sistemas academicos con investigacion y extension</td><td>Estudiantes, docentes, coordinadores, secretarias</td><td>API con PIC y PET</td><td>GA&F + VIF</td><td>Ano 1-2</td><td>% estudiantes con trayectoria integrada visible</td></tr>
+<tr><td><b>PIC</b> Investigacion y Creacion</td><td>Gestion de grupos, proyectos, patentes, repositorio, Open Science, CRIS Hub</td><td>Investigadores, estudiantes UROP, coordinadores, TTO</td><td>API con PAI y PGE</td><td>VIC&I + GA&F</td><td>Ano 1-2</td><td>% grupos con perfil activo en PIC</td></tr>
+<tr><td><b>PET</b> Extension Territorial</td><td>Gestion de convenios, practicas en territorio, educacion continua SAR, impacto ODS</td><td>Coordinadores, alcaldias, empresas, estudiantes</td><td>API con PAI y PGE</td><td>VICE&PS + GA&F</td><td>Ano 1-2</td><td>% convenios gestionados a traves de PET</td></tr>
+<tr><td><b>PGE</b> Gestion Estrategica</td><td>BSC-S, tablero publico, indicadores, benchmarking, planeacion PED</td><td>Directivos, CSU, DGE&P, Comite Inter-VR</td><td>API con PAI, PIC, PET</td><td>DGE&P + GA&F</td><td>Mes 3-6 (MV); Ano 1-2 (completo)</td><td>% indicadores alimentados automaticamente</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>6.5 · Estandares de interoperabilidad</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Estandar</th><th>Aplicacion</th><th>Responsable</th></tr></thead>
+<tbody>
+<tr><td><b>ORCID</b> para investigadores</td><td>PIC debe exigir ORCID para todos los grupos de investigacion</td><td>VIC&I</td></tr>
+<tr><td><b>DOI</b> para publicaciones</td><td>Repositorio institucional debe asignar DOI</td><td>VIC&I + DGE&P</td></tr>
+<tr><td><b>LRS (Learning Record Store)</b> para trayectorias</td><td>PAI debe registrar experiencias de aprendizaje en formato xAPI</td><td>VIF + GA&F</td></tr>
+<tr><td><b>Open Data</b> para datos territoriales</td><td>PET debe publicar datos de impacto en formatos abiertos</td><td>VICE&PS + DGE&P</td></tr>
+<tr><td><b>API REST</b> para conexion entre plataformas</td><td>Todas las plataformas deben exponer APIs documentadas</td><td>GA&F</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo G v3 · Planes de Accion · Pagina 4 / 5</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§7 · Escuelas permeando la fuerza de trabajo de las 3 Vicerrectorias</h2>
+
+<h3>7.1 · Modelo de dedicacion docente: 70% formacion / 30% cross-VR</h3>
+<div class="qb">
+El docente de la UDFJC no es solo un transmisor de conocimientos. Es un <b>formador, investigador, extensionista y emprendedor</b>. El modelo 70/30 reconoce que la formacion (docencia directa, preparacion, evaluacion) ocupa aproximadamente el 70% de la carga laboral, dejando un 30% para actividades cross-VR.
+</div>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Componente</th><th>%</th><th>Actividades incluidas</th><th>VR principal</th><th>VRs secundarias</th></tr></thead>
+<tbody>
+<tr><td><b>Formacion directa</b></td><td>70%</td><td>Docencia, preparacion, evaluacion, tutorias</td><td>VIF</td><td>—</td></tr>
+<tr><td><b>Investigacion-Creacion</b></td><td>10-15%</td><td>UROP, mentoria, grupos, publicaciones</td><td>VIC&I</td><td>VIF (co-mentoria)</td></tr>
+<tr><td><b>Extension-Proyeccion Social</b></td><td>5-10%</td><td>Practicas territoriales, convenios, educacion continua</td><td>VICE&PS</td><td>VIF (practicas)</td></tr>
+<tr><td><b>Emprendimiento-Innovacion</b></td><td>5%</td><td>Spin-offs, consultoria, transferencia tecnologica</td><td>VIC&I + VICE&PS</td><td>VIF (formacion)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="qb">
+<strong>Nota:</strong> El 30% cross-VR no es una reduccion de carga academica. Es una <b>reclasificacion</b> de actividades que ya realizan muchos docentes, pero que hoy no son reconocidas ni valoradas institucionalmente.
+</div>
+
+<h3>7.2 · Matriz de permeabilidad Escuela-VR</h3>
+<div class="qb">
+<strong>Definicion:</strong> La permeabilidad mide el grado en que una Escuela participa en las actividades de cada VR. Una Escuela 100% permeable participa activamente en VIF, VIC&I y VICE&PS.
+</div>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Escuela / Instituto</th><th>VIF (formacion)</th><th>VIC&I (investigacion)</th><th>VICE&PS (extension)</th><th>Indice de permeabilidad</th></tr></thead>
+<tbody>
+<tr><td>Escuela de Ingenieria</td><td>Lidera programas</td><td>Grupos I+D+i, patentes</td><td>Practicas empresariales, extension tecnica</td><td>Alta</td></tr>
+<tr><td>Escuela de Ciencias de la Salud</td><td>Lidera programas</td><td>Investigacion clinica, epidemiologia</td><td>Extension comunitaria, salud publica</td><td>Alta</td></tr>
+<tr><td>Escuela de Ciencias Sociales</td><td>Lidera programas</td><td>Investigacion social, creacion artistica</td><td>Extension territorial, politicas publicas</td><td>Alta</td></tr>
+<tr><td>Escuela de Artes</td><td>Lidera programas</td><td>Creacion e innovacion cultural</td><td>Extension cultural, festivales</td><td>Alta</td></tr>
+<tr><td>Escuela de Educacion</td><td>Lidera programas</td><td>Investigacion educativa, didactica</td><td>Extension pedagogica, formacion docente</td><td>Media-Alta</td></tr>
+<tr><td>Institutos tecnologicos</td><td>Lidera programas</td><td>Innovacion tecnologica aplicada</td><td>Extension productiva, SENA</td><td>Media-Alta</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="qb">
+<b>Meta ano 4:</b> Todas las Escuelas con indice de permeabilidad "Media-Alta" o superior.<br>
+<b>Meta ano 8:</b> Todas las Escuelas con indice "Alta".
+</div>
+
+<h3>7.3 · Indicadores de permeabilidad</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>Indicador</th><th>Meta T1 (2a)</th><th>Meta T2 (4a)</th><th>Meta T3 (8a)</th><th>Fuente</th></tr></thead>
+<tbody>
+<tr><td>PER-01</td><td>% docentes con dedicacion cross-VR reconocida</td><td>20%</td><td>40%</td><td>60%</td><td>VIF + VIC&I + VICE&PS</td></tr>
+<tr><td>PER-02</td><td>% Escuelas con indice de permeabilidad mayor o igual a Media-Alta</td><td>50%</td><td>80%</td><td>100%</td><td>DGE&P</td></tr>
+<tr><td>PER-03</td><td>% programas academicos con componente UROP o practica investigativa</td><td>30%</td><td>60%</td><td>90%</td><td>VIF + VIC&I</td></tr>
+<tr><td>PER-04</td><td>% programas academicos con componente de extension territorial</td><td>40%</td><td>70%</td><td>100%</td><td>VIF + VICE&PS</td></tr>
+<tr><td>PER-05</td><td>Numero de proyectos cross-VR liderados por Escuelas</td><td>5</td><td>15</td><td>30</td><td>Comite Inter-VR</td></tr>
+<tr><td>PER-06</td><td>% estudiantes que participan en actividades de 2+ VRs durante su carrera</td><td>25%</td><td>50%</td><td>75%</td><td>PAI</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>7.4 · Incentivos y reconocimiento</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Incentivo</th><th>Descripcion</th><th>Responsable</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td><b>Reconocimiento en evaluacion de desempeno</b></td><td>El 30% cross-VR se valora en la evaluacion docente anual</td><td>VIF + VIC&I + VICE&PS</td><td>Ano 1-2</td></tr>
+<tr><td><b>Puntos adicionales en escalafon</b></td><td>Participacion en proyectos cross-VR otorga puntos para ascenso</td><td>Consejo Academico</td><td>Ano 2-3</td></tr>
+<tr><td><b>Fondos semilla para proyectos Escuela-VR</b></td><td>Convocatoria anual de $100M para proyectos liderados por Escuelas con 2+ VRs</td><td>VIC&I + VICE&PS</td><td>Ano 1</td></tr>
+<tr><td><b>Distincion "Escuela Permeable"</b></td><td>Reconocimiento institucional anual a la Escuela con mayor indice de permeabilidad</td><td>Rectoria + DGE&P</td><td>Ano 2</td></tr>
+<tr><td><b>Reduccion de carga administrativa</b></td><td>Escuelas permeables obtienen tramites preferenciales en GA&F</td><td>GA&F</td><td>Ano 2-3</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§8 · Matriz de articulacion entre dependencias (a 8 anos)</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Que necesita...</th><th>De quien depende...</th><th>BPA que los articula</th><th>Mecanismo</th></tr></thead>
+<tbody>
+<tr><td>VIF (formacion de investigadores)</td><td>VIC&I (mentoria UROP)</td><td>BP-I01 + BP-F01</td><td>Protocolo VIF-Escuela (Anexo A)</td></tr>
+<tr><td>VIC&I (spin-offs)</td><td>VICE&PS (mercado) + GA&F (financiamiento)</td><td>BP-I05 + BP-E01</td><td>Comite Inter-VR</td></tr>
+<tr><td>VICE&PS (extension territorial)</td><td>VIF (estudiantes practicas) + VIC&I (proyectos)</td><td>BP-E02 + BP-F04</td><td>Convenios territoriales</td></tr>
+<tr><td>GA&F (presupuesto por VR)</td><td>Todas las VRs (planes de accion)</td><td>BP-A01 + BP-P01</td><td>Anexo B (presupuesto)</td></tr>
+<tr><td>DBU&BV (permanencia)</td><td>VIF (seguimiento academico) + DGE&P (indicadores)</td><td>BP-B01 + BP-P02</td><td>Tablero BSC-S (Anexo D)</td></tr>
+<tr><td>OEG (empleabilidad)</td><td>VICE&PS (convenios empresas) + VIF (programas)</td><td>BP-O02 + BP-E03</td><td>Anexo A (RACI)</td></tr>
+<tr><td>DGE&P (benchmarking)</td><td>Todas las VRs (datos operativos)</td><td>BP-P05</td><td>Informes trimestrales</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§9 · Minimizacion de friccion organizacional</h2>
+
+<h3>9.1 · Principios de implementacion sin friccion</h3>
+<div class="rule-card r1">
+  <div class="rule-title">1 · No cambiar todo a la vez</div>
+  <div class="rule-body">Maximo 3 BPAs ancla por dependencia en los primeros 2 anos.</div>
+</div>
+<div class="rule-card r2">
+  <div class="rule-title">2 · Pilotos antes de escalar</div>
+  <div class="rule-body">Probar en 1-2 Escuelas CABAs antes de universalizar.</div>
+</div>
+<div class="rule-card r3">
+  <div class="rule-title">3 · Ganar-ganar</div>
+  <div class="rule-body">Cada BPA debe beneficiar a al menos 2 dependencias.</div>
+</div>
+<div class="rule-card r4">
+  <div class="rule-title">4 · Reciclar antes que comprar</div>
+  <div class="rule-body">Usar infraestructura y personal existente.</div>
+</div>
+<div class="rule-card r5">
+  <div class="rule-title">5 · Documentar lecciones</div>
+  <div class="rule-body">La OTT sistematiza lo que funciona y lo que no.</div>
+</div>
+
+<h3>9.2 · Senales de alerta de friccion excesiva</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Senal</th><th>Que significa</th><th>Accion correctiva</th></tr></thead>
+<tbody>
+<tr><td>> 30% personal solicita traslado</td><td>Resistencia al cambio critica</td><td>OTT activa plan comunicacion + capacitacion intensiva</td></tr>
+<tr><td>Satisfaccion < 2.5 en 2 encuestas consecutivas</td><td>La comunidad rechaza la reforma</td><td>Diagnostico participativo + ajuste de implementacion</td></tr>
+<tr><td>> 50% hitos retrasados > 30 dias</td><td>Plan irreal o recursos insuficientes</td><td>Revision plan + posible ajuste de plazos con CSU</td></tr>
+<tr><td>Conflictos cross-VR > 5 por mes</td><td>RACI no funciona o no se cumple</td><td>Revision Comite Inter-VR + posible mediacion externa</td></tr>
+<tr><td>Presupuesto de transicion ejecutado < 60% a mes 6</td><td>Paralisis administrativa o resistencia GA&F</td><td>Reunion extraordinaria Rectoria + GA&F + OTT</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo G v3 · Planes de Accion · Pagina 5 / 5</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§10 · Formatos de entrega</h2>
+
+<h3>10.1 · Productos esperados de cada dependencia (a mes 3)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>Producto</th><th>Formato</th><th>Destinatario</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Diagnostico linea base (auto-evaluacion N0-N4)</td><td>Tabla + evidencia</td><td>OTT + DGE&P</td></tr>
+<tr><td>2</td><td>Matriz BPAs pertinentes (prioridad 1 y 2)</td><td>Tabla</td><td>Comite Inter-VR</td></tr>
+<tr><td>3</td><td>Fichas benchmark (3 universidades referentes)</td><td>Texto + fuentes</td><td>DGE&P</td></tr>
+<tr><td>4</td><td>Plan minimo viable por BPA ancla (max. 3)</td><td>Formato SS3.4</td><td>Comite Inter-VR</td></tr>
+<tr><td>5</td><td>Presupuesto estimado ano 1-2 por BPA</td><td>Tabla</td><td>GA&F + Anexo B</td></tr>
+<tr><td>6</td><td>Articulaciones con otras dependencias</td><td>Matriz SS8</td><td>Comite Inter-VR</td></tr>
+<tr><td>7</td><td>Riesgos y mitigaciones</td><td>Tabla</td><td>OTT</td></tr>
+<tr><td>8</td><td><b>Plan de permeabilidad Escuela-VR</b> (NUEVO v3)</td><td>Matriz SS7.2 + acciones</td><td>Comite Inter-VR</td></tr>
+<tr><td>9</td><td><b>Propuesta de plataformas de interoperabilidad</b> (NUEVO v3)</td><td>Ficha SS6</td><td>DGE&P + GA&F</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>10.2 · Consolidacion institucional (a mes 4)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>#</th><th>Producto</th><th>Responsable</th><th>Destinatario</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Plan Institucional de Implementacion a 8 anos</td><td>DGE&P</td><td>CSU</td></tr>
+<tr><td>2</td><td>Mapa de articulaciones cross-VR</td><td>DGE&P</td><td>Comite Inter-VR</td></tr>
+<tr><td>3</td><td>Presupuesto consolidado de transicion (anos 1-2)</td><td>GA&F</td><td>CSU</td></tr>
+<tr><td>4</td><td>Priorizacion de BPAs ancla institucional</td><td>OTT + Comite Inter-VR</td><td>Rectoria</td></tr>
+<tr><td>5</td><td>Cronograma integrado (estatutos + BPAs + infraestructura)</td><td>OTT</td><td>CSU</td></tr>
+<tr><td>6</td><td><b>Matriz de permeabilidad institucional</b> (NUEVO v3)</td><td>DGE&P</td><td>CSU</td></tr>
+<tr><td>7</td><td><b>Roadmap de plataformas de interoperabilidad</b> (NUEVO v3)</td><td>GA&F + DGE&P</td><td>Rectoria</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§11 · Glosario de terminos del Anexo G v3</h2>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>Termino</th><th>Definicion en este Anexo</th></tr></thead>
+<tbody>
+<tr><td><b>ADN emprendedor & transformativo</b></td><td>Conjunto de valores y practicas que orientan a la universidad a generar innovacion, impacto economico y transformacion social, mas alla de la transmision de conocimientos</td></tr>
+<tr><td><b>BPA cross-VR</b></td><td>Buena Practica Adoptable que, por su naturaleza, requiere la participacion de 2 o mas Vicerrectorias</td></tr>
+<tr><td><b>Interoperabilidad</b></td><td>Capacidad de dos o mas sistemas (fisicos, digitales, normativos) para compartir informacion, recursos o procesos sin replicar infraestructura</td></tr>
+<tr><td><b>PAI / PIC / PET / PGE</b></td><td>Plataformas de interoperabilidad definidas en SS6: Academica Integrada, Investigacion y Creacion, Extension Territorial, Gestion Estrategica</td></tr>
+<tr><td><b>Permeabilidad Escuela-VR</b></td><td>Grado en que una Escuela participa activamente en las actividades de las 3 Vicerrectorias, medido por indicadores cuantitativos</td></tr>
+<tr><td><b>Responsabilidad no exclusiva</b></td><td>Principio por el cual una VR lidera una funcion misional pero no posee el monopolio de ella; otras VRs pueden realizar actividades en ese dominio</td></tr>
+<tr><td><b>Modelo 70/30</b></td><td>Distribucion propuesta de la dedicacion docente: 70% formacion directa, 30% actividades cross-VR (investigacion, extension, emprendimiento)</td></tr>
+<tr><td><b>UROP</b></td><td>Undergraduate Research Opportunities Program: programa de investigacion para estudiantes de pregrado (BP-I01)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <div style="font-family: 'Georgia', serif; font-size: 10pt; font-weight: 700; color: #fff; line-height: 1.35;">Anexo G v3 · 5 principios · 15 BPAs cross-VR · 5 mecanismos articulacion · 4 plataformas · Modelo 70/30 · Escuelas permeando 3 VRs</div>
+  <div style="font-size: 6.5pt; color: rgba(255,255,255,0.72); margin-top: 0.1rem;">Novedad v3: ADN emprendedor & transformativa; responsabilidades no exclusivas; interoperabilidad por diseno; matriz de permeabilidad Escuela-VR con indicadores.</div>
+</div>
+
+<div class="ft">
+  <div>Anexo G v3 · Planes de Accion · Pagina 5 / 5</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+</body>
+</html>

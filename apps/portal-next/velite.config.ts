@@ -557,6 +557,16 @@ const news = defineCollection({
     })),
 });
 
+// v8g-l5 · Zoottelkeeper Index — archivos _Index_of_* generados por Obsidian
+const zoottelkeeperIndex = defineCollection({
+  name: 'ZoottelkeeperIndex',
+  pattern: 'vault-index/_Index_of_*.md',
+  schema: s.object({
+    slug: s.path(),
+    raw: s.string(),
+  }),
+});
+
 // v8g-l1 · Layout Config Protocol — navegación declarativa desde YAML
 const layoutConfig = defineCollection({
   name: 'LayoutConfig',
@@ -581,7 +591,7 @@ const layoutConfig = defineCollection({
                 id: s.string(),
                 emoji: s.string().optional(),
                 title: s.string(),
-                type: s.enum(['collection', 'tree', 'links', 'custom']).default('collection'),
+                type: s.enum(['collection', 'tree', 'links', 'custom', 'vault-tree']).default('collection'),
                 source: s.string().optional(),
                 icon: s.string().optional(),
                 filterable: s.boolean().default(false),
@@ -590,6 +600,14 @@ const layoutConfig = defineCollection({
                 showMissions: s.boolean().default(false),
                 visibleIf: s.string().optional(),
                 href: s.string().optional(),
+                vaultConfig: s
+                  .object({
+                    rootPath: s.string().optional(),
+                    excludePatterns: s.array(s.string()).default([]),
+                    folderMappings: s.record(s.string()).default({}),
+                    indexPattern: s.string().default('_Index_of_*'),
+                  })
+                  .optional(),
               }),
             )
             .default([]),
@@ -668,6 +686,7 @@ export default defineConfig({
     dashboard,
     news,
     csuAcuerdo,
+    zoottelkeeperIndex,
     layoutConfig,
   },
   markdown: {

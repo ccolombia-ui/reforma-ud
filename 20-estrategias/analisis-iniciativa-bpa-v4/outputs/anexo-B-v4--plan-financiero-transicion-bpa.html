@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo B v4 · Plan Financiero de Transición con TDABC por BPA</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+h4 { font-size: 8pt; font-weight: 700; color: var(--navy3); margin: 0.35rem 0 0.15rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+pre { background: var(--navy2); color: #fff; padding: 0.5rem; border-radius: 6px; font-family: var(--mono); font-size: 7pt; overflow-x: auto; margin: 0.3rem 0; }
+code { font-family: var(--mono); font-size: 7.2pt; background: #f1f5f9; padding: 0.05rem 0.2rem; border-radius: 3px; }
+pre code { background: transparent; padding: 0; }
+
+ul, ol { margin: 0.3rem 0 0.3rem 1.2rem; font-size: 7.5pt; }
+li { margin-bottom: 0.15rem; }
+a { color: var(--sky-d); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb, pre { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:anexo:2026:v4-B</div>
+    <h1>Anexo B v4 · Plan Financiero de Transición con TDABC por BPA</h1>
+    <div class="hero-sub"></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">4.1.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-05-01<br>
+      Acuerdo: EA-001a-v4<br>Anexo: B
+    </div>
+  </div>
+</div>
+<h1>Anexo B v4 · Plan Financiero de Transición con TDABC por BPA</h1>
+
+<div class="qb"><b>Nota de versión</b>: Este documento <b>enriquece</b> al Anexo B v3 (plan financiero de transición agregado) añadiendo el <b>desagregado por BPA usando TDABC-Lite</b> y la <b>proyección de ingresos por escenario S1–S5</b>. No modifica los topes presupuestales del Acuerdo 004/2025 ni la distribución por VR aprobada en Anexo B v3. Es una capa de precisión financiera <b>aditiva</b>.</div>
+
+<hr>
+<h2>1 · Resumen ejecutivo financiero</h2>
+
+| Concepto | Valor (COP) | Fuente |
+|---|---|---|
+| <b>Inversión total 8 años (escenario S3 – Equilibrado)</b> | ~$8.500 M | Consolidado TDABC-Lite |
+| <b>Inversión mínima viable (escenario S1 – Conservador)</b> | ~$3.500 M | Solo 5 anclas + INT02 |
+| <b>Inversión máxima (escenario S5 – Transformativo)</b> | ~$12.000 M | 21 BPAs + acreditaciones internacionales |
+| <b>Retorno estimado (ROI 3,5×)</b> | ~$29.750 M – $42.000 M | Ingresos PIIOM + EC + transferencia + ahorros |
+| <b>Financiación PIIOM potencial (8 años)</b> | ~$24.800 M | 5 Misiones × convocatorias misionales |
+| <b>Ingresos propios proyectados Año 8</b> | 25–35 % del presupuesto VR Extensión | Educación continua + spin-offs + TTO |
+
+<hr>
+<h2>2 · Principios del modelo financiero v4</h2>
+
+<h3>2.1 · TDABC-Lite (Time-Driven Activity-Based Costing simplificado)</h3>
+
+El Anexo B v3 usaba presupuesto agregado por VR. El v4 desagrega por BPA usando la fórmula:
+
+<pre><code>
+Costo_BPA = Σ (CCR_i × Horas_i) + CAPEX_BPA
+
+Donde:
+<ul><li>CCR_i = Costo de Capacidad de Recurso i ($/hora)</li><li>Horas_i = Tiempo estimado del recurso i en la BPA (año)</li><li>CAPEX_BPA = Inversión en infraestructura, equipos, software específicos de la BPA</li></ul>
+</code></pre>
+
+<b>Niveles de precisión</b>:
+
+| Nivel | Descripción | Cuándo se usa |
+|---|---|---|
+| <b>TDABC-Lite</b> | CCR promedio por tipo de recurso (docente, administrativo, infraestructura) | Año 0–1: estimación rápida |
+| <b>TDABC-Standard</b> | CCR por cargo específico, horas trazadas por actividad | Año 2–4: consolidación |
+| <b>TDABC-Full</b> | CCR por individuo, tiempo real registrado en sistema | Año 5–8: madurez |
+
+<h3>2.2 · Invariante fiscal R7</h3>
+
+<pre><code>
+Σ OPEX_BPA (todas las BPAs de la VR) ≤ Presupuesto vigente de la VR × 1,05
+
+Excepción: si la VR accede a ingresos externos (PIIOM, EC, transferencia),
+el tope puede ampliarse hasta 1,20 con autorización del CSU.
+</code></pre>
+
+<hr>
+<h2>3 · Presupuesto por escenario</h2>
+
+<h3>3.1 · Escenario S1 · Conservador (5 anclas + INT02)</h3>
+
+| BPA | Año 0 | Año 1 | Año 2 | Año 3 | Año 4 | Total 4 años |
+|---|---|---|---|---|---|---|
+| <b>BP-INT02</b> Créditos inv/ext | $100 M | $50 M | $30 M | $20 M | $20 M | $220 M |
+| <b>BP-INT01</b> Misión operacionalizada | $80 M | $40 M | $30 M | $20 M | $20 M | $190 M |
+| <b>BP-I01</b> UROP | $50 M | $200 M | $300 M | $250 M | $200 M | $1.000 M |
+| <b>BP-INT04</b> CABA Design Factory | $100 M | $250 M | $300 M | $200 M | $150 M | $1.000 M |
+| <b>BP-F01</b> Concepto compartido | $30 M | $80 M | $150 M | $200 M | $150 M | $610 M |
+| <b>BP-E02</b> Extensión territorial ODS | $50 M | $100 M | $150 M | $200 M | $200 M | $700 M |
+| <b>Subtotal BPAs</b> | $410 M | $720 M | $960 M | $890 M | $740 M | $3.720 M |
+| <b>Gestión y seguimiento (10 %)</b> | $41 M | $72 M | $96 M | $89 M | $74 M | $372 M |
+| <b>Contingencia (5 %)</b> | $23 M | $40 M | $53 M | $49 M | $41 M | $206 M |
+| <b>TOTAL S1</b> | <b>$474 M</b> | <b>$832 M</b> | <b>$1.109 M</b> | <b>$1.028 M</b> | <b>$855 M</b> | <b>$4.298 M</b> |
+
+<i>Nota: el total S1 a 8 años se estabiliza en ~$3.500 M porque Año 5–8 son operación y mantenimiento, no inversión nueva.</i>
+
+<h3>3.2 · Escenario S3 · Equilibrado (15 BPAs)</h3>
+
+Incluye las 6 del S1 más 9 BPAs adicionales (F02, F03, F04, I02, I03, E01, E03, INT03, INT06).
+
+| Año | Inversión BPAs | Gestión (10 %) | Contingencia (5 %) | <b>Total anual</b> |
+|---|---|---|---|---|
+| 0 | $600 M | $60 M | $33 M | <b>$693 M</b> |
+| 1 | $1.200 M | $120 M | $66 M | <b>$1.386 M</b> |
+| 2 | $1.800 M | $180 M | $99 M | <b>$2.079 M</b> |
+| 3 | $2.100 M | $210 M | $116 M | <b>$2.426 M</b> |
+| 4 | $1.900 M | $190 M | $105 M | <b>$2.195 M</b> |
+| 5 | $1.500 M | $150 M | $83 M | <b>$1.733 M</b> |
+| 6 | $1.200 M | $120 M | $66 M | <b>$1.386 M</b> |
+| 7 | $1.000 M | $100 M | $55 M | <b>$1.155 M</b> |
+| <b>Total 8 años</b> | <b>$11.300 M</b> | <b>$1.130 M</b> | <b>$623 M</b> | <b>$13.053 M</b> |
+
+<i>Ajustado a ~$8.500 M por ingresos propios que se reinvierten (ver §4).</i>
+
+<h3>3.3 · Escenario S5 · Transformativo (21 BPAs + acreditaciones)</h3>
+
+| Año | Inversión BPAs | Acreditaciones | Gestión + Contingencia | <b>Total anual</b> |
+|---|---|---|---|---|
+| 0 | $800 M | $0 | $120 M | <b>$920 M</b> |
+| 1 | $1.600 M | $100 M | $255 M | <b>$1.955 M</b> |
+| 2 | $2.400 M | $200 M | $390 M | <b>$2.990 M</b> |
+| 3 | $2.800 M | $300 M | $465 M | <b>$3.565 M</b> |
+| 4 | $2.500 M | $400 M | $435 M | <b>$3.335 M</b> |
+| 5 | $2.000 M | $500 M | $375 M | <b>$2.875 M</b> |
+| 6 | $1.600 M | $400 M | $300 M | <b>$2.300 M</b> |
+| 7 | $1.300 M | $300 M | $240 M | <b>$1.840 M</b> |
+| <b>Total</b> | <b>$15.000 M</b> | <b>$2.200 M</b> | <b>$2.580 M</b> | <b>$19.780 M</b> |
+
+<i>Ajustado a ~$12.000 M por reinversión de ingresos propios y economías de escala.</i>
+
+<hr>
+<h2>4 · Fuentes de financiación</h2>
+
+<h3>4.1 · Mix de financiación por escenario</h3>
+
+| Fuente | S1 Conservador | S3 Equilibrado | S5 Transformativo |
+|---|---|---|---|
+| <b>Presupuesto institucional</b> | 70 % | 45 % | 30 % |
+| <b>PIIOM / MinCiencias</b> | 20 % | 35 % | 30 % |
+| <b>Educación continua</b> | 5 % | 12 % | 20 % |
+| <b>Transferencia tecnológica / Spin-offs</b> | 2 % | 5 % | 12 % |
+| <b>Alianzas internacionales</b> | 3 % | 3 % | 8 % |
+
+<h3>4.2 · Proyección de ingresos por BPA generadora</h3>
+
+| BPA generadora de ingresos | Ingreso Año 4 | Ingreso Año 8 | Acumulado 8 años |
+|---|---|---|---|
+| <b>BP-E03</b> Educación continua | $300 M/año | $800 M/año | $3.800 M |
+| <b>BP-E01</b> TTO (licencias) | $50 M/año | $200 M/año | $900 M |
+| <b>BP-I05</b> Spin-offs (dividendos) | $20 M/año | $150 M/año | $600 M |
+| <b>BP-E02</b> Extensión ODS (contratos) | $100 M/año | $400 M/año | $1.800 M |
+| <b>PIIOM por proyectos integrados</b> | $500 M/año | $1.200 M/año | $5.400 M |
+| <b>Ahorros por eficiencia (retención, racionalización)</b> | $100 M/año | $300 M/año | $1.400 M |
+| <b>TOTAL INGRESOS</b> | <b>$1.070 M/año</b> | <b>$3.050 M/año</b> | <b>$13.900 M</b> |
+
+<hr>
+<h2>5 · TDABC-Lite por BPA ancla</h2>
+
+<h3>5.1 · BP-INT02 · Créditos de investigación y extensión</h3>
+
+| Recurso | CCR ($/hora) | Horas Año 0 | Costo Año 0 | Horas Año 1 | Costo Año 1 |
+|---|---|---|---|---|---|
+| Docente (diseño curricular) | $45.000 | 800 | $36.000.000 | 400 | $18.000.000 |
+| Administrativo (registro académico) | $25.000 | 600 | $15.000.000 | 300 | $7.500.000 |
+| Comité curricular (sesiones) | $60.000 | 400 | $24.000.000 | 200 | $12.000.000 |
+| <b>OPEX total</b> | | | <b>$75.000.000</b> | | <b>$37.500.000</b> |
+| CAPEX (sistema de registro) | — | — | $25.000.000 | — | $12.500.000 |
+| <b>Total anual</b> | | | <b>$100.000.000</b> | | <b>$50.000.000</b> |
+
+<h3>5.2 · BP-I01 · UROP</h3>
+
+| Recurso | CCR ($/hora) | Horas Año 1 (piloto) | Costo Año 1 | Horas Año 2 (escalado) | Costo Año 2 |
+|---|---|---|---|---|---|
+| Docente investigador (mentoría) | $55.000 | 2.000 | $110.000.000 | 8.000 | $440.000.000 |
+| Estudiante (estipendio) | $15.000 | 4.000 | $60.000.000 | 20.000 | $300.000.000 |
+| Laboratorio (uso) | $30.000 | 1.500 | $45.000.000 | 6.000 | $180.000.000 |
+| Gestión (convocatoria, selección) | $25.000 | 800 | $20.000.000 | 3.000 | $75.000.000 |
+| <b>OPEX total</b> | | | <b>$235.000.000</b> | | <b>$995.000.000</b> |
+| CAPEX (equipos piloto) | — | — | $15.000.000 | — | $100.000.000 |
+| <b>Total anual</b> | | | <b>$250.000.000</b> | | <b>$1.095.000.000</b> |
+
+<h3>5.3 · BP-INT04 · CABA Design Factory</h3>
+
+| Recurso | CCR ($/hora) | Horas Año 0 | Costo Año 0 | Horas Año 1 | Costo Año 1 |
+|---|---|---|---|---|---|
+| Coordinador Design Factory | $70.000 | 2.000 | $140.000.000 | 2.000 | $140.000.000 |
+| Facilitadores (docentes) | $50.000 | 1.000 | $50.000.000 | 3.000 | $150.000.000 |
+| Materiales y prototipado | — | — | $80.000.000 | — | $200.000.000 |
+| Convenios (empresas, alcaldía) | — | — | $30.000.000 | — | $50.000.000 |
+| <b>Total anual</b> | | | <b>$300.000.000</b> | | <b>$540.000.000</b> |
+
+<hr>
+<h2>6 · Matriz de sensibilidad</h2>
+
+¿Qué pasa si las fuentes de financiación fallan?
+
+| Riesgo fiscal | Probabilidad | Impacto | Estrategia de mitigación |
+|---|---|---|---|
+| Recorte presupuestal del 10 % | Media | Alto | Escalar BPAs de ingreso propio (E03, E01, I05) primero |
+| PIIOM no renueva convocatoria | Baja | Crítico | Diversificar: no más del 35 % dependencia PIIOM |
+| Educación continua no despega | Media | Alto | Pivotar a contratos directos con empresas (E01) |
+| Inflación supera 8 % anual | Media | Alto | Clausula de ajuste en contratos plurianuales |
+| Retraso en aprobación CSU (> 1 semestre) | Media | Crítico | Fase 0 sin inversión adicional (INT01 + INT02 solo requieren reorganización) |
+
+<hr>
+<h2>7 · Reglas de oro del financiamiento v4</h2>
+<ol><li><b>Sin P4, no hay BPA</b>: toda BPA aprobada debe tener TDABC-Lite completo.</li><li><b>Sin fuente de ingreso identificada, no hay escalamiento</b>: las BPAs piloto pueden usar presupuesto institucional; las BPAs masivas requieren ingresos propios o externos.</li><li><b>El 10 % de gestión es sagrado</b>: no se reduce para "ahorrar"; es el costo de medir.</li><li><b>Contingencia del 5 % solo se activa con autorización del Comité Inter-VR</b>: no es un colchón discrecional de la VR.</li><li><b>Reinversión obligatoria</b>: los ingresos generados por BPAs (EC, transferencia, spin-offs) se reinvierten en un fondo de innovación institucional administrado por DGE&P, con rendición al CSU.</li></ol>
+
+<hr>
+<i>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</i>
+<i>Anexo B v4 · Plan Financiero TDABC por BPA v4.1.0</i>
+<i>Aditivo al Anexo B v3 · TDABC-Lite · Escenarios S1/S3/S5 · Invariante R7</i>
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</div><div class="ft-r">4.1.0</div></div>
+</body>
+</html>

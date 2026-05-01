@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen Ejecutivo · EA001a-v3 — Síntesis de tres versiones para el CSU</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.eq-band { background: linear-gradient(90deg, var(--sky-d), var(--pur-d)); color: #fff; padding: 0.35rem 0.7rem; border-radius: 8px; margin: 0.35rem 0; font-size: 7pt; font-family: var(--mono); }
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.35rem; margin: 0.35rem 0; }
+.stat { background: var(--navy2); color: #fff; border-radius: 8px; padding: 0.35rem 0.5rem; text-align: center; }
+.stat-n { font-size: 14pt; font-weight: 700; color: var(--sky); display: block; }
+.stat-l { font-size: 6.5pt; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.04em; }
+
+.verdict { background: linear-gradient(135deg, #064e3b, #065f46); color: #fff; border-radius: 10px; padding: 0.5rem 0.7rem; margin: 0.35rem 0; font-size: 8pt; }
+.verdict strong { color: var(--grn-l); }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.anexo-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.35rem; margin: 0.4rem 0; }
+.anexo { border-radius: 8px; padding: 0.4rem; text-align: center; color: #fff; font-size: 6.5pt; }
+.anexo-a { background: linear-gradient(135deg, var(--sky-d), var(--pur-d)); }
+.anexo-b { background: linear-gradient(135deg, var(--grn-d), var(--teal-d)); }
+.anexo-c { background: linear-gradient(135deg, var(--sun-d), var(--rose-d)); }
+.anexo-d { background: linear-gradient(135deg, var(--pur-d), var(--rose-d)); }
+.anexo-e { background: linear-gradient(135deg, var(--navy3), var(--sky-d)); }
+.anexo-f { background: linear-gradient(135deg, var(--teal-d), var(--grn-d)); }
+.anexo-g { background: linear-gradient(135deg, var(--rose-d), var(--sun-d)); }
+.anexo .t1 { font-size: 8pt; font-weight: 700; display: block; margin-bottom: 0.1rem; }
+.anexo .t2 { font-size: 6pt; opacity: 0.85; }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.score-bar { display: flex; align-items: center; gap: 0.4rem; font-size: 7pt; margin: 0.15rem 0; }
+.score-bar .bar { flex: 1; height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+.score-bar .fill { height: 100%; border-radius: 5px; }
+.score-bar .label { min-width: 140px; font-size: 6.5pt; color: var(--navy3); }
+.score-bar .val { min-width: 28px; text-align: right; font-weight: 700; font-family: var(--mono); }
+
+.linaje-card { border-radius: 8px; padding: 0.35rem 0.5rem; border: 1px solid var(--border); margin: 0.15rem 0; font-size: 6.8pt; }
+.linaje-card .src { font-family: var(--mono); font-size: 6pt; padding: 0.05rem 0.3rem; border-radius: 3px; color: #fff; display: inline-block; margin-right: 0.3rem; }
+.src-ea001 { background: var(--sky-d); }
+.src-ea001b { background: var(--grn-d); }
+.src-ea001v2 { background: var(--pur-d); }
+.src-v3 { background: var(--sun-d); }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb, .anexo, .linaje-card { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:acuerdo:2026:EA-001a:v3-res-ejecutivo</div>
+    <h1>Resumen Ejecutivo · EA001a-v3<br><span style="font-size:11pt;font-weight:400">Síntesis de tres versiones para el CSU</span></h1>
+    <div class="hero-sub">EA001 base (conceptual) + EA001b (administrativo/operativo) + EA001a-v2 (anexos técnicos y mejoras estructurales) → un acuerdo único con 80+ artículos, 5 anexos técnicos vinculantes y capacidad institucional de transformación instalada.</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">v3.0.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-04-30<br>
+      Supersede: res-EA-001 v2.0<br>
+      Acuerdo: EA-001a
+    </div>
+  </div>
+</div>
+
+<div class="eq-band">EA001a-v3 Score = 4.55 / 5.0 · Umbral de viabilidad transformadora = 4.0</div>
+
+<div class="stats-row">
+  <div class="stat"><span class="stat-n">3</span><span class="stat-l">Versiones fusionadas</span></div>
+  <div class="stat"><span class="stat-n">18</span><span class="stat-l">Mejoras aditivas</span></div>
+  <div class="stat"><span class="stat-n">7</span><span class="stat-l">Anexos (5 técnicos + 2 claridad)</span></div>
+  <div class="stat"><span class="stat-n">4.55</span><span class="stat-l">Score ponderado</span></div>
+</div>
+
+<h2>§0 · Linaje de la versión v3</h2>
+
+<h3>¿Por qué una v3?</h3>
+<div class="qb">Durante el análisis crítico se identificaron <strong>tres corrientes</strong> de trabajo sobre la estructura organizativa de la UDFJC. Ninguna era suficiente por sí sola. La v3 es la síntesis que conserva la arquitectura transformadora de EA001a-v2, absorbe la agilidad operativa de EA001b, y mantiene la solidez conceptual de EA001 base.</div>
+
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>Versión</th><th>Naturaleza</th><th>Fortaleza principal</th><th>Debilidad principal</th></tr></thead>
+<tbody>
+<tr><td><b>EA001</b> (base)</td><td>Conceptual, estructural</td><td>Re-categorización epistémica de campos; escalabilidad</td><td>Sin gestión del cambio; sin indicadores; sin anexos técnicos</td></tr>
+<tr><td><b>EA001b</b> (borrador)</td><td>Administrativo, operativo</td><td>Agilidad redaccional; transferencia institucional detallada; menor resistencia inicial</td><td>Sin capacidad transformadora; sin anexos; tabla de cargos incompleta</td></tr>
+<tr><td><b>EA001a-v2</b> (mejoras)</td><td>Estructural + operativo + técnico</td><td>OTT, BSC-S, Comité Inter-VR, 5 anexos técnicos</td><td>Complejidad alta; depende de aprobación de paquete completo</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>¿Qué se aprovecha de cada versión?</h3>
+
+<div class="linaje-card"><span class="src src-ea001">EA001 base</span> <b>Arquitectura de 3 VRs + GA&F + direcciones + OEG</b> — Base estructural validada; no se altera.</div>
+<div class="linaje-card"><span class="src src-ea001">EA001 base</span> <b>Re-categorización epistémica de campos</b> — Marco conceptual que diferencia esta reforma de un mero cambio de nombres.</div>
+<div class="linaje-card"><span class="src src-ea001b">EA001b</span> <b>Redacción simplificada de funciones</b> — Lenguaje directo, útil para directivos y comunidad.</div>
+<div class="linaje-card"><span class="src src-ea001b">EA001b</span> <b>Transferencia institucional detallada (7 elementos)</b> — Garantiza continuidad operativa sin parálisis.</div>
+<div class="linaje-card"><span class="src src-ea001b">EA001b</span> <b>Transformación IDEXUD en Centro</b> — Decisión concreta y accionable (Art. 34).</div>
+<div class="linaje-card"><span class="src src-ea001b">EA001b</span> <b>Estructura DBU&BV como sistema institucional</b> — Enfoque sistémico transversal de bienestar (Arts. 26-30).</div>
+<div class="linaje-card"><span class="src src-ea001b">EA001b</span> <b>Régimen transitorio de contratos</b> — Seguridad jurídica de continuidad (Art. 44).</div>
+<div class="linaje-card"><span class="src src-ea001v2">EA001a-v2</span> <b>OTT (Oficina Temporal de Transformación)</b> — Condición sine qua non: sin gestión del cambio la reforma fracasa.</div>
+<div class="linaje-card"><span class="src src-ea001v2">EA001a-v2</span> <b>Comité Coordinador Inter-VR</b> — Resuelve conflictos cross-VR antes de llegar a Rectoría.</div>
+<div class="linaje-card"><span class="src src-ea001v2">EA001a-v2</span> <b>BSC-S (Sistema Integrado de Indicadores)</b> — Permite medir implementación y rendir cuentas.</div>
+<div class="linaje-card"><span class="src src-ea001v2">EA001a-v2</span> <b>Calidades de gestión del cambio</b> — Directivos preparados para liderar transformación.</div>
+<div class="linaje-card"><span class="src src-ea001v2">EA001a-v2</span> <b>Protocolo VIF-Escuela</b> — Articulación explícita entre VIF y núcleo operativo.</div>
+<div class="linaje-card"><span class="src src-ea001v2">EA001a-v2</span> <b>Cláusula prospectiva APA-001</b> — Coherencia normativa de largo plazo.</div>
+<div class="linaje-card"><span class="src src-ea001v2">EA001a-v2</span> <b>5 Anexos técnicos (A-E)</b> — Operacionalizan RACI, presupuesto, cronograma, métricas, planta.</div>
+<div class="linaje-card"><span class="src src-v3">NUEVO v3</span> <b>Anexo F · Alcance y límites del CSU</b> — Clarifica qué decide hoy vs. qué se diferida, previniendo expectativas irrealistas.</div>
+<div class="linaje-card"><span class="src src-v3">NUEVO v3</span> <b>Anexo G · Guía de Planes de Acción a 8 años</b> — ADN emprendedor, responsabilidades no exclusivas, plataformas de interoperabilidad, Escuelas permeando 3 VRs.</div>
+
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-04-30</div><div class="ft-r">Pág. 1 / 3</div></div>
+
+<div class="pg-2"></div>
+
+<h2>§1 · Veredicto sobre la pregunta de evaluación</h2>
+
+<div class="qb"><strong>¿La estructura organizativa propuesta por EA001a-v3 constituye una base suficiente, coherente y viable para implementar el mandato del Art. 98 del ACU-004-25, instalando las capacidades institucionales necesarias para una transformación real y no una reforma de papel?</strong></div>
+
+<div class="verdict"><strong>Respuesta: SÍ, con condicionamientos gestionables.</strong> EA001a-v3 obtiene un score de 4.55/5.0, por encima del umbral de viabilidad transformadora (4.0). Los 4 condicionamientos críticos son: (1) aprobar el paquete completo (articulado + 7 anexos v3), (2) constituir la OTT en los primeros 15 días, (3) sesionar el Comité Inter-VR quincenalmente desde el mes 1, y (4) operar el tablero BSC-S en los primeros 90 días.</div>
+
+<h3>Score por dimensión</h3>
+<div class="score-bar"><span class="label">Solidez estructural</span><div class="bar"><div class="fill" style="width:94%;background:var(--sky)"></div></div><span class="val">4.7</span></div>
+<div class="score-bar"><span class="label">Agilidad de aprobación</span><div class="bar"><div class="fill" style="width:84%;background:var(--grn)"></div></div><span class="val">4.2</span></div>
+<div class="score-bar"><span class="label">Capacidad transformadora</span><div class="bar"><div class="fill" style="width:96%;background:var(--pur)"></div></div><span class="val">4.8</span></div>
+<div class="score-bar"><span class="label">Operatividad inmediata</span><div class="bar"><div class="fill" style="width:92%;background:var(--sun)"></div></div><span class="val">4.6</span></div>
+<div class="score-bar"><span class="label">Coherencia normativa</span><div class="bar"><div class="fill" style="width:94%;background:var(--teal)"></div></div><span class="val">4.7</span></div>
+<div class="score-bar"><span class="label">Resistencia política</span><div class="bar"><div class="fill" style="width:80%;background:var(--rose)"></div></div><span class="val">4.0</span></div>
+<div class="score-bar"><span class="label">Innovación organizacional</span><div class="bar"><div class="fill" style="width:90%;background:var(--sky-d)"></div></div><span class="val">4.5</span></div>
+
+<h2>§2 · Tabla maestra de cambios propuestos (v3)</h2>
+
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>ID</th><th>Origen</th><th>Cambio propuesto</th><th>Anexo</th><th>Crítico</th></tr></thead>
+<tbody>
+<tr><td><b>M1</b></td><td>EA001a-v2</td><td>Art. 1 OBJETO ampliado: re-categorización epistémica + remisión a 5 anexos</td><td>Todos</td><td>🟡</td></tr>
+<tr><td><b>M2</b></td><td>EA001a-v2</td><td>Calidades cargos directivos: literal i · gestión del cambio (Prosci/Kotter/7S)</td><td>—</td><td>🟡</td></tr>
+<tr><td><b>M3</b></td><td>EA001a-v2</td><td>Art. 16: §1 protocolo VIF-Escuela + §2 articulación inter-VR</td><td>A</td><td>🔴</td></tr>
+<tr><td><b>M4</b></td><td>EA001a-v2</td><td>Arts. 25/42: periodicidad, quórum, actas públicas para consejos</td><td>—</td><td>🟡</td></tr>
+<tr><td><b>M5</b></td><td>EA001a-v2</td><td>🆕 Art. 60bis · Comité Coordinador Inter-VR (7 miembros, quincenal)</td><td>A</td><td>🔴</td></tr>
+<tr><td><b>M6</b></td><td>EA001a-v2</td><td>🆕 Art. 60ter · OTT: 18 funciones, 5 áreas, 18-30 meses, presupuesto 3%</td><td>A,B,C,D</td><td>🔴🔴</td></tr>
+<tr><td><b>M7</b></td><td>EA001a-v2</td><td>🆕 Art. 60quater · BSC-S: 5 perspectivas, tablero público, informe anual</td><td>D</td><td>🔴</td></tr>
+<tr><td><b>M8</b></td><td>EA001a-v2</td><td>Arts. 61-65 → cláusulas de remisión al Anexo E; tablas corregidas</td><td>E</td><td>🔴</td></tr>
+<tr><td><b>M9</b></td><td>EA001a-v2</td><td>Art. 66: 90 días hábiles + OTT como responsable + 7 elementos</td><td>C</td><td>🔴</td></tr>
+<tr><td><b>M10</b></td><td>EA001a-v2</td><td>🆕 Art. 65bis · Cláusula prospectiva: APA-001 deroga Acuerdo 15/2023</td><td>E</td><td>🔴</td></tr>
+<tr><td><b>M11</b></td><td>EA001a-v2</td><td>Art. 67: 3 fases (3m críticos / 6m importantes / 12m sistemas)</td><td>C</td><td>🟡</td></tr>
+<tr><td><b>M12</b></td><td>EA001a-v2</td><td>🆕 Art. 67bis · Continuidad: innovación organizacional pasa a DGE&P</td><td>D</td><td>🔴</td></tr>
+<tr><td><b>M13</b></td><td>EA001b</td><td>Transferencia institucional detallada: 7 elementos (Art. 63 EA001b)</td><td>C</td><td>🔴</td></tr>
+<tr><td><b>M14</b></td><td>EA001b</td><td>Transformación IDEXUD en Centro: decisión concreta con equipo y 6 meses</td><td>C</td><td>🟡</td></tr>
+<tr><td><b>M15</b></td><td>EA001b</td><td>DBU&BV como sistema institucional: enfoque transversal, articulado, integral</td><td>—</td><td>🟡</td></tr>
+<tr><td><b>M16</b></td><td>EA001b</td><td>Régimen transitorio contratos: continuidad fondos especiales y compromisos</td><td>—</td><td>🟡</td></tr>
+<tr><td><b>M17</b></td><td>EA001b</td><td>Redacción simplificada de funciones: lenguaje directo por dependencia</td><td>—</td><td>🟡</td></tr>
+<tr><td><b>M18</b></td><td>EA001b</td><td>Planta de cargos en anexo técnico: migrar tablas del articulado al Anexo E v3</td><td>E</td><td>🔴</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-04-30</div><div class="ft-r">Pág. 2 / 3</div></div>
+
+<div class="pg-2"></div>
+
+<h2>§3 · Cuadrante de anexos v3</h2>
+
+<div class="anexo-grid">
+  <div class="anexo anexo-a"><span class="t1">ANEXO A</span><span class="t2">ASIGNACIÓN<br>RESPONSAB.</span></div>
+  <div class="anexo anexo-b"><span class="t1">ANEXO B</span><span class="t2">PLAN<br>FINANCIERO</span></div>
+  <div class="anexo anexo-c"><span class="t1">ANEXO C</span><span class="t2">CRONOGRAMA<br>ESTATUTOS</span></div>
+  <div class="anexo anexo-d"><span class="t1">ANEXO D</span><span class="t2">SISTEMA<br>INDICADORES</span></div>
+  <div class="anexo anexo-e"><span class="t1">ANEXO E</span><span class="t2">PLANTA<br>CARGOS</span></div>
+  <div class="anexo anexo-f"><span class="t1">ANEXO F</span><span class="t2">ALCANCE<br>LÍMITES CSU</span></div>
+  <div class="anexo anexo-g"><span class="t1">ANEXO G</span><span class="t2">PLANES ACCIÓN<br>8 AÑOS</span></div>
+</div>
+
+<h3>Dependencias entre anexos</h3>
+<div class="qb">Anexo A (RACI) define <strong>quién decide qué</strong> → Anexo C asigna <strong>cuándo</strong> → Anexo B asigna <strong>qué recursos</strong> → Anexo D mide <strong>cómo se ejecuta</strong> → Anexo E define <strong>con qué cargos</strong> → Anexo F clarifica <strong>qué decide el CSU hoy</strong> → Anexo G orienta <strong>cómo operar a 8 años con ADN emprendedor</strong>.</div>
+
+<h2>§4 · Escenarios de decisión para el CSU</h2>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Escenario</th><th>Qué se aprueba</th><th>Score</th><th>Recomendación</th></tr></thead>
+<tbody>
+<tr><td><b>A</b> · EA001b puro</td><td>Solo borrador administrativo</td><td>2.8/5</td><td style="color:var(--rose-d)"><b>🔴 Reforma de papel</b></td></tr>
+<tr><td><b>B</b> · EA001 base</td><td>Solo conceptual original</td><td>3.0/5</td><td style="color:var(--sun-d)"><b>🟡 Incompleto</b></td></tr>
+<tr><td><b>C</b> · EA001a-v2 puro</td><td>Conceptual + mejoras + anexos v2</td><td>4.3/5</td><td style="color:var(--grn-d)"><b>🟢 Aceptable</b></td></tr>
+<tr><td><b>D</b> · EA001a-v3 <span style="color:var(--grn-d)">(recomendado)</span></td><td><b>Síntesis de tres versiones</b></td><td><b>4.55/5</b></td><td style="color:var(--grn-d)"><b>🟢 Óptimo</b></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§5 · Trazabilidad de documentos</h2>
+
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>Documento fuente</th><th>Ubicación</th><th>Rol en v3</th></tr></thead>
+<tbody>
+<tr><td>Audit DOFA EA001</td><td>03-evaluaciones/eva-EA-dofa-001</td><td>Base conceptual y marco crítico</td></tr>
+<tr><td>Audit DOFA EA001b</td><td>_audit/eva-EA-dofa-001b</td><td>Evaluación del borrador administrativo</td></tr>
+<tr><td>Comparativo EA001 vs EA001b</td><td>_audit/ana-EA-001-vs-001b</td><td>Justificación de fusión</td></tr>
+<tr><td>Comparativo EA001-v2 vs EA001b</td><td>_audit/ana-EA-001-v2-vs-001b</td><td>Justificación de anexos técnicos</td></tr>
+<tr><td>Articulado v2</td><td>_meta/EA-001-v2--articulado-mejoras-aditivas</td><td>12 mejoras conceptuales aditivas</td></tr>
+<tr><td>Borrador EA001b</td><td>_inbox/BORRADOR ACUERDO-REFORMA ADMINISTRATIVA</td><td>Elementos operativos absorbidos</td></tr>
+<tr><td><b>Anexos v3</b></td><td>outputs/anexo-{A-G}-v3--*.md</td><td>Operacionalización de la síntesis</td></tr>
+<tr><td><b>Este resumen</b></td><td>outputs/res-EA-001a-v3--ejecutivo</td><td>Síntesis para CSU</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="verdict" style="margin-top:0.6rem;"><strong>Conclusión:</strong> EA001a-v3 es la síntesis óptima de tres versiones. Arquitectura transformadora de EA001a-v2 (OTT, BSC-S, Comité Inter-VR, 5 anexos técnicos) + agilidad operativa de EA001b (transferencia institucional, redacción directa, transformación IDEXUD) + solidez conceptual de EA001 base (re-categorización epistémica, escalabilidad) + 2 anexos de claridad y guía (F: alcance CSU; G: planes de acción 8 años con ADN emprendedor). <strong>Score estimado: 4.55/5 — por encima del umbral de viabilidad transformadora (4.0/5).</strong></div>
+
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-04-30</div><div class="ft-r">Pág. 3 / 3</div></div>
+
+</body>
+</html>

@@ -11,8 +11,46 @@
 import type { LayoutConfig } from './types';
 
 export const layoutConfig: LayoutConfig = {
+  header: {
+    segmentLabels: {
+      canonico: 'Reforma Vinculante',
+      comunidades: 'Comunidades',
+      gobierno: 'Gobierno',
+      formacion: 'VR Formación',
+      investigacion: 'VR Investigación',
+      extension: 'VR Extensión',
+      facultades: 'Facultades',
+      escuelas: 'Escuelas',
+      programas: 'Programas',
+      cabas: 'CABAs',
+      institutos: 'Institutos',
+      centros: 'Centros',
+      direcciones: 'Direcciones',
+      biblioteca: 'Biblioteca',
+      grafo: 'Grafo',
+      glosario: 'Glosario',
+      about: 'Acerca de',
+      mision: 'Misión',
+    },
+  },
   sidebar: {
     sections: [
+      {
+        id: 'biblioteca-vault',
+        emoji: '🌲',
+        title: 'Biblioteca (Vault Tree)',
+        type: 'vault-tree',
+        source: 'zoottelkeeperIndex',
+        icon: 'FolderTree',
+        filterable: true,
+        href: '/canonico',
+        vaultConfig: {
+          rootPath: 'vault-index',
+          excludePatterns: ['^_.*', '^\\..*'],
+          folderMappings: { 'vault-index': 'Biblioteca', 'canonico': 'Canónico MI-12' },
+          indexPattern: '_Index_of_*',
+        },
+      },
       {
         id: 'biblioteca',
         emoji: '📚',
@@ -68,28 +106,6 @@ export const layoutConfig: LayoutConfig = {
       { href: '/comunidades/investigacion', label: 'VR Investigación', icon: 'Microscope' },
       { href: '/comunidades/extension', label: 'VR Extensión', icon: 'Globe' },
     ],
-  },
-  header: {
-    segmentLabels: {
-      canonico: 'Reforma Vinculante',
-      comunidades: 'Comunidades',
-      gobierno: 'Gobierno',
-      formacion: 'VR Formación',
-      investigacion: 'VR Investigación',
-      extension: 'VR Extensión',
-      facultades: 'Facultades',
-      escuelas: 'Escuelas',
-      programas: 'Programas',
-      cabas: 'CABAs',
-      institutos: 'Institutos',
-      centros: 'Centros',
-      direcciones: 'Direcciones',
-      biblioteca: 'Biblioteca',
-      grafo: 'Grafo',
-      glosario: 'Glosario',
-      about: 'Acerca de',
-      mision: 'Misión',
-    },
   },
   rightPanel: {
     tabs: [

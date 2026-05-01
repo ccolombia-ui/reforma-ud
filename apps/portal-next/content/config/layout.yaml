@@ -16,6 +16,25 @@ branding:
 # ─────────────────────────────────────────
 sidebar:
   sections:
+    # v8g-l5: vault-tree navigation — sección aditiva, coexiste con biblioteca tradicional
+    - id: biblioteca-vault
+      emoji: "🌲"
+      title: "Biblioteca (Vault Tree)"
+      type: vault-tree
+      source: zoottelkeeperIndex
+      icon: FolderTree
+      filterable: true
+      href: "/canonico"
+      vaultConfig:
+        rootPath: "vault-index"
+        excludePatterns:
+          - "^_.*"
+          - "^\\..*"
+        folderMappings:
+          "vault-index": "Biblioteca"
+          "canonico": "Canónico MI-12"
+        indexPattern: "_Index_of_*"
+
     - id: biblioteca
       emoji: "📚"
       title: "Biblioteca reforma·ud"

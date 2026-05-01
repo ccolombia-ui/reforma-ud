@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo B v3 · Plan Financiero de Transición</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:acuerdo:2026:EA-001a:anexo-B-v3</div>
+    <h1>Anexo B v3 · Plan Financiero de Transición</h1>
+    <div class="hero-sub">Resolver D4 (DOFA 001) y D_b3 (DOFA 001b): reasignación presupuestal sin desglose. Síntesis de EA001 base + EA001a-v2 + EA001b + Anexo B v2-1. Reasignación funcional gradual, sin porcentajes especulativos.</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">v3.0.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-04-30<br>
+      Supersede: anexo-B v2<br>
+      Anexo orden: 2<br>
+      Acuerdo: EA-001a
+    </div>
+  </div>
+</div>
+
+<h2>§0 · Introducción · Linaje de esta versión v3</h2>
+
+<div class="qb">
+<strong>Este Anexo B v3 es producto de la síntesis de cuatro fuentes:</strong><br><br>
+<table class="tbl-small">
+<thead><tr><th>Fuente</th><th>Qué se aprovecha</th><th>Qué se mejora</th></tr></thead>
+<tbody>
+<tr><td><b>EA001 base</b></td><td>Fondo especial por VR (Arts. 23, 29-35)</td><td>Se desglosa reasignación funcional por subsistema</td></tr>
+<tr><td><b>EA001a-v2</b></td><td>Plan presupuestal de transición (3 vigencias); análisis SOTA</td><td>Se fusiona con reasignación funcional v2-1; se añaden 3 fases</td></tr>
+<tr><td><b>EA001b</b></td><td>Art. 23 (3 subsistemas admin); Art. 44 (continuidad fondos)</td><td>Se traduce en matriz de reasignación por subsistema</td></tr>
+<tr><td><b>Anexo B v2-1</b></td><td>Reasignación funcional y de activos (sin % especulativos)</td><td>Se conserva como metodología base; se añaden rangos preliminares</td></tr>
+</tbody>
+</table><br>
+<strong>Novedad en v3:</strong> Modelo de <b>"reasignación funcional gradual"</b> — en lugar de proyectar porcentajes globales sin sustento, se define una <b>matriz de reasignación por funciones</b> y una <b>tabla de reasignación de activos</b>, con rangos preliminares basados en las cuotas presupuestales del Distrito Capital 2024-2026. Los % definitivos se fijarán tras inventario de activos y mapeo funcional (plazo: 90 días post-vigencia, OTT + GA&F).
+</div>
+
+<h2>§1 · Principios rectores</h2>
+
+<div class="rule-card r1">
+  <div class="rule-title">1 · Sin porcentajes globales sin sustento</div>
+  <div class="rule-body">Ninguna proyección presupuestal total sin respaldo en las cuotas asignadas por el Distrito Capital (Resoluciones CSU 2024-2026).</div>
+</div>
+<div class="rule-card r2">
+  <div class="rule-title">2 · Reasignación funcional primero, porcentual después</div>
+  <div class="rule-body">Se traslada el gasto según las funciones que migran, no según una distribución arbitraria.</div>
+</div>
+<div class="rule-card r3">
+  <div class="rule-title">3 · Fondos especiales se preservan</div>
+  <div class="rule-body">Fondo Investigación (VIC&I) y Fondo Extensión (VICE&PS) mantienen autonomía.</div>
+</div>
+<div class="rule-card r4">
+  <div class="rule-title">4 · OTT opera con presupuesto provisional 3%</div>
+  <div class="rule-body">Durante sus primeros 18 meses, la OTT dispone de hasta el 3% del presupuesto total institucional para gestión del cambio.</div>
+</div>
+<div class="rule-card r5">
+  <div class="rule-title">5 · Tres fases de implementación</div>
+  <div class="rule-body">Críticos (3m), Importantes (6m), Sistemas (12m) — cada fase con techo presupuestal diferenciado.</div>
+</div>
+
+<h2>§2 · Estado pre-v3 (T0) · Línea base</h2>
+
+<div class="qb">Nota metodológica: Las cifras absolutas no se publican por confidencialidad fiscal. Se presentan <b>rangos porcentuales consolidados</b> a partir de las Resoluciones CSU de cuotas presupuestales 2024-2026. El GA&F tiene la versión confidencial con cifras absolutas.</div>
+
+<h3>2.1 · Distribución funcional pre-reforma (T0)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Función / Dependencia</th><th>Rango % T0</th><th>Fuente</th></tr></thead>
+<tbody>
+<tr><td>Rectoría + Secretaría General</td><td>6% – 9%</td><td>CSU Resolución cuota 2024-2026</td></tr>
+<tr><td>Vicerrectoría Académica (única)</td><td>28% – 35%</td><td>CSU Resolución cuota 2024-2026</td></tr>
+<tr><td>Vicerrectoría Administrativa y Financiera (única)</td><td>22% – 28%</td><td>CSU Resolución cuota 2024-2026</td></tr>
+<tr><td>Bienestar Universitario</td><td>4% – 6%</td><td>CSU Resolución cuota 2024-2026</td></tr>
+<tr><td>Planeación</td><td>2% – 4%</td><td>CSU Resolución cuota 2024-2026</td></tr>
+<tr><td>Escuelas / Facultades / Institutos (operación directa)</td><td>18% – 25%</td><td>CSU Resolución cuota 2024-2026</td></tr>
+<tr><td>Servicios centrales (biblioteca, TI, infraestructura)</td><td>8% – 12%</td><td>CSU Resolución cuota 2024-2026</td></tr>
+<tr><td>Reserva / imprevistos</td><td>3% – 5%</td><td>CSU Resolución cuota 2024-2026</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo B v3 · Plan Financiero de Transición · Página 1 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§3 · Matriz de reasignación funcional (T0 → T2)</h2>
+
+<h3>3.1 · Funciones que migran de VR Académica (T0) → VIF (T2)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Función migrante</th><th>Destino T2</th><th>Mecanismo de traslado</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td>Docencia y currículo</td><td>VIF</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Admisiones y registro</td><td>VIF</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Biblioteca académica</td><td>VIF → luego VIC&I</td><td>Inventario + decisión Comité Inter-VR</td><td>Mes 3-6</td></tr>
+<tr><td>Relaciones internacionales (académicas)</td><td>VIF</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Laboratorios docencia</td><td>VIF</td><td>Reasignación línea presupuestal</td><td>Mes 1-6</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.2 · Funciones que migran de VR Académica (T0) → VIC&I (T2)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Función migrante</th><th>Destino T2</th><th>Mecanismo de traslado</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td>Investigación y grupos</td><td>VIC&I</td><td>Reasignación línea + Fondo Especial</td><td>Mes 1-3</td></tr>
+<tr><td>Creación e innovación</td><td>VIC&I</td><td>Reasignación línea + Fondo Especial</td><td>Mes 1-3</td></tr>
+<tr><td>Publicaciones científicas</td><td>VIC&I</td><td>Reasignación línea presupuestal</td><td>Mes 3-6</td></tr>
+<tr><td>Biblioteca investigación</td><td>VIC&I</td><td>Inventario + decisión Comité Inter-VR</td><td>Mes 3-6</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.3 · Funciones que migran de VR Académica/Adm-Financiera (T0) → VICE&PS (T2)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Función migrante</th><th>Origen T0</th><th>Destino T2</th><th>Mecanismo de traslado</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td>Extensión y proyección social</td><td>VR Académica</td><td>VICE&PS</td><td>Reasignación línea + Fondo Especial</td><td>Mes 1-3</td></tr>
+<tr><td>Educación continua / SAR</td><td>VR Académica</td><td>VICE&PS</td><td>Reasignación línea presupuestal</td><td>Mes 1-6</td></tr>
+<tr><td>Prácticas y pasantías</td><td>VR Académica</td><td>VICE&PS</td><td>Reasignación línea presupuestal</td><td>Mes 3-6</td></tr>
+<tr><td>Egresados</td><td>VR Académica</td><td>OEG (adscrita VICE&PS)</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Emisora / divulgación</td><td>VR Académica</td><td>VICE&PS</td><td>Reasignación línea presupuestal</td><td>Mes 3-6</td></tr>
+<tr><td>Empleabilidad</td><td>VR Adm-Financiera</td><td>VICE&PS</td><td>Reasignación línea presupuestal</td><td>Mes 3-6</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.4 · Funciones que migran de VR Adm-Financiera (T0) → GA&F (T2)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Función migrante</th><th>Destino T2</th><th>Mecanismo de traslado</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td>Talento humano</td><td>GA&F</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Presupuesto y contabilidad</td><td>GA&F</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Tesorería</td><td>GA&F</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Contratación</td><td>GA&F</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Infraestructura física</td><td>GA&F</td><td>Reasignación línea presupuestal</td><td>Mes 1-6</td></tr>
+<tr><td>Almacén e inventarios</td><td>GA&F</td><td>Reasignación línea presupuestal</td><td>Mes 1-3</td></tr>
+<tr><td>Tecnologías de la información</td><td>GA&F</td><td>Reasignación línea presupuestal</td><td>Mes 3-12</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.5 · Funciones nuevas (no existían en T0)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Función nueva</th><th>Dependencia</th><th>Fuente financiación</th><th>Plazo</th></tr></thead>
+<tbody>
+<tr><td>OTT (Oficina Temporal Transformación)</td><td>Rectoría</td><td>3% presupuesto total (provisional)</td><td>Mes 1-18</td></tr>
+<tr><td>Sistema BSC-S / tablero público</td><td>DGE&P</td><td>Inversión en TI (GA&F)</td><td>Mes 1-12</td></tr>
+<tr><td>Comité Inter-VR (operación)</td><td>Rectoría</td><td>Gasto administrativo existente</td><td>Mes 1 en adelante</td></tr>
+<tr><td>Protocolos VIF-Escuela</td><td>VIF</td><td>Gasto operativo existente</td><td>Mes 3-6</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo B v3 · Plan Financiero de Transición · Página 2 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§4 · Reasignación de activos entre Vicerrectorías</h2>
+
+<h3>4.1 · Inventario de activos a reasignar</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Tipo de activo</th><th>Inventario a cargo de</th><th>Plazo</th><th>Vinculación con</th></tr></thead>
+<tbody>
+<tr><td>Bienes muebles (equipos, mobiliario)</td><td>GA&F + OTT</td><td>90 días post-vigencia</td><td>Anexo C (fase 1)</td></tr>
+<tr><td>Bienes inmuebles (sedes, laboratorios)</td><td>GA&F + OTT</td><td>180 días post-vigencia</td><td>Anexo C (fase 2)</td></tr>
+<tr><td>Sistemas de información (software, bases de datos)</td><td>GA&F + DGE&P</td><td>90 días post-vigencia</td><td>Anexo C (fase 1)</td></tr>
+<tr><td>Fondos especiales (investigación, extensión)</td><td>GA&F + VRs receptoras</td><td>30 días post-vigencia</td><td>Anexo C (fase 1)</td></tr>
+<tr><td>Archivos y documentos</td><td>Secretaría General + OTT</td><td>60 días post-vigencia</td><td>Anexo C (fase 1)</td></tr>
+<tr><td>Contratos y convenios en curso</td><td>GA&F + VRs receptoras</td><td>60 días post-vigencia</td><td>Art. 44 EA001b</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>4.2 · Tabla de reasignación de activos (preliminar)</h3>
+<div class="qb">Esta tabla será completada tras el inventario de 90 días. Los rangos preliminares reflejan la distribución funcional esperada.</div>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Activo / Rubro</th><th>Origen T0</th><th>Destino T2</th><th>% estimado preliminar</th><th>Condición</th></tr></thead>
+<tbody>
+<tr><td>Infraestructura laboratorios docencia</td><td>VR Académica</td><td>VIF</td><td>60% – 70%</td><td>Post-inventario</td></tr>
+<tr><td>Infraestructura laboratorios investigación</td><td>VR Académica</td><td>VIC&I</td><td>70% – 80%</td><td>Post-inventario</td></tr>
+<tr><td>Equipos biblioteca</td><td>VR Académica</td><td>VIF / VIC&I</td><td>50% / 50%</td><td>Decisión Comité Inter-VR</td></tr>
+<tr><td>Sistemas académicos (registro, admisiones)</td><td>VR Académica</td><td>VIF</td><td>80% – 90%</td><td>Post-inventario TI</td></tr>
+<tr><td>Sistemas financieros (SIGUD)</td><td>VR Adm-Financiera</td><td>GA&F</td><td>90% – 100%</td><td>Post-inventario TI</td></tr>
+<tr><td>Sedes extensión territorial</td><td>VR Académica</td><td>VICE&PS</td><td>80% – 90%</td><td>Post-inventario</td></tr>
+<tr><td>Vehículos institucionales</td><td>VR Adm-Financiera</td><td>GA&F</td><td>100%</td><td>Directo</td></tr>
+<tr><td>Equipos de cómputo central</td><td>VR Adm-Financiera</td><td>GA&F</td><td>100%</td><td>Directo</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§5 · Fases presupuestales de transición</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Fase</th><th>Plazo</th><th>Techo presupuestal</th><th>Instrumentos</th><th>Hitos</th></tr></thead>
+<tbody>
+<tr><td><b>Fase 1 · Críticos</b></td><td>3 meses</td><td>15% del presupuesto anual disponible</td><td>Manuales VRs, GA&F, DBU&BV, DGE&P, OEG; inventario activos; constitución OTT</td><td>OTT operativa; Comité Inter-VR sesionando; inventario 50% completado</td></tr>
+<tr><td><b>Fase 2 · Importantes</b></td><td>6 meses</td><td>35% del presupuesto anual disponible</td><td>Procedimientos, formatos, comunicaciones; reasignación líneas presupuestales; formación directivos</td><td>80% reasignación funcional completada; protocolos VIF-Escuela aprobados</td></tr>
+<tr><td><b>Fase 3 · Sistemas</b></td><td>12 meses</td><td>50% del presupuesto anual disponible</td><td>SIGUD adaptado; sistemas integrados; BSC-S operativo; tablero público</td><td>100% activos reasignados; BSC-S reportando; informe anual al CSU</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo B v3 · Plan Financiero de Transición · Página 3 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§6 · Rendición de cuentas financiera</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Instancia</th><th>Frecuencia</th><th>Contenido</th><th>Responsable</th></tr></thead>
+<tbody>
+<tr><td>Rectoría</td><td>Mensual</td><td>Ejecución presupuestal por fase</td><td>OTT (meses 1-18)</td></tr>
+<tr><td>Consejo Gestión Administrativa</td><td>Mensual</td><td>Estado financiero y contable</td><td>GA&F</td></tr>
+<tr><td>CSU</td><td>Trimestral</td><td>Informe de ejecución del Plan Financiero de Transición</td><td>Rectoría + GA&F</td></tr>
+<tr><td>Asamblea Universitaria</td><td>Semestral</td><td>Avance implementación + sostenibilidad financiera</td><td>Rectoría</td></tr>
+<tr><td>Tablero público</td><td>Continuo</td><td>% ejecución por fase, por VR, por dependencia</td><td>DGE&P</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <div style="font-family: 'Georgia', serif; font-size: 10pt; font-weight: 700; color: #fff; line-height: 1.35;">Anexo B v3 · Síntesis de tres versiones · Reasignación funcional + activos · 3 fases · Sin porcentajes especulativos</div>
+  <div style="font-size: 6.5pt; color: rgba(255,255,255,0.72); margin-top: 0.1rem;">Novedad v3: Matriz de reasignación funcional gradual con rangos preliminares basados en cuotas Distrito Capital 2024-2026.</div>
+</div>
+
+<div class="ft">
+  <div>Anexo B v3 · Plan Financiero de Transición · Página 4 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+</body>
+</html>

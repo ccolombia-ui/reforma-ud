@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo G v4 · Guía para Planes de Acción a 8 Años con 21 BPAs</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+h4 { font-size: 8pt; font-weight: 700; color: var(--navy3); margin: 0.35rem 0 0.15rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+pre { background: var(--navy2); color: #fff; padding: 0.5rem; border-radius: 6px; font-family: var(--mono); font-size: 7pt; overflow-x: auto; margin: 0.3rem 0; }
+code { font-family: var(--mono); font-size: 7.2pt; background: #f1f5f9; padding: 0.05rem 0.2rem; border-radius: 3px; }
+pre code { background: transparent; padding: 0; }
+
+ul, ol { margin: 0.3rem 0 0.3rem 1.2rem; font-size: 7.5pt; }
+li { margin-bottom: 0.15rem; }
+a { color: var(--sky-d); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb, pre { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:anexo:2026:v4-G</div>
+    <h1>Anexo G v4 · Guía para Planes de Acción a 8 Años con 21 BPAs</h1>
+    <div class="hero-sub"></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">4.1.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-05-01<br>
+      Acuerdo: EA-001a-v4<br>Anexo: G
+    </div>
+  </div>
+</div>
+<h1>Anexo G v4 · Guía para Planes de Acción a 8 Años con 21 BPAs</h1>
+
+<div class="qb"><b>Nota de versión</b>: Este documento <b>enriquece</b> al Anexo G v3 (guía para planes de acción a 8 años con 15 BPAs cross-VR, 4 plataformas, modelo 70/30 y ADN emprendedor) actualizando a <b>21 BPAs</b>, añadiendo la <b>secuencia crítica</b>, el <b>BSC-S 20 KPIs</b> y los <b>escenarios S1–S5</b>. Conserva los principios del Anexo G v3 pero los opera con el corpus BPA completo.</div>
+
+<hr>
+<h2>1 · Principios rectores (heredados de G v3, operativizados en v4)</h2>
+
+| Principio G v3 | Cómo se operativiza en G v4 |
+|---|---|
+| <b>Modelo 70/30</b> (permeabilidad Escuela-VR) | Cada BPA declara cuánto del 30 % cross-VR consume (matriz 4F×5C). |
+| <b>4 plataformas</b> (PAI/PIC/PET/PGE) | Cada BPA declara qué plataforma usa y qué API necesita (contrato C8). |
+| <b>ADN emprendedor y transformativo</b> | Cada BPA en P5 declara su JTBD y outcomes medibles (no solo lemas). |
+| <b>15 BPAs cross-VR</b> | Expandido a 21 BPAs con mapeo R1–R6 y Misiones PIIOM. |
+| <b>Niveles de madurez N0–N4</b> | Evaluados desde 5 perspectivas P5–P1 (105 celdas de diagnóstico). |
+
+<hr>
+<h2>2 · La secuencia crítica: plan mínimo viable</h2>
+
+El Anexo G v3 proponía un plan general. El G v4 prioriza una <b>secuencia crítica</b> que concentra el 80 % del impacto en el 20 % del esfuerzo inicial:
+
+<pre><code>
+AÑO 0 — Semestre 1
+├── BP-INT02: Créditos de investigación y extensión (reforma curricular)
+└── BP-INT01: Misión operacionalizada "Proyecto Bogotá" (gobernanza)
+     └── Salida: 3 programas con créditos obligatorios + Documento "Proyecto Bogotá" firmado
+
+AÑO 0 — Semestre 2
+├── BP-I01: UROP piloto (1 Escuela, 50 estudiantes)
+└── BP-INT04: CABA Design Factory (equipo + 3 proyectos piloto)
+     └── Salida: 50 estudiantes en investigación real + 3 prototipos validados
+
+AÑO 1
+├── BP-I01: UROP escalado (3 Escuelas, 300 estudiantes)
+├── BP-INT04: CABA escalado (10 proyectos, 5 empresas aliadas)
+└── BP-I02: Reglamento PI inventor-friendly (aprobado)
+     └── Salida: 300 estudiantes + portafolio CABA + reglamento publicado
+
+AÑO 2
+├── BP-F01: Concepto compartido piloto (3 programas)
+├── BP-E02: Extensión territorial ODS piloto (2 territorios)
+└── BP-E01: TTO estructurado (presupuesto, equipo, primeras evaluaciones)
+     └── Salida: 3 perfiles de egreso alineados + 2 convenios territoriales + TTO operativo
+
+AÑO 3
+├── BP-F01: Concepto compartido escalado (50 % programas)
+├── BP-E02: Extensión territorial escalada (5 territorios)
+└── BP-F02: PBL piloto (1 Escuela)
+     └── Salida: 50 % programas con coherencia curricular + 5 territorios con métrica ODS
+
+AÑO 4–5
+├── BP-F02: PBL escalado (50 % cursos)
+├── BP-F03: Flexibilidad curricular (3 programas)
+├── BP-F04: Co-op piloto (1 programa)
+└── BP-E03: Educación continua (5 programas)
+     └── Salida: Currículo activo en toda la universidad + ingresos propios crecientes
+
+AÑO 6–7
+├── Todas las BPAs ancla en estado Operativa (N3)
+├── BP-INT03: CLR institucionalizado
+├── BP-INT05: Racionalización 1er ciclo
+└── BP-INT06: Retención y engagement universidad completa
+     └── Salida: Cultura de integración consolidada + métricas de sostenibilidad
+
+AÑO 8
+├── 21 BPAs en evaluación de madurez
+├── ≥ 5 BPAs en N4 (Institucionalizada)
+└── Evaluación externa (CNA, MinCiencias, acreditación internacional)
+     └── Salida: Informe de madurez institucional + decisión de próxima fase
+</code></pre>
+
+<hr>
+<h2>3 · Modelo 70/30 operativizado por BPA</h2>
+
+Cada BPA consume una porción del 30 % cross-VR del tiempo de un docente o estudiante:
+
+| BPA | % del 30 % cross-VR que consume | Dónde se registra |
+|---|---|---|
+| <b>BP-I01</b> UROP | 10 % | Créditos de investigación (INT02) |
+| <b>BP-F02</b> PBL | 8 % | Créditos de formación con componente investigación/extensión |
+| <b>BP-F04</b> Co-op | 12 % | Créditos de extensión o práctica profesional |
+| <b>BP-E02</b> Extensión territorial ODS | 6 % | Créditos de extensión (INT02) |
+| <b>BP-INT04</b> CABA Design Factory | 4 % | Créditos electivos interdisciplinarios |
+| <b>Otras BPAs</b> | Variable (< 3 % c/u) | Según diseño de cada programa |
+| <b>Reserva para imprevistos</b> | 5 % | Buffer administrado por VR-F |
+
+<b>Regla</b>: la suma de porcentajes asignados por programa no puede exceder el 30 % cross-VR disponible. Si una BPA requiere más, debe sustituir a otra o justificar ampliación excepcional ante Comité Inter-VR.
+
+<hr>
+<h2>4 · ADN emprendedor medible</h2>
+
+El Anexo G v3 declaraba el "ADN emprendedor y transformativo" como principio. El G v4 lo convierte en <b>indicadores concretos</b>:
+
+| Dimensión del ADN | Indicador v4 | Meta Año 4 | Meta Año 8 |
+|---|---|---|---|
+| <b>Innovación</b> | Índice de cultura emprendedora (F4-C5) | 3,0 / 5 | 4,0 / 5 |
+| <b>Riesgo calculado</b> | % proyectos UROP / PBL con fallo documentado y aprendizaje | 20 % | 30 % |
+| <b>Colaboración interdisciplinar</b> | % proyectos CABA con ≥ 2 Escuelas participando | 50 % | 80 % |
+| <b>Impacto territorial</b> | % proyectos extensión con métrica ODS publicada | 40 % | 75 % |
+| <b>Sostenibilidad fiscal</b> | % ingresos propios sobre presupuesto total | 10 % | 25 % |
+| <b>Aprendizaje continuo</b> | % docentes con certificación en al menos 1 BPA | 15 % | 50 % |
+
+<hr>
+<h2>5 · Plantilla de Plan de Acción por VR (8 años)</h2>
+
+Cada VR debe presentar su plan usando esta plantilla:
+
+<h3>5.1 · Portada del plan</h3>
+
+| Campo | Contenido |
+|---|---|
+| Vicerrectoría | [Nombre] |
+| Período | 2026 – 2034 |
+| Escenario elegido | [S1 / S2 / S3 / S4 / S5] |
+| BPAs seleccionadas | [Mínimo 3; máximo 21] |
+| Embajador v4 | [Nombre, correo] |
+| Fecha de presentación | [DD/MM/AAAA] |
+
+<h3>5.2 · Matriz de adopción por BPA</h3>
+
+| BPA | Nivel actual | Meta Año 2 | Meta Año 4 | Meta Año 8 | Inversión total | Ruta Clark |
+|---|---|---|---|---|---|---|
+| BP-___ | N_ | N_ | N_ | N_ | $___ M | R-_ |
+
+<h3>5.3 · Matriz de riesgos</h3>
+
+| Riesgo | Probabilidad | Impacto | Mitigación | Responsable |
+|---|---|---|---|---|
+| [Describir] | [Baja/Media/Alta] | [Bajo/Alto/Crítico] | [Acción concreta] | [Nombre] |
+
+<h3>5.4 · Matriz de indicadores BSC-S</h3>
+
+| KPI v4 | Línea base | Meta Año 2 | Meta Año 4 | Meta Año 8 | Fuente de datos |
+|---|---|---|---|---|---|
+| [F_-C_] | [Valor] | [Valor] | [Valor] | [Valor] | [Sistema] |
+
+<hr>
+<h2>6 · Plataformas de interoperabilidad y BPAs</h2>
+
+Cada BPA debe declarar qué plataforma utiliza (contrato C8):
+
+| Plataforma | Qué habilita | BPAs que la usan |
+|---|---|---|
+| <b>PAI</b> (Plataforma Académica Integrada) | Registro académico, mallas, créditos | BP-INT02, BP-F03, BP-INT03, BP-INT06 |
+| <b>PIC</b> (Plataforma de Investigación y Creación) | Gestión de proyectos, grupos, publicaciones | BP-I01, BP-I03, BP-I04, BP-I05 |
+| <b>PET</b> (Plataforma de Extensión y Territorio) | Convenios, extensiones, métricas ODS | BP-E01, BP-E02, BP-E03, BP-E04, BP-INT07 |
+| <b>PGE</b> (Plataforma de Gestión Estratégica) | Planeación, indicadores, BSC-S | BP-INT01, BP-INT05, BP-INT06, todas las BPAs (reporte) |
+
+<b>Regla</b>: si una BPA no puede declarar plataforma, no puede aprobarse. La plataforma es el sistema de trazabilidad.
+
+<hr>
+<h2>7 · Evaluación anual del plan de acción</h2>
+
+Cada año, el Comité Inter-VR evalúa los planes de acción con esta rúbrica:
+
+| Criterio | Peso | Excelente (5) | Satisfactorio (3) | Deficiente (1) |
+|---|---|---|---|---|
+| <b>Cumplimiento de metas N</b> | 30 % | ≥ 90 % de metas cumplidas | 60–89 % | < 60 % |
+| <b>Calidad de datos BSC-S</b> | 25 % | 100 % puntual, 0 % errores | < 1 semana retraso, < 5 % errores | > 2 semanas o > 10 % errores |
+| <b>Aporte a integración misional</b> | 25 % | Índice F4-C2 aumenta ≥ 0,10/año | Aumenta 0,05–0,09/año | Estable o decreciente |
+| <b>Sostenibilidad fiscal</b> | 20 % | Ingresos propios crecen ≥ 10 %/año | Crecen 5–9 %/año | Estables o decrecientes |
+
+<b>Resultado</b>:
+<ul><li><b>≥ 4,0</b>: VR puede proponer escenario más ambicioso el siguiente año.</li><li><b>2,5–3,9</b>: VR mantiene escenario; ajustes puntuales.</li><li><b>< 2,5</b>: VR debe presentar plan de recuperación; Comité Inter-VR asigna asesoría técnica.</li></ul>
+
+<hr>
+<i>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</i>
+<i>Anexo G v4 · Guía Plan Acción 8 Años 21 BPAs v4.1.0</i>
+<i>Aditivo al Anexo G v3 · Secuencia crítica · 70/30 operativizado · ADN emprendedor medible · Plantilla estandarizada</i>
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</div><div class="ft-r">4.1.0</div></div>
+</body>
+</html>

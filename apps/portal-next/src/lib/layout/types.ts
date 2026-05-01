@@ -10,7 +10,7 @@ export interface SidebarSection {
   id: string;
   emoji?: string;
   title: string;
-  type: 'collection' | 'tree' | 'links' | 'custom';
+  type: 'collection' | 'tree' | 'links' | 'custom' | 'vault-tree';
   source?: string;
   icon?: string;
   filterable?: boolean;
@@ -19,6 +19,13 @@ export interface SidebarSection {
   showMissions?: boolean;
   visibleIf?: string;
   href?: string;
+  /** v8g-l5: config para vault-tree (Zoottelkeeper) */
+  vaultConfig?: {
+    rootPath?: string;
+    excludePatterns?: string[];
+    folderMappings?: Record<string, string>;
+    indexPattern?: string;
+  };
 }
 
 export interface CollapsedNavItem {

@@ -27,6 +27,7 @@ import {
   Users,
   Sparkles,
   Target,
+  FolderTree,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -52,6 +53,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Users,
   Sparkles,
   Target,
+  FolderTree,
 };
 
 export function resolveIcon(name: string | undefined): LucideIcon | null {

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anexo A v3 · Matriz RACI cross-VR y Reglas de Asignación de Responsabilidades</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:acuerdo:2026:EA-001a:anexo-A-v3</div>
+    <h1>Anexo A v3 · Matriz RACI cross-VR y Reglas de Asignación de Responsabilidades</h1>
+    <div class="hero-sub">Resolver la debilidad D1 (DOFA 001) y D_b4 (DOFA 001b): ausencia de árbitro inter-VR claro. Síntesis de EA001 base + EA001a-v2 (43→48 procesos) + EA001b (Art. 25).</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">v3.0.0 · DRAFT</div><br>
+    <div class="hero-meta">
+      2026-04-30<br>
+      Supersede: anexo-A v2<br>
+      Anexo orden: 1<br>
+      Acuerdo: EA-001a
+    </div>
+  </div>
+</div>
+
+<h2>§0 · Introducción · Linaje de esta versión v3</h2>
+
+<div class="qb">
+<strong>Este Anexo A v3 es producto de la síntesis de tres versiones:</strong><br><br>
+<table class="tbl-small">
+<thead><tr><th>Fuente</th><th>Qué se aprovecha</th><th>Qué se mejora</th></tr></thead>
+<tbody>
+<tr><td><b>EA001 base</b></td><td>Art. 16 (articulación inter-VR declarativa)</td><td>Se convierte en protocolo operativo vinculante</td></tr>
+<tr><td><b>EA001a-v2</b></td><td>Matriz RACI de 43 procesos; Comité Inter-VR (Art. 60bis)</td><td>Se amplía a 48 procesos; se detalla reglamento del Comité</td></tr>
+<tr><td><b>EA001b</b></td><td>Art. 25 (Consejo Gestión Administrativa)</td><td>Se articula con RACI: el Consejo resuelve lo que RACI no cubre</td></tr>
+</tbody>
+</table><br>
+<strong>Novedad en v3:</strong> Se agregan 5 procesos adicionales provenientes del análisis DOFA 001b (procesos administrativos cross-VR que EA001b identifica implícitamente) y se vincula explícitamente la OTT como "Secretaría Técnica del Comité Inter-VR" durante sus primeros 18 meses.
+</div>
+
+<h2>§1 · Principios rectores</h2>
+
+<div class="rule-card r1">
+  <div class="rule-title">1 · Un solo Driver por proceso</div>
+  <div class="rule-body">Aunque múltiples unidades participan, una sola lidera.</div>
+</div>
+<div class="rule-card r2">
+  <div class="rule-title">2 · Accountable = quien decide</div>
+  <div class="rule-body">El rol A tiene poder de decisión final en su dominio.</div>
+</div>
+<div class="rule-card r3">
+  <div class="rule-title">3 · Consulted ≠ Informed</div>
+  <div class="rule-body">Consulted opina antes; Informed se entera después.</div>
+</div>
+<div class="rule-card r4">
+  <div class="rule-title">4 · Nada queda en "vacio"</div>
+  <div class="rule-body">Si un proceso no tiene Driver asignado, la OTT (meses 1-18) o la DGE&P (post-OTT) asume temporalmente.</div>
+</div>
+<div class="rule-card r5">
+  <div class="rule-title">5 · Escalamiento en 3 niveles</div>
+  <div class="rule-body">(1) bilateral Driver-Accountable → (2) Comité Inter-VR → (3) Rectoría.</div>
+</div>
+
+<div class="ft">
+  <div>Anexo A v3 · Asignación de responsabilidades · Página 1 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§2 · Estructura del Comité Coordinador Inter-VR v3</h2>
+
+<h3>2.1 · Integrantes</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>Cargo</th><th>Rol en Comité</th><th>Origen</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Vicerrector(a) de Formación</td><td><b>Presidente</b> (rotación anual)</td><td>EA001a-v2 Art. 60bis</td></tr>
+<tr><td>2</td><td>Vicerrector(a) de Investigación-Creación e Innovación</td><td>Miembro con voto</td><td>EA001a-v2 Art. 60bis</td></tr>
+<tr><td>3</td><td>Vicerrector(a) de Contextos-Extensión y Proyección Social</td><td>Miembro con voto</td><td>EA001a-v2 Art. 60bis</td></tr>
+<tr><td>4</td><td>Gerente(a) Administrativo y Financiero</td><td>Miembro con voto</td><td>EA001a-v2 Art. 60bis</td></tr>
+<tr><td>5</td><td>Director(a) de Gestión Estratégica y de Planeación</td><td>Secretaría Técnica</td><td>EA001a-v2 Art. 60bis</td></tr>
+<tr><td>6</td><td>Director(a) de Bienestar Universitario y Buen Vivir</td><td>Miembro con voto</td><td>EA001a-v2 Art. 60bis</td></tr>
+<tr><td>7</td><td>Jefe(a) de Oficina de Egresados</td><td>Miembro con voz, sin voto</td><td>EA001a-v2 Art. 60bis</td></tr>
+<tr><td>8</td><td><b>Director(a) de la OTT</b> (meses 1-18)</td><td>Secretaría Técnica Adjunta</td><td><b>NUEVO v3</b> · Enriquece operatividad</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.2 · Funciones ampliadas (v3)</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>Función</th><th>Origen</th><th>Detalle v3</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Resolver conflictos competenciales</td><td>EA001a-v2</td><td>Incluye mediación formal con acta</td></tr>
+<tr><td>2</td><td>Aprobar protocolos cross-VR</td><td>EA001a-v2</td><td>Basado en propuesta de Driver + Accountable</td></tr>
+<tr><td>3</td><td>Coordinar ejecución del PED</td><td>EA001a-v2</td><td>Con seguimiento trimestral DGE&P</td></tr>
+<tr><td>4</td><td>Velar coherencia inter-estatutos</td><td>EA001a-v2</td><td>Informe mensual a CSU</td></tr>
+<tr><td>5</td><td>Emitir conceptos previos a Rectoría</td><td>EA001a-v2</td><td>Plazo: 5 días hábiles</td></tr>
+<tr><td>6</td><td><b>Gestionar escalamiento de procesos RACI sin Driver</b></td><td><b>NUEVO v3</b></td><td>OTT asigna Driver provisional (60 días)</td></tr>
+<tr><td>7</td><td><b>Validar plan de migración de personal</b></td><td><b>NUEVO v3</b></td><td>Basado en EA001b Art. 63</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.3 · Reglamento operativo</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Aspecto</th><th>Regla</th><th>Origen</th></tr></thead>
+<tbody>
+<tr><td><b>Periodicidad</b></td><td>Ordinarias: quincenales · Extraordinarias: por convocatoria del Presidente o 3 miembros</td><td>EA001a-v2 + EA001b práctica operativa</td></tr>
+<tr><td><b>Quórum</b></td><td>5 de 7 miembros con voto</td><td>EA001a-v2</td></tr>
+<tr><td><b>Actas</b></td><td>Públicas en sistema institucional (Ley 1712/2014)</td><td>EA001a-v2 M4</td></tr>
+<tr><td><b>Votación</b></td><td>Mayoría simple; empate decide Presidente</td><td>EA001a-v2</td></tr>
+<tr><td><b>Secretaría</b></td><td>DGE&P + OTT (meses 1-18)</td><td><b>Fusión v3</b></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo A v3 · Asignación de responsabilidades · Página 2 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h2>§3 · Matriz RACI ampliada v3 (48 procesos)</h2>
+
+<h3>3.1 · Procesos académicos cross-VR (1-18)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>ID</th><th>Proceso</th><th>Driver (D)</th><th>Accountable (A)</th><th>Consulted (C)</th><th>Informed (I)</th><th>Origen</th></tr></thead>
+<tbody>
+<tr><td>A01</td><td>Diseño curricular conjunto</td><td>VIF</td><td>VIF</td><td>VIC&I, VICE&PS, Escuelas</td><td>GA&F, DGE&P</td><td>EA001a-v2 M3</td></tr>
+<tr><td>A02</td><td>Asignación docente a programas</td><td>VIF</td><td>VIF</td><td>Escuelas, VIC&I</td><td>GA&F</td><td>EA001a-v2</td></tr>
+<tr><td>A03</td><td>Movilidad académica inter-Escuela</td><td>VIF</td><td>VIF</td><td>VIC&I, VICE&PS</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A04</td><td>Aseguramiento calidad CCA</td><td>VIF</td><td>DGE&P</td><td>VIC&I, VICE&PS, Escuelas</td><td>CSU</td><td>EA001a-v2</td></tr>
+<tr><td>A05</td><td>Creación/modificación programas</td><td>VIF</td><td>CSU</td><td>VIC&I, VICE&PS, Escuelas</td><td>MEN</td><td>EA001a-v2</td></tr>
+<tr><td>A06</td><td>Admisiones y registro</td><td>VIF</td><td>VIF</td><td>Escuelas, DBU&BV</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A07</td><td>Internacionalización académica</td><td>VIF</td><td>VIF</td><td>VICE&PS</td><td>Relaciones Inter.</td><td>EA001a-v2</td></tr>
+<tr><td>A08</td><td>Educación virtual</td><td>VIF</td><td>VIF</td><td>VIC&I, GA&F</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A09</td><td>UROP / mentoría investigación pregrado</td><td>VIC&I</td><td>VIC&I</td><td>VIF, Escuelas</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A10</td><td>Spin-offs y emprendimiento</td><td>VIC&I</td><td>VIC&I</td><td>VICE&PS, GA&F</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A11</td><td>Divulgación científica</td><td>VIC&I</td><td>VIC&I</td><td>VICE&PS</td><td>Comunicaciones</td><td>EA001a-v2</td></tr>
+<tr><td>A12</td><td>Gestión grupos de investigación</td><td>VIC&I</td><td>VIC&I</td><td>VIF</td><td>MinCiencias</td><td>EA001a-v2</td></tr>
+<tr><td>A13</td><td>Extensión territorial ODS</td><td>VICE&PS</td><td>VICE&PS</td><td>VIF, VIC&I</td><td>Alcaldía</td><td>EA001a-v2</td></tr>
+<tr><td>A14</td><td>Educación continua y SAR</td><td>VICE&PS</td><td>VICE&PS</td><td>VIF</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A15</td><td>Prácticas y pasantías</td><td>VICE&PS</td><td>VICE&PS</td><td>VIF, VIC&I</td><td>Empresas</td><td>EA001a-v2</td></tr>
+<tr><td>A16</td><td>Empleabilidad y egresados</td><td>OEG</td><td>VICE&PS</td><td>VIF, VIC&I</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A17</td><td>Responsabilidad Social Universitaria</td><td>VICE&PS</td><td>VICE&PS</td><td>VIF, VIC&I</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A18</td><td>Convenios interinstitucionales</td><td>VICE&PS</td><td>VICE&PS</td><td>VIF, VIC&I</td><td>GA&F</td><td>EA001a-v2</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3.2 · Procesos administrativos cross-VR (19-36)</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>ID</th><th>Proceso</th><th>Driver (D)</th><th>Accountable (A)</th><th>Consulted (C)</th><th>Informed (I)</th><th>Origen</th></tr></thead>
+<tbody>
+<tr><td>A19</td><td>Presupuesto anual por VR</td><td>GA&F</td><td>Rectoría</td><td>Todas las VR</td><td>CSU</td><td>EA001a-v2</td></tr>
+<tr><td>A20</td><td>Ejecución presupuestal</td><td>GA&F</td><td>GA&F</td><td>VR afectada</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A21</td><td>Contratación de bienes/servicios</td><td>GA&F</td><td>GA&F</td><td>VR solicitante</td><td>Control Interno</td><td>EA001a-v2</td></tr>
+<tr><td>A22</td><td>Talento humano: selección</td><td>GA&F</td><td>GA&F</td><td>VR solicitante</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A23</td><td>Talento humano: evaluación</td><td>GA&F</td><td>GA&F</td><td>VR jefe</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A24</td><td>Infraestructura y mantenimiento</td><td>GA&F</td><td>GA&F</td><td>VR afectada</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A25</td><td>Tecnología e información</td><td>GA&F</td><td>GA&F</td><td>Todas las VR</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A26</td><td>Gestión documental</td><td>GA&F</td><td>GA&F</td><td>Secretaría General</td><td>Archivo</td><td>EA001a-v2</td></tr>
+<tr><td>A27</td><td>Planeación estratégica PED</td><td>DGE&P</td><td>Rectoría</td><td>Todas las VR</td><td>CSU</td><td>EA001a-v2</td></tr>
+<tr><td>A28</td><td>Indicadores institucionales</td><td>DGE&P</td><td>DGE&P</td><td>Todas las VR</td><td>CSU</td><td>EA001a-v2</td></tr>
+<tr><td>A29</td><td>Acreditación institucional</td><td>DGE&P</td><td>DGE&P</td><td>VIF, VIC&I, VICE&PS</td><td>CNA</td><td>EA001a-v2</td></tr>
+<tr><td>A30</td><td>Autoevaluación</td><td>DGE&P</td><td>DGE&P</td><td>Todas las VR</td><td>CSU</td><td>EA001a-v2</td></tr>
+<tr><td>A31</td><td>Bienestar estudiantil</td><td>DBU&BV</td><td>DBU&BV</td><td>VIF, VICE&PS</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A32</td><td>Bienestar docente</td><td>DBU&BV</td><td>DBU&BV</td><td>VIF, VIC&I</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A33</td><td>Permanencia estudiantil</td><td>DBU&BV</td><td>DBU&BV</td><td>VIF</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A34</td><td>Salud integral</td><td>DBU&BV</td><td>DBU&BV</td><td>VIF, GA&F</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A35</td><td>Cultura y deporte</td><td>DBU&BV</td><td>DBU&BV</td><td>VICE&PS</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+<tr><td>A36</td><td>Egresados: seguimiento</td><td>OEG</td><td>VICE&PS</td><td>VIF, VIC&I</td><td>DGE&P</td><td>EA001a-v2</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ft">
+  <div>Anexo A v3 · Asignación de responsabilidades · Página 3 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+<div class="pg-2"></div>
+
+<h3>3.3 · Procesos de gobernanza y transformación (37-48) — NUEVOS v3</h3>
+<div class="tbl-wrap">
+<table class="tbl-small">
+<thead><tr><th>ID</th><th>Proceso</th><th>Driver (D)</th><th>Accountable (A)</th><th>Consulted (C)</th><th>Informed (I)</th><th>Origen</th></tr></thead>
+<tbody>
+<tr><td>A37</td><td>Gestión del cambio organizacional</td><td><b>OTT</b></td><td>Rectoría</td><td>Todas las VR</td><td>CSU</td><td><b>NUEVO v3</b> · M6</td></tr>
+<tr><td>A38</td><td>Migración de personal</td><td><b>OTT</b></td><td>GA&F</td><td>Todas las VR</td><td>Asesoría Jurídica</td><td><b>NUEVO v3</b> · EA001b Art. 63</td></tr>
+<tr><td>A39</td><td>Comunicación interna reforma</td><td><b>OTT</b></td><td>Rectoría</td><td>Todas las VR</td><td>Comunidad</td><td><b>NUEVO v3</b> · M6</td></tr>
+<tr><td>A40</td><td>Formación directivos nuevo modelo</td><td><b>OTT</b></td><td>DGE&P</td><td>Todas las VR</td><td>CSU</td><td><b>NUEVO v3</b> · M6</td></tr>
+<tr><td>A41</td><td>Seguimiento 7 estatutos derivados</td><td><b>OTT</b></td><td>Rectoría</td><td>DGE&P</td><td>CSU</td><td><b>NUEVO v3</b> · M6</td></tr>
+<tr><td>A42</td><td>Tablero público implementación</td><td>DGE&P</td><td>DGE&P</td><td><b>OTT</b> (meses 1-18)</td><td>CSU, Asamblea</td><td><b>NUEVO v3</b> · M7</td></tr>
+<tr><td>A43</td><td>Revisión anual estructura org.</td><td>DGE&P</td><td>CSU</td><td>Todas las VR</td><td>MEN</td><td><b>NUEVO v3</b> · M10</td></tr>
+<tr><td>A44</td><td>Innovación organizacional</td><td>DGE&P</td><td>DGE&P</td><td>Todas las VR</td><td>CSU</td><td><b>NUEVO v3</b> · M12</td></tr>
+<tr><td>A45</td><td>Evaluación impacto territorial</td><td>VICE&PS</td><td>DGE&P</td><td>VIF, VIC&I</td><td>Alcaldía</td><td><b>NUEVO v3</b> · EA001b funciones</td></tr>
+<tr><td>A46</td><td>Articulación IDEXUD→Centro</td><td>VICE&PS</td><td>CSU</td><td>Equipo designado</td><td>Comunidad</td><td><b>NUEVO v3</b> · EA001b Art. 34</td></tr>
+<tr><td>A47</td><td>Sistema Bienestar-Buen Vivir</td><td>DBU&BV</td><td>DBU&BV</td><td>Todas las VR</td><td>DGE&P</td><td><b>NUEVO v3</b> · EA001b Arts. 26-30</td></tr>
+<tr><td>A48</td><td>Rendición cuentas trimestral</td><td>DGE&P</td><td>Rectoría</td><td>Todas las VR</td><td>CSU, Asamblea</td><td><b>NUEVO v3</b> · Síntesis</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>§4 · Reglas de escalamiento v3</h2>
+
+<div class="rule-card r1">
+  <div class="rule-title">Nivel 1 · Bilateral (5 días hábiles)</div>
+  <div class="rule-body">Driver → Accountable. Si no hay acuerdo → Nivel 2.</div>
+</div>
+<div class="rule-card r2">
+  <div class="rule-title">Nivel 2 · Comité Inter-VR (10 días hábiles desde inicio)</div>
+  <div class="rule-body">Driver + Accountable → Comité Inter-VR. Si resuelve: acta + comunicación. Si no → Nivel 3.</div>
+</div>
+<div class="rule-card r3">
+  <div class="rule-title">Nivel 3 · Rectoría (15 días hábiles desde inicio)</div>
+  <div class="rule-body">Comité Inter-VR → Rectoría. Decisión vinculante + fundamento escrito.</div>
+</div>
+<div class="rule-card r4">
+  <div class="rule-title">Vacío de Driver (proceso sin R asignado)</div>
+  <div class="rule-body">1. OTT (meses 1-18) detecta vacío → informa Comité Inter-VR.<br>2. Comité designa Driver provisional (60 días).<br>3. DGE&P evalúa si vacío es estructural → propone modificación EA001a-v3.</div>
+</div>
+
+<h2>§5 · Conexión con otros anexos v3</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Este Anexo A define...</th><th>Que se opera en...</th><th>Mediante...</th></tr></thead>
+<tbody>
+<tr><td>Quién decide qué</td><td>Anexo B (Presupuesto)</td><td>Asignación de recursos por Driver</td></tr>
+<tr><td>Quién coordina cuándo</td><td>Anexo C (Cronograma)</td><td>Hitos con responsables RACI</td></tr>
+<tr><td>Cómo se mide</td><td>Anexo D (Indicadores)</td><td>KPIs ligados a rol A de cada proceso</td></tr>
+<tr><td>Con qué cargos</td><td>Anexo E (Planta)</td><td>Posiciones que soportan roles R/A/C/I</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <div style="font-family: 'Georgia', serif; font-size: 10pt; font-weight: 700; color: #fff; line-height: 1.35;">Anexo A v3 · Síntesis de tres versiones · 48 procesos · 5 principios · 3 niveles escalamiento</div>
+  <div style="font-size: 6.5pt; color: rgba(255,255,255,0.72); margin-top: 0.1rem;">Novedad v3: 5 procesos administrativos adicionales + OTT como Secretaría Técnica Adjunta del Comité Inter-VR.</div>
+</div>
+
+<div class="ft">
+  <div>Anexo A v3 · Asignación de responsabilidades · Página 4 / 4</div>
+  <div class="ft-r">v3.0.0 · DRAFT · 2026-04-30 · CC BY-SA 4.0 · UDFJC</div>
+</div>
+
+</body>
+</html>

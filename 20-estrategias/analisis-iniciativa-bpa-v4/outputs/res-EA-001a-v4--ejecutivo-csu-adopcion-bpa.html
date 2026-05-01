@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen Ejecutivo v4 · Adopción de BPAs y Medición de Madurez de Reforma</title>
+<style>
+:root {
+  --navy:  #0a0f1e; --navy2: #111827; --navy3: #1e293b;
+  --sky:   #0ea5e9; --sky-d: #0369a1; --sky-l: #bae6fd;
+  --sun:   #f59e0b; --sun-d: #b45309; --sun-l: #fde68a;
+  --grn:   #10b981; --grn-d: #047857; --grn-l: #a7f3d0;
+  --pur:   #8b5cf6; --pur-d: #6d28d9; --pur-l: #ddd6fe;
+  --rose:  #f43f5e; --rose-d: #be123c; --rose-l: #fecdd3;
+  --teal:  #14b8a6; --teal-d: #0f766e; --teal-l: #99f6e4;
+  --text:  #1e293b; --muted: #64748b; --bg: #f8fafc; --border: rgba(0,0,0,0.07);
+  --mono:  'Courier New', Courier, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif; font-size: 9pt; line-height: 1.42; color: var(--text); background: #fff; max-width: 215mm; margin: 0 auto; padding: 7mm 11mm; }
+.print-btn { position: fixed; top: 10px; right: 10px; background: var(--sky-d); color:#fff; border:none; padding: 0.4rem 0.9rem; border-radius: 7px; font-size: 0.75rem; font-weight: 700; cursor: pointer; z-index: 999; font-family: inherit; box-shadow: 0 3px 12px rgba(0,0,0,0.22); }
+.print-btn:hover { background: var(--navy2); }
+h1 { font-size: 16pt; font-weight: 700; color: #fff; line-height: 1.06; }
+h2 { font-size: 10pt; font-weight: 700; color: var(--navy); margin: 0.55rem 0 0.28rem; border-bottom: 2px solid var(--sky); padding-bottom: 0.14rem; }
+h3 { font-size: 8.5pt; font-weight: 700; color: var(--navy3); margin: 0.4rem 0 0.18rem; }
+h4 { font-size: 8pt; font-weight: 700; color: var(--navy3); margin: 0.35rem 0 0.15rem; }
+.si { font-size: 6.8pt; color: var(--muted); margin-bottom: 0.25rem; font-style: italic; }
+.pg-2 { page-break-before: always; break-before: page; }
+
+.hero { background: linear-gradient(135deg, #0a0f1e 0%, #0c2340 40%, #0f3460 70%, #1a1a2e 100%); border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 0.42rem; display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: center; }
+.hero-eyebrow { font-size: 6.5pt; font-family: var(--mono); color: var(--sky); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.22rem; }
+.hero-sub { font-size: 7.5pt; color: rgba(255,255,255,0.65); margin-top: 0.2rem; line-height: 1.45; }
+.hero-right { text-align: right; }
+.hero-badge { display: inline-block; background: var(--sky); color: #fff; font-size: 6pt; font-family: var(--mono); font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.15rem; letter-spacing: 0.06em; }
+.hero-meta { font-size: 6pt; color: rgba(255,255,255,0.5); font-family: var(--mono); line-height: 1.7; }
+
+.tbl-wrap { overflow-x: auto; margin: 0.22rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 7.2pt; line-height: 1.35; }
+th, td { border: 1px solid #e2e8f0; padding: 0.22rem 0.34rem; text-align: left; vertical-align: top; }
+th { background: var(--navy2); color: #fff; font-weight: 700; font-size: 6.5pt; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: #f8fafc; }
+tr:nth-child(odd)  { background: #fff; }
+td { color: var(--text); }
+.tbl-small { font-size: 6.5pt; }
+.tbl-small th, .tbl-small td { padding: 0.14rem 0.24rem; }
+
+.qb { border-left: 3.5px solid var(--sky-d); background: linear-gradient(160deg,#eff6ff,#dbeafe); border-radius: 0 8px 8px 0; padding: 0.45rem 0.7rem; margin: 0.3rem 0; font-size: 8pt; color: var(--navy3); }
+.qb strong { color: var(--navy); }
+
+.rule-card { border-radius: 8px; padding: 0.4rem 0.5rem; border: 1px solid var(--border); margin: 0.22rem 0; break-inside: avoid; }
+.rule-card.r1 { background: linear-gradient(160deg,#eff6ff,#dbeafe); border-left: 3.5px solid var(--sky-d); }
+.rule-card.r2 { background: linear-gradient(160deg,#f0fdf4,#dcfce7); border-left: 3.5px solid var(--grn-d); }
+.rule-card.r3 { background: linear-gradient(160deg,#fffbeb,#fef3c7); border-left: 3.5px solid var(--sun-d); }
+.rule-card.r4 { background: linear-gradient(160deg,#faf5ff,#ede9fe); border-left: 3.5px solid var(--pur-d); }
+.rule-card.r5 { background: linear-gradient(160deg,#f0fdfa,#ccfbf1); border-left: 3.5px solid var(--teal-d); }
+.rule-card.r6 { background: linear-gradient(160deg,#fef2f2,#fecdd3); border-left: 3.5px solid var(--rose-d); }
+.rule-title { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 0.1rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.rule-body { font-size: 7pt; color: var(--text); line-height: 1.32; }
+.rule-body b { color: var(--navy2); }
+
+.ft { margin-top: 0.4rem; padding-top: 0.32rem; border-top: 1.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; font-size: 5.8pt; color: var(--muted); }
+.ft-r { text-align: right; font-family: var(--mono); }
+
+.verdict { background: linear-gradient(135deg, var(--grn-d) 0%, var(--sky-d) 50%, var(--pur-d) 100%); border-radius: 10px; padding: 0.55rem 0.9rem; margin: 0.3rem 0; text-align: center; }
+
+pre { background: var(--navy2); color: #fff; padding: 0.5rem; border-radius: 6px; font-family: var(--mono); font-size: 7pt; overflow-x: auto; margin: 0.3rem 0; }
+code { font-family: var(--mono); font-size: 7.2pt; background: #f1f5f9; padding: 0.05rem 0.2rem; border-radius: 3px; }
+pre code { background: transparent; padding: 0; }
+
+ul, ol { margin: 0.3rem 0 0.3rem 1.2rem; font-size: 7.5pt; }
+li { margin-bottom: 0.15rem; }
+a { color: var(--sky-d); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@page { size: Letter portrait; margin: 7mm 9mm 7mm 9mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin:0; padding:0; max-width:100%; }
+  .print-btn { display: none !important; }
+  body { font-size: 8pt; padding: 0; line-height: 1.34; }
+  .pg-2 { page-break-before: always !important; break-before: page !important; }
+  .rule-card, .tbl-wrap, .qb, pre { break-inside: avoid; page-break-inside: avoid; }
+  h2 { margin: 0.34rem 0 0.18rem; }
+  h1 { font-size: 14pt; }
+}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">urn:udfjc:csu:resumen:2026:EA-001a-v4-ejecutivo</div>
+    <h1>Resumen Ejecutivo v4 · Adopción de BPAs y Medición de Madurez de Reforma</h1>
+    <div class="hero-sub"></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">4.1.0 · FINAL</div><br>
+    <div class="hero-meta">
+      2026-05-01<br>
+      Acuerdo: EA-001a-v4<br>Anexo: v4
+    </div>
+  </div>
+</div>
+<h1>Resumen Ejecutivo v4 · Adopción de BPAs y Medición de Madurez de Reforma</h1>
+
+<div class="qb"><b>Audiencia</b>: Consejo Superior Universitario (CSU), Vicerrectorías, Dirección de Gestión Estratégica y de Planeación (DGE&P), Comité Inter-VR.</div>
+<div class="qb"><b>Tiempo de lectura</b>: 8 minutos.</div>
+<div class="qb"><b>Relación con versiones anteriores</b>: Este documento <b>NO reemplaza</b> los anexos v3 (A–G). Es una capa de seguimiento y evaluación que se construye <b>encima</b> de lo aprobado en 2025.</div>
+
+<hr>
+<h2>1 · Pregunta de diseño central (misma pregunta, mismos criterios)</h2>
+
+<div class="qb"><b>¿Qué ganamos y qué arriesgamos al incluir el detalle conceptual de las 21 BPAs en el documento de validación del CSU (Anexo v4), versus mantener un marco genérico donde cada Vicerrectoría defina sus propias buenas prácticas sin un marco común de medición?</b></div>
+
+Esta es <b>la misma pregunta</b> que originó el AUDIT de diseño del Anexo v4 en abril de 2026. Se mantiene porque la tensión central no ha desaparecido: por un lado, el CSU necesita saber <b>qué</b> se está implementando y <b>cómo</b> se mide; por el otro, las VRs necesitan <b>autonomía</b> para diseñar sus propios caminos. La diferencia entre la pregunta de entonces y ahora es que ya existe una respuesta construida: el <b>Anexo v4</b>.
+
+<b>Criterios de ponderación</b> (mismos del AUDIT v1):
+
+| Criterio | Peso | Cómo se aplica en v4 |
+|---|---|---|
+| <b>Transparencia democrática</b> | 25 % | El catálogo §5 expone las 21 BPAs con referentes internacionales; el BSC-S §8 publica 20 KPIs con línea base. |
+| <b>Accountability operativo</b> | 25 % | Cada BPA tiene BPA activador, meta TO-BE, AS-IS y fórmula. Sin estos 4 elementos, no entra al tablero. |
+| <b>Autonomía con coherencia</b> | 25 % | Las VRs eligen ≥ 3 BPAs del catálogo referencial, pero deben pasar contratos C1–C8 y alimentar KPIs obligatorios. |
+| <b>Viabilidad política</b> | 25 % | El anexo NO modifica el Acuerdo 004/2025. Es un instrumento de seguimiento, no una reforma. |
+
+<hr>
+<h2>2 · Respuesta ejecutiva en una página</h2>
+
+La UDFJC tiene <b>estructura</b> (Acuerdo 004/2025) pero aún no tiene <b>funcionamiento</b> medible. Los 7 anexos v3 (A–G) resolvieron la arquitectura organizativa: quién decide, quién paga, cuándo se aprueba, cuántos cargos hay. Pero <b>ninguno de esos 7 anexos mide si la reforma está transformando la universidad</b>.
+
+El <b>Anexo v4</b> cierra esa brecha con tres herramientas:
+<ol><li><b>Un marco obligatorio de evaluación</b> (5 perspectivas, niveles N0–N4, escenarios S0–S5). El CSU aprueba <b>cómo</b> se mide.</li><li><b>Un catálogo referencial de 21 BPAs</b> validadas en 21 universidades del mundo. El CSU ve <b>qué</b> se puede adoptar; cada VR elige las suyas.</li><li><b>Un tablero de 20 KPIs</b> (4 funciones × 5 criterios) que miden <b>transformación</b>, no actividad. Se actualizan semestral o anualmente.</li></ol>
+
+El resultado es una <b>solución aditiva</b>: el Acuerdo 004/2025 y los anexos v3 A–G se mantienen intactos. El Anexo v4 se suma como la <b>capa de seguimiento</b> que convierte la estructura en comportamiento medible.
+
+<hr>
+<h2>3 · Mejoras de la versión v4 con respecto a v3</h2>
+
+<h3>3.1 · ¿Qué tenía v3? (Línea base)</h3>
+
+Los 7 anexos v3 resolvieron problemas de <b>estructura</b>:
+
+| Anexo v3 | Qué resolvió | Qué NO resolvía |
+|---|---|---|
+| <b>A</b> | Asignación de responsabilidades (RACI) | No definía qué prácticas operativas debía ejecutar cada responsable. |
+| <b>B</b> | Plan financiero de transición | No desagregaba presupuesto por práctica ni medía retorno. |
+| <b>C</b> | Cronograma de estatutos derivados | No vinculaba normas con comportamientos de aula o laboratorio. |
+| <b>D</b> | Sistema de indicadores (BSC-S) | Tenía indicadores institucionales, pero no por BPA ni con líneas base. |
+| <b>E</b> | Planta de cargos (Decreto 785) | Definía puestos, no competencias ni prácticas específicas. |
+| <b>F</b> | Alcance y límites de decisión del CSU | Era genérico; no mencionaba BPAs ni madurez. |
+| <b>G</b> | Guía para planes de acción a 8 años | Mencionaba 15 BPAs cross-VR sin metas numéricas ni mapeo sistemático. |
+
+<h3>3.2 · ¿Qué aporta v4? (Mejoras aditivas)</h3>
+
+El Anexo v4 no reemplaza ningún anexo v3. <b>Se superpone</b> y aporta 8 mejoras concretas:
+
+| # | Mejora v4 | Anexo v3 al que potencia | Impacto |
+|---|---|---|---|
+| <b>M1</b> | <b>21 BPAs especificadas</b> con árbol de problemas, cadena de resultados y matriz 4×5 | G (planes de acción) | De "15 BPAs mencionadas" a "21 BPAs operativas con evidencia" |
+| <b>M2</b> | <b>Catálogo referencial</b> con 3 universidades referentes por BPA | G (benchmarking) | De "5 referentes en una tabla" a "63 referentes con lecciones aprendidas" |
+| <b>M3</b> | <b>Framework P5–P1</b> con 5 perspectivas de evaluación por BPA | D (indicadores) | De "5 niveles genéricos" a "105 celdas de diagnóstico" (21×5) |
+| <b>M4</b> | <b>BSC-S simplificado</b> con 20 KPIs transformacionales (4F×5C) | D (indicadores) | De "indicadores institucionales" a "KPIs que miden cambio de comportamiento" |
+| <b>M5</b> | <b>DOFA 5R Clark</b> comparativo Con/Sin BPA | A (RACI) + F (alcance) | De "análisis genérico" a "5 amenazas convergentes evidenciadas con palancas" |
+| <b>M6</b> | <b>Secuencia crítica</b> con plan mínimo viable y presupuesto | B (financiero) + G (planes) | De "21 BPAs a la vez" a "5 anclas + INT02 en orden ejecutable" |
+| <b>M7</b> | <b>Matriz BPAs × PIIOM</b> con proyección de ingresos | B (financiero) | De "sin alineación MinCiencias" a "+$3.100 M COP/año potenciales" |
+| <b>M8</b> | <b>Contratos de coherencia C1–C8</b> validados por Comité Inter-VR | A (RACI) + F (alcance) | De "cada VR por su lado" a "validación cross-VR obligatoria antes de CSU" |
+
+<h3>3.3 · Tabla comparativa v3 vs v4 · Por dimensión</h3>
+
+| Dimensión | v3 (estado 2025) | v4 (estado 2026) | Delta |
+|---|---|---|---|
+| <b>Cobertura normativa</b> | Acuerdo 004/2025 + 7 anexos | Mismo + Anexo v4 de seguimiento | +1 anexo técnico |
+| <b>Prácticas operativas</b> | 15 BPAs mencionadas sin detalle | 21 BPAs con especificación RBM-GAC | +6 BPAs, +100 % de detalle |
+| <b>Indicadores por BPA</b> | Ninguno | 20 KPIs con AS-IS, TO-BE, fórmula | De 0 a 20 |
+| <b>Líneas base</b> | No declaradas | 20 líneas base AS-IS 2026 con confianza | De 0 a 20 |
+| <b>Benchmarking internacional</b> | 5 universidades | 21 universidades con heatmap | +16 referentes |
+| <b>Presupuesto por práctica</b> | Agregado por VR | TDABC-Lite por BPA (P4) | Desagregación operativa |
+| <b>Diagnóstico cultural</b> | Genérico | DOFA P2 + IVC por BPA | Cultural por práctica |
+| <b>Adopción de estándares</b> | No mapeado | 8 estándares × 9 Escuelas | Heatmap 9×8 |
+| <b>Niveles de madurez</b> | N0–N4 genéricos | N0–N4 × 5 perspectivas × 21 BPAs | 105 celdas de diagnóstico |
+| <b>Escenarios de decisión</b> | No definidos | S0–S5 con pesos ajustables | Dashboard decisional |
+
+<hr>
+<h2>4 · ¿Por qué es una solución aditiva?</h2>
+
+<h3>4.1 · Definición operativa de "aditiva"</h3>
+
+Una solución aditiva es aquella que <b>se suma sin modificar lo existente</b>. El Anexo v4 cumple 5 pruebas de aditividad:
+
+| Prueba | ¿Cumple? | Evidencia |
+|---|---|---|
+| <b>1. Sin modificación de Acuerdo</b> | ✅ Sí | El Anexo v4 NO modifica el texto del Acuerdo 004/2025 ni deroga ningún artículo. |
+| <b>2. Sin reemplazo de anexos v3</b> | ✅ Sí | Los anexos A–G v3 se mantienen vigentes. El v4 es un anexo <b>adicional</b> de seguimiento. |
+| <b>3. Sin cambio de cargos</b> | ✅ Sí | No crea cargos nuevos ni modifica la planta del Decreto 785 (Anexo E v3). |
+| <b>4. Sin nueva estructura organizativa</b> | ✅ Sí | No modifica el organigrama aprobado en Acuerdo 004/2025. Usa el Comité Inter-VR ya existente (Art. 60bis). |
+| <b>5. Con retrocompatibilidad</b> | ✅ Sí | Si en el futuro el CSU decide discontinuar v4, los anexos v3 A–G siguen funcionando exactamente igual. |
+
+<h3>4.2 · Metáfora: el edificio y el termómetro</h3>
+
+Los anexos v3 construyeron el <b>edificio</b>: cimientos (A), presupuesto (B), planos (C), medidores de luz (D), mobiliario (E), reglamento de copropiedad (F) y manual de mantenimiento (G). El Anexo v4 es el <b>termómetro</b> que mide si el edificio está caliente o frío. El termómetro no cambia la arquitectura, pero sin él no sabes si la calefacción funciona.
+
+<h3>4.3 · Implicación para el CSU</h3>
+
+Aprobar el Anexo v4 no requiere votar una reforma. Requiere <b>aprobar un marco de medición</b> y <b>recibir un catálogo de referencia</b>. Las decisiones operativas (qué BPAs adopta cada VR, con qué metas, con qué presupuesto) se toman <b>dentro</b> del marco, no por reforma del marco.
+
+<hr>
+<h2>5 · Riesgos de no comprensión de esta versión</h2>
+
+<h3>5.1 · El riesgo principal: confundir "aditivo" con "opcional"</h3>
+
+La mayor amenaza no es que se rechace v4. Es que se <b>archive</b> v4 asumiendo que "como no modifica el Acuerdo, no es urgente". Ese error de comprensión tiene consecuencias graves:
+
+| Error de comprensión | Consecuencia si no se corrige |
+|---|---|
+| "v4 es opcional porque es aditivo" | La reforma sigue sin medición; en 2030 nadie sabrá si funcionó o no. |
+| "v4 es solo para las VRs, no para el CSU" | El CSU pierde la única herramienta que le permite supervisar la reforma sin micromanejar. |
+| "las BPAs son una lista de deseos" | Las VRs inventan sus propias prácticas sin evidencia; se repiten errores ya cometidos en otras universidades. |
+| "los KPIs son metas de cumplimiento" | Las VRs "maquillan" indicadores en lugar de transformar comportamientos. |
+| "el catálogo referencial es un menú buffet" | Cada VR elige solo las BPAs fáciles, dejando las críticas (INT01, INT02, I01) sin ejecutar. |
+| "v4 reemplaza a v3" | Se abandona la estructura organizativa recién aprobada; el caos institucional se profundiza. |
+
+<h3>5.2 · Matriz de riesgos de incomprensión</h3>
+
+| Riesgo | Probabilidad | Impacto | Mitigación documentada en |
+|---|---|---|---|
+| <b>R-IC1</b> · Archivar v4 por "no urgente" | Media | Crítico | §0.2 y §4.1 (pruebas de aditividad); comunicar que v4 es el único termómetro de la reforma. |
+| <b>R-IC2</b> · VRs ignoran el catálogo y crean BPAs propias | Media | Alto | §3.4 (contratos C1–C8); §7 (validación cross-VR obligatoria antes de CSU). |
+| <b>R-IC3</b> · KPIs maquillados en lugar de transformación | Alta | Alto | §8.1 (reglas de lectura: KPI mide transformación, no actividad); auditoría externa anual. |
+| <b>R-IC4</b> · Secuencia crítica saltada (querer todo a la vez) | Media | Crítico | §6.1 (diagrama temporal); §6.2 (justificación por retroalimentaciones); hitos go/no-go semestrales. |
+| <b>R-IC5</b> · Confundir referencial con obligatorio | Media | Alto | §0.3 (tabla Marco obligatorio vs Catálogo referencial); capacitación al CSU en primera sesión. |
+| <b>R-IC6</b> · No alimentar datos al BSC-S | Media | Alto | §9 (infraestructura JSONL + DataviewJS); asignación de responsable de datos por VR en Anexo A v3. |
+| <b>R-IC7</b> · Resistencia docente por no entender el origen de las BPAs | Alta | Crítico | §1 (narrativa de origen: las BPAs no son inventos del rector, son adaptaciones de estándares internacionales). |
+
+<h3>5.3 · Estrategias de mitigación activas</h3>
+
+<h4>Mitigación 1 · Carta de intenciones del CSU (Año 0, Semestre 1)</h4>
+
+Antes de la primera adopción de BPAs, el CSU emite una <b>resolución interpretativa</b> que establece:
+<ul><li>El Anexo v4 es <b>instrumento de seguimiento obligatorio</b> de la reforma.</li><li>Sin informe de avance BSC-S semestral, no hay aprobación de recursos adicionales para la VR.</li><li>El Comité Inter-VR tiene <b>atribución vinculante</b> de validar C1–C8; no es un espacio de coordinación voluntaria.</li></ul>
+
+<h4>Mitigación 2 · Capacitación "v4 en 90 minutos"</h4>
+
+Una sola sesión para todo el CSU y directivos de VRs con 4 bloques:
+<ol><li><b>15 min</b>: narrativa §1 (¿por qué existe cada BPA? Origen normativo e internacional).</li><li><b>20 min</b>: catálogo §5 (las 5 anclas + INT02; el resto es referencial).</li><li><b>25 min</b>: BSC-S §8 (cómo leer los 20 KPIs; diferencia entre actividad y transformación).</li><li><b>30 min</b>: simulación de decisión con dashboard S0–S5 (cambiar pesos wF/wC/wT y ver cómo cambia el escenario recomendado).</li></ol>
+
+<h4>Mitigación 3 · Primer informe BSC-S "aunque sea vacío"</h4>
+
+El primer informe semestral (2026-II) debe publicarse <b>aunque todas las celdas digan cero o N/A</b>. Esto normaliza la transparencia y establece la línea base sin presión de "maquillar". El mensaje: "empezar con ceros no es fracaso; es honestidad metodológica".
+
+<h4>Mitigación 4 · Comunicación de "aditivo ≠ opcional"</h4>
+
+En todos los documentos oficiales se usa esta frase estándar:
+
+<div class="qb">"El Anexo v4 es aditivo porque <b>se suma</b> a los anexos v3 A–G sin modificarlos. No es opcional porque <b>sin medición no hay rendición de cuentas</b>, y sin rendición de cuentas la reforma pierde legitimidad democrática."</div>
+
+<h4>Mitigación 5 · Designación de "Embajador v4" por VR</h4>
+
+Cada VR designa un profesional (no necesariamente nuevo; puede ser el mismo de Anexo A v3) como <b>Embajador v4</b>: responsable de alimentar datos, entender el catálogo y explicar a su VR por qué una BPA sí o no se adopta. Esa persona tiene acceso directo a la DGE&P para resolver dudas técnicas.
+
+<hr>
+<h2>6 · Veredicto y recomendación</h2>
+
+<h3>6.1 · Respuesta a la pregunta de diseño</h3>
+
+<div class="qb"><b>¿Qué ganamos y qué arriesgamos al incluir el detalle de las 21 BPAs en el seguimiento del CSU?</b></div>
+
+<b>Ganancias de incluirlo</b>:
+<ol><li><b>Transparencia</b>: el CSU y la comunidad saben exactamente qué se propone y a qué altura del mundo se compara.</li><li><b>Accountability</b>: cada BPA tiene responsable, meta, presupuesto y referente. El BSC-S lo hace auditable.</li><li><b>Alineación</b>: las 21 BPAs están mapeadas a R1–R6 y PIIOM; sin detalle, se pierde articulación misional.</li><li><b>Benchmarking</b>: 21 universidades demuestran que es posible. La UDFJC no inventa: adapta.</li><li><b>Financiación</b>: PIIOM proyecta +$3.100 M COP/año; sin matriz BPAs × Misiones, no se argumenta.</li></ol>
+
+<b>Riesgos de incluirlo</b> (y cómo v4 los mitiga):
+<ol><li><b>Sobrecarga normativa</b> → Mitigado: el anexo NO modifica el Acuerdo; es técnico, no normativo.</li><li><b>Rigidez</b> → Mitigado: el catálogo es referencial; las VRs eligen y proponen metas propias.</li><li><b>Resistencia cultural</b> → Mitigado: P2 (DOFA cultural) + IVC obligatorio antes de aprobar cada BPA.</li><li><b>Pérdida de autonomía VR</b> → Mitigado: mínimo 3 BPAs del catálogo, pero cada VR decide cuáles y con qué ambición.</li><li><b>Expectativa irreal</b> → Mitigado: niveles de ambición ajustables (S1 conservador → S5 transformativo).</li></ol>
+
+<h3>6.2 · Recomendación</h3>
+
+El CSU debe <b>aprobar el marco obligatorio del Anexo v4</b> (§3: 5 perspectivas, N0–N4, S0–S5, C1–C8, BSC-S 20 KPIs) y <b>recibir el catálogo referencial</b> (§5: 21 BPAs) como documento técnico de consulta. La aprobación del marco no compromete al CSU con las 21 BPAs: compromete al CSU con <b>medir</b> si la reforma avanza.
+
+Las VRs deben iniciar el <b>Paso 1</b> de la metodología de adopción (§7) en el semestre siguiente a la aprobación del marco: diagnóstico de línea base P5–P1 para las 5 BPAs ancla + INT02.
+
+<h3>6.3 · Próximo paso inmediato</h3>
+
+| Acción | Responsable | Plazo |
+|---|---|---|
+| Aprobar marco obligatorio Anexo v4 en sesión CSU | CSU | 2026-II |
+| Capacitación "v4 en 90 minutos" a CSU + VRs | DGE&P + Asesor técnico | 1 semana después de aprobación |
+| Designación de Embajador v4 por VR | Cada Vicerrector(a) | 2 semanas después de aprobación |
+| Primer informe BSC-S (línea base, puede ser cero) | DGE&P | 2026-II (cierre de vigencia) |
+| Primer diagnóstico P5–P1 de 5 anclas + INT02 | VRs con asesoría DGE&P | 2027-I |
+
+<hr>
+<h2>7 · Documentos que componen la versión v4</h2>
+
+<h3>7.1 · Anexo v4 (marco + catálogo + BSC-S)</h3>
+
+| Documento | Ubicación | Tipo | Audiencia principal |
+|---|---|---|---|
+| <b>Anexo v4 · Medición de Adopción</b> | <a href="../Anexo-v4--medicion-adopcion-reforma-bpa.md"><code>Anexo-v4--medicion-adopcion-reforma-bpa.md</code></a> | Anexo técnico completo (§0–§10) | CSU, VRs, DGE&P, Comité Inter-VR |
+| <b>AUDIT v2.1 · Inicio del Análisis</b> | <a href="../AUDIT-inicio-analisis-bpa-v4-v2-1.md"><code>AUDIT-inicio-analisis-bpa-v4-v2-1.md</code></a> | Documento de diseño y fundamentación | Equipo técnico, asesores CSU |
+| <b>AUDIT v1.0 · Diseño arquitectónico</b> | <a href="../AUDIT-inicio-analisis-bpa-v4.md"><code>AUDIT-inicio-analisis-bpa-v4.md</code></a> | DOFA preliminar, opciones A/B/C, user stories | Archivo histórico de decisiones |
+| <b>Resumen Ejecutivo v4</b> | Este documento | Síntesis para decisión política | CSU en pleno, comunidad académica |
+
+<h3>7.2 · Anexos v4-A a v4-G (enriquecimiento aditivo de los anexos v3)</h3>
+
+| Anexo v4 | Corresponde a Anexo v3 | Qué añade | Archivo |
+|---|---|---|---|
+| <b>Anexo A v4</b> | A v3 (RACI) | RACI por 6 BPAs mínimo viable; roles Embajador v4, CSC, RDB; flujo de decisión 7 pasos; resolución de conflictos | <a href="anexo-A-v4--asignacion-responsabilidades-bpa.md"><code>anexo-A-v4--asignacion-responsabilidades-bpa.md</code></a> |
+| <b>Anexo B v4</b> | B v3 (financiero) | TDABC-Lite por BPA; escenarios S1/S3/S5 con presupuesto desagregado; invariante fiscal R7; mix de financiación; matriz de sensibilidad | <a href="anexo-B-v4--plan-financiero-transicion-bpa.md"><code>anexo-B-v4--plan-financiero-transicion-bpa.md</code></a> |
+| <b>Anexo C v4</b> | C v3 (cronograma) | 21 hitos BPA sincronizados con estatutos derivados; 8 puertas go/no-go; diagrama Gantt simplificado; sincronización normativa-BPA | <a href="anexo-C-v4--cronograma-adopcion-bpas-estatutos-derivados.md"><code>anexo-C-v4--cronograma-adopcion-bpas-estatutos-derivados.md</code></a> |
+| <b>Anexo D v4</b> | D v3 (indicadores) | BSC-S simplificado 20 KPIs (4F×5C); tableros F1–F4 con semáforos; tuplas JSONL; dashboard DataviewJS; integración v3+v4 | <a href="anexo-D-v4--sistema-indicadores-bsc-s-bpa.md"><code>anexo-D-v4--sistema-indicadores-bsc-s-bpa.md</code></a> |
+| <b>Anexo E v4</b> | E v3 (planta cargos) | 5 competencias transversales CT-01–CT-05; competencias por BPA y función; perfiles Embajador v4, CSC, RDB; plan de formación $520 M | <a href="anexo-E-v4--planta-cargos-competencias-bpa.md"><code>anexo-E-v4--planta-cargos-competencias-bpa.md</code></a> |
+| <b>Anexo F v4</b> | F v3 (alcance CSU) | 4 niveles decisionales (CSU/Comité/VR/Escuela); atribuciones vinculantes del Comité Inter-VR; quórum y votación; autonomía con accountability; derecho de objeción de Escuelas | <a href="anexo-F-v4--alcance-limites-decision-csu-bpa.md"><code>anexo-F-v4--alcance-limites-decision-csu-bpa.md</code></a> |
+| <b>Anexo G v4</b> | G v3 (planes 8 años) | Secuencia crítica INT02→INT01→I01/INT04→F01/E02; modelo 70/30 operativizado por BPA; ADN emprendedor con 6 indicadores medibles; plantilla estandarizada de Plan de Acción por VR; evaluación anual con rúbrica 4 criterios | <a href="anexo-G-v4--guia-plan-accion-8-anos-21-bpas.md"><code>anexo-G-v4--guia-plan-accion-8-anos-21-bpas.md</code></a> |
+
+<h3>7.3 · Corpus de investigación que fundamenta v4</h3>
+
+| Paper | Aporte a v4 | Ubicación |
+|---|---|---|
+| <b>M01</b> Mandato normativo | Cadena constitucional → ACU-004-25; 6 riesgos de transición | <a href="../../2-resultado-consolidados/M01-mandato-normativo/M01-mandato-normativo-v2.md"><code>M01-mandato-normativo-v2.md</code></a> |
+| <b>M02</b> Ciclo virtuoso | 6 retroalimentaciones QMT; 5 Vías Clark; CABA como nodo vitalizador | <a href="../../2-resultado-consolidados/M02-ciclo-virtuoso/M02-ciclo-virtuoso-v3.md"><code>M02-ciclo-virtuoso-v3.md</code></a> |
+| <b>M03</b> Estándares internacionales | 8 estándares × 4 capas; heatmap 9×8; 10 gaps críticos UDFJC | <a href="../../2-resultado-consolidados/M03-estandares-internacionales/M03-estandares-internacionales.md"><code>M03-estandares-internacionales.md</code></a> |
+| <b>M05</b> Procesos misionales | Benchmarking 21 IES; <code>culture_lag = 2</code>; Dashboard 4F×5C; UDFJC última | <a href="../../2-resultado-consolidados/M05-procesos-misionales/M05-procesos-misionales-v5.md"><code>M05-procesos-misionales-v5.md</code></a> |
+| <b>M07</b> 21 BPAs especificadas | RBM-GAC por BPA; 5 anclas + INT02; matriz 21×6 R; stateDiagram adopción | <a href="../../2-resultado-consolidados/M07-21-bpa-especificadas/M07-21-bpa-especificadas.md"><code>M07-21-bpa-especificadas.md</code></a> |
+
+<hr>
+<i>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</i>
+<i>res-EA-001a-v4--ejecutivo-csu-adopcion-bpa.md v4.1.1</i>
+<i>Solución aditiva · 8 mejoras sobre v3 · 7 riesgos de incomprensión mitigados · 12 documentos de entrega (1 resumen + 1 anexo técnico + 7 anexos A–G + 3 AUDITs)</i>
+<div class="ft"><div>CC BY-SA 4.0 · Carlos Camilo Madera Sepúlveda · UDFJC · 2026-05-01</div><div class="ft-r">4.1.0</div></div>
+</body>
+</html>
