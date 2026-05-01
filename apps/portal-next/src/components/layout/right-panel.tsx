@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, createElement } from 'react';
 import { Sparkles, Send, ChevronLeft, Target, Lightbulb, Link2, Users, ListTree, Network, GitCommit } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useRightPanel, useActiveProfile, useRightWidth, useFocusedPane } from '@/lib/ui-state';
+import type { RightTab } from '@/lib/ui-state';
 import { usePanesState } from '@/lib/panes-state';
 import { COMPREHENSION_REGISTRY } from '@/lib/comprehension';
 import { getReadingState, type ReadingState } from '@/lib/reading-state';
@@ -20,7 +21,54 @@ import { VisNetworkGraph } from '@/components/graph/vis-network-graph';
 import { EvolutionTab } from '@/components/biblioteca/evolution-tab';
 import { RefsPanel } from '@/components/biblioteca/refs-panel';
 import { ComunidadPanel } from '@/components/biblioteca/comunidad-panel';
+import { MissionPanel } from '@/components/mission/mission-panel';
+import { layoutConfig } from '@/lib/layout/config';
+import { resolveIcon } from '@/lib/layout/icons';
 import { canonicPaper, community, note } from '#site/content';
+
+/** Mapa estático de renderers por tab (evita crear componentes durante render). */
+const TAB_RENDERERS: Record<string, (props: {
+  activeDoc: ReturnType<typeof getActiveDocFromPath>;
+  copSlug: string | null;
+  pathname: string;
+  pending: Array<{
+    docId: string;
+    href: string;
+    title: string;
+    remaining: number;
+    total: number;
+    type: 'paper' | 'note';
+    copName: string;
+  }>;
+}) => React.ReactNode> = {
+  esquema: ({ activeDoc }) => (
+    <div className="h-full overflow-y-auto">
+      <EsquemaTab doc={activeDoc} />
+    </div>
+  ),
+  grafo: ({ activeDoc }) => (
+    <div className="h-full">
+      {activeDoc ? (
+        <PaperLocalGraph nodeId={activeDoc.id} hops={1} />
+      ) : (
+        <VisNetworkGraph src="/static/graph-global.json" />
+      )}
+    </div>
+  ),
+  evolucion: ({ activeDoc }) => (
+    <div className="h-full overflow-y-auto">
+      <EvolutionTab doc={activeDoc} />
+    </div>
+  ),
+  refs: ({ activeDoc }) => <RefsPanel doc={activeDoc} />,
+  comunidad: ({ activeDoc }) => <ComunidadPanel doc={activeDoc} />,
+  asistente: ({ copSlug, pathname }) => (
+    <div className="h-full overflow-hidden p-3">
+      <ChatPane copSlug={copSlug} pathname={pathname} />
+    </div>
+  ),
+  misiones: ({ pending }) => <MissionPanel pending={pending} />,
+};
 
 type PendingItem = {
   docId: string;
@@ -125,26 +173,33 @@ export function RightPanel() {
   // v5.0aa — Si activeDoc desaparece y estamos en tab que requiere doc activo
   // (refs, comunidad, evolucion), fallback a asistente. Esquema y Grafo
   // soportan no-doc (esquema vacío + grafo global).
-  useEffect(() => {
-    if (!activeDoc && (tab === 'refs' || tab === 'comunidad' || tab === 'evolucion')) {
-      setTab('asistente');
-    }
-  }, [activeDoc, tab, setTab]);
+  const tabsConfig = layoutConfig.rightPanel?.tabs ?? [];
+  const tabsRequiringDoc = useMemo(() =>
+    new Set(tabsConfig.filter((t) => t.requiresDoc).map((t) => t.id)),
+  [tabsConfig]);
 
-  // v6.1 G-SBR-01 · Atajos Alt+1..6 para cambiar de tab. No interfieren con
-  // shortcuts del browser (Alt+digito en navegadores no es estándar) y son
-  // detectables sin Shift/Ctrl. Si no hay doc activo y la tab destino lo
-  // requiere, el useEffect superior re-rutea a asistente.
+  useEffect(() => {
+    if (!activeDoc && tabsRequiringDoc.has(tab)) {
+      const fallback = (layoutConfig.rightPanel?.defaultTab ?? 'asistente') as RightTab;
+      setTab(fallback);
+    }
+  }, [activeDoc, tab, setTab, tabsRequiringDoc]);
+
+  // v6.1 G-SBR-01 · Atajos Alt+dígito para cambiar de tab (configurables desde YAML).
+  const shortcutMap = useMemo(() => {
+    const map: Record<string, RightTab> = {};
+    for (const s of layoutConfig.rightPanel?.keyboardShortcuts ?? []) {
+      map[s.key] = s.tab as RightTab;
+    }
+    return map;
+  }, []);
+
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
       const target = e.target as HTMLElement | null;
       if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
-      const map: Record<string, typeof tab> = {
-        '1': 'esquema', '2': 'grafo', '3': 'evolucion',
-        '4': 'refs', '5': 'comunidad', '6': 'asistente',
-      };
-      const next = map[e.key];
+      const next = shortcutMap[e.key];
       if (next) {
         e.preventDefault();
         setTab(next);
@@ -152,7 +207,7 @@ export function RightPanel() {
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [setTab]);
+  }, [setTab, shortcutMap]);
 
   // counts para badges de tabs (refs solamente · backlinks)
   const [backlinkCount, setBacklinkCount] = useState<number>(0);
@@ -278,53 +333,24 @@ export function RightPanel() {
         <div className="flex flex-1 min-h-0 flex-row">
           <div className="flex-1 min-w-0 flex flex-col">
             <div className="flex items-center gap-2 border-b border-sidebar-border px-3 py-2.5">
-              {tab === 'esquema' && <ListTree className="h-4 w-4 text-primary" />}
-              {tab === 'grafo' && <Network className="h-4 w-4 text-primary" />}
-              {tab === 'evolucion' && <GitCommit className="h-4 w-4 text-primary" />}
-              {tab === 'refs' && <Link2 className="h-4 w-4 text-primary" />}
-              {tab === 'comunidad' && <Users className="h-4 w-4 text-primary" />}
-              {tab === 'asistente' && <Sparkles className="h-4 w-4 text-primary" />}
+              {(() => {
+                const tc = tabsConfig.find((t) => t.id === tab);
+                const Icon = tc ? resolveIcon(tc.icon) : null;
+                return Icon ? createElement(Icon, { className: 'h-4 w-4 text-primary' }) : null;
+              })()}
               <span className="font-semibold text-sm">
-                {tab === 'esquema' && 'Esquema'}
-                {tab === 'grafo' && 'Grafo semántico'}
-                {tab === 'evolucion' && 'Evolución'}
-                {tab === 'refs' && 'Referencias'}
-                {tab === 'comunidad' && 'Comunidad'}
-                {tab === 'asistente' && 'Asistente'}
+                {tabsConfig.find((t) => t.id === tab)?.label ?? tab}
               </span>
             </div>
 
             <div className="flex-1 overflow-hidden">
-              {tab === 'esquema' && (
-                <div className="h-full overflow-y-auto">
-                  <EsquemaTab doc={activeDoc} />
-                </div>
-              )}
-              {tab === 'grafo' && (
-                <div className="h-full">
-                  {activeDoc ? (
-                    /* v6.0 G-SVC-01 · `nodeId` genérico acepta paper m##,
-                       concepto con-XXX, note slug, comunidad slug. Si el id
-                       no está en el grafo, el componente muestra mensaje. */
-                    <PaperLocalGraph nodeId={activeDoc.id} hops={1} />
-                  ) : (
-                    /* Sin doc activo → grafo GLOBAL del corpus (107 nodos, 125 aristas). */
-                    <VisNetworkGraph src="/static/graph-global.json" />
-                  )}
-                </div>
-              )}
-              {tab === 'evolucion' && (
-                <div className="h-full overflow-y-auto">
-                  <EvolutionTab doc={activeDoc} />
-                </div>
-              )}
-              {tab === 'refs' && <RefsPanel doc={activeDoc} />}
-              {tab === 'comunidad' && <ComunidadPanel doc={activeDoc} />}
-              {tab === 'asistente' && (
-                <div className="h-full overflow-hidden p-3">
-                  <ChatPane copSlug={copSlug} pathname={pathname} />
-                </div>
-              )}
+              {TAB_RENDERERS[tab]
+                ? TAB_RENDERERS[tab]({ activeDoc, copSlug, pathname, pending })
+                : (
+                  <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                    Tab «{tab}» no implementada
+                  </div>
+                )}
             </div>
           </div>
 
@@ -332,47 +358,23 @@ export function RightPanel() {
             aria-label="Modos del panel"
             className="flex w-11 shrink-0 flex-col items-center gap-0.5 border-l border-sidebar-border py-2"
           >
-            {/* v5.0aa · 6 tabs planas (sin agrupador "Conexiones"). */}
-            <RailIcon
-              active={tab === 'esquema'}
-              onClick={() => setTab('esquema')}
-              Icon={ListTree}
-              label="Esquema"
-            />
-            <RailIcon
-              active={tab === 'grafo'}
-              onClick={() => setTab('grafo')}
-              Icon={Network}
-              label="Grafo"
-            />
-            <RailIcon
-              active={tab === 'evolucion'}
-              onClick={() => setTab('evolucion')}
-              Icon={GitCommit}
-              label="Evolución"
-              disabled={!activeDoc}
-            />
-            <RailIcon
-              active={tab === 'refs'}
-              onClick={() => setTab('refs')}
-              Icon={Link2}
-              label="Refs"
-              disabled={!activeDoc}
-              badge={backlinkCount > 0 ? backlinkCount : undefined}
-            />
-            <RailIcon
-              active={tab === 'comunidad'}
-              onClick={() => setTab('comunidad')}
-              Icon={Users}
-              label="Comunidad"
-              disabled={!activeDoc}
-            />
-            <RailIcon
-              active={tab === 'asistente'}
-              onClick={() => setTab('asistente')}
-              Icon={Sparkles}
-              label="Asistente"
-            />
+            {tabsConfig.map((tc) => {
+              const Icon = resolveIcon(tc.icon);
+              if (!Icon) return null;
+              const disabled = tc.requiresDoc && !activeDoc;
+              const badge = tc.badgeSource === 'backlinkCount' && backlinkCount > 0 ? backlinkCount : undefined;
+              return (
+                <RailIcon
+                  key={tc.id}
+                  active={tab === tc.id}
+                  onClick={() => setTab(tc.id as RightTab)}
+                  Icon={Icon}
+                  label={tc.label}
+                  disabled={disabled}
+                  badge={badge}
+                />
+              );
+            })}
             {pending.length > 0 && (
               <span
                 className="mt-auto mb-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[9px] font-mono px-1.5 py-0.5"

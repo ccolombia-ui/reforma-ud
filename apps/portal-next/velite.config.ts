@@ -557,6 +557,99 @@ const news = defineCollection({
     })),
 });
 
+// v8g-l1 · Layout Config Protocol — navegación declarativa desde YAML
+const layoutConfig = defineCollection({
+  name: 'LayoutConfig',
+  pattern: 'config/layout.yaml',
+  schema: s
+    .object({
+      kd_id: s.string().optional(),
+      kd_version: s.string().optional(),
+      branding: s
+        .object({
+          name: s.string().default('reforma·ud'),
+          logo: s.string().default('/logo-udfjc.svg'),
+          altLogo: s.string().optional(),
+          primaryColor: s.string().default('#3b82f6'),
+        })
+        .default({ name: 'reforma·ud', logo: '/logo-udfjc.svg', primaryColor: '#3b82f6' }),
+      sidebar: s
+        .object({
+          sections: s
+            .array(
+              s.object({
+                id: s.string(),
+                emoji: s.string().optional(),
+                title: s.string(),
+                type: s.enum(['collection', 'tree', 'links', 'custom']).default('collection'),
+                source: s.string().optional(),
+                icon: s.string().optional(),
+                filterable: s.boolean().default(false),
+                sortBy: s.enum(['number', 'title', 'date']).default('title'),
+                groupBy: s.string().optional(),
+                showMissions: s.boolean().default(false),
+                visibleIf: s.string().optional(),
+                href: s.string().optional(),
+              }),
+            )
+            .default([]),
+          collapsedNav: s
+            .array(
+              s.object({
+                href: s.string(),
+                label: s.string(),
+                icon: s.string(),
+              }),
+            )
+            .default([]),
+        })
+        .default({ sections: [], collapsedNav: [] }),
+      header: s
+        .object({
+          segmentLabels: s.record(s.string()).default({}),
+          documentTitleBar: s
+            .object({
+              enabled: s.boolean().default(true),
+              showWorkflowStatus: s.boolean().default(false),
+            })
+            .default({ enabled: true, showWorkflowStatus: false }),
+        })
+        .default({ segmentLabels: {}, documentTitleBar: { enabled: true, showWorkflowStatus: false } }),
+      rightPanel: s
+        .object({
+          tabs: s
+            .array(
+              s.object({
+                id: s.string(),
+                label: s.string(),
+                icon: s.string(),
+                component: s.string(),
+                requiresDoc: s.boolean().default(false),
+                badgeSource: s.string().optional(),
+                visibleIf: s.string().optional(),
+              }),
+            )
+            .default([]),
+          defaultTab: s.string().default('esquema'),
+          keyboardShortcuts: s
+            .array(
+              s.object({
+                key: s.string(),
+                tab: s.string(),
+              }),
+            )
+            .default([]),
+        })
+        .default({ tabs: [], defaultTab: 'esquema', keyboardShortcuts: [] }),
+    })
+    .transform((data) => ({
+      ...data,
+      // Computed: lista de section ids para O(1) lookups
+      _sectionIds: data.sidebar.sections.map((s) => s.id),
+      _tabIds: data.rightPanel.tabs.map((t) => t.id),
+    })),
+});
+
 export default defineConfig({
   root: 'content',
   output: {
@@ -575,6 +668,7 @@ export default defineConfig({
     dashboard,
     news,
     csuAcuerdo,
+    layoutConfig,
   },
   markdown: {
     gfm: true,

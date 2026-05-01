@@ -2,13 +2,18 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles, Atom, X, Scale, BookOpen, Hammer } from 'lucide-react';
+import { BookMarked, Network, FileText, Folder, Building2, GraduationCap, Microscope, Globe, Landmark, ChevronDown, Home, Library, MessageSquare, Calendar, Users, Search, Sparkles, Atom, X, Scale, BookOpen, Hammer, type LucideIcon } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { canonicPaper, concepto, community, csuAcuerdo } from '#site/content';
 import { buildCommunityTree, type TreeNode } from '@/lib/sidebar-tree';
 import { useLeftCollapsed, useLeftWidth } from '@/lib/ui-state';
 import { filterPublished } from '@/lib/show-drafts';
+import { resolveIcon } from '@/lib/layout/icons';
+import { layoutConfig } from '@/lib/layout/config';
+import { filterVisibleSections } from '@/lib/layout/sidebar-config';
+import type { SidebarSection } from '@/lib/layout/types';
 import { cn } from '@/lib/utils';
+
 
 const TYPE_ICONS: Record<string, React.ReactNode> = {
   gobierno: <Landmark className="h-3.5 w-3.5" />,
@@ -519,6 +524,122 @@ function TreeItem({ node, currentPath, depth = 0 }: { node: TreeNode; currentPat
   );
 }
 
+function NavIcon({
+  href,
+  label,
+  Icon,
+  isActive,
+}: {
+  href: string;
+  label: string;
+  Icon: LucideIcon | null;
+  isActive: boolean;
+}) {
+  if (!Icon) return null;
+  return (
+    <Link
+      href={href}
+      aria-label={label}
+      title={label}
+      className={cn(
+        'group relative inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors',
+        isActive ? 'bg-sidebar-accent text-primary' : 'hover:bg-sidebar-accent',
+      )}
+    >
+      <Icon className="h-4 w-4" />
+      <span className="pointer-events-none absolute left-12 whitespace-nowrap rounded-md border bg-popover px-2 py-1 text-xs text-popover-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100 z-50">
+        {label}
+      </span>
+    </Link>
+  );
+}
+
+function SidebarSectionContent({
+  section,
+  pathname,
+  filter,
+  papers,
+  conceptos,
+  tree,
+}: Readonly<{
+  section: SidebarSection;
+  pathname: string;
+  filter: string;
+  papers: Paper[];
+  conceptos: ConceptoLite[];
+  tree: TreeNode[];
+}>) {
+  if (section.type === 'collection' && section.source === 'canonico') {
+    return (
+      <ul className="space-y-0.5">
+        <li>
+          <Link
+            href="/canonico/grafo"
+            className={cn(
+              'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
+              pathname === '/canonico/grafo' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+            )}
+          >
+            <Network className="h-3.5 w-3.5 text-primary/80" /> Grafo semántico
+          </Link>
+        </li>
+        <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
+        <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
+      </ul>
+    );
+  }
+
+  if (section.type === 'collection' && section.source === 'concepto') {
+    return <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />;
+  }
+
+  if (section.type === 'collection' && section.source === 'csuAcuerdo') {
+    return (
+      <>
+        <div className="mt-1 flex items-center gap-1 px-2 py-0.5">
+          <Scale className="h-3 w-3 text-blue-400/70 shrink-0" />
+          <span className="text-[9px] uppercase tracking-wider text-muted-foreground/60 font-semibold">CSU — Estatutos</span>
+          <span className="ml-auto text-[9px] text-muted-foreground/60">{csuAcuerdo.length}</span>
+        </div>
+        <ul className="ml-3 space-y-0.5 border-l border-sidebar-border pl-2">
+          {csuAcuerdo.map((a) => (
+            <li key={a.id}>
+              <Link
+                href={a.href}
+                className={cn(
+                  'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
+                  pathname.startsWith(`/acuerdos/${a.id}`) && 'bg-sidebar-accent font-semibold text-sidebar-primary',
+                )}
+              >
+                <Scale className="h-3 w-3 text-blue-400/60 shrink-0" />
+                <span className="flex-1 text-left leading-tight line-clamp-2">{a.objetoCorto}</span>
+                <span className={cn(
+                  'shrink-0 text-[8px] font-mono px-1 rounded',
+                  a.estado === 'VIGENTE' ? 'bg-green-500/20 text-green-400' :
+                  a.estado === 'PRE_APROBADO' ? 'bg-sky-500/20 text-sky-400' :
+                  'bg-gray-500/20 text-gray-400'
+                )}>{a.estado}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  }
+
+  if (section.type === 'tree' && section.source === 'community') {
+    return (
+      <ul className="space-y-0.5">
+        {tree.map((root) => (
+          <TreeItem key={root.slug} node={root} currentPath={pathname} />
+        ))}
+      </ul>
+    );
+  }
+
+  return null;
+}
+
 export function Sidebar() {
   const pathname = usePathname() ?? '/';
   const [collapsed] = useLeftCollapsed();
@@ -584,37 +705,44 @@ export function Sidebar() {
 
   // collapsed: barra estrecha con icons clave + opciones
   if (collapsed) {
-    const NavIcon = ({ href, label, Icon, isActive }: { href: string; label: string; Icon: typeof Home; isActive: boolean }) => (
-      <Link
-        href={href}
-        aria-label={label}
-        title={label}
-        className={cn(
-          'group relative inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors',
-          isActive ? 'bg-sidebar-accent text-primary' : 'hover:bg-sidebar-accent',
-        )}
-      >
-        <Icon className="h-4 w-4" />
-        <span className="pointer-events-none absolute left-12 whitespace-nowrap rounded-md border bg-popover px-2 py-1 text-xs text-popover-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100 z-50">
-          {label}
-        </span>
-      </Link>
-    );
+    const collapsedNav = layoutConfig.sidebar?.collapsedNav ?? [];
+    const dividerIdx = collapsedNav.findIndex((item) => item.href === '/canonico/grafo');
+    const beforeDivider = dividerIdx >= 0 ? collapsedNav.slice(0, dividerIdx + 1) : collapsedNav;
+    const afterDivider = dividerIdx >= 0 ? collapsedNav.slice(dividerIdx + 1) : [];
+
     return (
       <nav
         data-pagefind-ignore
         data-sidebar
         className="hidden h-[calc(100vh-3.5rem)] w-14 shrink-0 flex-col items-center gap-1 border-r bg-sidebar py-3 text-sidebar-foreground md:flex"
       >
-        <NavIcon href="/" label="Inicio" Icon={Home} isActive={pathname === '/'} />
-        <NavIcon href="/canonico" label="Canónico · Biblioteca" Icon={Library} isActive={pathname.startsWith('/canonico') && pathname !== '/canonico/grafo'} />
-        <NavIcon href="/canonico/grafo" label="Grafo semántico del corpus" Icon={Network} isActive={pathname === '/canonico/grafo'} />
+        {beforeDivider.map((item) => {
+          const Icon = resolveIcon(item.icon);
+          const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+          return (
+            <NavIcon
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              Icon={Icon}
+              isActive={isActive}
+            />
+          );
+        })}
         <div className="my-1 h-px w-8 bg-sidebar-border" />
-        <NavIcon href="/comunidades" label="Comunidades · Hub" Icon={GraduationCap} isActive={pathname === '/comunidades'} />
-        <NavIcon href="/comunidades/gobierno" label="Gobierno" Icon={Landmark} isActive={pathname.startsWith('/comunidades/gobierno')} />
-        <NavIcon href="/comunidades/formacion" label="VR Formación" Icon={BookMarked} isActive={pathname.startsWith('/comunidades/formacion')} />
-        <NavIcon href="/comunidades/investigacion" label="VR Investigación" Icon={Microscope} isActive={pathname.startsWith('/comunidades/investigacion')} />
-        <NavIcon href="/comunidades/extension" label="VR Extensión" Icon={Globe} isActive={pathname.startsWith('/comunidades/extension')} />
+        {afterDivider.map((item) => {
+          const Icon = resolveIcon(item.icon);
+          const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+          return (
+            <NavIcon
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              Icon={Icon}
+              isActive={isActive}
+            />
+          );
+        })}
         <div className="mt-auto h-px w-8 bg-sidebar-border" />
         <Link
           href="/about"
@@ -686,66 +814,18 @@ export function Sidebar() {
           </SectionToggle>
         )}
 
-        <SectionToggle id="canonico" emoji="📚" title="Biblioteca reforma·ud">
-          {/* v5.0x · Items directos bajo el SectionToggle root (sin sub-header
-              "Biblioteca" intermedio). Orden: Grafo > Glosario > Reforma Vinculante. */}
-          <ul className="space-y-0.5">
-            <li>
-              <Link
-                href="/canonico/grafo"
-                className={cn(
-                  'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
-                  pathname === '/canonico/grafo' && 'bg-sidebar-accent font-semibold text-sidebar-primary',
-                )}
-              >
-                <Network className="h-3.5 w-3.5 text-primary/80" /> Grafo semántico
-              </Link>
-            </li>
-            <GlosarioSection conceptos={conceptos} pathname={pathname} filter={filter} />
-            <ReformaCuanticaSection papers={papers} pathname={pathname} filter={filter} />
-            {/* v8 CSU · Estatutos Derivados Art. 98 ACU-004-25 */}
-            <li>
-              <div className="mt-1 flex items-center gap-1 px-2 py-0.5">
-                <Scale className="h-3 w-3 text-blue-400/70 shrink-0" />
-                <span className="text-[9px] uppercase tracking-wider text-muted-foreground/60 font-semibold">CSU — Estatutos</span>
-                <span className="ml-auto text-[9px] text-muted-foreground/60">{csuAcuerdo.length}</span>
-              </div>
-              <ul className="ml-3 space-y-0.5 border-l border-sidebar-border pl-2">
-                {csuAcuerdo.map((a) => (
-                  <li key={a.id}>
-                    <Link
-                      href={a.href}
-                      className={cn(
-                        'flex items-center gap-1 rounded px-2 py-1 text-xs hover:bg-sidebar-accent',
-                        pathname.startsWith(`/acuerdos/${a.id}`) && 'bg-sidebar-accent font-semibold text-sidebar-primary',
-                      )}
-                    >
-                      <Scale className="h-3 w-3 text-blue-400/60 shrink-0" />
-                      <span className="flex-1 text-left leading-tight line-clamp-2">{a.objetoCorto}</span>
-                      <span className={cn(
-                        'shrink-0 text-[8px] font-mono px-1 rounded',
-                        a.estado === 'VIGENTE' ? 'bg-green-500/20 text-green-400' :
-                        a.estado === 'PRE_APROBADO' ? 'bg-sky-500/20 text-sky-400' :
-                        'bg-gray-500/20 text-gray-400'
-                      )}>{a.estado}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          </ul>
-        </SectionToggle>
-
-        <SectionToggle id="comunidades" emoji="🏛️" title="Comunidades">
-          {/* v5.0x · Items directos bajo el SectionToggle root (sin sub-header
-              "Hub" intermedio). Las 4 unidades organizativas (Gobierno,
-              VR Formación, VR Investigación, VR Extensión) van directas. */}
-          <ul className="space-y-0.5">
-            {tree.map((root) => (
-              <TreeItem key={root.slug} node={root} currentPath={pathname} />
-            ))}
-          </ul>
-        </SectionToggle>
+        {filterVisibleSections(layoutConfig.sidebar?.sections ?? [], { project: 'udfjc' }).map((section) => (
+          <SectionToggle key={section.id} id={section.id} emoji={section.emoji ?? '📄'} title={section.title}>
+            <SidebarSectionContent
+              section={section}
+              pathname={pathname}
+              filter={filter}
+              papers={papers}
+              conceptos={conceptos}
+              tree={tree}
+            />
+          </SectionToggle>
+        ))}
       </div>
 
       {/* v6.3 G-SBL-04 · botones collapse-all / expand-all */}

@@ -14,30 +14,13 @@ import { canonicPaper, concepto } from '#site/content';
 import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
 
-const SEGMENT_LABELS: Record<string, string> = {
-  canonico: 'Reforma Vinculante',
-  comunidades: 'Comunidades',
-  gobierno: 'Gobierno',
-  formacion: 'VR Formación',
-  investigacion: 'VR Investigación',
-  extension: 'VR Extensión',
-  facultades: 'Facultades',
-  escuelas: 'Escuelas',
-  programas: 'Programas',
-  cabas: 'CABAs',
-  institutos: 'Institutos',
-  centros: 'Centros',
-  direcciones: 'Direcciones',
-  biblioteca: 'Biblioteca',
-  grafo: 'Grafo',
-  glosario: 'Glosario',
-  about: 'Acerca de',
-};
+import { layoutConfig } from '@/lib/layout/config';
 
 // v6.1 G-HDR-01 · resolve seg → label rico (M## → "M03 Estándares
 // Internacionales", con-* → SKOS prefLabel del concepto).
 function prettify(seg: string): string {
-  if (SEGMENT_LABELS[seg]) return SEGMENT_LABELS[seg];
+  const segmentLabels = layoutConfig.header?.segmentLabels ?? {};
+  if (segmentLabels[seg]) return segmentLabels[seg];
   if (/^m\d{2}$/i.test(seg)) {
     const p = canonicPaper.find((x) => x.id === seg.toLowerCase());
     if (p) return `${seg.toUpperCase()} · ${p.title}`;
