@@ -115,7 +115,7 @@ export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
 
   const loadObsidianTree = useCallback(async () => {
     try {
-      const res = await fetch('/api/vault-tree');
+      const res = await fetch('/api/vault-tree/');
       if (!res.ok) throw new Error('fetch failed');
       const data = (await res.json()) as VaultTreeNode[];
       setObsidianTree(data);
@@ -128,7 +128,7 @@ export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
 
   useEffect(() => {
     if (mode === 'obsidian') {
-      void loadObsidianTree();
+      queueMicrotask(() => loadObsidianTree());
     }
   }, [mode, loadObsidianTree]);
 
