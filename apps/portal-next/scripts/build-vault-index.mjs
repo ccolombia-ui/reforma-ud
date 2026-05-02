@@ -66,6 +66,7 @@ function buildTree(dirPath, basePath = '') {
         name: name.replace(/\.(md|mdx)$/i, ''),
         slug: toSlug(relPath),
         href: toHref(relPath),
+        children: [],
       });
     }
   }
