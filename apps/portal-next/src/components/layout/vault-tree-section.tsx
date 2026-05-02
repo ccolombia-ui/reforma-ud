@@ -1,16 +1,17 @@
 /**
- * VaultTreeSection — v8g-l5.2
+ * VaultTreeSection — v8g-l8
  *
  * Renderiza un árbol de carpetas tipo Obsidian File Explorer.
  * Modo "obsidian": fetch de /vault-tree.json (vault real escaneado).
  * Modo "static":  usa vaultTreeRoot desde build-vault-index.mjs.
+ * Nuevo v8g-l8: search/filter en tiempo real.
  */
 
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect, useCallback } from 'react';
-import { ChevronDown, Folder, FileText, Loader2 } from 'lucide-react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { ChevronDown, Folder, FileText, Loader2, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { SidebarSection } from '@/lib/layout/types';
 import { vaultTreeRoot } from '@/lib/layout/vault-index-raw';
@@ -29,16 +30,20 @@ function VaultTreeItem({
   currentPath,
   depth = 0,
   expandDepth = 0,
+  forceOpen = false,
 }: {
   node: VaultTreeNode;
   currentPath: string;
   depth?: number;
   expandDepth?: number;
+  forceOpen?: boolean;
 }) {
   const isFolder = node.type === 'folder';
   const isActive = node.href === currentPath;
   const hasChildren = isFolder && node.children.length > 0;
   const [open, setOpen] = useState(depth < expandDepth);
+
+  const isOpen = forceOpen || open;
 
   if (isFolder) {
     return (
@@ -50,13 +55,13 @@ function VaultTreeItem({
             'group flex w-full items-center gap-1 rounded px-1.5 py-0.5 text-[11px] hover:bg-sidebar-accent',
             'text-muted-foreground',
           )}
-          aria-expanded={open}
+          aria-expanded={isOpen}
         >
           {hasChildren && (
             <ChevronDown
               className={cn(
                 'h-2.5 w-2.5 shrink-0 transition-transform',
-                !open && '-rotate-90',
+                !isOpen && '-rotate-90',
               )}
             />
           )}
@@ -69,7 +74,7 @@ function VaultTreeItem({
             </span>
           )}
         </button>
-        {open && hasChildren && (
+        {(isOpen || forceOpen) && hasChildren && (
           <ul className="ml-3 border-l border-sidebar-border/50 pl-2">
             {node.children.map((child) => (
               <VaultTreeItem
@@ -78,6 +83,7 @@ function VaultTreeItem({
                 currentPath={currentPath}
                 depth={depth + 1}
                 expandDepth={expandDepth}
+                forceOpen={forceOpen}
               />
             ))}
           </ul>
@@ -104,6 +110,24 @@ function VaultTreeItem({
   );
 }
 
+function filterNodes(nodes: VaultTreeNode[], query: string): VaultTreeNode[] {
+  if (!query.trim()) return nodes;
+  const lower = query.toLowerCase().trim();
+
+  function search(node: VaultTreeNode): VaultTreeNode | null {
+    const matched = node.name.toLowerCase().includes(lower);
+    const children = node.children
+      .map(search)
+      .filter((c): c is VaultTreeNode => c !== null);
+    if (matched || children.length > 0) {
+      return { ...node, children };
+    }
+    return null;
+  }
+
+  return nodes.map(search).filter((n): n is VaultTreeNode => n !== null);
+}
+
 interface VaultTreeSectionProps {
   section: SidebarSection;
   pathname: string;
@@ -117,6 +141,7 @@ export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
 
   const [obsidianTree, setObsidianTree] = useState<VaultTreeNode[] | null>(null);
   const [loading, setLoading] = useState(mode === 'obsidian');
+  const [query, setQuery] = useState('');
 
   const loadObsidianTree = useCallback(async () => {
     try {
@@ -140,10 +165,15 @@ export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
   const rawTree: VaultTreeNode[] =
     mode === 'obsidian' ? (obsidianTree ?? []) : vaultTreeRoot;
 
-  const tree = rawTree.filter((node) => {
-    if (!rootFilter || rootFilter.length === 0) return true;
-    return rootFilter.includes(node.name);
-  });
+  const tree = useMemo(() => {
+    const filtered = rawTree.filter((node) => {
+      if (!rootFilter || rootFilter.length === 0) return true;
+      return rootFilter.includes(node.name);
+    });
+    return filterNodes(filtered, query);
+  }, [rawTree, rootFilter, query]);
+
+  const isFiltering = query.trim().length > 0;
 
   if (loading) {
     return (
@@ -154,25 +184,50 @@ export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
     );
   }
 
-  if (tree.length === 0) {
-    return (
-      <div className="px-2 py-1 text-[10px] text-muted-foreground italic">
-        Sin contenido indexado
-      </div>
-    );
-  }
-
   return (
-    <ul className="space-y-0.5">
-      {tree.map((node) => (
-        <VaultTreeItem
-          key={node.id}
-          node={node}
-          currentPath={pathname}
-          depth={0}
-          expandDepth={expandDepth}
+    <div className="space-y-1">
+      <div className="relative px-2">
+        <Search className="absolute left-3 top-1/2 h-3 w-3 -translate-y-1/2 text-muted-foreground" />
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Filtrar..."
+          className={cn(
+            'w-full rounded-md border bg-background py-1 pl-7 pr-6 text-[11px]',
+            'placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+            'border-input',
+          )}
         />
-      ))}
-    </ul>
+        {query && (
+          <button
+            type="button"
+            onClick={() => setQuery('')}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            aria-label="Limpiar filtro"
+          >
+            <X className="h-3 w-3" />
+          </button>
+        )}
+      </div>
+      {tree.length === 0 ? (
+        <div className="px-2 py-1 text-[10px] text-muted-foreground italic">
+          Sin coincidencias
+        </div>
+      ) : (
+        <ul className="space-y-0.5">
+          {tree.map((node) => (
+            <VaultTreeItem
+              key={node.id}
+              node={node}
+              currentPath={pathname}
+              depth={0}
+              expandDepth={expandDepth}
+              forceOpen={isFiltering}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
