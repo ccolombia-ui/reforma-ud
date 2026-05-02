@@ -1,20 +1,21 @@
 /**
- * VaultTreeSection — v8g-l5
+ * VaultTreeSection — v8g-l5 (Client Component)
  *
- * Renderiza un árbol de carpetas tipo Obsidian File Explorer
- * a partir de un índice Zoottelkeeper (_Index_of_*.md).
+ * Renderiza un árbol de carpetas tipo Obsidian File Explorer.
+ * Lee índices Zoottelkeeper desde .velite/vault-index-raw.json
+ * generado por scripts/build-vault-index.mjs en build-time.
  */
 
 'use client';
 
 import Link from 'next/link';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { ChevronDown, Folder, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { zoottelkeeperIndex } from '#site/content';
 import type { VaultTreeNode } from '@/lib/layout/zoottelkeeper-parser';
 import { parseZoottelkeeperIndex } from '@/lib/layout/zoottelkeeper-parser';
 import type { SidebarSection } from '@/lib/layout/types';
+import { vaultIndexRaw } from '@/lib/layout/vault-index-raw';
 
 function VaultTreeItem({
   node,
@@ -93,43 +94,32 @@ function VaultTreeItem({
   );
 }
 
-export function VaultTreeSection({
-  section,
-  pathname,
-}: Readonly<{
+interface VaultTreeSectionProps {
   section: SidebarSection;
   pathname: string;
-}>) {
+}
+
+export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
   const { vaultConfig } = section;
 
-  // v8g-l5 · Los índices Zoottelkeeper se cargan desde Velite (#site/content).
-  // Si no hay índice real, se usa demoContent como fallback.
-  const treeNodes = useMemo<VaultTreeNode[]>(() => {
+  const treeNodes: VaultTreeNode[] = (() => {
     if (!vaultConfig) return [];
 
-    // Buscar el índice correspondiente en el rootPath configurado
     const root = vaultConfig.rootPath ?? 'vault-index';
-    const indexEntry = zoottelkeeperIndex.find((entry) =>
-      entry.slug.startsWith(root),
-    );
+    const entry =
+      vaultIndexRaw.find((e: { slug: string; raw: string }) => e.slug.startsWith(root)) ??
+      vaultIndexRaw.find((e: { slug: string; raw: string }) => e.slug.includes('_Index_of_')) ??
+      vaultIndexRaw[0];
 
-    const raw = indexEntry?.raw ?? `%% Zoottelkeeper: Beginning %%
-[[canonico/m01|M01 — Mandato Normativo]]
-[[canonico/m02|M02 — Ciclo Virtuoso]]
-[[canonico/m03|M03 — Estándares Internacionales]]
-[[canonico/m04|M04 — JTBD Comunidad]]
-[[canonico/m05|M05 — BMK Procesos Misionales]]
-[[canonico/m06|M06 — BMK Créditos CCA]]
-[[canonico/m07|M07 — 21 BPA]]
-[[glosario/con-cca|con-cca]]
-%% Zoottelkeeper: End %%`;
+    const raw = entry?.raw ?? '';
+    if (!raw) return [];
 
     return parseZoottelkeeperIndex(raw, {
       rootPath: vaultConfig.rootPath,
       excludePatterns: vaultConfig.excludePatterns ?? [],
       folderMappings: vaultConfig.folderMappings ?? {},
     });
-  }, [vaultConfig]);
+  })();
 
   if (!vaultConfig || treeNodes.length === 0) {
     return (
