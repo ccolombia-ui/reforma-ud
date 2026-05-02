@@ -1,18 +1,28 @@
 /**
- * VaultTreeSection — v8g-l5.1 (Client Component)
+ * VaultTreeSection — v8g-l5.2
  *
- * Renderiza un árbol de carpetas tipo Obsidian File Explorer
- * a partir del filesystem escaneado por build-vault-index.mjs.
+ * Renderiza un árbol de carpetas tipo Obsidian File Explorer.
+ * Modo "obsidian": fetch de /vault-tree.json (vault real escaneado).
+ * Modo "static":  usa vaultTreeRoot desde build-vault-index.mjs.
  */
 
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-import { ChevronDown, Folder, FileText } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { ChevronDown, Folder, FileText, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { SidebarSection } from '@/lib/layout/types';
-import { vaultTreeRoot, type VaultTreeNode } from '@/lib/layout/vault-index-raw';
+import { vaultTreeRoot } from '@/lib/layout/vault-index-raw';
+
+export interface VaultTreeNode {
+  type: 'folder' | 'file';
+  id: string;
+  name: string;
+  slug: string;
+  href?: string;
+  children: VaultTreeNode[];
+}
 
 function VaultTreeItem({
   node,
@@ -26,7 +36,7 @@ function VaultTreeItem({
   const isFolder = node.type === 'folder';
   const isActive = node.href === currentPath;
   const hasChildren = isFolder && node.children.length > 0;
-  const [open, setOpen] = useState(depth === 0);
+  const [open, setOpen] = useState(depth < 2);
 
   if (isFolder) {
     return (
@@ -98,22 +108,43 @@ interface VaultTreeSectionProps {
 
 export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
   const { vaultConfig } = section;
+  const mode = (vaultConfig as Record<string, unknown> | undefined)?.mode ?? 'static';
 
-  if (!vaultConfig || vaultTreeRoot.length === 0) {
+  const [obsidianTree, setObsidianTree] = useState<VaultTreeNode[] | null>(null);
+  const [loading, setLoading] = useState(mode === 'obsidian');
+
+  const loadObsidianTree = useCallback(async () => {
+    try {
+      const res = await fetch('/api/vault-tree');
+      if (!res.ok) throw new Error('fetch failed');
+      const data = (await res.json()) as VaultTreeNode[];
+      setObsidianTree(data);
+    } catch {
+      setObsidianTree([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mode === 'obsidian') {
+      void loadObsidianTree();
+    }
+  }, [mode, loadObsidianTree]);
+
+  const tree: VaultTreeNode[] =
+    mode === 'obsidian' ? (obsidianTree ?? []) : vaultTreeRoot;
+
+  if (loading) {
     return (
-      <div className="px-2 py-1 text-[10px] text-muted-foreground italic">
-        Sin contenido indexado
+      <div className="flex items-center gap-2 px-2 py-1 text-[10px] text-muted-foreground italic">
+        <Loader2 className="h-3 w-3 animate-spin" />
+        Cargando vault...
       </div>
     );
   }
 
-  // Filtrar por rootPath si está configurado
-  const root = vaultConfig.rootPath ?? '';
-  const nodes = root
-    ? vaultTreeRoot.filter((n) => n.slug === root || n.slug.startsWith(`${root}/`))
-    : vaultTreeRoot;
-
-  if (nodes.length === 0) {
+  if (tree.length === 0) {
     return (
       <div className="px-2 py-1 text-[10px] text-muted-foreground italic">
         Sin contenido indexado
@@ -123,8 +154,13 @@ export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
 
   return (
     <ul className="space-y-0.5">
-      {nodes.map((node) => (
-        <VaultTreeItem key={node.id} node={node} currentPath={pathname} depth={0} />
+      {tree.map((node) => (
+        <VaultTreeItem
+          key={node.id}
+          node={node}
+          currentPath={pathname}
+          depth={0}
+        />
       ))}
     </ul>
   );

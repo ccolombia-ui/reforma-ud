@@ -25,6 +25,7 @@ sidebar:
       filterable: true
       href: "/"
       vaultConfig:
+        mode: obsidian
         excludePatterns:
           - "^_.*"
           - "^\\..*"

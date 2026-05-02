@@ -44,6 +44,7 @@ export const layoutConfig: LayoutConfig = {
         filterable: true,
         href: '/',
         vaultConfig: {
+          mode: 'obsidian',
           excludePatterns: ['^_.*', '^\\..*'],
           folderMappings: { 'canonico': 'Canónico MI-12' },
         },

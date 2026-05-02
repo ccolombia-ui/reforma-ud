@@ -19,8 +19,9 @@ export interface SidebarSection {
   showMissions?: boolean;
   visibleIf?: string;
   href?: string;
-  /** v8g-l5: config para vault-tree (Zoottelkeeper) */
+  /** v8g-l5: config para vault-tree (Zoottelkeeper / Obsidian filesystem) */
   vaultConfig?: {
+    mode?: 'static' | 'obsidian';
     rootPath?: string;
     excludePatterns?: string[];
     folderMappings?: Record<string, string>;

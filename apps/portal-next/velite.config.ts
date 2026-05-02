@@ -602,6 +602,7 @@ const layoutConfig = defineCollection({
                 href: s.string().optional(),
                 vaultConfig: s
                   .object({
+                    mode: s.enum(['static', 'obsidian']).default('static'),
                     rootPath: s.string().optional(),
                     excludePatterns: s.array(s.string()).default([]),
                     folderMappings: s.record(s.string()).default({}),
