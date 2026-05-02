@@ -28,15 +28,17 @@ function VaultTreeItem({
   node,
   currentPath,
   depth = 0,
+  expandDepth = 0,
 }: {
   node: VaultTreeNode;
   currentPath: string;
   depth?: number;
+  expandDepth?: number;
 }) {
   const isFolder = node.type === 'folder';
   const isActive = node.href === currentPath;
   const hasChildren = isFolder && node.children.length > 0;
-  const [open, setOpen] = useState(depth < 2);
+  const [open, setOpen] = useState(depth < expandDepth);
 
   if (isFolder) {
     return (
@@ -75,6 +77,7 @@ function VaultTreeItem({
                 node={child}
                 currentPath={currentPath}
                 depth={depth + 1}
+                expandDepth={expandDepth}
               />
             ))}
           </ul>
@@ -109,6 +112,8 @@ interface VaultTreeSectionProps {
 export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
   const { vaultConfig } = section;
   const mode = (vaultConfig as Record<string, unknown> | undefined)?.mode ?? 'static';
+  const rootFilter = (vaultConfig as Record<string, unknown> | undefined)?.rootFilter as string[] | undefined;
+  const expandDepth = ((vaultConfig as Record<string, unknown> | undefined)?.expandDepth as number | undefined) ?? 0;
 
   const [obsidianTree, setObsidianTree] = useState<VaultTreeNode[] | null>(null);
   const [loading, setLoading] = useState(mode === 'obsidian');
@@ -132,8 +137,13 @@ export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
     }
   }, [mode, loadObsidianTree]);
 
-  const tree: VaultTreeNode[] =
+  const rawTree: VaultTreeNode[] =
     mode === 'obsidian' ? (obsidianTree ?? []) : vaultTreeRoot;
+
+  const tree = rawTree.filter((node) => {
+    if (!rootFilter || rootFilter.length === 0) return true;
+    return rootFilter.includes(node.name);
+  });
 
   if (loading) {
     return (
@@ -160,6 +170,7 @@ export function VaultTreeSection({ section, pathname }: VaultTreeSectionProps) {
           node={node}
           currentPath={pathname}
           depth={0}
+          expandDepth={expandDepth}
         />
       ))}
     </ul>

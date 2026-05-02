@@ -45,6 +45,8 @@ export const layoutConfig: LayoutConfig = {
         href: '/',
         vaultConfig: {
           mode: 'obsidian',
+          rootFilter: ['100--csu'],
+          expandDepth: 0,
           excludePatterns: ['^_.*', '^\\..*'],
           folderMappings: { 'canonico': 'Canónico MI-12' },
         },

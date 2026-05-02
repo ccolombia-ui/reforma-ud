@@ -604,6 +604,8 @@ const layoutConfig = defineCollection({
                   .object({
                     mode: s.enum(['static', 'obsidian']).default('static'),
                     rootPath: s.string().optional(),
+                    rootFilter: s.array(s.string()).default([]),
+                    expandDepth: s.number().default(0),
                     excludePatterns: s.array(s.string()).default([]),
                     folderMappings: s.record(s.string()).default({}),
                     indexPattern: s.string().default('_Index_of_*'),

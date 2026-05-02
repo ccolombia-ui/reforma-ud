@@ -23,9 +23,12 @@ export interface SidebarSection {
   vaultConfig?: {
     mode?: 'static' | 'obsidian';
     rootPath?: string;
+    rootFilter?: string[];
     excludePatterns?: string[];
     folderMappings?: Record<string, string>;
     indexPattern?: string;
+    /** Profundidad inicial hasta la cual expandir (default: 2) */
+    expandDepth?: number;
   };
 }
 
