@@ -38,6 +38,28 @@ export interface CollapsedNavItem {
   icon: string;
 }
 
+export interface GamificationConfig {
+  enabled: boolean;
+  xpPerAction?: {
+    sectionRead?: number;
+    paperCompleted?: number;
+    comprehensionVerified?: number;
+    firstLogin?: number;
+  };
+  levels?: Array<{
+    name: string;
+    minXp: number;
+    icon: string;
+  }>;
+  badges?: Array<{
+    id: string;
+    name: string;
+    description: string;
+    icon: string;
+    condition: string;
+  }>;
+}
+
 export interface LayoutConfig {
   kd_id?: string;
   kd_version?: string;
@@ -71,4 +93,5 @@ export interface LayoutConfig {
     defaultTab: string;
     keyboardShortcuts: Array<{ key: string; tab: string }>;
   };
+  gamification?: GamificationConfig;
 }

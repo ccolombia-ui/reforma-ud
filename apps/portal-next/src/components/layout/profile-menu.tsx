@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Check, ChevronDown, Pencil } from 'lucide-react';
+import { Check, ChevronDown, Pencil, Zap, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ROLES, useActiveProfile } from '@/lib/ui-state';
+import { useGamification } from '@/lib/gamification';
 
 /**
  * ProfileMenu · avatar circular + nombre + rol a la izquierda del header.
@@ -12,12 +13,15 @@ import { ROLES, useActiveProfile } from '@/lib/ui-state';
  */
 export function ProfileMenu() {
   const { role, name, setRole, setName, meta } = useActiveProfile();
+  const gamification = useGamification(role);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [draftName, setDraftName] = useState(name);
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => setDraftName(name), [name]);
+  useEffect(() => {
+    queueMicrotask(() => setDraftName(name));
+  }, [name]);
 
   // Cerrar al click fuera
   useEffect(() => {
@@ -117,11 +121,30 @@ export function ProfileMenu() {
                     </button>
                   </div>
                   <div className="text-[10px] text-muted-foreground line-clamp-2">{meta.name}</div>
-                </>
-              )}
-              <div className="mt-1 inline-flex items-center gap-1 rounded-full border px-1.5 py-0.5 text-[9px] text-muted-foreground">
-                Sin auth · localStorage MVP
-              </div>
+                    </>
+                  )}
+                  {/* v8g-l9 · XP + Nivel */}
+                  <div className="mt-2 space-y-1">
+                    <div className="flex items-center gap-1.5 text-[10px]">
+                      <span className="text-base leading-none">{gamification.level.icon}</span>
+                      <span className="font-semibold">{gamification.level.name}</span>
+                      <span className="ml-auto text-muted-foreground">{gamification.xp} XP</span>
+                    </div>
+                    <div className="h-1 w-full overflow-hidden rounded-full bg-muted">
+                      <div
+                        className="h-full rounded-full bg-primary transition-all"
+                        style={{ width: `${gamification.progressToNext}%` }}
+                      />
+                    </div>
+                    {gamification.nextLevel && (
+                      <div className="text-[9px] text-muted-foreground">
+                        {gamification.progressToNext}% hacia {gamification.nextLevel.name}
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-1 inline-flex items-center gap-1 rounded-full border px-1.5 py-0.5 text-[9px] text-muted-foreground">
+                    Sin auth · localStorage MVP
+                  </div>
             </div>
           </div>
 
@@ -151,6 +174,29 @@ export function ProfileMenu() {
               ))}
             </ul>
           </div>
+
+          {/* Badges */}
+          {gamification.badges.some((b) => b.earned) && (
+            <div className="border-t px-2 py-2">
+              <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                Logros
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {gamification.badges
+                  .filter((b) => b.earned)
+                  .map((b) => (
+                    <span
+                      key={b.id}
+                      title={b.description}
+                      className="inline-flex items-center gap-1 rounded-full border bg-accent/30 px-1.5 py-0.5 text-[9px]"
+                    >
+                      <span>{b.icon}</span>
+                      <span className="hidden sm:inline">{b.name}</span>
+                    </span>
+                  ))}
+              </div>
+            </div>
+          )}
 
           <div className="border-t px-3 py-2 text-[10px] text-muted-foreground">
             El rol se usa para personalizar el Asistente AI y filtrar contenido relevante.

@@ -167,3 +167,47 @@ rightPanel:
     - { key: "5", tab: comunidad }
     - { key: "6", tab: misiones }
     - { key: "7", tab: asistente }
+
+# ─────────────────────────────────────────
+# GAMIFICATION
+# ─────────────────────────────────────────
+gamification:
+  enabled: true
+  xpPerAction:
+    sectionRead: 10
+    paperCompleted: 100
+    comprehensionVerified: 50
+    firstLogin: 25
+  levels:
+    - { name: "Novato",      minXp: 0,    icon: "🌱" }
+    - { name: "Aprendiz",    minXp: 200,  icon: "🌿" }
+    - { name: "Contribuyente", minXp: 500,  icon: "🍃" }
+    - { name: "Especialista",  minXp: 1000, icon: "🌳" }
+    - { name: "Experto",       minXp: 2000, icon: "🏆" }
+    - { name: "Maestro",       minXp: 5000, icon: "👑" }
+  badges:
+    - id: "primer-paso"
+      name: "Primer Paso"
+      description: "Lee tu primera sección"
+      icon: "👣"
+      condition: "sectionsRead >= 1"
+    - id: "lector-activo"
+      name: "Lector Activo"
+      description: "Lee 10 secciones"
+      icon: "📖"
+      condition: "sectionsRead >= 10"
+    - id: "mision-cumplida"
+      name: "Misión Cumplida"
+      description: "Completa tu primera misión"
+      icon: "🎯"
+      condition: "missionsCompleted >= 1"
+    - id: "comprension-verificada"
+      name: "Comprensión Verificada"
+      description: "Verifica 5 preguntas de comprensión"
+      icon: "✅"
+      condition: "questionsVerified >= 5"
+    - id: "recorrido-completo"
+      name: "Recorrido Completo"
+      description: "Completa todas las misiones M01-M12"
+      icon: "🏅"
+      condition: "missionsCompleted >= 12"
