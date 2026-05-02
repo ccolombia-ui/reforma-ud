@@ -36,19 +36,16 @@ export const layoutConfig: LayoutConfig = {
   sidebar: {
     sections: [
       {
-        id: 'biblioteca-vault',
+        id: 'vault-explorer',
         emoji: '🌲',
-        title: 'Biblioteca (Vault Tree)',
+        title: 'VAULT',
         type: 'vault-tree',
-        source: 'zoottelkeeperIndex',
         icon: 'FolderTree',
         filterable: true,
-        href: '/canonico',
+        href: '/',
         vaultConfig: {
-          rootPath: 'vault-index',
           excludePatterns: ['^_.*', '^\\..*'],
-          folderMappings: { 'vault-index': 'Biblioteca', 'canonico': 'Canónico MI-12' },
-          indexPattern: '_Index_of_*',
+          folderMappings: { 'canonico': 'Canónico MI-12' },
         },
       },
       {
