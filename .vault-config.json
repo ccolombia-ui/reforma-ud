@@ -1,0 +1,13 @@
+{
+  "name": "reforma-ud-vault",
+  "version": "1.0.0",
+  "description": "Vault de contenido Obsidian para la iniciativa reforma·ud",
+  "source": "https://github.com/ccolombia-ui/reforma-ud/tree/vault-content",
+  "rootFilter": ["100--csu"],
+  "excludePatterns": ["^_.*", "^\\..*"],
+  "allowedExtensions": [".md", ".mdx"],
+  "assets": {
+    "include": false,
+    "note": "Assets (imágenes, canvas, etc.) se excluyen de esta rama. Se sirven desde Google Drive u otro CDN."
+  }
+}
