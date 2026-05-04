@@ -38,7 +38,7 @@ function scan(dir, base = '') {
           type: 'file',
           id: rel,
           name: name.replace(/\.(md|mdx)$/i, ''),
-          href: '/' + rel.replace(/\\/g, '/').replace(/\.(md|mdx)$/i, ''),
+          href: '/vault/' + rel.replace(/\\/g, '/').replace(/\.(md|mdx)$/i, ''),
         });
       }
     } catch {

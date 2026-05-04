@@ -32,7 +32,7 @@ function isMdFile(name) {
 
 function toHref(filePath) {
   const withoutExt = filePath.replace(/\.(md|mdx)$/i, '');
-  return '/' + withoutExt.replace(/\\/g, '/');
+  return '/vault/' + withoutExt.replace(/\\/g, '/');
 }
 
 function toSlug(filePath) {
