@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "node scripts/build-vault-index.mjs && pnpm build",
-  "installCommand": "npm install --legacy-peer-deps --no-audit --no-fund --prefer-online --fetch-retries=8 --fetch-retry-mintimeout=20000 --fetch-retry-maxtimeout=120000",
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install --no-frozen-lockfile",
   "framework": "nextjs"
 }
