@@ -1,0 +1,38 @@
+{
+  "name": "@aleia/sdk",
+  "version": "0.1.0",
+  "description": "SDK agnóstico para gestión documental y gamificación multi-tenant sobre Supabase",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./gamification": {
+      "import": "./dist/gamification/index.js",
+      "types": "./dist/gamification/index.d.ts"
+    },
+    "./supabase": {
+      "import": "./dist/supabase/index.js",
+      "types": "./dist/supabase/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "@biomejs/biome": "^1.9.4"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "license": "MIT"
+}
