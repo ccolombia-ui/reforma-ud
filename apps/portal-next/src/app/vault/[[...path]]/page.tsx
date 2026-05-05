@@ -1,26 +1,35 @@
 /**
- * Vault Document Viewer — v8g-l13
+ * Vault Document Viewer — v8g-l13 (Google Drive via Apps Script proxy)
  *
- * Ruta dinámica /vault/[...path] que lee archivos .md desde el branch
- * vault-content del repo en GitHub (raw.githubusercontent.com).
+ * Ruta dinámica /vault/[...path] que lee archivos .md desde Google Drive
+ * a través de un Google Apps Script Web App (CORS-enabled).
  *
  * Uso: /vault/100--csu/000--estatuto-general/00-glosario-universal/1-normativo/con-10-principios-generales
+ *
+ * Requiere la variable de entorno NEXT_PUBLIC_VAULT_PROXY_URL apuntando al
+ * deployment del Apps Script (ver cloud-functions/vault-gdrive-proxy/SETUP.md).
  */
 
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const GITHUB_RAW_BASE =
-  'https://raw.githubusercontent.com/ccolombia-ui/reforma-ud/vault-content';
+const PROXY_URL =
+  process.env.NEXT_PUBLIC_VAULT_PROXY_URL || '';
 
-function githubRawUrl(filePath: string): string {
-  // El branch vault-content aplanará las carpetas tal cual
-  return `${GITHUB_RAW_BASE}/${filePath}.md`;
+function proxyDocUrl(filePath: string): string {
+  const normalized = filePath.replace(/\\/g, '/').replace(/^\//, '');
+  // El proxy espera el path relativo al vault, SIN la extensión .md
+  const withoutExt = normalized.replace(/\.md$/i, '');
+  const url = new URL(PROXY_URL);
+  url.searchParams.set('mode', 'doc');
+  url.searchParams.set('path', withoutExt + '.md');
+  return url.toString();
 }
 
 async function fetchVaultMd(filePath: string): Promise<string | null> {
-  const url = githubRawUrl(filePath);
+  if (!PROXY_URL) return null;
+  const url = proxyDocUrl(filePath);
   try {
     const res = await fetch(url, { next: { revalidate: 60 } });
     if (!res.ok) return null;
